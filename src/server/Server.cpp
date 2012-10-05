@@ -56,11 +56,11 @@ void Server::receiveDataFromClient(Server::ClientInfo& client)
 	if (client.socket->receive(packet) == sf::Socket::Done)
 	{
 		packetReceivedSignal.emit(client.id, packet);
-		logger << "Received packet from " + std::to_string(client.id));
+		logger << "Received packet from " + std::to_string(client.id);
 	}
 	else
 	{
-		logger << "Failed to recieve a packet from " + std::to_string(client.id));
+		logger << "Failed to recieve a packet from " + std::to_string(client.id);
 	}
 }
 

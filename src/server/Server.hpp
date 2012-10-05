@@ -2,7 +2,7 @@
 
 #include <SFML/Network.hpp>
 
-#include <sigc++/sigc++.h>
+#include <sigc++-2.0/sigc++/sigc++.h>
 
 #include <memory>
 

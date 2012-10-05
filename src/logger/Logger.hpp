@@ -1,3 +1,5 @@
+#pragma once
+
 #include <fstream>
 #include <iostream>
 #include <ctime>
@@ -19,8 +21,8 @@ private:
 	void writeHead(std::ostream& stream, bool colored, bool dated);
 
 	std::ofstream file;
-	bool verbose;
 	std::string title;
 	unsigned color;
+	bool verbose;
 	bool enabled;
 };
