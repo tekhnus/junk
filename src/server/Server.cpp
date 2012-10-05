@@ -5,8 +5,9 @@ Server::Server() : logger("SERVER")
 	clientsNumber = 0;
 }
 
-Server::Server(unsigned short port) : Server::Server()
+Server::Server(unsigned short port) : logger("SERVER")
 {
+	clientsNumber = 0;
 	this->port = port;
 }
 
