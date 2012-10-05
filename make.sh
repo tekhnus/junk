@@ -13,7 +13,7 @@ CXX_COMPILE=clang++
 mkdir -p build
 mkdir -p bin
 cd src
-pwd
+
 $CXX_COMPILE -c client/Client.cpp -o ../build/Client.o $CXX_FLAGS $INCLUDE_PATH
 $CXX_COMPILE -c server/Server.cpp -o ../build/Server.o $CXX_FLAGS $INCLUDE_PATH
 $CXX_COMPILE -c logger/Logger.cpp -o ../build/Logger.o $CXX_FLAGS $INCLUDE_PATH
