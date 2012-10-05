@@ -3,7 +3,7 @@ LIBRARY=$LIBRARY' '-lsfml-network
 LIBRARY=$LIBRARY' '-lsigc-2.0
 
 CXX_FLAGS=$CXX_FLAGS' '-Wall
-CXX_FLAGS=$CXX_FLAGS' '-std=c++11
+CXX_FLAGS=$CXX_FLAGS' '-std=c++11' '-stdlib=libstdc++
 CXX_FLAGS=$CXX_FLAGS' '-I.' '-I/usr/include/sigc++-2.0
 CXX_FLAGS=$CXX_FLAGS' '-I/usr/lib/x86_64-linux-gnu/sigc++-2.0/include
 CXX_FLAGS=$CXX_FLAGS' '-I/opt/local/include/sigc++-2.0' '-I/opt/local/include
