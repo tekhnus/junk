@@ -20,6 +20,8 @@ public:
   void fireHandler(sf::Vector2f direction);
   void rotateHandler(sf::Vector2f direction);
 
+  void clientMoved();
+
 private:
   ClientView& view;
   ClientModel& model;
