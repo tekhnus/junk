@@ -2,13 +2,12 @@
 
 #include <SFML/System.hpp>
 #include <sigc++/sigc++.h>
-#include <logger/Logger.hpp>
+#include <common/logger/Logger.hpp>
 #include <client/model/ClientModel.hpp>
+#include <client/view/ClientView.hpp>
 
 namespace junk
 {
-
-class ClientView;
 
 class ClientController
 {

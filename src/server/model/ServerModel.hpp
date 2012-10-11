@@ -2,7 +2,7 @@
 
 #include <SFML/System.hpp>
 #include <sigc++/sigc++.h>
-#include <logger/Logger.hpp>
+#include <common/logger/Logger.hpp>
 
 namespace junk
 {
