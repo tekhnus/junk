@@ -1,47 +1,84 @@
 #include "Unit.hpp"
 
-Unit::Unit (const std::string& name, sf::Vector2i position)
-	: name(name), position(position)
+namespace junk
+{
+
+Unit::Unit(const std::string& name, sf::Vector2f position, sf::Vector2f rotation)
+	: name(name), position(position), rotation(rotation)
 {
 
 }
 
-void Unit::moveTo (sf::Vector2i target)
+void Unit::setName(const std::string &name)
 {
-	position = target;
+	this->name = name;
 }
 
-void Unit::moveAlong (sf::Vector2i vector)
+void Unit::setPosition(sf::Vector2f position)
 {
-	position += vector;
+	this->position = position;
 }
 
-void Unit::rename (const std::string &newName)
+void Unit::setRotation(sf::Vector2f rotation)
 {
-	name = newName;
+	if (std::fabs(rotation.x) < 1e-5 && std::fabs(rotation.y) < 1e-5)
+	{
+		return;
+	}
+
+	this->rotation = rotation;
 }
 
-sf::Vector2i Unit::getPosition () const
-{
-	return position;
-}
-
-std::string Unit::getName () const
+std::string Unit::getName() const
 {
 	return name;
 }
 
-PlayerUnit::PlayerUnit (const std::string& name, sf::Vector2i position)
-		: Unit(name, position), Drawable()
+sf::Vector2f Unit::getPosition() const
 {
-	circle.setRadius(10.0);
+	return position;
 }
 
-PlayerUnit::~PlayerUnit ()
+sf::Vector2f Unit::getRotation() const
 {
+	return rotation;
+}
+
+PlayerUnit::PlayerUnit(const std::string& name, sf::Vector2f position, sf::Vector2f rotation)
+		: Unit(name, position, rotation)
+{
+	player.setRadius(30.0);
+	player.setFillColor(sf::Color(0, 255, 0, 255));
+	gun.setPointCount(3);
+	gun.setFillColor(sf::Color(255, 0, 0, 255));
+}
+
+PlayerUnit::~PlayerUnit()
+{
+}
+
+void PlayerUnit::update()
+{
+	player.setPosition(getPosition() - sf::Vector2f(player.getRadius(), player.getRadius()));
+
+	float length = getRotation().x * getRotation().x +
+				   getRotation().y * getRotation().y;
+
+	length = sqrt(length);
+
+	sf::Vector2f v = (player.getRadius() / length) * getRotation();
+	sf::Vector2f n(-v.y, v.x);
+	n = static_cast<float>(0.3) * n;
+
+	gun.setPoint(0, getPosition());
+	gun.setPoint(1, getPosition() + v + n);
+	gun.setPoint(2, getPosition() + v - n);
 }
 
 void PlayerUnit::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(circle, states);
+	target.draw(player, states);
+	target.draw(gun, states);
+}
+
 }

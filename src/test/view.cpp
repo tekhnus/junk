@@ -6,8 +6,11 @@ int main ()
 	sf::RenderWindow window(sf::VideoMode(512, 512), "Title");
 	//window.show();
 
-	junk::PlayerUnit u("hello");
-	u.setPosition(sf::Vector2f(100.0, 100.0));
+	// junk::View view;
+	junk::PlayerUnit u("Unit", sf::Vector2f(100.0, 100.0), sf::Vector2f(100.0, 100.0));
+	// view.addPlayer(sf::Vector2f(100.0, 100.0), sf::Vector2f(100.0, 100.0));
+
+	// u.setPosition(sf::Vector2f(100.0, 100.0));
 	sf::Font font;
 	font.loadFromFile("/Users/mekagem/junk/bin/arial.ttf");
 
