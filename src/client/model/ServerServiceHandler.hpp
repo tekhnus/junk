@@ -17,7 +17,13 @@ namespace junk
 		void clientDirectionUpdated(const int16_t id, const Vector2f& direction);
 		void fireUpdated();
 
+		void subscribeForPositionUpdatedSignal(sigc::slot<void, int16_t, sf::Vector2f> slot);
+		void subscribeForDirectionUpdatedSignal(sigc::slot<void, int16_t, sf::Vector2f> slot);
+
 	private:
+		sigc::signal<void, int16_t, sf::Vector2f> clientPositionUpdatedSignal;
+		sigc::signal<void, int16_t, sf::Vector2f> clientDirectionUpdatedSignal;
+
 	}; // ServerServiceHandle
 
 } // namespace junk
