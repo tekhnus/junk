@@ -3,15 +3,15 @@
 namespace junk
 {
 
-View::View ()
+View::View()
 {
 }
 
-View::~View ()
+View::~View()
 {
 }
 
-PlayerIDType View::addPlayer (sf::Vector2f position, sf::Vector2f rotation)
+PlayerIDType View::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
 {
 	PlayerIDType newPlayerID = 0;
 	for (auto player : players)
@@ -26,12 +26,12 @@ PlayerIDType View::addPlayer (sf::Vector2f position, sf::Vector2f rotation)
 	return newPlayerID;
 }
 
-void View::removePlayer (PlayerIDType playerID)
+void View::removePlayer(PlayerIDType playerID)
 {
 	players.erase(playerID);
 }
 
-void View::setPlayerPosition (PlayerIDType playerID, sf::Vector2f position)
+void View::setPlayerPosition(PlayerIDType playerID, sf::Vector2f position)
 {
 	if (players.find(playerID) != players.end())
 	{
@@ -39,7 +39,7 @@ void View::setPlayerPosition (PlayerIDType playerID, sf::Vector2f position)
 	}
 }
 
-void View::setPlayerRotation (PlayerIDType playerID, sf::Vector2f rotation)
+void View::setPlayerRotation(PlayerIDType playerID, sf::Vector2f rotation)
 {
 	if (players.find(playerID) != players.end())
 	{
@@ -47,22 +47,30 @@ void View::setPlayerRotation (PlayerIDType playerID, sf::Vector2f rotation)
 	}
 }
 
-bool View::subscribeForFireSignal (sigc::slot<void, sf::Vector2f> slot)
+bool View::subscribeForFireSignal(sigc::slot<void, sf::Vector2f> slot)
 {
 	fireSignal.connect(slot);
 	return true;
 }
 
-bool View::subscribeForMoveSignal (sigc::slot<void, sf::Vector2f> slot)
+bool View::subscribeForMoveSignal(sigc::slot<void, sf::Vector2f> slot)
 {
 	moveSignal.connect(slot);
 	return true;
 }
 
-bool View::subscribeForRotateSignal (sigc::slot<void, sf::Vector2f> slot)
+bool View::subscribeForRotateSignal(sigc::slot<void, sf::Vector2f> slot)
 {
 	rotateSignal.connect(slot);
 	return true;
+}
+
+void View::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	for (auto player : players)
+	{
+		target.draw(player.second, states);
+	}
 }
 
 }

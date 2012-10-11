@@ -3,23 +3,23 @@
 namespace junk
 {
 
-Unit::Unit (const std::string& name, sf::Vector2f position, sf::Vector2f rotation)
+Unit::Unit(const std::string& name, sf::Vector2f position, sf::Vector2f rotation)
 	: name(name), position(position), rotation(rotation)
 {
 
 }
 
-void Unit::setName (const std::string &name)
+void Unit::setName(const std::string &name)
 {
 	this->name = name;
 }
 
-void Unit::setPosition (sf::Vector2f position)
+void Unit::setPosition(sf::Vector2f position)
 {
 	this->position = position;
 }
 
-void Unit::setRotation (sf::Vector2f rotation)
+void Unit::setRotation(sf::Vector2f rotation)
 {
 	if (std::fabs(rotation.x) < 1e-5 && std::fabs(rotation.y) < 1e-5)
 	{
@@ -29,22 +29,22 @@ void Unit::setRotation (sf::Vector2f rotation)
 	this->rotation = rotation;
 }
 
-std::string Unit::getName () const
+std::string Unit::getName() const
 {
 	return name;
 }
 
-sf::Vector2f Unit::getPosition () const
+sf::Vector2f Unit::getPosition() const
 {
 	return position;
 }
 
-sf::Vector2f Unit::getRotation () const
+sf::Vector2f Unit::getRotation() const
 {
 	return rotation;
 }
 
-PlayerUnit::PlayerUnit (const std::string& name, sf::Vector2f position, sf::Vector2f rotation)
+PlayerUnit::PlayerUnit(const std::string& name, sf::Vector2f position, sf::Vector2f rotation)
 		: Unit(name, position, rotation)
 {
 	player.setRadius(30.0);
@@ -53,11 +53,11 @@ PlayerUnit::PlayerUnit (const std::string& name, sf::Vector2f position, sf::Vect
 	gun.setFillColor(sf::Color(255, 0, 0, 255));
 }
 
-PlayerUnit::~PlayerUnit ()
+PlayerUnit::~PlayerUnit()
 {
 }
 
-void PlayerUnit::update ()
+void PlayerUnit::update()
 {
 	player.setPosition(getPosition() - sf::Vector2f(player.getRadius(), player.getRadius()));
 
