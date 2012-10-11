@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Network.hpp>
-#include "logger/Logger.hpp"
+#include "common/logger/Logger.hpp"
 
 class Client
 {

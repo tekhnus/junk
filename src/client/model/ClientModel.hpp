@@ -2,8 +2,8 @@
 
 #include <SFML/System.hpp>
 #include <sigc++/sigc++.h>
-#include <logger/Logger.hpp>
-#include <client/model/ServerServiceHandler.hpp>
+#include <common/logger/Logger.hpp>
+#include <common/server_service/ServerServiceHandler.hpp>
 
 namespace junk
 {

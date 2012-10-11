@@ -1,5 +1,5 @@
 #include "server/Server.hpp"
-#include "logger/Logger.hpp"
+#include "common/logger/Logger.hpp"
 
 #include <iostream>
 #include <string>
