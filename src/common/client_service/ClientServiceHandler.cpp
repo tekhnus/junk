@@ -6,7 +6,7 @@ namespace junk
 	{
 	}
 
-	void ClientServiceHandler::move(Vector2f& direction)
+	void ClientServiceHandler::move(const Vector2f& direction)
 	{
 	}
 
