@@ -1,6 +1,5 @@
 #include <SFML/System.hpp>
 #include <sigc++/sigc++.h>
-#include <logger/Logger.hpp>
 #include "ServerModel.hpp"
 
 namespace junk
