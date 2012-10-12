@@ -1,4 +1,4 @@
-#include "client/view/unit/Unit.hpp"
+#include "client/view/Unit.hpp"
 #include <SFML/Window.hpp>
 
 int main ()
