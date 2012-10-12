@@ -1,4 +1,6 @@
 build
+!build/CMakeLists.txr
 bin
 src/common/client_service/gen-cpp
 src/common/server_service/gen-cpp
+
