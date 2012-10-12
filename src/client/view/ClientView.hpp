@@ -1,6 +1,6 @@
 #pragma once
 
-#include "unit/Unit.hpp"
+#include "Unit.hpp"
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
