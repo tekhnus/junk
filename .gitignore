@@ -1,4 +1,4 @@
-build
+build/*
 !build/CMakeLists.txr
 bin
 src/common/client_service/gen-cpp
