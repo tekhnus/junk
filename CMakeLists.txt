@@ -12,6 +12,7 @@ ENDIF(UNIX)
 IF(APPLE)
 	include_directories (/opt/local/include/sigc++-2.0)
 	include_directories (/opt/local/include)
+	include_directories (/opt/local/include/thrift)
 ENDIF(APPLE)
 
 add_subdirectory (src build)
