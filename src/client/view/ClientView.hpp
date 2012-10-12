@@ -13,11 +13,11 @@ namespace junk
 
 typedef unsigned int PlayerIDType;
 
-class View : public sf::Drawable
+class ClientView : public sf::Drawable
 {
 public:
-	View();
-	virtual ~View();
+	ClientView();
+	virtual ~ClientView();
 
 	PlayerIDType addPlayer(sf::Vector2f position, sf::Vector2f rotation);
 	void removePlayer(PlayerIDType playerID);
