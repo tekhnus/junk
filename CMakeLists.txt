@@ -2,7 +2,8 @@ cmake_minimum_required (VERSION 2.6)
 
 project (junk CXX)
 
-add_definitions (--std=c++0x)
+set (CMAKE_CXX_COMPILER clang++)
+add_definitions (-std=c++11)
 
 IF(UNIX)
 	include_directories (/usr/include/sigc++-2.0)
@@ -10,6 +11,7 @@ IF(UNIX)
 ENDIF(UNIX)
 
 IF(APPLE)
+	add_definitions (-stdlib=libc++)
 	include_directories (/opt/local/include/sigc++-2.0)
 	include_directories (/opt/local/include)
 	include_directories (/opt/local/include/thrift)
