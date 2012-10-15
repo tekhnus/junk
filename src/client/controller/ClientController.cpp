@@ -23,16 +23,19 @@ ClientController::~ClientController()
 void ClientController::moveHandler(sf::Vector2f direction)
 {
 	logger << "moveHandler invoked";
+	model.move(direction);
 }
 
 void ClientController::fireHandler(sf::Vector2f direction)
 {
 	logger << "fireHandler invoked";
+	model.fire(direction);
 }
 
 void ClientController::rotateHandler(sf::Vector2f direction)
 {
 	logger << "rotateHandler invoked";
+	model.rotate(direction);
 }
 
 void ClientController::clientPositionUpdatedHandler(int16_t id, sf::Vector2f direction)

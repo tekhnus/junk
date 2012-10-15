@@ -3,7 +3,7 @@
 #include <SFML/System.hpp>
 #include <sigc++/sigc++.h>
 #include <common/logger/Logger.hpp>
-#include <common/server_service/ServerServiceHandler.hpp>
+#include "network_model/ClientNetworkModel.hpp"
 
 namespace junk
 {
@@ -21,7 +21,7 @@ public:
 		this->direction = direction;
 	}
 
-	int16_t getId() const
+	int32_t getId() const
 	{
 		return id;
 	}
@@ -29,7 +29,7 @@ public:
 private:
 	sf::Vector2f position;
 	sf::Vector2f direction;
-	int16_t id;
+	int32_t id;
 };
 
 class ClientModel
@@ -38,19 +38,23 @@ public:
   ClientModel();
   ~ClientModel();
 
-	void updatePlayerPosition(int16_t id, sf::Vector2f position);
-	void updatePlayerDirection(int16_t id, sf::Vector2f direction);
+	void updatePlayerPosition(int32_t id, sf::Vector2f position);
+	void updatePlayerDirection(int32_t id, sf::Vector2f direction);
 
-	void subscribeForClientPositionUpdatedSignal(sigc::slot<void, int16_t, sf::Vector2f> slot);
-	void subscribeForClientDirectionUpdatedSignal(sigc::slot<void, int16_t, sf::Vector2f> slot);
+	void subscribeForClientPositionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
+	void subscribeForClientDirectionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
+
+	void move(sf::Vector2f direction);
+	void rotate(sf::Vector2f direction);
+	void fire(sf::Vector2f direction);
 
 private:
 	std::vector<Player> players;
-	ServerServiceHandler serverService;
-	int16_t clientId;
+	ClientNetworkModel networkModel;
+	int32_t clientId;
 
-	sigc::signal<void, int16_t, sf::Vector2f> clientPositionUpdatedSignal;
-	sigc::signal<void, int16_t, sf::Vector2f> clientDirectionUpdatedSignal;
+	sigc::signal<void, int32_t, sf::Vector2f> clientPositionUpdatedSignal;
+	sigc::signal<void, int32_t, sf::Vector2f> clientDirectionUpdatedSignal;
 
   Logger logger;
   
