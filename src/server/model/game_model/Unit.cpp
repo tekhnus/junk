@@ -22,7 +22,7 @@ void Unit::movePosition(sf::Vector2f vector)
 RotatableUnit::RotatableUnit(sf::Vector2f position, sf::Vector2f rotation)
  : Unit(position), rotation(rotation)
 {
-	if (std::fabs(rotation.x) < eps && std::fabs(rotation.y) < eps)
+	if (std::fabs(rotation.x) < unitEps && std::fabs(rotation.y) < unitEps)
 	{
 		this->rotation = sf::Vector2f(1.0, 1.0);
 	}
