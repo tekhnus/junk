@@ -68,6 +68,7 @@ void ServerGameModel::move(PlayerIDType playerID, sf::Vector2f position)
 
 		palyers[playerID].movePosition(position);
 	}
+	moveSignal(playerID, rotation);
 	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
@@ -81,24 +82,25 @@ void ServerGameModel::rotate(PlayerIDType playerID, sf::Vector2f rotation)
 	{
 		palyers[playerID].setRotation(rotation);
 	}
+	rotateSignal(playerID, rotation);
 	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
 }
 
-void ServerGameModel::fire(PlayerIDType playerID)
+/*void ServerGameModel::fire(PlayerIDType playerID)
 {
 	gameChangesMutex.lock();
 
 	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
-}
+}*/
 
-bool ServerGameModel::subscribeForFireSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
+/*bool ServerGameModel::subscribeForFireSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
 {
 	fireSignal.connect(slot);
-}
+}*/
 
 bool ServerGameModel::subscribeForMoveSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
 {
