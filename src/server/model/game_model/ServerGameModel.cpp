@@ -69,7 +69,7 @@ void ServerGameModel::move(PlayerIDType playerID, sf::Vector2f position)
 
 		players.at(playerID).movePosition(position);
 	}
-	moveSignal(playerID, rotation);
+	moveSignal(playerID, position);
 	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
