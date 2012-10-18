@@ -1,11 +1,12 @@
 #include "ServerGameModel.hpp"
 #include "sigc++/sigc++.h"
+#include <functional>
 
 namespace junk
 {
 
 ServerGameModel::ServerGameModel()
- : isRunning(false);
+ : isRunning(false)
 {
 }
 
@@ -13,7 +14,7 @@ void ServerGameModel::start()
 {
 	isRunning = true;
 	gameLoopTimer.restart();
-	gameLoopThread(this->gameLoop);
+	gameLoopThread(std::ref(*this));
 }
 
 void ServerGameModel::stop()
@@ -37,7 +38,7 @@ void ServerGameModel::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
 			newPlayerID++;
 		}
 	}
-	players.insert(std::make_pair(newPlayerID, unit::Player(position, rotation));
+	players.insert(std::make_pair(newPlayerID,unit::Player(position, rotation)));
 	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
@@ -66,9 +67,9 @@ void ServerGameModel::move(PlayerIDType playerID, sf::Vector2f position)
 		position *= moveSpeed;
 		position *= gameLoopTimer.getElapsedTime().asSeconds();
 
-		palyers[playerID].movePosition(position);
+		players.at(playerID).movePosition(position);
 	}
-	moveSignal(playerID, rotation);
+	moveSignal(playerID, position);
 	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
@@ -80,7 +81,7 @@ void ServerGameModel::rotate(PlayerIDType playerID, sf::Vector2f rotation)
 
 	if (players.find(playerID) != players.end())
 	{
-		palyers[playerID].setRotation(rotation);
+		players.at(playerID).setRotation(rotation);
 	}
 	rotateSignal(playerID, rotation);
 	gameLoopTimer.restart();
@@ -112,7 +113,7 @@ bool ServerGameModel::subscribeForRotateSignal(sigc::slot<void, PlayerIDType, sf
 	rotateSignal.connect(slot);
 }
 
-void ServerGameModel::gameLoop()
+void ServerGameModel::operator()()
 {
 	while (true)
 	{	
