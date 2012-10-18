@@ -30,9 +30,9 @@ public:
 	//bool subscribeForFireSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
 	bool subscribeForMoveSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
 	bool subscribeForRotateSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
-
-private:
 	void operator()();
+private:
+	
 
 	std::map<PlayerIDType, unit::Player> players;
 
