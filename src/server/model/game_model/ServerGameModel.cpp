@@ -37,7 +37,7 @@ void ServerGameModel::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
 			newPlayerID++;
 		}
 	}
-	players[newPlayerID] = unit::Player(position, rotation);
+	players.insert(std::make_pair(newPlayerID, unit::Player(position, rotation));
 	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();

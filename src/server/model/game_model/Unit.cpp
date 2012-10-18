@@ -11,10 +11,6 @@ const float unitEps = 1e-5;
 
 Unit::Unit(sf::Vector2f position) : position(position)
 {
-	if (std::fabs(rotation.x) < eps && std::fabs(rotation.y) < eps)
-	{
-		this->rotation = sf::Vector2f(1.0, 1.0);
-	}
 }
 
 void Unit::movePosition(sf::Vector2f vector)
@@ -25,7 +21,10 @@ void Unit::movePosition(sf::Vector2f vector)
 RotatableUnit::RotatableUnit(sf::Vector2f position, sf::Vector2f rotation)
  : Unit(position), rotation(rotation)
 {
-
+	if (std::fabs(rotation.x) < eps && std::fabs(rotation.y) < eps)
+	{
+		this->rotation = sf::Vector2f(1.0, 1.0);
+	}
 }
 
 RotatableUnit::setRotation(sf::Vector2f rotation)
