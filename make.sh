@@ -25,6 +25,7 @@ cd src
 
 $CXX_COMPILE -c client/Client.cpp -o ../build/Client.o $CXX_FLAGS $INCLUDE_PATH
 $CXX_COMPILE -c client/model/ClientModel.cpp $DEFINE_FLAGS -o ../build/ClientModel.o $CXX_FLAGS $INCLUDE_PATH
+$CXX_COMPILE -c server/model/ServerModel.cpp $DEFINE_FLAGS -o ../build/ServerModel.o $CXX_FLAGS $INCLUDE_PATH
 $CXX_COMPILE -c server/Server.cpp -o ../build/Server.o $CXX_FLAGS $INCLUDE_PATH
 $CXX_COMPILE -c common/logger/Logger.cpp -o ../build/Logger.o $CXX_FLAGS $INCLUDE_PATH
 $CXX_COMPILE -c client/view/unit/Unit.cpp -o ../build/Unit.o $CXX_FLAGS $INCLUDE_PATH
