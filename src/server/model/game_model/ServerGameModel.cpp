@@ -14,7 +14,7 @@ void ServerGameModel::start()
 {
 	isRunning = true;
 	gameLoopTimer.restart();
-	gameLoopThread(std::ref(*this));
+	gameLoopThread=std::thread(std::ref(*this));
 }
 
 void ServerGameModel::stop()
