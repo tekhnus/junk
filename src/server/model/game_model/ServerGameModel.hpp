@@ -3,6 +3,9 @@
 #include "SFML/System.hpp"
 #include "Unit.hpp"
 #include "sigc++/sigc++.h"
+#include <map>
+#include <thread>
+#include <mutex>
 
 namespace junk
 {
@@ -29,7 +32,7 @@ public:
 	bool subscribeForRotateSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
 
 private:
-	void gameLoop();
+	void operator()();
 
 	std::map<PlayerIDType, unit::Player> players;
 

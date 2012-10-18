@@ -1,4 +1,5 @@
 #pragma once 
+#include <SFML/System.hpp>
 
 namespace junk
 {
@@ -9,6 +10,7 @@ namespace unit
 class Unit
 {
 public:
+//	explicit Unit();
 	explicit Unit(sf::Vector2f position);
 	virtual ~Unit(){}
 
@@ -35,6 +37,7 @@ private:
 class Player : public RotatableUnit
 {
 public:
+//	Player();
 	Player(sf::Vector2f position, sf::Vector2f rotation);
 	~Player(){}
 
