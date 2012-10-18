@@ -1,4 +1,3 @@
-#include <cmath>
 #include "Unit.hpp"
 
 namespace junk
@@ -7,7 +6,7 @@ namespace junk
 namespace unit
 {
 
-const float unitEps = 1e-5;
+const float eps = 1e-5;
 
 Unit::Unit(sf::Vector2f position) : position(position)
 {
@@ -30,7 +29,7 @@ RotatableUnit::RotatableUnit(sf::Vector2f position, sf::Vector2f rotation)
 
 void RotatableUnit::setRotation(sf::Vector2f rotation)
 {
-	if (std::fabs(rotation.x) > unitEps || std::fabs(rotation.y) > unitEps)
+	if (std::fabs(rotation.x) > eps || std::fabs(rotation.y) > eps)
 	{
 		this->rotation = rotation;
 	}
