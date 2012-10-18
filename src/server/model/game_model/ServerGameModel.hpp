@@ -25,9 +25,9 @@ public:
 	void removePlayer(PlayerIDType playerID);
 	void move(PlayerIDType playerID, sf::Vector2f position);
 	void rotate(PlayerIDType playerID, sf::Vector2f rotation);
-	void fire(PlayerIDType playerID);
+	//void fire(PlayerIDType playerID);
 
-	bool subscribeForFireSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
+	//bool subscribeForFireSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
 	bool subscribeForMoveSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
 	bool subscribeForRotateSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
 
@@ -42,7 +42,7 @@ private:
 	std::thread gameLoopThread;
 	std::mutex gameChangesMutex;
 
-	sigc::signal<void, PlayerIDType, sf::Vector2f> fireSignal;
+	//sigc::signal<void, PlayerIDType, sf::Vector2f> fireSignal;
 	sigc::signal<void, PlayerIDType, sf::Vector2f> moveSignal;
 	sigc::signal<void, PlayerIDType, sf::Vector2f> rotateSignal;
 
