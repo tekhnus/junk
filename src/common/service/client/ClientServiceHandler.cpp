@@ -30,6 +30,11 @@ namespace junk
 	{
 	}
 
+	void ClientServiceHandler::subscribeForConnectSignal(sigc::slot<void, int32_t> slot)
+	{
+		connectSignal.connect(slot);
+	}
+
 	void ClientServiceHandler::subscribeForMoveSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)
 	{
 		moveSignal.connect(slot);
