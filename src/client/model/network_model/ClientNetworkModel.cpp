@@ -27,19 +27,28 @@ ClientNetworkModel::~ClientNetworkModel()
 	logger << "ClientNetworkModel destructed";
 }
 
-ClientNetworkModel::move(sf::Vector2f direction)
+void ClientNetworkModel::move(sf::Vector2f direction_)
 {
-  ClientServiceClient->move(id, direction);
+  Vector2f direction;
+  direction.x = direction_.x;
+  direction.y = direction_.y;
+  clientServiceClient->move(id, direction);
 }
 
-ClientNetworkModel::rotate(sf::Vector2f direction)
+void ClientNetworkModel::rotate(sf::Vector2f direction_)
 {
-  ClientServiceClient->rotate(id, direction);
+  Vector2f direction;
+  direction.x = direction_.x;
+  direction.y = direction_.y;
+  clientServiceClient->rotate(id, direction);
 }
 
-ClientNetworkModel::fire(sf::Vector2f direction)
+void ClientNetworkModel::fire(sf::Vector2f direction_)
 {
-  ClientServiceClient->fire(id, direction);
+  Vector2f direction;
+  direction.x = direction_.x;
+  direction.y = direction_.y;
+  clientServiceClient->fire(id, direction);
 }
 
 } // namespace junk

@@ -5,8 +5,8 @@ namespace junk
 
 ClientModel::ClientModel() : logger("client_model.log", "CLIENT_MODEL", true)
 {
-	networkModel.subscribeForPositionUpdatedSignal(sigc::mem_fun(this, &ClientModel::updatePlayerPosition));
-	networkModel.subscribeForDirectionUpdatedSignal(sigc::mem_fun(this, &ClientModel::updatePlayerDirection));
+	//networkModel.subscribeForPositionUpdatedSignal(sigc::mem_fun(this, &ClientModel::updatePlayerPosition));
+	//networkModel.subscribeForDirectionUpdatedSignal(sigc::mem_fun(this, &ClientModel::updatePlayerDirection));
 	logger << "ClientModel created";
 }
 
