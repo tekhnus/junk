@@ -13,6 +13,11 @@ Unit::Unit(sf::Vector2f position) : position(position)
 
 }
 
+sf::Vector2f Unit::getPosition()const
+{
+	return position;
+}
+
 void Unit::movePosition(sf::Vector2f vector)
 {
 	this->position += vector;

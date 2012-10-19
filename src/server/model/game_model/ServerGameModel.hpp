@@ -28,8 +28,8 @@ public:
 	//void fire(PlayerIDType playerID);
 
 	//bool subscribeForFireSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
-	bool subscribeForPositionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
-	bool subscribeForDirectionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
+	void subscribeForPositionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
+	void subscribeForDirectionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
 	void operator()();
 private:
 	

@@ -16,6 +16,7 @@ public:
 	explicit Unit(sf::Vector2f position);
 	virtual ~Unit(){}
 
+	sf::Vector2f getPosition()const;
 	void movePosition(sf::Vector2f vector);
 
 private:	

@@ -54,7 +54,7 @@ void ServerGameModel::removePlayer(PlayerIDType playerID)
 	gameChangesMutex.unlock();
 }
 
-void ServerGameModel::move(PlayerIDType playerID, sf::Vector2f position)
+void ServerGameModel::move(PlayerIDType playerID, sf::Vector2f vector)
 {
 	static const float moveSpeed = 25.0; // wiil be removed
 
@@ -62,14 +62,14 @@ void ServerGameModel::move(PlayerIDType playerID, sf::Vector2f position)
 
 	if (players.find(playerID) != players.end())
 	{
-		float length = std::sqrt(position.x * position.x + position.y * position.y);
-		position /= length;
-		position *= moveSpeed;
-		position *= gameLoopTimer.getElapsedTime().asSeconds();
+		float length = std::sqrt(vector.x * vector.x + vector.y * vector.y);
+		vector /= length;
+		vector *= moveSpeed;
+		vector *= gameLoopTimer.getElapsedTime().asSeconds();
 
-		players.at(playerID).movePosition(position);
+		players.at(playerID).movePosition(vector);
+		positionUpdatedSignal(playerID, players.at(playerID).getPosition() + vector);
 	}
-	positionUpdatedSignal(playerID, position);
 	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
@@ -103,12 +103,12 @@ void ServerGameModel::rotate(PlayerIDType playerID, sf::Vector2f rotation)
 	fireSignal.connect(slot);
 }*/
 
-bool ServerGameModel::subscribeForPositionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
+void ServerGameModel::subscribeForPositionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
 {
 	positionUpdatedSignal.connect(slot);
 }
 
-bool ServerGameModel::subscribeForDirectionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
+void ServerGameModel::subscribeForDirectionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
 {
 	directionUpdatedSignal.connect(slot);
 }
