@@ -28,8 +28,8 @@ public:
 	//void fire(PlayerIDType playerID);
 
 	//bool subscribeForFireSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
-	bool subscribeForMoveSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
-	bool subscribeForRotateSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
+	bool subscribeForPositionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
+	bool subscribeForDirectionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
 	void operator()();
 private:
 	
@@ -43,8 +43,8 @@ private:
 	std::mutex gameChangesMutex;
 
 	//sigc::signal<void, PlayerIDType, sf::Vector2f> fireSignal;
-	sigc::signal<void, PlayerIDType, sf::Vector2f> moveSignal;
-	sigc::signal<void, PlayerIDType, sf::Vector2f> rotateSignal;
+	sigc::signal<void, PlayerIDType, sf::Vector2f> positionUpdatedSignal;
+	sigc::signal<void, PlayerIDType, sf::Vector2f> directionUpdatedSignal;
 
 };
 

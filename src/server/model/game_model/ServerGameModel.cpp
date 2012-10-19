@@ -69,7 +69,7 @@ void ServerGameModel::move(PlayerIDType playerID, sf::Vector2f position)
 
 		players.at(playerID).movePosition(position);
 	}
-	moveSignal(playerID, position);
+	positionUpdatedSignal(playerID, position);
 	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
@@ -83,7 +83,7 @@ void ServerGameModel::rotate(PlayerIDType playerID, sf::Vector2f rotation)
 	{
 		players.at(playerID).setRotation(rotation);
 	}
-	rotateSignal(playerID, rotation);
+	directionUpdatedSignal(playerID, rotation);
 	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
@@ -103,14 +103,14 @@ void ServerGameModel::rotate(PlayerIDType playerID, sf::Vector2f rotation)
 	fireSignal.connect(slot);
 }*/
 
-bool ServerGameModel::subscribeForMoveSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
+bool ServerGameModel::subscribeForPositionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
 {
-	moveSignal.connect(slot);
+	positionUpdatedSignal.connect(slot);
 }
 
-bool ServerGameModel::subscribeForRotateSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
+bool ServerGameModel::subscribeForDirectionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
 {
-	rotateSignal.connect(slot);
+	directionUpdatedSignal.connect(slot);
 }
 
 void ServerGameModel::operator()()

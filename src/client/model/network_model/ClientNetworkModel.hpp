@@ -23,11 +23,6 @@ using namespace apache::thrift::server;
 namespace junk
 {
 
-sf::Vector2f convert(const Vector2f& v)
-{
-  return sf::Vector2f(v.x, v.y);
-}
-
 class ClientNetworkModel
 {
 public:
