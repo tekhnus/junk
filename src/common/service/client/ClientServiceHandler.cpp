@@ -6,6 +6,11 @@ namespace junk
 	{
 	}
 
+	void ClientServiceHandler::connect()
+	{
+		connectSignal.emit();
+	}
+
 	void ClientServiceHandler::move(uint32_t id, const Vector2f& direction)
 	{
 		moveSignal.emit(id, sf::Vector2f(direction.x, direction.y));

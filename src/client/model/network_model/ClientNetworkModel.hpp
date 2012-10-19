@@ -46,6 +46,8 @@ public:
 
 private:
 
+  int32_t id;
+
 	// Client
   boost::shared_ptr<TTransport> socket;
   boost::shared_ptr<TTransport> transport;
