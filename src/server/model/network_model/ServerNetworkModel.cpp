@@ -6,8 +6,8 @@ namespace junk
 ServerNetworkModel::ServerNetworkModel() : logger("server_model.log", "SERVER_NETWORK_MODEL", true)
 {
   handler = boost::shared_ptr<ClientServiceHandler> (new ClientServiceHandler());
-  processor = boost::shared_ptr<TProcessor> (new ServerServiceProcessor(handler));
-  serverTransport = boost::shared_ptr<TServerTransport> (new TServerSocket(port));
+  processor = boost::shared_ptr<TProcessor> (new ClientServiceProcessor(handler));
+  serverTransport = boost::shared_ptr<TServerTransport> (new TServerSocket(8099));
   transportFactory = boost::shared_ptr<TTransportFactory> (new TBufferedTransportFactory());
   protocolFactory = boost::shared_ptr<TProtocolFactory> (new TBinaryProtocolFactory());
 
@@ -16,12 +16,6 @@ ServerNetworkModel::ServerNetworkModel() : logger("server_model.log", "SERVER_NE
   server->serve();
 
 	logger << "ServerNetworkModel created";
-}
-
-void ServerNetworkModel::addClient(const std::string& clientIp, int port)
-{
-  //clientServiceClient[lastID]->connected(lastId);
-  lastID++;
 }
 
 ServerNetworkModel::~ServerNetworkModel()
@@ -54,20 +48,10 @@ Vector2f convertSFMLtoThrift(sf::Vector2f v)
 
 void ServerNetworkModel::clientPositionUpdated(uint32_t id, sf::Vector2f direction_)
 {
-  Vector2f direction = convertSFMLtoThrift(direction_);
-  for (auto& service : serverServiceClient)
-  {
-    service.second->clientPositionUpdated(id, direction); // change to position
-  }
 }
 
 void ServerNetworkModel::clientDirectionUpdated(uint32_t id, sf::Vector2f direction_)
 {
-  Vector2f direction = convertSFMLtoThrift(direction_);
-  for (auto& service : serverServiceClient)
-  {
-    service.second->clientDirectionUpdated(id, direction);
-  }
 }
 
 void ServerNetworkModel::fireUpdated()

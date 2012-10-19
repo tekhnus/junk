@@ -3,7 +3,6 @@
 #include <SFML/System.hpp>
 #include <sigc++/sigc++.h>
 #include <common/logger/Logger.hpp>
-#include <common/service/server/ServerServiceHandler.hpp>
 #include <common/service/client/ClientServiceHandler.hpp>
 
 #include <thrift/concurrency/ThreadManager.h>
@@ -53,14 +52,6 @@ private:
   boost::shared_ptr<TTransport> transport;
   boost::shared_ptr<TProtocol> protocol;
   boost::shared_ptr<ClientServiceClient> clientServiceClient;
-
-  // Server
-  boost::shared_ptr<ServerServiceHandler> handler;
-  boost::shared_ptr<TProcessor> processor;
-  boost::shared_ptr<TServerTransport> serverTransport;
-  boost::shared_ptr<TTransportFactory> transportFactory;
-  boost::shared_ptr<TProtocolFactory> protocolFactory;
-  boost::shared_ptr<TSimpleServer> server;
 
   Logger logger;
   

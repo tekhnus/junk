@@ -14,7 +14,7 @@ struct PlayerInfo {
 }
 
 struct GameChanges {
-	list<PlayerInfo> players
+	1: list<PlayerInfo> players
 }
 
 struct GameState {

@@ -6,24 +6,28 @@ namespace junk
 	{
 	}
 
-	void ClientServiceHandler::connect()
+	int32_t ClientServiceHandler::connect()
 	{
-		connectSignal.emit();
+		connectSignal.emit(0);
 	}
 
-	void ClientServiceHandler::move(uint32_t id, const Vector2f& direction)
+	void ClientServiceHandler::move(int32_t id, const Vector2f& direction)
 	{
 		moveSignal.emit(id, sf::Vector2f(direction.x, direction.y));
 	}
 
-	void ClientServiceHandler::rotate(uint32_t id, const Vector2f& direction)
+	void ClientServiceHandler::rotate(int32_t id, const Vector2f& direction)
 	{
 		rotateSignal.emit(id, sf::Vector2f(direction.x, direction.y));
 	}
 
-	void ClientServiceHandler::fire(uint32_t id, const Vector2f& direction)
+	void ClientServiceHandler::fire(int32_t id, const Vector2f& direction)
 	{
 		fireSignal.emit(id, sf::Vector2f(direction.x, direction.y));
+	}
+
+	void ClientServiceHandler::getChanges(GameChanges& gameChanges, int32_t id)
+	{
 	}
 
 	void ClientServiceHandler::subscribeForMoveSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)

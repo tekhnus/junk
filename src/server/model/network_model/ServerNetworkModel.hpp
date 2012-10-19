@@ -3,7 +3,6 @@
 #include <SFML/System.hpp>
 #include <sigc++/sigc++.h>
 #include <common/logger/Logger.hpp>
-#include <common/service/server/ServerServiceHandler.hpp>
 #include <common/service/client/ClientServiceHandler.hpp>
 
 #include <thrift/concurrency/ThreadManager.h>
@@ -49,12 +48,6 @@ public:
 private:
 
   int lastID;
-
-	// Server
-  std::unordered_map< int32_t, boost::shared_ptr<TTransport> > socket;
-  std::unordered_map< int32_t, boost::shared_ptr<TTransport> > transport;
-  std::unordered_map< int32_t, boost::shared_ptr<TProtocol> > protocol;
-  std::unordered_map< int32_t, boost::shared_ptr<ServerServiceClient> > serverServiceClient;
 
   // Client
   boost::shared_ptr<ClientServiceHandler> handler;
