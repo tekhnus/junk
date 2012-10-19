@@ -3,6 +3,7 @@
 #include <SFML/System.hpp>
 #include <sigc++/sigc++.h>
 #include <common/logger/Logger.hpp>
+#include "network_model/ServerNetworkModel.hpp"
 
 namespace junk
 {
@@ -14,7 +15,9 @@ public:
   ~ServerModel();
 
 private:
-	//ClientService networkChannel	;
+	ServerNetworkModel networkModel;
+	//ServerGameModel gameModel;
+
 
   Logger logger;
   

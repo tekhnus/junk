@@ -16,4 +16,6 @@ ELSE(APPLE)
 	include_directories (/usr/lib/x86_64-linux-gnu/sigc++-2.0/include)
 ENDIF(APPLE)
 
+add_definitions (-DHAVE_NETINET_IN_H)
+
 add_subdirectory (src build)
