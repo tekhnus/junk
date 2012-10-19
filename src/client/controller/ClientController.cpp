@@ -5,12 +5,12 @@ namespace junk
 
 ClientController::ClientController(ClientView& view, ClientModel& model) : view(view), model(model), logger("client_controller.log", "CLIENT_CONTROLLER", true)
 {
-	view.subscribeForFireSignal(sigc::mem_fun(this, &fireHandler));
-	view.subscribeForMoveSignal(sigc::mem_fun(this, &moveHandler));
-	view.subscribeForRotateSignal(sigc::mem_fun(this, &rotateHandler));
+	view.subscribeForFireSignal(sigc::mem_fun(this, &ClientController::fireHandler));
+	view.subscribeForMoveSignal(sigc::mem_fun(this, &ClientController::moveHandler));
+	view.subscribeForRotateSignal(sigc::mem_fun(this, &ClientController::rotateHandler));
 
-	model.subscribeForClientPositionUpdatedSignal(sigc::mem_fun(this, &clientPositionUpdatedHandler));
-	model.subscribeForClientDirectionUpdatedSignal(sigc::mem_fun(this, &clientDirectionUpdatedHandler)));
+	model.subscribeForClientPositionUpdatedSignal(sigc::mem_fun(this, &ClientController::clientPositionUpdatedHandler));
+	model.subscribeForClientDirectionUpdatedSignal(sigc::mem_fun(this, &ClientController::clientDirectionUpdatedHandler));
 
 	logger << "ClientController created";
 }

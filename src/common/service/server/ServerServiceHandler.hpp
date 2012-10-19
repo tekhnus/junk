@@ -4,7 +4,7 @@
 #include <sigc++/sigc++.h>
 #include <common/logger/Logger.hpp>
 
-#include <common/service/gen-cpp/ServerService.h>
+#include <gen-cpp/ServerService.h>
 
 namespace junk
 {
