@@ -36,9 +36,6 @@ public:
 
   void connectToServer(const std::string& serverIp, int port);
 
-  void subscribeForPositionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
-  void subscribeForDirectionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
-
   void move(sf::Vector2f direction);
   void fire(sf::Vector2f direction);
   void rotate(sf::Vector2f direction);
