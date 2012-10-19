@@ -7,17 +7,25 @@ struct Vector2f {
   2: double y
 }
 
+struct PlayerInfo {
+	1: i32 id,
+	2: Vector2f position,
+	3: Vector2f direction
+}
+
+struct GameChanges {
+	list<PlayerInfo> players
+}
+
+struct GameState {
+	1: list<PlayerInfo> players
+}
+
 service ClientService {
-	void connect();
+	i32 connect();
 	void move(1: i32 id, 2: Vector2f direction);
 	void rotate(1: i32 id, 2: Vector2f direction);
 	void fire(1: i32 id, 2: Vector2f direction);
+	#GameState getGameState(1: i32 id);
+	GameChanges getChanges(1: i32 id);
 }
-
-service ServerService {
-	void connected(1: i32 id);
-	void clientPositionUpdated(1: i32 id, 2: Vector2f position);
-	void clientDirectionUpdated(1: i32 id, 2: Vector2f direction);
-	void fireUpdated();
-}
-

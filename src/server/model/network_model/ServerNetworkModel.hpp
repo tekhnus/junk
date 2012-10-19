@@ -48,6 +48,8 @@ public:
 
 private:
 
+  int lastID;
+
 	// Server
   std::unordered_map< int32_t, boost::shared_ptr<TTransport> > socket;
   std::unordered_map< int32_t, boost::shared_ptr<TTransport> > transport;

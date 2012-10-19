@@ -24,6 +24,7 @@ void ClientNetworkModel::connectToServer(const std::string& serverIp, int port)
   transport = boost::shared_ptr<TTransport> (new TBufferedTransport(socket));
   protocol = boost::shared_ptr<TProtocol> (new TBinaryProtocol(transport));
   clientServiceClient = boost::shared_ptr<ClientServiceClient> (new ClientServiceClient(protocol));
+  clientServiceClient->connect();
 }
 
 ClientNetworkModel::~ClientNetworkModel()
@@ -43,17 +44,17 @@ void ClientNetworkModel::subscribeForDirectionUpdatedSignal(sigc::slot<void, int
 
 ClientNetworkModel::move(sf::Vector2f direction)
 {
-  ClientServiceClient->move(direction);
+  ClientServiceClient->move(id, direction);
 }
 
 ClientNetworkModel::rotate(sf::Vector2f direction)
 {
-  ClientServiceClient->rotate(direction);
+  ClientServiceClient->rotate(id, direction);
 }
 
 ClientNetworkModel::fire(sf::Vector2f direction)
 {
-  ClientServiceClient->fire(direction);
+  ClientServiceClient->fire(id, direction);
 }
 
 } // namespace junk
