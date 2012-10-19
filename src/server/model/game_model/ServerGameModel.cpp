@@ -39,7 +39,6 @@ void ServerGameModel::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
 		}
 	}
 	players.insert(std::make_pair(newPlayerID,unit::Player(position, rotation)));
-	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
 }
@@ -49,28 +48,18 @@ void ServerGameModel::removePlayer(PlayerIDType playerID)
 	gameChangesMutex.lock();
 
 	players.erase(playerID);
-	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
 }
 
 void ServerGameModel::move(PlayerIDType playerID, sf::Vector2f vector)
 {
-	static const float moveSpeed = 25.0; // wiil be removed
-
 	gameChangesMutex.lock();
 
 	if (players.find(playerID) != players.end())
 	{
-		float length = std::sqrt(vector.x * vector.x + vector.y * vector.y);
-		vector /= length;
-		vector *= moveSpeed;
-		vector *= gameLoopTimer.getElapsedTime().asSeconds();
-
-		players.at(playerID).movePosition(vector);
-		positionUpdatedSignal(playerID, players.at(playerID).getPosition() + vector);
+		players.at(playerID).synchronize(gameLoopTimer);
 	}
-	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
 }
@@ -84,7 +73,6 @@ void ServerGameModel::rotate(PlayerIDType playerID, sf::Vector2f rotation)
 		players.at(playerID).setRotation(rotation);
 	}
 	directionUpdatedSignal(playerID, rotation);
-	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
 }
@@ -92,8 +80,6 @@ void ServerGameModel::rotate(PlayerIDType playerID, sf::Vector2f rotation)
 /*void ServerGameModel::fire(PlayerIDType playerID)
 {
 	gameChangesMutex.lock();
-
-	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
 }*/
@@ -124,7 +110,6 @@ void ServerGameModel::operator()()
 			gameChangesMutex.unlock();
 			break;
 		}
-		gameLoopTimer.restart();
 
 		gameChangesMutex.unlock();
 	}
