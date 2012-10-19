@@ -3,6 +3,11 @@
 namespace junk
 {
 
+sf::Vector2f convert(const Vector2f& v)
+{
+  return sf::Vector2f(v.x, v.y);
+}
+
 ClientNetworkModel::ClientNetworkModel() : logger("client_model.log", "CLIENT_NETWORK_MODEL", true)
 {
   handler = boost::shared_ptr<ServerServiceHandler> (new ServerServiceHandler());
