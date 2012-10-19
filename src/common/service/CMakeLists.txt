@@ -5,4 +5,4 @@ COMMENT "Thrifting service"
 )
 
 #include_directories(${CMAKE_CURRENT_BINARY_DIR})
-add_library (clientservicehandler client/ClientServiceHandler.cpp gen-cpp/ClientService.h)
+add_library (clientservicehandler gen-cpp/ServiceDefinition_types.cpp gen-cpp/ClientService.cpp client/ClientServiceHandler.cpp)
