@@ -31,6 +31,7 @@ public:
 
   void connectToServer(const std::string& serverIp, int port);
 
+  GameChanges getGameChanges();
   void move(sf::Vector2f direction);
   void fire(sf::Vector2f direction);
   void rotate(sf::Vector2f direction);

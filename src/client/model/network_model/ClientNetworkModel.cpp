@@ -27,6 +27,13 @@ ClientNetworkModel::~ClientNetworkModel()
 	logger << "ClientNetworkModel destructed";
 }
 
+GameChanges ClientNetworkModel::getGameChanges()
+{
+  GameChanges gameChanges;
+  clientServiceClient->getChanges(gameChanges, id);
+  return gameChanges;
+}
+
 void ClientNetworkModel::move(sf::Vector2f direction_)
 {
   Vector2f direction;

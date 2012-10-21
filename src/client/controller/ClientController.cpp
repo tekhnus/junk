@@ -9,6 +9,7 @@ ClientController::ClientController(ClientView& view, ClientModel& model) : view(
 	view.subscribeForMoveSignal(sigc::mem_fun(this, &ClientController::moveHandler));
 	view.subscribeForRotateSignal(sigc::mem_fun(this, &ClientController::rotateHandler));
 
+	model.subscribeForClientAddedSignal(sigc::mem_fun(this, &ClientController::clientAddedHandler));
 	model.subscribeForClientPositionUpdatedSignal(sigc::mem_fun(this, &ClientController::clientPositionUpdatedHandler));
 	model.subscribeForClientDirectionUpdatedSignal(sigc::mem_fun(this, &ClientController::clientDirectionUpdatedHandler));
 
@@ -18,6 +19,12 @@ ClientController::ClientController(ClientView& view, ClientModel& model) : view(
 ClientController::~ClientController()
 {
 	logger << "ClientController destructed";
+}
+
+void ClientController::clientAddedHandler(int32_t id)
+{
+	logger << "clientAddedHandler invoked";
+	//view.addPlayer(id);
 }
 
 void ClientController::moveHandler(sf::Vector2f direction)
@@ -38,14 +45,16 @@ void ClientController::rotateHandler(sf::Vector2f direction)
 	model.rotate(direction);
 }
 
-void ClientController::clientPositionUpdatedHandler(int16_t id, sf::Vector2f direction)
+void ClientController::clientPositionUpdatedHandler(int32_t id, sf::Vector2f position)
 {
-		logger << "clientPositionUpdatedHandler invoked";
+	logger << "clientPositionUpdatedHandler invoked";
+	view.setPlayerPosition(id, position);
 }
 
-void ClientController::clientDirectionUpdatedHandler(int16_t id, sf::Vector2f direction)
+void ClientController::clientDirectionUpdatedHandler(int32_t id, sf::Vector2f direction)
 {
-		logger << "clientDirectionUpdatedHandler invoked";
+	logger << "clientDirectionUpdatedHandler invoked";
+	view.setPlayerRotation(id, direction);
 }
 
 } // namespace junk

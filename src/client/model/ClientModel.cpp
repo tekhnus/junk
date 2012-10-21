@@ -5,14 +5,29 @@ namespace junk
 
 ClientModel::ClientModel() : logger("client_model.log", "CLIENT_MODEL", true)
 {
-	//networkModel.subscribeForPositionUpdatedSignal(sigc::mem_fun(this, &ClientModel::updatePlayerPosition));
-	//networkModel.subscribeForDirectionUpdatedSignal(sigc::mem_fun(this, &ClientModel::updatePlayerDirection));
 	logger << "ClientModel created";
 }
 
 ClientModel::~ClientModel()
 {
 	logger << "ClientModel destructed";
+}
+
+void ClientModel::update()
+{
+	GameChanges gameChanges = networkModel.getGameChanges();
+	for (auto& player : gameChanges.players)
+	{
+		updatePlayerPosition(player.id, sf::Vector2f(player.position.x, player.position.y));
+		updatePlayerDirection(player.id, sf::Vector2f(player.direction.x, player.direction.y));
+	}
+}
+
+void ClientModel::addPlayer(int32_t id)
+{
+	logger << "Adding new player";
+	players.push_back(Player(id));
+	clientAddedSignal.emit(id);
 }
 
 void ClientModel::updatePlayerPosition(int32_t id, sf::Vector2f position)
@@ -43,6 +58,10 @@ void ClientModel::updatePlayerDirection(int32_t id, sf::Vector2f direction)
 	}
 }
 
+void ClientModel::subscribeForClientAddedSignal(sigc::slot<void, int32_t> slot)
+{
+	clientAddedSignal.connect(slot);
+}
 
 void ClientModel::subscribeForClientPositionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)
 {

@@ -11,6 +11,8 @@ namespace junk
 class Player
 {
 public:
+	Player(int32_t id) : id(id) {}
+
 	void setPosition(sf::Vector2f position)
 	{
 		this->position = position;
@@ -38,9 +40,13 @@ public:
   ClientModel();
   ~ClientModel();
 
+  void update();
+
+  void addPlayer(int32_t id);
 	void updatePlayerPosition(int32_t id, sf::Vector2f position);
 	void updatePlayerDirection(int32_t id, sf::Vector2f direction);
 
+	void subscribeForClientAddedSignal(sigc::slot<void, int32_t> slot);
 	void subscribeForClientPositionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
 	void subscribeForClientDirectionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
 
@@ -53,6 +59,7 @@ private:
 	ClientNetworkModel networkModel;
 	int32_t clientId;
 
+	sigc::signal<void, int32_t> clientAddedSignal;
 	sigc::signal<void, int32_t, sf::Vector2f> clientPositionUpdatedSignal;
 	sigc::signal<void, int32_t, sf::Vector2f> clientDirectionUpdatedSignal;
 

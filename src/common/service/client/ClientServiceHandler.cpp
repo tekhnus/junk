@@ -8,7 +8,7 @@ namespace junk
 
 	int32_t ClientServiceHandler::connect()
 	{
-		connectSignal.emit(0);
+		return connectSignal.emit();
 	}
 
 	void ClientServiceHandler::move(int32_t id, const Vector2f& direction)
@@ -28,11 +28,17 @@ namespace junk
 
 	void ClientServiceHandler::getChanges(GameChanges& gameChanges, int32_t id)
 	{
+		gameChanges = getChangesSignal.emit(id);
 	}
 
-	void ClientServiceHandler::subscribeForConnectSignal(sigc::slot<void, int32_t> slot)
+	void ClientServiceHandler::subscribeForConnectSignal(sigc::slot<int32_t> slot)
 	{
 		connectSignal.connect(slot);
+	}
+
+	void ClientServiceHandler::subscribeForGetChangesSignal(sigc::slot<GameChanges, int32_t> slot)
+	{
+		getChangesSignal.connect(slot);
 	}
 
 	void ClientServiceHandler::subscribeForMoveSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)

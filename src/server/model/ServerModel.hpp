@@ -4,6 +4,7 @@
 #include <sigc++/sigc++.h>
 #include <common/logger/Logger.hpp>
 #include "network_model/ServerNetworkModel.hpp"
+#include "game_model/ServerGameModel.hpp"
 
 namespace junk
 {
@@ -16,7 +17,7 @@ public:
 
 private:
 	ServerNetworkModel networkModel;
-	//ServerGameModel gameModel;
+	ServerGameModel gameModel;
 
 
   Logger logger;

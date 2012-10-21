@@ -36,7 +36,9 @@ public:
   ServerNetworkModel();
   ~ServerNetworkModel();
 
+  int addClient();
 
+  void subscribeForGetChangesSignal(sigc::slot<GameChanges, int32_t> slot);
   void subscribeForMoveSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
   void subscribeForRotateSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
   void subscribeForFireSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);

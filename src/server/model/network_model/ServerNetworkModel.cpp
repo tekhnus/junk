@@ -23,6 +23,16 @@ ServerNetworkModel::~ServerNetworkModel()
 	logger << "ServerNetworkModel destructed";
 }
 
+int ServerNetworkModel::addClient()
+{
+  return lastID++;
+}
+
+void ServerNetworkModel::subscribeForGetChangesSignal(sigc::slot<GameChanges, int32_t> slot)
+{
+  handler->subscribeForGetChangesSignal(slot);
+}
+
 void ServerNetworkModel::subscribeForMoveSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)
 {
   handler->subscribeForMoveSignal(slot);
