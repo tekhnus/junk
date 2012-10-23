@@ -15,11 +15,15 @@ ClientNetworkModel::ClientNetworkModel() : logger("client_model.log", "CLIENT_NE
 
 void ClientNetworkModel::connectToServer(const std::string& serverIp, int port)
 {
-  socket = boost::shared_ptr<TTransport> (new TSocket(serverIp, port));
+  logger << "Connecting to server";
+
+  socket = boost::shared_ptr<TSocket> (new TSocket(serverIp, port));
   transport = boost::shared_ptr<TTransport> (new TBufferedTransport(socket));
   protocol = boost::shared_ptr<TProtocol> (new TBinaryProtocol(transport));
   clientServiceClient = boost::shared_ptr<ClientServiceClient> (new ClientServiceClient(protocol));
   id = clientServiceClient->connect();
+
+  logger << "Connected to server, id = " << std::to_string(id);
 }
 
 ClientNetworkModel::~ClientNetworkModel()

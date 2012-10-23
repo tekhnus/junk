@@ -1,5 +1,7 @@
 #include "Server.hpp"
 
+#include <iostream>
+
 namespace junk
 {
 
@@ -12,10 +14,3 @@ void Server::run()
 }
 
 } // namespace junk
-
-int main()
-{
-	junk::Server server;
-	server.run();
-	return 0;
-}

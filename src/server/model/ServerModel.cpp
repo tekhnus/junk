@@ -5,7 +5,7 @@
 namespace junk
 {
 
-ServerModel::ServerModel() : logger("server_model.log", "SERVER_MODEL", true)
+ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
 {
 	gameModel.subscribeForPositionUpdatedSignal(sigc::mem_fun(&networkModel, 
 		&ServerNetworkModel::clientPositionUpdated));

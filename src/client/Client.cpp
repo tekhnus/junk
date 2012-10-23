@@ -13,10 +13,3 @@ void Client::connectToServer(const std::string& serverIp, int port)
 }
 
 } // namespace junk
-
-int main()
-{
-	junk::Client client;
-	client.connectToServer("192.168.1.1", 8099);
-	return 0;
-}

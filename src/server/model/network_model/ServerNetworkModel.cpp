@@ -3,17 +3,25 @@
 namespace junk
 {
 
-ServerNetworkModel::ServerNetworkModel() : logger("server_model.log", "SERVER_NETWORK_MODEL", true)
+sf::Vector2f convert(const Vector2f& v)
+{
+  return sf::Vector2f(v.x, v.y);
+}
+
+ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODELj", "server_model.log", true)
 {
   handler = boost::shared_ptr<ClientServiceHandler> (new ClientServiceHandler());
   processor = boost::shared_ptr<TProcessor> (new ClientServiceProcessor(handler));
-  serverTransport = boost::shared_ptr<TServerTransport> (new TServerSocket(8099));
+  serverTransport = boost::shared_ptr<TServerTransport> (new TServerSocket(7777));
   transportFactory = boost::shared_ptr<TTransportFactory> (new TBufferedTransportFactory());
   protocolFactory = boost::shared_ptr<TProtocolFactory> (new TBinaryProtocolFactory());
 
-  server = boost::shared_ptr<TSimpleServer> 
-  	(new TSimpleServer (processor, serverTransport, transportFactory, protocolFactory));
-  server->serve();
+  server = boost::shared_ptr<TThreadedServer> 
+  	(new TThreadedServer (processor, serverTransport, transportFactory, protocolFactory));
+
+  serverThread = std::shared_ptr<std::thread> (new std::thread(&TThreadedServer::serve, server));
+
+  //server->serve();
 
 	logger << "ServerNetworkModel created";
 }

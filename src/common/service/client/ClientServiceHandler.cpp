@@ -6,6 +6,10 @@ namespace junk
 	{
 	}
 
+	ClientServiceHandler::~ClientServiceHandler()
+	{
+	}
+
 	int32_t ClientServiceHandler::connect()
 	{
 		return connectSignal.emit();

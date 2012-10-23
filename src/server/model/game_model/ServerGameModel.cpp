@@ -10,6 +10,10 @@ ServerGameModel::ServerGameModel()
 {
 }
 
+ServerGameModel::~ServerGameModel()
+{
+}
+
 void ServerGameModel::start()
 {
 	isRunning = true;

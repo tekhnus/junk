@@ -16,19 +16,16 @@
 #include <thrift/transport/TTransportUtils.h>
 
 #include <unordered_map>
+#include <thread>
 
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
 using namespace apache::thrift::transport;
 using namespace apache::thrift::server;
+using namespace apache::thrift::concurrency;
 
 namespace junk
 {
-
-sf::Vector2f convert(const Vector2f& v)
-{
-  return sf::Vector2f(v.x, v.y);
-}
 
 class ServerNetworkModel
 {
@@ -57,7 +54,9 @@ private:
   boost::shared_ptr<TServerTransport> serverTransport;
   boost::shared_ptr<TTransportFactory> transportFactory;
   boost::shared_ptr<TProtocolFactory> protocolFactory;
-  boost::shared_ptr<TSimpleServer> server;
+  boost::shared_ptr<TThreadedServer> server;
+
+  std::shared_ptr<std::thread> serverThread;
 
   Logger logger;
   

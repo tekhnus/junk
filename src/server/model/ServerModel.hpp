@@ -12,7 +12,7 @@ namespace junk
 class ServerModel
 {
 public:
-  explicit ServerModel();
+  ServerModel();
   ~ServerModel();
 
 private:
