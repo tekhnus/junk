@@ -1,7 +1,7 @@
 #include "Logger.hpp"
-#include <SFML/System.hpp>
+#include <mutex>
 
-static sf::Mutex safelog;
+static std::mutex safelog;
 
 static unsigned globalCount = 0;
 
@@ -34,7 +34,7 @@ Logger& Logger::operator<<(const std::string &message)
 	{
 		return *this;
 	}
-	sf::Lock lock(safelog);
+	std::unique_lock<std::mutex> lock(safelog);
 	if (verbose)
 	{
 		writeHead(std::cerr, true, false);
