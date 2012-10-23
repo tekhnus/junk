@@ -11,27 +11,18 @@ ClientView::~ClientView()
 {
 }
 
-PlayerIDType ClientView::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
+void ClientView::addPlayer(IDType playerID, sf::Vector2f position, sf::Vector2f rotation)
 {
-	PlayerIDType newPlayerID = 0;
-	for (auto player : players)
-	{
-		if (player.first == newPlayerID)
-		{
-			newPlayerID++;
-		}
-	}
-
-	players[newPlayerID] = PlayerUnit(std::to_string(newPlayerID), position, rotation);
-	return newPlayerID;
+	assert(players.find(playerID) == players.end());
+	players[playerID] = PlayerUnit(std::to_string(playerID), position, rotation);
 }
 
-void ClientView::removePlayer(PlayerIDType playerID)
+void ClientView::removePlayer(IDType playerID)
 {
 	players.erase(playerID);
 }
 
-void ClientView::setPlayerPosition(PlayerIDType playerID, sf::Vector2f position)
+void ClientView::setPlayerPosition(IDType playerID, sf::Vector2f position)
 {
 	if (players.find(playerID) != players.end())
 	{
@@ -39,7 +30,7 @@ void ClientView::setPlayerPosition(PlayerIDType playerID, sf::Vector2f position)
 	}
 }
 
-void ClientView::setPlayerRotation(PlayerIDType playerID, sf::Vector2f rotation)
+void ClientView::setPlayerRotation(IDType playerID, sf::Vector2f rotation)
 {
 	if (players.find(playerID) != players.end())
 	{
