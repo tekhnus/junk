@@ -1,5 +1,5 @@
 add_custom_command(
-OUTPUT gen-cpp/ClientService.h
+OUTPUT gen-cpp/ServiceDefinition_types.cpp gen-cpp/ClientService.cpp
 COMMAND thrift --gen cpp ${CMAKE_CURRENT_SOURCE_DIR}/ServiceDefinition.thrift
 COMMENT "Thrifting service" 
 )
