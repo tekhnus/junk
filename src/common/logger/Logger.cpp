@@ -1,8 +1,6 @@
 #include "Logger.hpp"
 #include <mutex>
 
-static std::mutex safelog;
-
 static unsigned globalCount = 0;
 
 static unsigned nextColor()
@@ -26,26 +24,6 @@ Logger::~Logger()
 	{
 		file.close();
 	}
-}
-
-Logger& Logger::operator<<(const std::string &message)
-{
-	if(!enabled)
-	{
-		return *this;
-	}
-	std::unique_lock<std::mutex> lock(safelog);
-	if (verbose)
-	{
-		writeHead(std::cerr, true, false);
-		std::cerr << message << std::endl;
-	}
-	if (file.is_open())
-	{
-		writeHead(file, false, true);
-		file << message << std::endl;
-	}
-	return *this;
 }
 
 void Logger::set(bool active)

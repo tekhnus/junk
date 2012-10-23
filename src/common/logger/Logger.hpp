@@ -14,7 +14,8 @@ public:
 	explicit Logger(const std::string& title, const std::string& filename, bool verbose = true);
 	explicit Logger(const std::string& title);
 	~Logger();
-	Logger& operator<<(const std::string &message);
+	template<typename T>
+	Logger& operator<<(const T &message);
 	void set(bool active);
 	
 private:
@@ -26,3 +27,5 @@ private:
 	bool verbose;
 	bool enabled;
 };
+
+#include "Logger.inl"
