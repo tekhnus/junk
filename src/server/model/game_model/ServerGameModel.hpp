@@ -10,7 +10,7 @@
 namespace junk
 {
 
-typedef int32_t PlayerIDType;
+typedef int32_t IDType;
 
 class ServerGameModel
 {
@@ -22,19 +22,19 @@ public:
 	void stop();
 
 	void addPlayer(sf::Vector2f position, sf::Vector2f rotation);
-	void removePlayer(PlayerIDType playerID);
-	void move(PlayerIDType playerID, sf::Vector2f position);
-	void rotate(PlayerIDType playerID, sf::Vector2f rotation);
-	//void fire(PlayerIDType playerID);
+	void removePlayer(IDType playerID);
+	void move(IDType playerID, sf::Vector2f position);
+	void rotate(IDType playerID, sf::Vector2f rotation);
+	//void fire(IDType playerID);
 
-	//bool subscribeForFireSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
-	void subscribeForPositionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
-	void subscribeForDirectionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot);
+	//bool subscribeForFireSignal(sigc::slot<void, IDType, sf::Vector2f> slot);
+	void subscribeForPositionUpdatedSignal(sigc::slot<void, IDType, sf::Vector2f> slot);
+	void subscribeForDirectionUpdatedSignal(sigc::slot<void, IDType, sf::Vector2f> slot);
 	void operator()();
 private:
-	
-
-	std::map<PlayerIDType, unit::Player> players;
+	std::map<IDType, std::shared_ptr<unit::Unit>> units;
+	//std::map<IDType, unit::Player> players;
+	//std::map<IDType, unit::Bullet> bullets;
 
 	bool isRunning;
 	sf::Clock gameLoopTimer;
@@ -42,9 +42,9 @@ private:
 	std::thread gameLoopThread;
 	std::mutex gameChangesMutex;
 
-	//sigc::signal<void, PlayerIDType, sf::Vector2f> fireSignal;
-	sigc::signal<void, PlayerIDType, sf::Vector2f> positionUpdatedSignal;
-	sigc::signal<void, PlayerIDType, sf::Vector2f> directionUpdatedSignal;
+	//sigc::signal<void, IDType, sf::Vector2f> fireSignal;
+	sigc::signal<void, IDType, sf::Vector2f> positionUpdatedSignal;
+	sigc::signal<void, IDType, sf::Vector2f> directionUpdatedSignal;
 
 };
 
