@@ -21,9 +21,12 @@ void ClientNetworkModel::connectToServer(const std::string& serverIp, int port)
   transport = boost::shared_ptr<TTransport> (new TBufferedTransport(socket));
   protocol = boost::shared_ptr<TProtocol> (new TBinaryProtocol(transport));
   clientServiceClient = boost::shared_ptr<ClientServiceClient> (new ClientServiceClient(protocol));
+
+  transport->open();
   id = clientServiceClient->connect();
 
-  logger << "Connected to server, id = " << std::to_string(id);
+  std::string message = "Connected to server, id = " + std::to_string(id);
+  logger << message;
 }
 
 ClientNetworkModel::~ClientNetworkModel()

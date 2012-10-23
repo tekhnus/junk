@@ -8,7 +8,7 @@ sf::Vector2f convert(const Vector2f& v)
   return sf::Vector2f(v.x, v.y);
 }
 
-ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODELj", "server_model.log", true)
+ServerNetworkModel::ServerNetworkModel() : lastID(1), logger("SERVER_NETWORK_MODELj", "server_model.log", true)
 {
   handler = boost::shared_ptr<ClientServiceHandler> (new ClientServiceHandler());
   processor = boost::shared_ptr<TProcessor> (new ClientServiceProcessor(handler));
@@ -16,12 +16,12 @@ ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODELj", "serv
   transportFactory = boost::shared_ptr<TTransportFactory> (new TBufferedTransportFactory());
   protocolFactory = boost::shared_ptr<TProtocolFactory> (new TBinaryProtocolFactory());
 
+  handler->subscribeForConnectSignal(sigc::mem_fun(this, &ServerNetworkModel::addClient));
+
   server = boost::shared_ptr<TThreadedServer> 
   	(new TThreadedServer (processor, serverTransport, transportFactory, protocolFactory));
 
   serverThread = std::shared_ptr<std::thread> (new std::thread(&TThreadedServer::serve, server));
-
-  //server->serve();
 
 	logger << "ServerNetworkModel created";
 }
@@ -33,6 +33,7 @@ ServerNetworkModel::~ServerNetworkModel()
 
 int ServerNetworkModel::addClient()
 {
+  logger << "Client connected";
   return lastID++;
 }
 
