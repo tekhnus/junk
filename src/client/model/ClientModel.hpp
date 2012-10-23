@@ -40,6 +40,8 @@ public:
   ClientModel();
   ~ClientModel();
 
+  void connectToServer(const std::string& serverIp, int port);
+
   void update();
 
   void addPlayer(int32_t id);

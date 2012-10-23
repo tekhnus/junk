@@ -13,6 +13,11 @@ ClientModel::~ClientModel()
 	logger << "ClientModel destructed";
 }
 
+void ClientModel::connectToServer(const std::string& serverIp, int port)
+{
+	networkModel.connectToServer(serverIp, port);
+}
+
 void ClientModel::update()
 {
 	GameChanges gameChanges = networkModel.getGameChanges();

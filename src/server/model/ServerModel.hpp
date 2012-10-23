@@ -16,9 +16,14 @@ public:
   ~ServerModel();
 
 private:
+
+	GameChanges getChangesHandler(int32_t id);
+	void moveHandler(int32_t id, sf::Vector2f direction);
+	void rotateHandler(int32_t id, sf::Vector2f direction);
+	void fireHandler(int32_t id, sf::Vector2f direction);
+
 	ServerNetworkModel networkModel;
 	ServerGameModel gameModel;
-
 
   Logger logger;
   
