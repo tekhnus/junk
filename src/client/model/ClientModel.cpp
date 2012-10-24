@@ -3,7 +3,7 @@
 namespace junk
 {
 
-ClientModel::ClientModel() : logger("client_model.log", "CLIENT_MODEL", true)
+ClientModel::ClientModel() : logger("CLIENT_MODEL", "client_model.log", true)
 {
 	logger << "ClientModel created";
 }

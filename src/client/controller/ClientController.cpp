@@ -3,7 +3,7 @@
 namespace junk
 {
 
-ClientController::ClientController(ClientView& view, ClientModel& model) : view(view), model(model), logger("client_controller.log", "CLIENT_CONTROLLER", true)
+ClientController::ClientController(ClientView& view, ClientModel& model) : view(view), model(model), logger("CLIENT_CONTROLLER", "client_controller.log", true)
 {
 	view.subscribeForFireSignal(sigc::mem_fun(this, &ClientController::fireHandler));
 	view.subscribeForMoveSignal(sigc::mem_fun(this, &ClientController::moveHandler));

@@ -8,7 +8,7 @@ sf::Vector2f convert(const Vector2f& v)
   return sf::Vector2f(v.x, v.y);
 }
 
-ClientNetworkModel::ClientNetworkModel() : logger("client_model.log", "CLIENT_NETWORK_MODEL", true)
+ClientNetworkModel::ClientNetworkModel() : logger("CLIENT_NETWORK_MODEL", "client_model.log", true)
 {
 	logger << "ClientNetworkModel created";
 }
