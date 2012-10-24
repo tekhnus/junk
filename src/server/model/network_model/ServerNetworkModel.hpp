@@ -35,6 +35,7 @@ public:
 
   int addClient();
 
+  void subscribeForConnectSignal(sigc::slot<int32_t> slot);
   void subscribeForGetChangesSignal(sigc::slot<GameChanges, int32_t> slot);
   void subscribeForMoveSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
   void subscribeForRotateSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
@@ -45,9 +46,7 @@ public:
   void fireUpdated();
 
 private:
-
-  int lastID;
-
+ 
   // Client
   boost::shared_ptr<ClientServiceHandler> handler;
   boost::shared_ptr<TProcessor> processor;

@@ -13,6 +13,7 @@ ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
 	gameModel.subscribeForDirectionUpdatedSignal(sigc::mem_fun(&networkModel, 
 		&ServerNetworkModel::clientDirectionUpdated));
 
+	networkModel.subscribeForConnectSignal(sigc::mem_fun(this, &ServerModel::connectHandler));
 	networkModel.subscribeForGetChangesSignal(sigc::mem_fun(this, &ServerModel::getChangesHandler));
 	networkModel.subscribeForMoveSignal(sigc::mem_fun(this, &ServerModel::moveHandler));
 	networkModel.subscribeForRotateSignal(sigc::mem_fun(this, &ServerModel::rotateHandler));
@@ -24,6 +25,11 @@ ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
 ServerModel::~ServerModel()
 {
 	logger << "ServerModel destroyed";
+}
+
+int32_t ServerModel::connectHandler()
+{
+	return gameModel.addClient();
 }
 
 GameChanges ServerModel::getChangesHandler(int32_t id)

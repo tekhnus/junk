@@ -16,8 +16,6 @@ ServerNetworkModel::ServerNetworkModel() : lastID(1), logger("SERVER_NETWORK_MOD
   transportFactory = boost::shared_ptr<TTransportFactory> (new TBufferedTransportFactory());
   protocolFactory = boost::shared_ptr<TProtocolFactory> (new TBinaryProtocolFactory());
 
-  handler->subscribeForConnectSignal(sigc::mem_fun(this, &ServerNetworkModel::addClient));
-
   server = boost::shared_ptr<TThreadedServer> 
   	(new TThreadedServer (processor, serverTransport, transportFactory, protocolFactory));
 
@@ -30,11 +28,10 @@ ServerNetworkModel::~ServerNetworkModel()
 {
 	logger << "ServerNetworkModel destructed";
 }
-
-int ServerNetworkModel::addClient()
+                                            
+void ServerNetworkModel::subscribeForConnectSignal(sigc::slot<GameChanges, int32_t> slot)
 {
-  logger << "Client connected";
-  return lastID++;
+  handler->subscribeForConnectSignal(slot);
 }
 
 void ServerNetworkModel::subscribeForGetChangesSignal(sigc::slot<GameChanges, int32_t> slot)
