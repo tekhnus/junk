@@ -21,10 +21,10 @@ ClientController::~ClientController()
 	logger << "ClientController destructed";
 }
 
-void ClientController::clientAddedHandler(int32_t id)
+void ClientController::clientAddedHandler(int32_t id, sf::Vector2f position, sf::Vector2f direction)
 {
 	logger << "clientAddedHandler invoked";
-	//view.addPlayer(id);
+	view.addPlayer(id, position, direction);
 }
 
 void ClientController::moveHandler(sf::Vector2f direction)

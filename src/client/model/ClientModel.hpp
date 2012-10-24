@@ -5,13 +5,15 @@
 #include <common/logger/Logger.hpp>
 #include "network_model/ClientNetworkModel.hpp"
 
+#include <unordered_map>
+
 namespace junk
 {
 
 class Player
 {
 public:
-	Player(int32_t id) : id(id) {}
+	Player(int32_t id, sf::Vector2f position, sf::Vector2f direction) : id(id), position(position), direction(direction) {}
 
 	void setPosition(sf::Vector2f position)
 	{
@@ -29,9 +31,9 @@ public:
 	}
 
 private:
+	int32_t id;
 	sf::Vector2f position;
 	sf::Vector2f direction;
-	int32_t id;
 };
 
 class ClientModel
@@ -44,11 +46,11 @@ public:
 
   void update();
 
-  void addPlayer(int32_t id);
+  void addPlayer(int32_t id, sf::Vector2f position, sf::Vector2f direction);
 	void updatePlayerPosition(int32_t id, sf::Vector2f position);
 	void updatePlayerDirection(int32_t id, sf::Vector2f direction);
 
-	void subscribeForClientAddedSignal(sigc::slot<void, int32_t> slot);
+	void subscribeForClientAddedSignal(sigc::slot<void, int32_t, sf::Vector2f, sf::Vector2f> slot);
 	void subscribeForClientPositionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
 	void subscribeForClientDirectionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
 
@@ -57,11 +59,11 @@ public:
 	void fire(sf::Vector2f direction);
 
 private:
-	std::vector<Player> players;
+	std::unordered_map<int32_t, Player> players;
 	ClientNetworkModel networkModel;
 	int32_t clientId;
 
-	sigc::signal<void, int32_t> clientAddedSignal;
+	sigc::signal<void, int32_t, sf::Vector2f, sf::Vector2f> clientAddedSignal;
 	sigc::signal<void, int32_t, sf::Vector2f> clientPositionUpdatedSignal;
 	sigc::signal<void, int32_t, sf::Vector2f> clientDirectionUpdatedSignal;
 

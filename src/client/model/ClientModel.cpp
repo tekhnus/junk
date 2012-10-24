@@ -28,38 +28,40 @@ void ClientModel::update()
 	}
 }
 
-void ClientModel::addPlayer(int32_t id)
+void ClientModel::addPlayer(int32_t id, sf::Vector2f position, sf::Vector2f direction)
 {
 	logger << "Adding new player";
-	players.push_back(Player(id));
-	clientAddedSignal.emit(id);
+	players[id] = Player(id, position, direction);
+	clientAddedSignal.emit(id, position, direction);
 }
 
 void ClientModel::updatePlayerPosition(int32_t id, sf::Vector2f position)
 {
 	logger << "Updating player position";
-	for (Player& player : players)
+	if (players.find(id) == players.end())
 	{
-		if (player.getId() == id)
-		{
-			player.setPosition(position);
-			clientPositionUpdatedSignal.emit(id, position);
-			return;
-		}
+		addPlayer(id, position, sf::Vector2f(1.0, 1.0));
+	}
+	else
+	{
+		players[id].setPosition(position);
+		clientPositionUpdatedSignal.emit(id, position);
+		return;
 	}
 }
 
 void ClientModel::updatePlayerDirection(int32_t id, sf::Vector2f direction)
 {
 	logger << "Updating player direction";
-	for (Player& player : players)
+	if (players.find(id) == players.end())
 	{
-		if (player.getId() == id)
-		{
-			player.setDirection(direction);
-			clientDirectionUpdatedSignal.emit(id, direction);
-			return;
-		}
+		addPlayer(id, sf::Vector2f(1.0, 1.0), direction);
+	}
+	else
+	{
+		players[id].setDirection(direction);
+		clientPositionUpdatedSignal.emit(id, direction);
+		return;
 	}
 }
 
