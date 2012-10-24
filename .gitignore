@@ -1,4 +1,6 @@
 build
 bin
-src/common/client_service/gen-cpp
-src/common/server_service/gen-cpp
+Makefile
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake

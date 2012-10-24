@@ -1,25 +1,29 @@
 #pragma once
 
-#include <SFML/Network.hpp>
-#include "common/logger/Logger.hpp"
+#include "client/view/ClientView.hpp"
+#include "client/model/ClientModel.hpp"
+#include "client/controller/ClientController.hpp"
+
+namespace junk
+{
 
 class Client
 {
 public:
 	Client();
 
-	~Client();
-	
-	void connect(sf::IpAddress address, unsigned short port);
-	void disconnect();
+	void run();
 
-	void sendDataToServer(sf::Packet packet);
-	sf::Packet receiveDataFromServer();
+	/*
+	 Created only for testing, will be removed and invoked by controller when view sends
+	 signal to connect with appropriate params
+	*/
+  void connectToServer(const std::string& serverIp, int port);
 
 private:
-	sf::TcpSocket serverSocket;
-	sf::IpAddress serverAddress;
-	unsigned short port;
+	ClientView view;
+	ClientModel model;
+	ClientController controller;
+}; // Client
 
-	Logger logger;
-};
+} // namespace junk

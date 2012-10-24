@@ -1,48 +1,12 @@
 #include "client/Client.hpp"
-#include "common/logger/Logger.hpp"
 
-#include <iostream>
-#include <string>
-
-#include <SFML/Network.hpp>
-#include <SFML/Graphics.hpp>
-
-int main ()
+int main()
 {
-	Client client;
-
-	std::string serverIp;
-	std::cout << "Enter server ip:" << std::endl;
-	std::cin >> serverIp;
-	unsigned int port = 7777;
- 
-	std::cerr << "Connecting to server..." << std::endl;
-	client.connect(serverIp, port);
-	std::cerr << "Connected to server" << std::endl;
-
-	std::string message = "connect", answer;
-	
-	sf::Packet packet;
-	packet << message;
-
-	std::cerr << "Sending data to server..." << std::endl;
-
-	client.sendDataToServer(packet);
-
-	std::cerr << "Receiving data from server..." << std::endl;
-
-	packet = client.receiveDataFromServer();
-
-	packet >> answer;
-
-	if (answer == "connection established")
+	junk::Client client;
+	client.connectToServer("localhost", 7777);
+	while (true)
 	{
-		std::cerr << "connection established" << std::endl;
-	}
-	else //(answer == "connection refused")
-	{
-		std::cerr << "connection refused" << std::endl;
-	}
 
+	}
 	return 0;
 }

@@ -1,21 +1,14 @@
 #include "server/Server.hpp"
-#include "common/logger/Logger.hpp"
 
 #include <iostream>
-#include <string>
 
-#include <SFML/Network.hpp>
-
-void playerConnected (int id)
+int main()
 {
-	std::cerr << "Player " << id << " connected!" << std::endl;
-}
-
-int main ()
-{
-	unsigned int port = 7777;
-	Server server(port);
-	server.subscribeForNewClientSignal( sigc::ptr_fun(&playerConnected) );
-
-	server.start();
+	junk::Server server;
+	server.run();
+	while (true)
+	{
+		
+	}
+	return 0;
 }
