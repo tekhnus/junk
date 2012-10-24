@@ -2,6 +2,7 @@
 
 #include "SFML/System.hpp"
 #include "Unit.hpp"
+#include <common/logger/logger.hpp>
 #include "sigc++/sigc++.h"
 #include <map>
 #include <thread>
@@ -21,7 +22,7 @@ public:
 	void start();
 	void stop();
 
-	void addPlayer(sf::Vector2f position, sf::Vector2f rotation);
+	IDType addPlayer(sf::Vector2f position, sf::Vector2f rotation);
 	void removePlayer(IDType playerID);
 	void move(IDType playerID, sf::Vector2f position);
 	void rotate(IDType playerID, sf::Vector2f rotation);
@@ -31,6 +32,7 @@ public:
 	void subscribeForPositionUpdatedSignal(sigc::slot<void, IDType, sf::Vector2f> slot);
 	void subscribeForDirectionUpdatedSignal(sigc::slot<void, IDType, sf::Vector2f> slot);
 	void operator()();
+
 private:
 	std::map<IDType, std::shared_ptr<unit::Unit>> units;
 	//std::map<IDType, unit::Player> players;
@@ -46,6 +48,8 @@ private:
 	sigc::signal<void, IDType, sf::Vector2f> positionUpdatedSignal;
 	sigc::signal<void, IDType, sf::Vector2f> directionUpdatedSignal;
 
+	Logger logger;
+
 };
 
-}
+} // namespace junk

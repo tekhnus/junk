@@ -6,8 +6,14 @@ namespace junk
 {
 
 ServerGameModel::ServerGameModel()
- : isRunning(false)
+ : logger("server_game_model.log", "SERVER_GAME_MODEL", true), isRunning(false)
 {
+	logger << "ServerGameModel created";
+}
+
+ServerGameModel::~ServerGameModel()
+{
+	logger << "ServerGameModel destroyed";
 }
 
 void ServerGameModel::start()
@@ -15,6 +21,8 @@ void ServerGameModel::start()
 	isRunning = true;
 	gameLoopTimer.restart();
 	gameLoopThread = std::thread(std::ref(*this));
+
+	logger << "Game model started";
 }
 
 void ServerGameModel::stop()
@@ -24,11 +32,15 @@ void ServerGameModel::stop()
 	gameChangesMutex.unlock();
 
 	gameLoopThread.join();
+
+	logger << "Game model stopped";
 }
 
-void ServerGameModel::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
+IDType ServerGameModel::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
 {
 	gameChangesMutex.lock();
+
+	logger << "Adding a player...";
 
 	IDType newPlayerID = 0;
 	for (auto &unit : units)
@@ -39,19 +51,35 @@ void ServerGameModel::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
 		}
 	}
 
+	logger << std::string("New player ID = ") + std::to_string(newPlayerID);
+
 	std::shared_ptr<unit::Unit> newPlayerPtr;
 	newPlayerPtr = std::move(std::shared_ptr<unit::Unit>(new unit::Player(position, rotation)));
 
 	units.insert(std::make_pair(newPlayerID, std::move(newPlayerPtr)));
 
+	logger << "Player added";
+
 	gameChangesMutex.unlock();
+
+	return newPlayerID;
 }
 
 void ServerGameModel::removePlayer(IDType playerID)
 {
 	gameChangesMutex.lock();
 
-	units.erase(playerID);
+	logger << std::string("Removing a player with ID = ") + std::to_string(playerID);
+
+	if (units.find(playerID) == units.end())
+	{
+		logger << "There is no such player";
+	}
+	else
+	{
+		units.erase(playerID);
+		logger << "Player removed";
+	}
 
 	gameChangesMutex.unlock();
 }
@@ -62,10 +90,18 @@ void ServerGameModel::move(IDType playerID, sf::Vector2f vector)
 
 	gameChangesMutex.lock();
 
-	if (units.find(playerID) != units.end())
+	if (units.find(playerID) == units.end())
+	{
+		logger << "There is no such player";
+	}
+	else
 	{	
 		units.at(playerID)->setMoveVector(vector);
 		units.at(playerID)->setMoveSpeed(speed);
+
+		logger << std::string("Movement vector of player with ID = ") + std::to_string(playerID);
+		logger << std::string("changed to (") + std::to_string(vector.x) 
+			+ std::string(", ") + std::to_string(vector.y) + std::string(")");
 	}
 
 	gameChangesMutex.unlock();
@@ -75,10 +111,16 @@ void ServerGameModel::rotate(IDType playerID, sf::Vector2f rotation)
 {
 	gameChangesMutex.lock();
 
-	if (units.find(playerID) != units.end())
+	if (units.find(playerID) == units.end())
+	{
+		logger << "There is no such player";
+	}
+	else
 	{
 		dynamic_cast<unit::RotatableUnit*>(units.at(playerID).get())->setPosition(rotation);
-
+		logger << std::string("View vector of player with ID = ") + std::to_string(playerID);
+		logger << std::string("changed to (") + std::to_string(rotation.x) 
+			+ std::string(", ") + std::to_string(rotation.y) + std::string(")");
 	}
 	directionUpdatedSignal(playerID, rotation);
 
@@ -99,11 +141,13 @@ void ServerGameModel::rotate(IDType playerID, sf::Vector2f rotation)
 
 void ServerGameModel::subscribeForPositionUpdatedSignal(sigc::slot<void, IDType, sf::Vector2f> slot)
 {
+	logger << "Subscribing for positionUpdatedSignal";
 	positionUpdatedSignal.connect(slot);
 }
 
 void ServerGameModel::subscribeForDirectionUpdatedSignal(sigc::slot<void, IDType, sf::Vector2f> slot)
 {
+	logger << "Subscribing for directionUpdatedSignal";
 	directionUpdatedSignal.connect(slot);
 }
 
