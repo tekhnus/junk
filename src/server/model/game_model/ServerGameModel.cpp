@@ -16,10 +16,6 @@ ServerGameModel::~ServerGameModel()
 	logger << "ServerGameModel destroyed";
 }
 
-ServerGameModel::~ServerGameModel()
-{
-}
-
 void ServerGameModel::start()
 {
 	isRunning = true;

@@ -21,7 +21,7 @@ ServerNetworkModel::ServerNetworkModel() : lastID(1), logger("SERVER_NETWORK_MOD
   server = boost::shared_ptr<TThreadedServer> 
   	(new TThreadedServer (processor, serverTransport, transportFactory, protocolFactory));
 
-  serverThread = std::shared_ptr<std::thread> (new std::thread(&TThreadedServer::serve, server));
+  serverThread = std::shared_ptr<std::thread> (new std::thread(&TThreadedServer::serve, server.get()));
 
 	logger << "ServerNetworkModel created";
 }
