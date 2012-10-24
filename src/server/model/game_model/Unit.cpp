@@ -6,16 +6,31 @@ namespace junk
 namespace unit
 {
 
-const float eps = 1e-5;
+void Synchronized::synchronize(const sf::Clock &timer)
+{
+	sf::Time dTime = updateTime(timer);
+	sync(dTime);
+}
+
+sf::Time Synchronized::updateTime(const sf::Clock &timer)
+{
+	sf::Time dTime = timer.getElapsedTime() - lastUpdate;
+	lastUpdate += dTime;
+	return dTime;
+}
 
 Unit::Unit(sf::Vector2f position) : position(position)
 {
-
 }
 
-void Unit::movePosition(sf::Vector2f vector)
+void Unit::setPosition(sf::Vector2f position)
 {
-	this->position += vector;
+	this->position = position;
+}
+
+sf::Vector2f Unit::getPosition()const
+{
+	return position;
 }
 
 RotatableUnit::RotatableUnit(sf::Vector2f position, sf::Vector2f rotation)
@@ -37,6 +52,25 @@ void RotatableUnit::setRotation(sf::Vector2f rotation)
 	{
 		this->rotation = sf::Vector2f(1,1);
 	}
+}
+
+sf::Vector2f RotatableUnit::getRotation()const
+{
+	return rotation;
+}
+
+void RotatableUnit::sync(sf::Time dTime)
+{
+	static const float moveSpeed = 25.0; // wiil be removed
+
+	sf::Vector2f rotation = getRotation();
+
+	float length = std::sqrt(rotation.x * rotation.x + rotation.y * rotation.y);
+	rotation /= length;
+	rotation *= moveSpeed;
+	rotation *= dTime.asSeconds();
+
+	setPosition(getPosition() + rotation);
 }
 
 Player::Player(sf::Vector2f position, sf::Vector2f rotation)

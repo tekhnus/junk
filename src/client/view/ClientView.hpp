@@ -7,11 +7,12 @@
 #include <sigc++/sigc++.h>
 
 #include <map>
+#include <cassert>
 
 namespace junk
 {
 
-typedef unsigned int PlayerIDType;
+typedef unsigned int IDType;
 
 class ClientView : public sf::Drawable
 {
@@ -19,18 +20,18 @@ public:
 	ClientView();
 	virtual ~ClientView();
 
-	PlayerIDType addPlayer(sf::Vector2f position, sf::Vector2f rotation);
-	void removePlayer(PlayerIDType playerID);
+	void addPlayer(IDType playerID, sf::Vector2f position, sf::Vector2f rotation);
+	void removePlayer(IDType playerID);
 
-	void setPlayerPosition(PlayerIDType playerID, sf::Vector2f position);
-	void setPlayerRotation(PlayerIDType playerID, sf::Vector2f rotation);
+	void setPlayerPosition(IDType playerID, sf::Vector2f position);
+	void setPlayerRotation(IDType playerID, sf::Vector2f rotation);
 
 	bool subscribeForFireSignal(sigc::slot<void, sf::Vector2f> slot);
 	bool subscribeForMoveSignal(sigc::slot<void, sf::Vector2f> slot);
 	bool subscribeForRotateSignal(sigc::slot<void, sf::Vector2f> slot);
 
 private:
-	std::map<PlayerIDType, PlayerUnit> players;
+	std::map<IDType, PlayerUnit> players;
 	sigc::signal<void, sf::Vector2f> fireSignal;
 	sigc::signal<void, sf::Vector2f> moveSignal;
 	sigc::signal<void, sf::Vector2f> rotateSignal;

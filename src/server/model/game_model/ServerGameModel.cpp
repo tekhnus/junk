@@ -43,7 +43,6 @@ void ServerGameModel::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
 		}
 	}
 	players.insert(std::make_pair(newPlayerID,unit::Player(position, rotation)));
-	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
 }
@@ -53,28 +52,18 @@ void ServerGameModel::removePlayer(PlayerIDType playerID)
 	gameChangesMutex.lock();
 
 	players.erase(playerID);
-	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
 }
 
-void ServerGameModel::move(PlayerIDType playerID, sf::Vector2f position)
+void ServerGameModel::move(PlayerIDType playerID, sf::Vector2f vector)
 {
-	static const float moveSpeed = 25.0; // wiil be removed
-
 	gameChangesMutex.lock();
 
 	if (players.find(playerID) != players.end())
 	{
-		float length = std::sqrt(position.x * position.x + position.y * position.y);
-		position /= length;
-		position *= moveSpeed;
-		position *= gameLoopTimer.getElapsedTime().asSeconds();
-
-		players.at(playerID).movePosition(position);
+		players.at(playerID).synchronize(gameLoopTimer);
 	}
-	positionUpdatedSignal(playerID, position);
-	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
 }
@@ -88,7 +77,6 @@ void ServerGameModel::rotate(PlayerIDType playerID, sf::Vector2f rotation)
 		players.at(playerID).setRotation(rotation);
 	}
 	directionUpdatedSignal(playerID, rotation);
-	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
 }
@@ -96,8 +84,6 @@ void ServerGameModel::rotate(PlayerIDType playerID, sf::Vector2f rotation)
 /*void ServerGameModel::fire(PlayerIDType playerID)
 {
 	gameChangesMutex.lock();
-
-	gameLoopTimer.restart();
 
 	gameChangesMutex.unlock();
 }*/
@@ -107,12 +93,12 @@ void ServerGameModel::rotate(PlayerIDType playerID, sf::Vector2f rotation)
 	fireSignal.connect(slot);
 }*/
 
-bool ServerGameModel::subscribeForPositionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
+void ServerGameModel::subscribeForPositionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
 {
 	positionUpdatedSignal.connect(slot);
 }
 
-bool ServerGameModel::subscribeForDirectionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
+void ServerGameModel::subscribeForDirectionUpdatedSignal(sigc::slot<void, PlayerIDType, sf::Vector2f> slot)
 {
 	directionUpdatedSignal.connect(slot);
 }
@@ -128,7 +114,6 @@ void ServerGameModel::operator()()
 			gameChangesMutex.unlock();
 			break;
 		}
-		gameLoopTimer.restart();
 
 		gameChangesMutex.unlock();
 	}

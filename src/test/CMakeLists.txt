@@ -1,5 +1,5 @@
 add_executable (log log.cpp)
-target_link_libraries(log logger sfml-system)
+target_link_libraries(log logger)
 
 add_executable (view view.cpp)
 target_link_libraries(view unitview clientview clientmodel clientnetworkmodel clientservicehandler logger clientcontroller sfml-graphics sfml-window sfml-system sigc-2.0 pthread thrift)

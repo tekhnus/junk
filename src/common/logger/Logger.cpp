@@ -1,7 +1,5 @@
 #include "Logger.hpp"
-#include <SFML/System.hpp>
-
-static sf::Mutex safelog;
+#include <mutex>
 
 static unsigned globalCount = 0;
 
@@ -26,26 +24,6 @@ Logger::~Logger()
 	{
 		file.close();
 	}
-}
-
-Logger& Logger::operator<<(const std::string &message)
-{
-	if(!enabled)
-	{
-		return *this;
-	}
-	sf::Lock lock(safelog);
-	if (verbose)
-	{
-		writeHead(std::cerr, true, false);
-		std::cerr << message << std::endl;
-	}
-	if (file.is_open())
-	{
-		writeHead(file, false, true);
-		file << message << std::endl;
-	}
-	return *this;
 }
 
 void Logger::set(bool active)
