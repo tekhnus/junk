@@ -6,6 +6,8 @@
 #include <SFML/Graphics.hpp>
 #include <sigc++/sigc++.h>
 
+#include <common/logger/Logger.hpp>
+
 #include <map>
 #include <cassert>
 
@@ -30,11 +32,15 @@ public:
 	bool subscribeForMoveSignal(sigc::slot<void, sf::Vector2f> slot);
 	bool subscribeForRotateSignal(sigc::slot<void, sf::Vector2f> slot);
 
+	void update();
+
 private:
 	std::map<IDType, PlayerUnit> players;
 	sigc::signal<void, sf::Vector2f> fireSignal;
 	sigc::signal<void, sf::Vector2f> moveSignal;
 	sigc::signal<void, sf::Vector2f> rotateSignal;
+
+	Logger logger;
 
 protected:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;

@@ -60,12 +60,12 @@ void ClientModel::updatePlayerDirection(int32_t id, sf::Vector2f direction)
 	else
 	{
 		players[id].setDirection(direction);
-		clientPositionUpdatedSignal.emit(id, direction);
+		clientDirectionUpdatedSignal.emit(id, direction);
 		return;
 	}
 }
 
-void ClientModel::subscribeForClientAddedSignal(sigc::slot<void, int32_t> slot)
+void ClientModel::subscribeForClientAddedSignal(sigc::slot<void, int32_t, sf::Vector2f, sf::Vector2f> slot)
 {
 	clientAddedSignal.connect(slot);
 }

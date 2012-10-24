@@ -8,7 +8,7 @@ sf::Vector2f convert(const Vector2f& v)
   return sf::Vector2f(v.x, v.y);
 }
 
-ServerNetworkModel::ServerNetworkModel() : lastID(1), logger("SERVER_NETWORK_MODEL", "server_model.log", true)
+ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODEL", "server_model.log", true)
 {
   handler = boost::shared_ptr<ClientServiceHandler> (new ClientServiceHandler());
   processor = boost::shared_ptr<TProcessor> (new ClientServiceProcessor(handler));
@@ -29,7 +29,7 @@ ServerNetworkModel::~ServerNetworkModel()
 	logger << "ServerNetworkModel destructed";
 }
                                             
-void ServerNetworkModel::subscribeForConnectSignal(sigc::slot<GameChanges, int32_t> slot)
+void ServerNetworkModel::subscribeForConnectSignal(sigc::slot<int32_t> slot)
 {
   handler->subscribeForConnectSignal(slot);
 }

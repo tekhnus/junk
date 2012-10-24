@@ -29,12 +29,12 @@ ServerModel::~ServerModel()
 
 int32_t ServerModel::connectHandler()
 {
-	return gameModel.addClient();
+	return gameModel.addPlayer();
 }
 
 GameChanges ServerModel::getChangesHandler(int32_t id)
 {
-	//return gameModel.getChanges(id);
+	return gameModel.getChanges(id);
 }
 
 void ServerModel::moveHandler(int32_t id, sf::Vector2f direction)

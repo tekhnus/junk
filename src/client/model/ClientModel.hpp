@@ -13,6 +13,7 @@ namespace junk
 class Player
 {
 public:
+	Player() {}
 	Player(int32_t id, sf::Vector2f position, sf::Vector2f direction) : id(id), position(position), direction(direction) {}
 
 	void setPosition(sf::Vector2f position)

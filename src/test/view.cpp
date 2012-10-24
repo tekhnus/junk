@@ -11,7 +11,10 @@ int main()
 	junk::ClientModel model;
 	junk::ClientController control(view, model);
 	// junk::View view;
-	junk::PlayerUnit u("Unit", sf::Vector2f(100.0, 100.0), sf::Vector2f(100.0, 100.0));
+
+	model.connectToServer("localhost", 7777);
+
+	//junk::PlayerUnit u("Unit", sf::Vector2f(0.0, 0.0), sf::Vector2f(1.0, 1.0));
 	// view.addPlayer(sf::Vector2f(100.0, 100.0), sf::Vector2f(100.0, 100.0));
 
 	// u.setPosition(sf::Vector2f(100.0, 100.0));
@@ -20,8 +23,12 @@ int main()
 	while (window.isOpen())
 	{
 		window.clear();
-		u.update();
-		window.draw(u);
+		model.update();
+		view.update();
+		window.draw(view);
+
+		//u.update();
+		//window.draw(u);
 		//window.draw(sf::Text("Hello", font));
 		window.display();
 	}

@@ -8,6 +8,8 @@
 #include <thread>
 #include <mutex>
 
+#include <gen-cpp/ClientService.h>
+
 namespace junk
 {
 
@@ -22,11 +24,15 @@ public:
 	void start();
 	void stop();
 
-	IDType addPlayer(sf::Vector2f position, sf::Vector2f rotation);
+	IDType addPlayer(sf::Vector2f position = sf::Vector2f(0.0, 0.0), 
+		sf::Vector2f rotation = sf::Vector2f(1.0, 1.0));
 	void removePlayer(IDType playerID);
 	void move(IDType playerID, sf::Vector2f position);
 	void rotate(IDType playerID, sf::Vector2f rotation);
 	//void fire(IDType playerID);
+
+	GameChanges getChanges(IDType id);
+
 
 	//bool subscribeForFireSignal(sigc::slot<void, IDType, sf::Vector2f> slot);
 	void subscribeForPositionUpdatedSignal(sigc::slot<void, IDType, sf::Vector2f> slot);

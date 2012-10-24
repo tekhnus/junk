@@ -127,6 +127,25 @@ void ServerGameModel::rotate(IDType playerID, sf::Vector2f rotation)
 	gameChangesMutex.unlock();
 }
 
+GameChanges ServerGameModel::getChanges(IDType id)
+{
+	GameChanges gameChanges;
+	for (auto& unit : units)
+	{
+		PlayerInfo playerInfo;
+		playerInfo.id = unit.first;
+		//playerInfo.position.x = unit.second->getPosition().x;
+		//playerInfo.position.y = unit.second->getPosition().y;
+		Vector2f unity;
+		unity.x = 100.0;
+		unity.y = 100.0;
+		playerInfo.position = unity;
+		playerInfo.direction = unity;
+		gameChanges.players.push_back(playerInfo);
+	}
+	return gameChanges;
+}
+
 /*void ServerGameModel::fire(IDType playerID)
 {
 	gameChangesMutex.lock();

@@ -3,7 +3,7 @@
 namespace junk
 {
 
-ClientView::ClientView()
+ClientView::ClientView() : logger("CLIENT_VIEW", "client_view.log", true)
 {
 }
 
@@ -24,6 +24,7 @@ void ClientView::removePlayer(IDType playerID)
 
 void ClientView::setPlayerPosition(IDType playerID, sf::Vector2f position)
 {
+	logger << std::string("setPlayerPosition invoked, id = ") + std::to_string(playerID);
 	if (players.find(playerID) != players.end())
 	{
 		players[playerID].setPosition(position);
@@ -32,6 +33,7 @@ void ClientView::setPlayerPosition(IDType playerID, sf::Vector2f position)
 
 void ClientView::setPlayerRotation(IDType playerID, sf::Vector2f rotation)
 {
+	logger << std::string("setPlayerRotation invoked, id = ") + std::to_string(playerID);
 	if (players.find(playerID) != players.end())
 	{
 		players[playerID].setRotation(rotation);
@@ -56,9 +58,21 @@ bool ClientView::subscribeForRotateSignal(sigc::slot<void, sf::Vector2f> slot)
 	return true;
 }
 
+void ClientView::update()
+{
+	for (auto& player : players)
+	{
+		logger << std::string("Position.x ") + std::to_string(player.second.getRotation().x);
+		logger << std::string("Position.y ") + std::to_string(player.second.getRotation().y);
+		logger << std::string("Rotation.x ") + std::to_string(player.second.getRotation().x);
+		logger << std::string("Rotation.y ") + std::to_string(player.second.getRotation().y);
+		player.second.update();
+	}
+}
+
 void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	for (auto player : players)
+	for (auto& player : players)
 	{
 		target.draw(player.second, states);
 	}
