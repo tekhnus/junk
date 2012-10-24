@@ -19,7 +19,8 @@ sf::Time Synchronized::updateTime(const sf::Clock &timer)
 	return dTime;
 }
 
-Unit::Unit(sf::Vector2f position) : position(position)
+Unit::Unit(sf::Vector2f position)
+ : position(position), moveVector(sf::Vector2f(0.0, 0.0)), moveSpeed(0.0)
 {
 }
 
@@ -28,9 +29,48 @@ void Unit::setPosition(sf::Vector2f position)
 	this->position = position;
 }
 
+void Unit::setMoveVector(sf::Vector2f moveVector)
+{
+	this->moveVector = moveVector;
+}
+
+void Unit::setMoveSpeed(float moveSpeed)
+{
+	this->moveSpeed = moveSpeed;
+}
+
 sf::Vector2f Unit::getPosition()const
 {
 	return position;
+}
+
+sf::Vector2f Unit::getMoveVector()const
+{
+	return moveVector;
+}
+
+float Unit::getMoveSpeed()const
+{
+	return moveSpeed;
+}
+
+bool Unit::interactsWith(const Unit &unit)const
+{
+	float dx = fabs(position.x - unit.position.x);
+	float dy = fabs(position.y - unit.position.y);
+	float dist = sqrt(dx * dx + dy * dy);
+
+	return dist < actionRadius + unit.actionRadius + eps;
+}
+
+void Unit::sync(sf::Time dTime)
+{
+	float length = std::sqrt(moveVector.x * moveVector.x + moveVector.y * moveVector.y);
+	moveVector /= length;
+	moveVector *= moveSpeed;
+	moveVector *= dTime.asSeconds();
+
+	setPosition(getPosition() + moveVector);
 }
 
 RotatableUnit::RotatableUnit(sf::Vector2f position, sf::Vector2f rotation)
@@ -50,7 +90,7 @@ void RotatableUnit::setRotation(sf::Vector2f rotation)
 	}
 	else
 	{
-		this->rotation = sf::Vector2f(1,1);
+		this->rotation = sf::Vector2f(1.0, 1.0);
 	}
 }
 
@@ -59,22 +99,8 @@ sf::Vector2f RotatableUnit::getRotation()const
 	return rotation;
 }
 
-void RotatableUnit::sync(sf::Time dTime)
-{
-	static const float moveSpeed = 25.0; // wiil be removed
-
-	sf::Vector2f rotation = getRotation();
-
-	float length = std::sqrt(rotation.x * rotation.x + rotation.y * rotation.y);
-	rotation /= length;
-	rotation *= moveSpeed;
-	rotation *= dTime.asSeconds();
-
-	setPosition(getPosition() + rotation);
-}
-
 Player::Player(sf::Vector2f position, sf::Vector2f rotation)
- : RotatableUnit(position, rotation)
+ : RotatableUnit(position, rotation), hp(5)
 {
 }
 
@@ -83,6 +109,6 @@ Bullet::Bullet(sf::Vector2f position, sf::Vector2f rotation)
 {
 }
 
-}
+} // namespace unit
 
-}
+} // namespace junk

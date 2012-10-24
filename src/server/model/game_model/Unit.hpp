@@ -26,16 +26,27 @@ protected:
 class Unit : public Synchronized
 {
 public:
-//	explicit Unit();
 	explicit Unit(sf::Vector2f position);
 	virtual ~Unit(){}
 
 	void setPosition(sf::Vector2f position);
+	void setMoveVector(sf::Vector2f moveVector);
+	void setMoveSpeed(float);
+
 	sf::Vector2f getPosition()const;
-//	void movePosition(sf::Vector2f vector);
+	sf::Vector2f getMoveVector()const;
+	float getMoveSpeed()const;
+
+	bool interactsWith(const Unit &unit)const;
 
 private:	
 	sf::Vector2f position;
+	sf::Vector2f moveVector;
+	float actionRadius;
+	float moveSpeed;
+
+protected:
+	void sync(sf::Time dTime);
 
 };
 
@@ -47,23 +58,20 @@ public:
 
 	void setRotation(sf::Vector2f rotation);
 	sf::Vector2f getRotation()const;
-
+	
 private:
 	sf::Vector2f rotation;
-
-protected:
-	void sync(sf::Time dTime);
 
 };
 
 class Player : public RotatableUnit
 {
 public:
-//	Player();
 	Player(sf::Vector2f position, sf::Vector2f rotation);
 	~Player(){}
 
 private:
+	int hp;
 
 };
 
