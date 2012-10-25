@@ -16,6 +16,8 @@ public:
   ~ClientController();
 
   void clientAddedHandler(int32_t id, sf::Vector2f position, sf::Vector2f direction);
+  void gotClientIdHandler(int32_t id);
+
   void moveHandler(sf::Vector2f direction);
   void fireHandler(sf::Vector2f direction);
   void rotateHandler(sf::Vector2f direction);

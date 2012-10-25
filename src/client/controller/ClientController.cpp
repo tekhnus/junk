@@ -21,6 +21,12 @@ ClientController::~ClientController()
 	logger << "ClientController destructed";
 }
 
+void ClientController::gotClientIdHandler(int32_t id)
+{
+	logger << "gotClientIdHandler invoked";
+	//view.setPlayerId(id);
+}
+
 void ClientController::clientAddedHandler(int32_t id, sf::Vector2f position, sf::Vector2f direction)
 {
 	logger << "clientAddedHandler invoked";

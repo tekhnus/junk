@@ -13,7 +13,7 @@ ClientNetworkModel::ClientNetworkModel() : logger("CLIENT_NETWORK_MODEL", "clien
 	logger << "ClientNetworkModel created";
 }
 
-void ClientNetworkModel::connectToServer(const std::string& serverIp, int port)
+int32_t ClientNetworkModel::connectToServer(const std::string& serverIp, int port)
 {
   logger << "Connecting to server";
 
@@ -27,6 +27,7 @@ void ClientNetworkModel::connectToServer(const std::string& serverIp, int port)
 
   std::string message = "Connected to server, id = " + std::to_string(id);
   logger << message;
+  return id;
 }
 
 ClientNetworkModel::~ClientNetworkModel()

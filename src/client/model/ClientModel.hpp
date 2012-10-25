@@ -43,7 +43,7 @@ public:
   ClientModel();
   ~ClientModel();
 
-  void connectToServer(const std::string& serverIp, int port);
+  int32_t connectToServer(const std::string& serverIp, int port);
 
   void update();
 
@@ -51,6 +51,7 @@ public:
 	void updatePlayerPosition(int32_t id, sf::Vector2f position);
 	void updatePlayerDirection(int32_t id, sf::Vector2f direction);
 
+	void subscribeForGotClientIdSignal(sigc::slot<void, int32_t> slot);
 	void subscribeForClientAddedSignal(sigc::slot<void, int32_t, sf::Vector2f, sf::Vector2f> slot);
 	void subscribeForClientPositionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
 	void subscribeForClientDirectionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
@@ -64,6 +65,7 @@ private:
 	ClientNetworkModel networkModel;
 	int32_t clientId;
 
+	sigc::signal<void, int32_t> gotClientIdSignal;
 	sigc::signal<void, int32_t, sf::Vector2f, sf::Vector2f> clientAddedSignal;
 	sigc::signal<void, int32_t, sf::Vector2f> clientPositionUpdatedSignal;
 	sigc::signal<void, int32_t, sf::Vector2f> clientDirectionUpdatedSignal;

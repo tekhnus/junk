@@ -29,7 +29,7 @@ public:
   ClientNetworkModel();
   ~ClientNetworkModel();
 
-  void connectToServer(const std::string& serverIp, int port);
+  int32_t connectToServer(const std::string& serverIp, int port);
 
   GameChanges getGameChanges();
   void move(sf::Vector2f direction);

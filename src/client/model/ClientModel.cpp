@@ -13,9 +13,11 @@ ClientModel::~ClientModel()
 	logger << "ClientModel destructed";
 }
 
-void ClientModel::connectToServer(const std::string& serverIp, int port)
+int32_t ClientModel::connectToServer(const std::string& serverIp, int port)
 {
-	networkModel.connectToServer(serverIp, port);
+	clientId = networkModel.connectToServer(serverIp, port);
+	gotClientIdSignal.emit(clientId);
+	return clientId;
 }
 
 void ClientModel::update()
@@ -67,6 +69,11 @@ void ClientModel::updatePlayerDirection(int32_t id, sf::Vector2f direction)
 		clientDirectionUpdatedSignal.emit(id, direction);
 		return;
 	}
+}
+
+void ClientModel::subscribeForGotClientIdSignal(sigc::slot<void, int32_t> slot)
+{
+	gotClientIdSignal.connect(slot);
 }
 
 void ClientModel::subscribeForClientAddedSignal(sigc::slot<void, int32_t, sf::Vector2f, sf::Vector2f> slot)
