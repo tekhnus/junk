@@ -74,10 +74,6 @@ void Unit::sync(sf::Time dTime)
 	moveVector *= moveSpeed;
 	moveVector *= dTime.asSeconds();
 
-	std::cerr << length << std::endl;
-	std::cerr << dTime.asSeconds() << std::endl;
-	std::cerr << moveVector.x << " " << moveVector.y << std::endl;
-
 	setPosition(getPosition() + moveVector);
 }
 

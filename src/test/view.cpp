@@ -38,8 +38,13 @@ int main()
 	junk::ClientController control(view, model);
 	// junk::View view;
 
+<<<<<<< HEAD
 	model.connectToServer("localhost", 7777);
 	window.setFramerateLimit(60);
+=======
+	model.connectToServer("192.168.1.34", 7777);
+	//model.connectToServer("localhost", 7777);
+>>>>>>> 6948e2b61f79e5742ed3c760addf7c7aa87615c8
 
 	//junk::PlayerUnit u("Unit", sf::Vector2f(0.0, 0.0), sf::Vector2f(1.0, 1.0));
 	// view.addPlayer(sf::Vector2f(100.0, 100.0), sf::Vector2f(100.0, 100.0));
@@ -64,6 +69,8 @@ int main()
    		view.move(diff);
    	
    		//sf::sleep(sf::seconds(0.01f));
+
+   	sf::sleep(sf::seconds(0.01f));
 
 		//u.update();
 		//window.draw(u);
