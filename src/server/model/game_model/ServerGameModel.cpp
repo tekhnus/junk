@@ -124,7 +124,7 @@ void ServerGameModel::rotate(IDType playerID, sf::Vector2f rotation)
 		logger << std::string("changed to (") + std::to_string(rotation.x) 
 			+ std::string(", ") + std::to_string(rotation.y) + std::string(")");
 	}
-	directionUpdatedSignal(playerID, rotation);
+	//directionUpdatedSignal(playerID, rotation);
 
 	gameChangesMutex.unlock();
 }
@@ -138,13 +138,18 @@ GameChanges ServerGameModel::getChanges(IDType id)
 		playerInfo.id = unit.first;
 		playerInfo.position.x = unit.second->getPosition().x;
 		playerInfo.position.y = unit.second->getPosition().y;
-		//playerInfo.direction.x = unit.second->getRotation().x;
-		//playerInfo.direction.y = unit.second->getRotation().y;
-		Vector2f unity;
-		unity.x = 100.0;
-		unity.y = 100.0;
-		//playerInfo.position = unity;
-		playerInfo.direction = unity;
+		//#KoCTblJlb!
+		playerInfo.direction.x = dynamic_cast<unit::RotatableUnit*>(unit.second.get())->getRotation().x;
+		playerInfo.direction.y = dynamic_cast<unit::RotatableUnit*>(unit.second.get())->getRotation().y;
+		//playerInfo.direction.x = 1;
+		//playerInfo.direction.y = 1;
+
+
+		// Vector2f unity;
+		// unity.x = 100.0;
+		// unity.y = 100.0;
+		// playerInfo.position = unity;
+		// playerInfo.direction = unity;
 		gameChanges.players.push_back(playerInfo);
 	}
 	return gameChanges;
