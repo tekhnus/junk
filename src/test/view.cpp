@@ -39,6 +39,7 @@ int main()
 	// junk::View view;
 
 	model.connectToServer("localhost", 7777);
+	window.setFramerateLimit(60);
 
 	//junk::PlayerUnit u("Unit", sf::Vector2f(0.0, 0.0), sf::Vector2f(1.0, 1.0));
 	// view.addPlayer(sf::Vector2f(100.0, 100.0), sf::Vector2f(100.0, 100.0));
@@ -59,8 +60,10 @@ int main()
     bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
     
    	sf::Vector2f diff = getDiff(1.0, up, down, left, right);
-   	if (up || down || left || right)
+   	//if (up || down || left || right)
    		view.move(diff);
+   	
+   		//sf::sleep(sf::seconds(0.01f));
 
 		//u.update();
 		//window.draw(u);
