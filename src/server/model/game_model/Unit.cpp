@@ -67,6 +67,7 @@ bool Unit::interactsWith(const Unit &unit)const
 
 void Unit::sync(sf::Time dTime)
 {
+	sf::Vector2f backup = moveVector;
 	float length = std::sqrt(moveVector.x * moveVector.x + moveVector.y * moveVector.y);
 	if (length < 1e-3)
 		return;
@@ -75,6 +76,7 @@ void Unit::sync(sf::Time dTime)
 	moveVector *= dTime.asSeconds();
 
 	setPosition(getPosition() + moveVector);
+	moveVector = backup;
 }
 
 RotatableUnit::RotatableUnit(sf::Vector2f position, sf::Vector2f rotation)
