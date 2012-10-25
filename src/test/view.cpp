@@ -38,7 +38,8 @@ int main()
 	junk::ClientController control(view, model);
 	// junk::View view;
 
-	model.connectToServer("localhost", 7777);
+	model.connectToServer("192.168.1.34", 7777);
+	//model.connectToServer("localhost", 7777);
 
 	//junk::PlayerUnit u("Unit", sf::Vector2f(0.0, 0.0), sf::Vector2f(1.0, 1.0));
 	// view.addPlayer(sf::Vector2f(100.0, 100.0), sf::Vector2f(100.0, 100.0));
@@ -61,6 +62,8 @@ int main()
    	sf::Vector2f diff = getDiff(1.0, up, down, left, right);
    	if (up || down || left || right)
    		view.move(diff);
+
+   	sf::sleep(sf::seconds(0.01f));
 
 		//u.update();
 		//window.draw(u);

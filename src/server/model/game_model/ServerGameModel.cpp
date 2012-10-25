@@ -88,7 +88,7 @@ void ServerGameModel::removePlayer(IDType playerID)
 
 void ServerGameModel::move(IDType playerID, sf::Vector2f vector)
 {
-	static const float speed = 250.0; // will be deleted
+	static const float speed = 250000.0; // will be deleted
 
 	gameChangesMutex.lock();
 
