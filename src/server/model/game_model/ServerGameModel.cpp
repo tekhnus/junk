@@ -6,7 +6,7 @@ namespace junk
 {
 
 ServerGameModel::ServerGameModel()
- : logger("server_game_model.log", "SERVER_GAME_MODEL", true), isRunning(false)
+ : logger("SERVER_GAME_MODEL", "server_model.log", true), isRunning(false)
 {
 	logger << "ServerGameModel created";
 }
@@ -53,6 +53,8 @@ IDType ServerGameModel::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
 
 	logger << std::string("New player ID = ") + std::to_string(newPlayerID);
 
+	logger << std::to_string(position.x) + std::string(" ") + std::to_string(position.y);
+
 	std::shared_ptr<unit::Unit> newPlayerPtr;
 	newPlayerPtr = std::move(std::shared_ptr<unit::Unit>(new unit::Player(position, rotation)));
 
@@ -86,7 +88,7 @@ void ServerGameModel::removePlayer(IDType playerID)
 
 void ServerGameModel::move(IDType playerID, sf::Vector2f vector)
 {
-	static const float speed = 25.0; // will be deleted
+	static const float speed = 250.0; // will be deleted
 
 	gameChangesMutex.lock();
 
@@ -117,7 +119,7 @@ void ServerGameModel::rotate(IDType playerID, sf::Vector2f rotation)
 	}
 	else
 	{
-		dynamic_cast<unit::RotatableUnit*>(units.at(playerID).get())->setPosition(rotation);
+		dynamic_cast<unit::RotatableUnit*>(units.at(playerID).get())->setRotation(rotation);
 		logger << std::string("View vector of player with ID = ") + std::to_string(playerID);
 		logger << std::string("changed to (") + std::to_string(rotation.x) 
 			+ std::string(", ") + std::to_string(rotation.y) + std::string(")");
@@ -134,12 +136,14 @@ GameChanges ServerGameModel::getChanges(IDType id)
 	{
 		PlayerInfo playerInfo;
 		playerInfo.id = unit.first;
-		//playerInfo.position.x = unit.second->getPosition().x;
-		//playerInfo.position.y = unit.second->getPosition().y;
+		playerInfo.position.x = unit.second->getPosition().x;
+		playerInfo.position.y = unit.second->getPosition().y;
+		//playerInfo.direction.x = unit.second->getRotation().x;
+		//playerInfo.direction.y = unit.second->getRotation().y;
 		Vector2f unity;
 		unity.x = 100.0;
 		unity.y = 100.0;
-		playerInfo.position = unity;
+		//playerInfo.position = unity;
 		playerInfo.direction = unity;
 		gameChanges.players.push_back(playerInfo);
 	}

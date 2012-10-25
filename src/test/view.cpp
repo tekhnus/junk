@@ -3,6 +3,32 @@
 #include "client/model/ClientModel.hpp"
 #include <SFML/Window.hpp>
 
+sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
+{
+	time = 1;
+  float dx = 0;
+  float dy = 0;
+  if (up)
+    dy += -time;
+
+  if (down)
+    dy += time;
+
+  if (left)
+    dx += -time;
+
+  if (right)
+    dx += time;
+
+  if (fabs(dx) > 0.0 && fabs(dy) > 0.0)
+  {
+    dx /= sqrt(2.0);
+    dy /= sqrt(2.0);
+  }
+  return sf::Vector2f(dx, dy);
+} 
+
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(512, 512), "Title");
@@ -26,6 +52,15 @@ int main()
 		model.update();
 		view.update();
 		window.draw(view);
+
+		bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+    bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
+    bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+    bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+    
+   	sf::Vector2f diff = getDiff(1.0, up, down, left, right);
+   	if (up || down || left || right)
+   		view.move(diff);
 
 		//u.update();
 		//window.draw(u);

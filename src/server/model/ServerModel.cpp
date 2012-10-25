@@ -27,6 +27,11 @@ ServerModel::~ServerModel()
 	logger << "ServerModel destroyed";
 }
 
+void ServerModel::start()
+{
+	gameModel.start();
+}
+
 int32_t ServerModel::connectHandler()
 {
 	return gameModel.addPlayer();
@@ -34,7 +39,13 @@ int32_t ServerModel::connectHandler()
 
 GameChanges ServerModel::getChangesHandler(int32_t id)
 {
-	return gameModel.getChanges(id);
+	GameChanges gameChanges = gameModel.getChanges(id);
+	for (auto& player : gameChanges.players)
+	{
+		logger << std::to_string(player.id) + std::string(" ") 
+			+ std::to_string(player.position.x) + std::string(" ") + std::to_string(player.position.y);
+	}
+	return gameChanges;
 }
 
 void ServerModel::moveHandler(int32_t id, sf::Vector2f direction)

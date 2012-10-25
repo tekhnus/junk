@@ -15,6 +15,8 @@ public:
   ServerModel();
   ~ServerModel();
 
+  void start();
+
 private:
 
 	GameChanges getChangesHandler(int32_t id);

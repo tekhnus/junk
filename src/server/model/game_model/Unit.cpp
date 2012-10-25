@@ -1,5 +1,7 @@
 #include "Unit.hpp"
 
+#include <iostream>
+
 namespace junk
 {
 
@@ -66,9 +68,15 @@ bool Unit::interactsWith(const Unit &unit)const
 void Unit::sync(sf::Time dTime)
 {
 	float length = std::sqrt(moveVector.x * moveVector.x + moveVector.y * moveVector.y);
+	if (length < 1e-3)
+		return;
 	moveVector /= length;
 	moveVector *= moveSpeed;
 	moveVector *= dTime.asSeconds();
+
+	std::cerr << length << std::endl;
+	std::cerr << dTime.asSeconds() << std::endl;
+	std::cerr << moveVector.x << " " << moveVector.y << std::endl;
 
 	setPosition(getPosition() + moveVector);
 }

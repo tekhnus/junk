@@ -43,6 +43,7 @@ GameChanges ClientNetworkModel::getGameChanges()
 
 void ClientNetworkModel::move(sf::Vector2f direction_)
 {
+  logger << std::string("move ") + std::to_string(direction_.x) + std::string(" ") + std::to_string(direction_.y);
   Vector2f direction;
   direction.x = direction_.x;
   direction.y = direction_.y;

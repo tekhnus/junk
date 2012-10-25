@@ -2,7 +2,7 @@
 
 #include "SFML/System.hpp"
 #include "Unit.hpp"
-#include <common/logger/logger.hpp>
+#include <common/logger/Logger.hpp>
 #include "sigc++/sigc++.h"
 #include <map>
 #include <thread>

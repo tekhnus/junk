@@ -28,6 +28,8 @@ public:
 	void setPlayerPosition(IDType playerID, sf::Vector2f position);
 	void setPlayerRotation(IDType playerID, sf::Vector2f rotation);
 
+	void move(sf::Vector2f direction);
+
 	bool subscribeForFireSignal(sigc::slot<void, sf::Vector2f> slot);
 	bool subscribeForMoveSignal(sigc::slot<void, sf::Vector2f> slot);
 	bool subscribeForRotateSignal(sigc::slot<void, sf::Vector2f> slot);

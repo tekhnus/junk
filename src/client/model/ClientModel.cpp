@@ -20,9 +20,13 @@ void ClientModel::connectToServer(const std::string& serverIp, int port)
 
 void ClientModel::update()
 {
+	logger << "update";
 	GameChanges gameChanges = networkModel.getGameChanges();
 	for (auto& player : gameChanges.players)
 	{
+		logger << std::to_string(player.id) + std::string(" ") 
+			+ std::to_string(player.position.x) + std::string(" ") + std::to_string(player.position.y);
+			
 		updatePlayerPosition(player.id, sf::Vector2f(player.position.x, player.position.y));
 		updatePlayerDirection(player.id, sf::Vector2f(player.direction.x, player.direction.y));
 	}

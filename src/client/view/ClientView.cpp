@@ -1,4 +1,4 @@
-#include "ClientView.hpp"
+	#include "ClientView.hpp"
 
 namespace junk
 {
@@ -25,6 +25,7 @@ void ClientView::removePlayer(IDType playerID)
 void ClientView::setPlayerPosition(IDType playerID, sf::Vector2f position)
 {
 	logger << std::string("setPlayerPosition invoked, id = ") + std::to_string(playerID);
+	logger << std::string("position ") + std::to_string(position.x) + std::string(" ") + std::to_string(position.y);
 	if (players.find(playerID) != players.end())
 	{
 		players[playerID].setPosition(position);
@@ -56,6 +57,12 @@ bool ClientView::subscribeForRotateSignal(sigc::slot<void, sf::Vector2f> slot)
 {
 	rotateSignal.connect(slot);
 	return true;
+}
+
+void ClientView::move(sf::Vector2f direction)
+{
+	logger << "move invoked";
+	moveSignal.emit(direction);
 }
 
 void ClientView::update()
