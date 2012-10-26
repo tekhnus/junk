@@ -10,7 +10,12 @@
 
 #include <map>
 #include <cassert>
-//#define _GLIBCXX_USE_NANOSLEEP
+
+//for std::this_thread::sleep_for
+#ifndef _GLIBCXX_USE_NANOSLEEP
+	#define _GLIBCXX_USE_NANOSLEEP
+#endif
+
 #include <thread>
 
 namespace junk
