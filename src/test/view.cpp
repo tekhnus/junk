@@ -79,13 +79,17 @@ void processInput()
 	}
 }
 
-int main()
+int main(int argc, char** argv)
 {
 	//sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
 	//window.show();
 	// junk::View view;
-
-	id = model.connectToServer("localhost", 7777);
+	std::string address("localhost");	
+	if(argc > 1)
+	{
+		address = std::string(argv[1]);
+	}
+	id = model.connectToServer(address, 7777);
 	//model.connectToServer("192.168.1.34", 7777);
 	window.setFramerateLimit(60);
 
