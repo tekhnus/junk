@@ -11,6 +11,7 @@
 #include <thrift/server/TSimpleServer.h>
 #include <thrift/server/TThreadPoolServer.h>
 #include <thrift/server/TThreadedServer.h>
+#include <thrift/server/TNonblockingServer.h>
 #include <thrift/transport/TSocket.h>
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TTransportUtils.h>
@@ -41,19 +42,20 @@ public:
   void subscribeForRotateSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
   void subscribeForFireSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
 
-  void clientPositionUpdated(uint32_t id, sf::Vector2f direction);
-  void clientDirectionUpdated(uint32_t id, sf::Vector2f direction);
-  void fireUpdated();
-
 private:
  
   // Client
   boost::shared_ptr<ClientServiceHandler> handler;
   boost::shared_ptr<TProcessor> processor;
-  boost::shared_ptr<TServerTransport> serverTransport;
+  boost::shared_ptr<TProtocolFactory> protocolFactory;
+  boost::shared_ptr<ThreadManager> threadManager;
+  boost::shared_ptr<PosixThreadFactory> threadFactory;
+  boost::shared_ptr<TNonblockingServer> server;
+
+  /*boost::shared_ptr<TServerTransport> serverTransport;
   boost::shared_ptr<TTransportFactory> transportFactory;
   boost::shared_ptr<TProtocolFactory> protocolFactory;
-  boost::shared_ptr<TThreadedServer> server;
+  boost::shared_ptr<TThreadedServer> server;*/
 
   std::shared_ptr<std::thread> serverThread;
 

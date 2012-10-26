@@ -75,7 +75,7 @@ void ServerGameModel::removePlayer(IDType playerID)
 
 	if (units.find(playerID) == units.end())
 	{
-		logger << "There is no such player";
+		logger << std::string("There is no such player, id = ") + std::to_string(playerID);
 	}
 	else
 	{
@@ -101,9 +101,9 @@ void ServerGameModel::move(IDType playerID, sf::Vector2f vector)
 		units.at(playerID)->setMoveVector(vector);
 		units.at(playerID)->setMoveSpeed(speed);
 
-		logger << std::string("Movement vector of player with ID = ") + std::to_string(playerID);
-		logger << std::string("changed to (") + std::to_string(vector.x) 
-			+ std::string(", ") + std::to_string(vector.y) + std::string(")");
+		//logger << std::string("Movement vector of player with ID = ") + std::to_string(playerID);
+		//logger << std::string("changed to (") + std::to_string(vector.x) 
+		//	+ std::string(", ") + std::to_string(vector.y) + std::string(")");
 	}
 
 	gameChangesMutex.unlock();
@@ -120,11 +120,10 @@ void ServerGameModel::rotate(IDType playerID, sf::Vector2f rotation)
 	else
 	{
 		dynamic_cast<unit::RotatableUnit*>(units.at(playerID).get())->setRotation(rotation);
-		logger << std::string("View vector of player with ID = ") + std::to_string(playerID);
-		logger << std::string("changed to (") + std::to_string(rotation.x) 
-			+ std::string(", ") + std::to_string(rotation.y) + std::string(")");
+		//logger << std::string("View vector of player with ID = ") + std::to_string(playerID);
+		//logger << std::string("changed to (") + std::to_string(rotation.x) 
+		//	+ std::string(", ") + std::to_string(rotation.y) + std::string(")");
 	}
-	directionUpdatedSignal(playerID, rotation);
 
 	gameChangesMutex.unlock();
 }
@@ -138,13 +137,18 @@ GameChanges ServerGameModel::getChanges(IDType id)
 		playerInfo.id = unit.first;
 		playerInfo.position.x = unit.second->getPosition().x;
 		playerInfo.position.y = unit.second->getPosition().y;
-		//playerInfo.direction.x = unit.second->getRotation().x;
-		//playerInfo.direction.y = unit.second->getRotation().y;
-		Vector2f unity;
-		unity.x = 100.0;
-		unity.y = 100.0;
-		//playerInfo.position = unity;
-		playerInfo.direction = unity;
+		//#KoCTblJlb!
+		playerInfo.direction.x = dynamic_cast<unit::RotatableUnit*>(unit.second.get())->getRotation().x;
+		playerInfo.direction.y = dynamic_cast<unit::RotatableUnit*>(unit.second.get())->getRotation().y;
+		//playerInfo.direction.x = 1;
+		//playerInfo.direction.y = 1;
+
+
+		// Vector2f unity;
+		// unity.x = 100.0;
+		// unity.y = 100.0;
+		// playerInfo.position = unity;
+		// playerInfo.direction = unity;
 		gameChanges.players.push_back(playerInfo);
 	}
 	return gameChanges;

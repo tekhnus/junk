@@ -28,18 +28,65 @@ sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
   return sf::Vector2f(dx, dy);
 } 
 
+bool prevUp, prevDown, prevLeft, prevRight;
+junk::ClientView view;
+junk::ClientModel model;
+junk::ClientController control(view, model);
+
+std::mutex updateLock;
+
+int32_t id = -1;
+
+sf::RenderWindow window(sf::VideoMode(512, 512), "Title");
+
+void processInput()
+{
+	while (true)
+	{
+		if (id == -1)
+			continue;
+
+		updateLock.lock();
+
+		bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+	  bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
+	  bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+	  bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+
+	 	sf::Vector2f diff = getDiff(1.0, up, down, left, right);
+	 	if (up != prevUp || down != prevDown || left != prevLeft || right != prevRight)
+	 	{
+	 		view.move(diff);
+	 		prevUp = up;
+	 		prevDown = down;
+	 		prevLeft = left;
+	 		prevRight = right;
+	 	}
+
+	 	if (view.players.find(id) != view.players.end())
+	 	{
+	 		sf::Vector2i posI = sf::Mouse::getPosition(window);
+	   	sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
+	   	sf::Vector2f player = view.players.at(id).getPosition();
+	   	sf::Vector2f rot = player - pos;
+	   	view.rotate(-rot);
+	  }
+
+		updateLock.unlock();
+
+   	std::chrono::milliseconds tm(30);
+   	std::this_thread::sleep_for(tm);
+	}
+}
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(512, 512), "Title");
+	//sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
 	//window.show();
-	junk::ClientView view;
-	junk::ClientModel model;
-	junk::ClientController control(view, model);
 	// junk::View view;
 
-	//model.connectToServer("localhost", 7777);
-	model.connectToServer("192.168.1.34", 7777);
+	id = model.connectToServer("localhost", 7777);
+	//model.connectToServer("192.168.1.34", 7777);
 	window.setFramerateLimit(60);
 
 	//junk::PlayerUnit u("Unit", sf::Vector2f(0.0, 0.0), sf::Vector2f(1.0, 1.0));
@@ -48,36 +95,45 @@ int main()
 	// u.setPosition(sf::Vector2f(100.0, 100.0));
 	//sf::Font font = sf::Font::getDefaultFont();
 
-	bool prevUp, prevDown, prevLeft, prevRight;
+	std::thread t(&processInput);
+
+
+	sf::Clock clock;
+	clock.restart();
+	int counter;
 
 	while (window.isOpen())
 	{
+		updateLock.lock();
+
 		window.clear();
 		model.update();
 		view.update();
 		window.draw(view);
 
-		bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
-    bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
-    bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
-    bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
-    
-   	sf::Vector2f diff = getDiff(1.0, up, down, left, right);
-   	if (up != prevUp || down != prevDown || left != prevLeft || right != prevRight)
+		//processInput();
+
+   	/*
+   	if (players.find(clientID) != players.end())
+   	//if(clientID != -1)
    	{
-   		view.move(diff);
-   		prevUp = up;
-   		prevDown = down;
-   		prevLeft = left;
-   		prevRight = right;
-   	}
-   	
-   		//sf::sleep(sf::seconds(0.01f));
+   		sf::Vector2i posI = sf::Mouse::getPosition();
+	   	sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
+	   	sf::Vector2f player = players.at(clientID).getPosition();
+	   	sf::Vector2f rot = player - pos;
+	   	logger << rot.x << rot.y;
+	   	//rotate(sf::Vector2f(-1,-1));
+   	}*/
 
 		//u.update();
 		//window.draw(u);
 		//window.draw(sf::Text("Hello", font));
 		window.display();
+		counter++;
+		std::cerr << " FPS: " << float(counter) / clock.getElapsedTime().asSeconds() << std::endl;
+
+		updateLock.unlock();
+   	sf::sleep(sf::seconds(0.05f));
 	}
 
 	return 0;

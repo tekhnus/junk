@@ -7,11 +7,13 @@ namespace junk
 
 ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
 {
+	/*
 	gameModel.subscribeForPositionUpdatedSignal(sigc::mem_fun(&networkModel, 
 		&ServerNetworkModel::clientPositionUpdated));
 
 	gameModel.subscribeForDirectionUpdatedSignal(sigc::mem_fun(&networkModel, 
 		&ServerNetworkModel::clientDirectionUpdated));
+	*/
 
 	networkModel.subscribeForConnectSignal(sigc::mem_fun(this, &ServerModel::connectHandler));
 	networkModel.subscribeForGetChangesSignal(sigc::mem_fun(this, &ServerModel::getChangesHandler));
@@ -40,11 +42,6 @@ int32_t ServerModel::connectHandler()
 GameChanges ServerModel::getChangesHandler(int32_t id)
 {
 	GameChanges gameChanges = gameModel.getChanges(id);
-	for (auto& player : gameChanges.players)
-	{
-		logger << std::to_string(player.id) + std::string(" ") 
-			+ std::to_string(player.position.x) + std::string(" ") + std::to_string(player.position.y);
-	}
 	return gameChanges;
 }
 

@@ -40,11 +40,14 @@ private:
 
   int32_t id;
 
+
 	// Client
-  boost::shared_ptr<TTransport> socket;
+  boost::shared_ptr<TSocket> socket;
   boost::shared_ptr<TTransport> transport;
   boost::shared_ptr<TProtocol> protocol;
   boost::shared_ptr<ClientServiceClient> clientServiceClient;
+
+  std::mutex socketMutex;
 
   Logger logger;
   

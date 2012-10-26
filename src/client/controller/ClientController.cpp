@@ -9,6 +9,7 @@ ClientController::ClientController(ClientView& view, ClientModel& model) : view(
 	view.subscribeForMoveSignal(sigc::mem_fun(this, &ClientController::moveHandler));
 	view.subscribeForRotateSignal(sigc::mem_fun(this, &ClientController::rotateHandler));
 
+	model.subscribeForGotClientIdSignal(sigc::mem_fun(this, &ClientController::gotClientIdHandler));
 	model.subscribeForClientAddedSignal(sigc::mem_fun(this, &ClientController::clientAddedHandler));
 	model.subscribeForClientPositionUpdatedSignal(sigc::mem_fun(this, &ClientController::clientPositionUpdatedHandler));
 	model.subscribeForClientDirectionUpdatedSignal(sigc::mem_fun(this, &ClientController::clientDirectionUpdatedHandler));
@@ -24,7 +25,7 @@ ClientController::~ClientController()
 void ClientController::gotClientIdHandler(int32_t id)
 {
 	logger << "gotClientIdHandler invoked";
-	//view.setPlayerId(id);
+	view.setClientID(id);
 }
 
 void ClientController::clientAddedHandler(int32_t id, sf::Vector2f position, sf::Vector2f direction)

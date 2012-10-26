@@ -18,7 +18,7 @@ int32_t ClientNetworkModel::connectToServer(const std::string& serverIp, int por
   logger << "Connecting to server";
 
   socket = boost::shared_ptr<TSocket> (new TSocket(serverIp, port));
-  transport = boost::shared_ptr<TTransport> (new TBufferedTransport(socket));
+  transport = boost::shared_ptr<TTransport> (new TFramedTransport(socket));
   protocol = boost::shared_ptr<TProtocol> (new TBinaryProtocol(transport));
   clientServiceClient = boost::shared_ptr<ClientServiceClient> (new ClientServiceClient(protocol));
 
@@ -37,34 +37,50 @@ ClientNetworkModel::~ClientNetworkModel()
 
 GameChanges ClientNetworkModel::getGameChanges()
 {
+  socketMutex.lock();
+
   GameChanges gameChanges;
   clientServiceClient->getChanges(gameChanges, id);
+
+  socketMutex.unlock();
   return gameChanges;
 }
 
 void ClientNetworkModel::move(sf::Vector2f direction_)
 {
+  socketMutex.lock();
+
   logger << std::string("move ") + std::to_string(direction_.x) + std::string(" ") + std::to_string(direction_.y);
   Vector2f direction;
   direction.x = direction_.x;
   direction.y = direction_.y;
   clientServiceClient->move(id, direction);
+
+  socketMutex.unlock();
 }
 
 void ClientNetworkModel::rotate(sf::Vector2f direction_)
 {
+  socketMutex.lock();
+
   Vector2f direction;
   direction.x = direction_.x;
   direction.y = direction_.y;
   clientServiceClient->rotate(id, direction);
+
+  socketMutex.unlock();
 }
 
 void ClientNetworkModel::fire(sf::Vector2f direction_)
 {
+  socketMutex.lock();
+
   Vector2f direction;
   direction.x = direction_.x;
   direction.y = direction_.y;
   clientServiceClient->fire(id, direction);
+
+  socketMutex.unlock();
 }
 
 } // namespace junk
