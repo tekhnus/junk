@@ -81,13 +81,17 @@ void processInput()
   }
 }
 
-int main()
+int main(int argc, char** argv)
 {
   //sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
   //window.show();
   // junk::View view;
-
-  id = model.connectToServer("localhost", 7777);
+  std::string address("localhost");
+  if (argc > 1)
+  {
+    address = std::string(argv[1]);
+  }
+  id = model.connectToServer(address, 7777);
   //model.connectToServer("192.168.1.34", 7777);
   window.setFramerateLimit(60);
 
@@ -98,6 +102,7 @@ int main()
   //sf::Font font = sf::Font::getDefaultFont();
 
   std::thread t(&processInput);
+
 
   sf::Clock clock;
   clock.restart();
@@ -112,23 +117,6 @@ int main()
     view.update();
     window.draw(view);
 
-    //processInput();
-
-    /*
-    if (players.find(clientID) != players.end())
-    //if(clientID != -1)
-    {
-      sf::Vector2i posI = sf::Mouse::getPosition();
-      sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
-      sf::Vector2f player = players.at(clientID).getPosition();
-      sf::Vector2f rot = player - pos;
-      logger << rot.x << rot.y;
-      //rotate(sf::Vector2f(-1,-1));
-    }*/
-
-    //u.update();
-    //window.draw(u);
-    //window.draw(sf::Text("Hello", font));
     window.display();
     counter++;
     std::cerr << " FPS: " << float(counter) / clock.getElapsedTime().asSeconds() << std::endl;
