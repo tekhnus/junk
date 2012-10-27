@@ -9,10 +9,12 @@
 
 #include "ServiceDefinition_types.h"
 
-namespace junk {
+namespace junk
+{
 
-class ServiceDefinitionConstants {
- public:
+class ServiceDefinitionConstants
+{
+public:
   ServiceDefinitionConstants();
 
 };

@@ -10,37 +10,29 @@ sf::Vector2f convert(const Vector2f& v)
 
 ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODEL", "server_model.log", true)
 {
-  handler = boost::shared_ptr<ClientServiceHandler> (new ClientServiceHandler());
-  processor = boost::shared_ptr<TProcessor> (new ClientServiceProcessor(handler));
-  protocolFactory = boost::shared_ptr<TProtocolFactory> (new TBinaryProtocolFactory());
+  handler = boost::shared_ptr<ClientServiceHandler > (new ClientServiceHandler());
+  processor = boost::shared_ptr<TProcessor > (new ClientServiceProcessor(handler));
+  protocolFactory = boost::shared_ptr<TProtocolFactory > (new TBinaryProtocolFactory());
 
   // using thread pool with maximum 15 threads to handle incoming requests
-  threadManager = boost::shared_ptr<ThreadManager> (ThreadManager::newSimpleThreadManager(15));
-  threadFactory = boost::shared_ptr<PosixThreadFactory>(new PosixThreadFactory());
+  threadManager = boost::shared_ptr<ThreadManager > (ThreadManager::newSimpleThreadManager(15));
+  threadFactory = boost::shared_ptr<PosixThreadFactory > (new PosixThreadFactory());
   threadManager->threadFactory(threadFactory);
   threadManager->start();
-  server = boost::shared_ptr<TNonblockingServer>
+  server = boost::shared_ptr<TNonblockingServer >
     (new TNonblockingServer(processor, protocolFactory, 7777, threadManager));
 
-  serverThread = std::shared_ptr<std::thread> 
+  serverThread = std::shared_ptr<std::thread >
     (new std::thread(&TNonblockingServer::serve, server.get()));
 
-  //processor = boost::shared_ptr<TProcessor> (new ClientServiceProcessor(handler));
-  //serverTransport = boost::shared_ptr<TServerTransport> (new TServerSocket(7777));
-  //transportFactory = boost::shared_ptr<TTransportFactory> (new TBufferedTransportFactory());
-  //protocolFactory = boost::shared_ptr<TProtocolFactory> (new TBinaryProtocolFactory());
-
-  //server = boost::shared_ptr<TThreadedServer> 
-  	//(new TThreadedServer (processor, serverTransport, transportFactory, protocolFactory));
-
-	logger << "ServerNetworkModel created";
+  logger << "ServerNetworkModel created";
 }
 
 ServerNetworkModel::~ServerNetworkModel()
 {
-	logger << "ServerNetworkModel destructed";
+  logger << "ServerNetworkModel destructed";
 }
-                                            
+
 void ServerNetworkModel::subscribeForConnectSignal(sigc::slot<int32_t> slot)
 {
   handler->subscribeForConnectSignal(slot);
@@ -66,7 +58,7 @@ void ServerNetworkModel::subscribeForFireSignal(sigc::slot<void, int32_t, sf::Ve
   handler->subscribeForFireSignal(slot);
 }
 
-Vector2f convertSFMLtoThrift(sf::Vector2f v)
+Vector2f convertSFMLtoThrift(const sf::Vector2f& v)
 {
   Vector2f v1;
   v1.x = v.x;

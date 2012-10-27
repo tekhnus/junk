@@ -41,7 +41,7 @@ private:
   int32_t id;
 
 
-	// Client
+  // Client
   boost::shared_ptr<TSocket> socket;
   boost::shared_ptr<TTransport> transport;
   boost::shared_ptr<TProtocol> protocol;
@@ -50,7 +50,7 @@ private:
   std::mutex socketMutex;
 
   Logger logger;
-  
+
 }; // ClientNetworkModel
 
 } // namespace junk

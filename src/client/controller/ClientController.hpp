@@ -30,7 +30,7 @@ private:
   ClientModel& model;
 
   Logger logger;
-  
+
 }; // ClientController
 
 } // namespace junk

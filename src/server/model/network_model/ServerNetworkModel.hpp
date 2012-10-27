@@ -43,7 +43,7 @@ public:
   void subscribeForFireSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
 
 private:
- 
+
   // Client
   boost::shared_ptr<ClientServiceHandler> handler;
   boost::shared_ptr<TProcessor> processor;
@@ -52,15 +52,10 @@ private:
   boost::shared_ptr<PosixThreadFactory> threadFactory;
   boost::shared_ptr<TNonblockingServer> server;
 
-  /*boost::shared_ptr<TServerTransport> serverTransport;
-  boost::shared_ptr<TTransportFactory> transportFactory;
-  boost::shared_ptr<TProtocolFactory> protocolFactory;
-  boost::shared_ptr<TThreadedServer> server;*/
-
   std::shared_ptr<std::thread> serverThread;
 
   Logger logger;
-  
+
 }; // ServerNetworkModel
 
 } // namespace junk

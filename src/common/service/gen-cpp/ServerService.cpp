@@ -6,9 +6,11 @@
  */
 #include "ServerService.h"
 
-namespace junk {
+namespace junk
+{
 
-uint32_t ServerService_connected_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_connected_args::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -23,22 +25,26 @@ uint32_t ServerService_connected_args::read(::apache::thrift::protocol::TProtoco
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     switch (fid)
     {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->id);
-          this->__isset.id = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
+    case 1:
+      if (ftype == ::apache::thrift::protocol::T_I32)
+      {
+        xfer += iprot->readI32(this->id);
+        this->__isset.id = true;
+      }
+      else
+      {
         xfer += iprot->skip(ftype);
-        break;
+      }
+      break;
+    default:
+      xfer += iprot->skip(ftype);
+      break;
     }
     xfer += iprot->readFieldEnd();
   }
@@ -48,7 +54,8 @@ uint32_t ServerService_connected_args::read(::apache::thrift::protocol::TProtoco
   return xfer;
 }
 
-uint32_t ServerService_connected_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_connected_args::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ServerService_connected_args");
 
@@ -61,7 +68,8 @@ uint32_t ServerService_connected_args::write(::apache::thrift::protocol::TProtoc
   return xfer;
 }
 
-uint32_t ServerService_connected_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_connected_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ServerService_connected_pargs");
 
@@ -74,7 +82,8 @@ uint32_t ServerService_connected_pargs::write(::apache::thrift::protocol::TProto
   return xfer;
 }
 
-uint32_t ServerService_connected_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_connected_result::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -89,7 +98,8 @@ uint32_t ServerService_connected_result::read(::apache::thrift::protocol::TProto
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -101,7 +111,8 @@ uint32_t ServerService_connected_result::read(::apache::thrift::protocol::TProto
   return xfer;
 }
 
-uint32_t ServerService_connected_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_connected_result::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
 
   uint32_t xfer = 0;
 
@@ -112,7 +123,8 @@ uint32_t ServerService_connected_result::write(::apache::thrift::protocol::TProt
   return xfer;
 }
 
-uint32_t ServerService_connected_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_connected_presult::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -127,7 +139,8 @@ uint32_t ServerService_connected_presult::read(::apache::thrift::protocol::TProt
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -139,7 +152,8 @@ uint32_t ServerService_connected_presult::read(::apache::thrift::protocol::TProt
   return xfer;
 }
 
-uint32_t ServerService_clientPositionUpdated_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_clientPositionUpdated_args::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -154,30 +168,37 @@ uint32_t ServerService_clientPositionUpdated_args::read(::apache::thrift::protoc
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     switch (fid)
     {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->id);
-          this->__isset.id = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->position.read(iprot);
-          this->__isset.position = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
+    case 1:
+      if (ftype == ::apache::thrift::protocol::T_I32)
+      {
+        xfer += iprot->readI32(this->id);
+        this->__isset.id = true;
+      }
+      else
+      {
         xfer += iprot->skip(ftype);
-        break;
+      }
+      break;
+    case 2:
+      if (ftype == ::apache::thrift::protocol::T_STRUCT)
+      {
+        xfer += this->position.read(iprot);
+        this->__isset.position = true;
+      }
+      else
+      {
+        xfer += iprot->skip(ftype);
+      }
+      break;
+    default:
+      xfer += iprot->skip(ftype);
+      break;
     }
     xfer += iprot->readFieldEnd();
   }
@@ -187,7 +208,8 @@ uint32_t ServerService_clientPositionUpdated_args::read(::apache::thrift::protoc
   return xfer;
 }
 
-uint32_t ServerService_clientPositionUpdated_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_clientPositionUpdated_args::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ServerService_clientPositionUpdated_args");
 
@@ -204,7 +226,8 @@ uint32_t ServerService_clientPositionUpdated_args::write(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t ServerService_clientPositionUpdated_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_clientPositionUpdated_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ServerService_clientPositionUpdated_pargs");
 
@@ -221,7 +244,8 @@ uint32_t ServerService_clientPositionUpdated_pargs::write(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t ServerService_clientPositionUpdated_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_clientPositionUpdated_result::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -236,7 +260,8 @@ uint32_t ServerService_clientPositionUpdated_result::read(::apache::thrift::prot
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -248,7 +273,8 @@ uint32_t ServerService_clientPositionUpdated_result::read(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t ServerService_clientPositionUpdated_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_clientPositionUpdated_result::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
 
   uint32_t xfer = 0;
 
@@ -259,7 +285,8 @@ uint32_t ServerService_clientPositionUpdated_result::write(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t ServerService_clientPositionUpdated_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_clientPositionUpdated_presult::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -274,7 +301,8 @@ uint32_t ServerService_clientPositionUpdated_presult::read(::apache::thrift::pro
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -286,7 +314,8 @@ uint32_t ServerService_clientPositionUpdated_presult::read(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t ServerService_clientDirectionUpdated_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_clientDirectionUpdated_args::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -301,30 +330,37 @@ uint32_t ServerService_clientDirectionUpdated_args::read(::apache::thrift::proto
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     switch (fid)
     {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->id);
-          this->__isset.id = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->direction.read(iprot);
-          this->__isset.direction = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
+    case 1:
+      if (ftype == ::apache::thrift::protocol::T_I32)
+      {
+        xfer += iprot->readI32(this->id);
+        this->__isset.id = true;
+      }
+      else
+      {
         xfer += iprot->skip(ftype);
-        break;
+      }
+      break;
+    case 2:
+      if (ftype == ::apache::thrift::protocol::T_STRUCT)
+      {
+        xfer += this->direction.read(iprot);
+        this->__isset.direction = true;
+      }
+      else
+      {
+        xfer += iprot->skip(ftype);
+      }
+      break;
+    default:
+      xfer += iprot->skip(ftype);
+      break;
     }
     xfer += iprot->readFieldEnd();
   }
@@ -334,7 +370,8 @@ uint32_t ServerService_clientDirectionUpdated_args::read(::apache::thrift::proto
   return xfer;
 }
 
-uint32_t ServerService_clientDirectionUpdated_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_clientDirectionUpdated_args::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ServerService_clientDirectionUpdated_args");
 
@@ -351,7 +388,8 @@ uint32_t ServerService_clientDirectionUpdated_args::write(::apache::thrift::prot
   return xfer;
 }
 
-uint32_t ServerService_clientDirectionUpdated_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_clientDirectionUpdated_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ServerService_clientDirectionUpdated_pargs");
 
@@ -368,7 +406,8 @@ uint32_t ServerService_clientDirectionUpdated_pargs::write(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t ServerService_clientDirectionUpdated_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_clientDirectionUpdated_result::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -383,7 +422,8 @@ uint32_t ServerService_clientDirectionUpdated_result::read(::apache::thrift::pro
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -395,7 +435,8 @@ uint32_t ServerService_clientDirectionUpdated_result::read(::apache::thrift::pro
   return xfer;
 }
 
-uint32_t ServerService_clientDirectionUpdated_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_clientDirectionUpdated_result::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
 
   uint32_t xfer = 0;
 
@@ -406,7 +447,8 @@ uint32_t ServerService_clientDirectionUpdated_result::write(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t ServerService_clientDirectionUpdated_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_clientDirectionUpdated_presult::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -421,7 +463,8 @@ uint32_t ServerService_clientDirectionUpdated_presult::read(::apache::thrift::pr
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -433,7 +476,8 @@ uint32_t ServerService_clientDirectionUpdated_presult::read(::apache::thrift::pr
   return xfer;
 }
 
-uint32_t ServerService_fireUpdated_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_fireUpdated_args::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -448,7 +492,8 @@ uint32_t ServerService_fireUpdated_args::read(::apache::thrift::protocol::TProto
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -460,7 +505,8 @@ uint32_t ServerService_fireUpdated_args::read(::apache::thrift::protocol::TProto
   return xfer;
 }
 
-uint32_t ServerService_fireUpdated_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_fireUpdated_args::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ServerService_fireUpdated_args");
 
@@ -469,7 +515,8 @@ uint32_t ServerService_fireUpdated_args::write(::apache::thrift::protocol::TProt
   return xfer;
 }
 
-uint32_t ServerService_fireUpdated_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_fireUpdated_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ServerService_fireUpdated_pargs");
 
@@ -478,7 +525,8 @@ uint32_t ServerService_fireUpdated_pargs::write(::apache::thrift::protocol::TPro
   return xfer;
 }
 
-uint32_t ServerService_fireUpdated_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_fireUpdated_result::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -493,7 +541,8 @@ uint32_t ServerService_fireUpdated_result::read(::apache::thrift::protocol::TPro
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -505,7 +554,8 @@ uint32_t ServerService_fireUpdated_result::read(::apache::thrift::protocol::TPro
   return xfer;
 }
 
-uint32_t ServerService_fireUpdated_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ServerService_fireUpdated_result::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
 
   uint32_t xfer = 0;
 
@@ -516,7 +566,8 @@ uint32_t ServerService_fireUpdated_result::write(::apache::thrift::protocol::TPr
   return xfer;
 }
 
-uint32_t ServerService_fireUpdated_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ServerService_fireUpdated_presult::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -531,7 +582,8 @@ uint32_t ServerService_fireUpdated_presult::read(::apache::thrift::protocol::TPr
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -571,19 +623,22 @@ void ServerServiceClient::recv_connected()
   ::apache::thrift::protocol::TMessageType mtype;
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION)
+  {
     ::apache::thrift::TApplicationException x;
     x.read(iprot_);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
     throw x;
   }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+  if (mtype != ::apache::thrift::protocol::T_REPLY)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("connected") != 0) {
+  if (fname.compare("connected") != 0)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
@@ -625,19 +680,22 @@ void ServerServiceClient::recv_clientPositionUpdated()
   ::apache::thrift::protocol::TMessageType mtype;
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION)
+  {
     ::apache::thrift::TApplicationException x;
     x.read(iprot_);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
     throw x;
   }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+  if (mtype != ::apache::thrift::protocol::T_REPLY)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("clientPositionUpdated") != 0) {
+  if (fname.compare("clientPositionUpdated") != 0)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
@@ -679,19 +737,22 @@ void ServerServiceClient::recv_clientDirectionUpdated()
   ::apache::thrift::protocol::TMessageType mtype;
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION)
+  {
     ::apache::thrift::TApplicationException x;
     x.read(iprot_);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
     throw x;
   }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+  if (mtype != ::apache::thrift::protocol::T_REPLY)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("clientDirectionUpdated") != 0) {
+  if (fname.compare("clientDirectionUpdated") != 0)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
@@ -731,19 +792,22 @@ void ServerServiceClient::recv_fireUpdated()
   ::apache::thrift::protocol::TMessageType mtype;
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION)
+  {
     ::apache::thrift::TApplicationException x;
     x.read(iprot_);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
     throw x;
   }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+  if (mtype != ::apache::thrift::protocol::T_REPLY)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("fireUpdated") != 0) {
+  if (fname.compare("fireUpdated") != 0)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
@@ -756,14 +820,16 @@ void ServerServiceClient::recv_fireUpdated()
   return;
 }
 
-bool ServerServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
+bool ServerServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext)
+{
   ProcessMap::iterator pfn;
   pfn = processMap_.find(fname);
-  if (pfn == processMap_.end()) {
+  if (pfn == processMap_.end())
+  {
     iprot->skip(::apache::thrift::protocol::T_STRUCT);
     iprot->readMessageEnd();
     iprot->getTransport()->readEnd();
-    ::apache::thrift::TApplicationException x(::apache::thrift::TApplicationException::UNKNOWN_METHOD, "Invalid method name: '"+fname+"'");
+    ::apache::thrift::TApplicationException x(::apache::thrift::TApplicationException::UNKNOWN_METHOD, "Invalid method name: '" + fname + "'");
     oprot->writeMessageBegin(fname, ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
@@ -778,12 +844,14 @@ bool ServerServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol*
 void ServerServiceProcessor::process_connected(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     ctx = this->eventHandler_->getContext("ServerService.connected", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "ServerService.connected");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preRead(ctx, "ServerService.connected");
   }
 
@@ -792,15 +860,20 @@ void ServerServiceProcessor::process_connected(int32_t seqid, ::apache::thrift::
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postRead(ctx, "ServerService.connected", bytes);
   }
 
   ServerService_connected_result result;
-  try {
+  try
+  {
     iface_->connected(args.id);
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+  }
+  catch (const std::exception& e)
+  {
+    if (this->eventHandler_.get() != NULL)
+    {
       this->eventHandler_->handlerError(ctx, "ServerService.connected");
     }
 
@@ -813,7 +886,8 @@ void ServerServiceProcessor::process_connected(int32_t seqid, ::apache::thrift::
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preWrite(ctx, "ServerService.connected");
   }
 
@@ -823,7 +897,8 @@ void ServerServiceProcessor::process_connected(int32_t seqid, ::apache::thrift::
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postWrite(ctx, "ServerService.connected", bytes);
   }
 }
@@ -831,12 +906,14 @@ void ServerServiceProcessor::process_connected(int32_t seqid, ::apache::thrift::
 void ServerServiceProcessor::process_clientPositionUpdated(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     ctx = this->eventHandler_->getContext("ServerService.clientPositionUpdated", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "ServerService.clientPositionUpdated");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preRead(ctx, "ServerService.clientPositionUpdated");
   }
 
@@ -845,15 +922,20 @@ void ServerServiceProcessor::process_clientPositionUpdated(int32_t seqid, ::apac
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postRead(ctx, "ServerService.clientPositionUpdated", bytes);
   }
 
   ServerService_clientPositionUpdated_result result;
-  try {
+  try
+  {
     iface_->clientPositionUpdated(args.id, args.position);
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+  }
+  catch (const std::exception& e)
+  {
+    if (this->eventHandler_.get() != NULL)
+    {
       this->eventHandler_->handlerError(ctx, "ServerService.clientPositionUpdated");
     }
 
@@ -866,7 +948,8 @@ void ServerServiceProcessor::process_clientPositionUpdated(int32_t seqid, ::apac
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preWrite(ctx, "ServerService.clientPositionUpdated");
   }
 
@@ -876,7 +959,8 @@ void ServerServiceProcessor::process_clientPositionUpdated(int32_t seqid, ::apac
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postWrite(ctx, "ServerService.clientPositionUpdated", bytes);
   }
 }
@@ -884,12 +968,14 @@ void ServerServiceProcessor::process_clientPositionUpdated(int32_t seqid, ::apac
 void ServerServiceProcessor::process_clientDirectionUpdated(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     ctx = this->eventHandler_->getContext("ServerService.clientDirectionUpdated", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "ServerService.clientDirectionUpdated");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preRead(ctx, "ServerService.clientDirectionUpdated");
   }
 
@@ -898,15 +984,20 @@ void ServerServiceProcessor::process_clientDirectionUpdated(int32_t seqid, ::apa
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postRead(ctx, "ServerService.clientDirectionUpdated", bytes);
   }
 
   ServerService_clientDirectionUpdated_result result;
-  try {
+  try
+  {
     iface_->clientDirectionUpdated(args.id, args.direction);
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+  }
+  catch (const std::exception& e)
+  {
+    if (this->eventHandler_.get() != NULL)
+    {
       this->eventHandler_->handlerError(ctx, "ServerService.clientDirectionUpdated");
     }
 
@@ -919,7 +1010,8 @@ void ServerServiceProcessor::process_clientDirectionUpdated(int32_t seqid, ::apa
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preWrite(ctx, "ServerService.clientDirectionUpdated");
   }
 
@@ -929,7 +1021,8 @@ void ServerServiceProcessor::process_clientDirectionUpdated(int32_t seqid, ::apa
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postWrite(ctx, "ServerService.clientDirectionUpdated", bytes);
   }
 }
@@ -937,12 +1030,14 @@ void ServerServiceProcessor::process_clientDirectionUpdated(int32_t seqid, ::apa
 void ServerServiceProcessor::process_fireUpdated(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     ctx = this->eventHandler_->getContext("ServerService.fireUpdated", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "ServerService.fireUpdated");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preRead(ctx, "ServerService.fireUpdated");
   }
 
@@ -951,15 +1046,20 @@ void ServerServiceProcessor::process_fireUpdated(int32_t seqid, ::apache::thrift
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postRead(ctx, "ServerService.fireUpdated", bytes);
   }
 
   ServerService_fireUpdated_result result;
-  try {
+  try
+  {
     iface_->fireUpdated();
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+  }
+  catch (const std::exception& e)
+  {
+    if (this->eventHandler_.get() != NULL)
+    {
       this->eventHandler_->handlerError(ctx, "ServerService.fireUpdated");
     }
 
@@ -972,7 +1072,8 @@ void ServerServiceProcessor::process_fireUpdated(int32_t seqid, ::apache::thrift
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preWrite(ctx, "ServerService.fireUpdated");
   }
 
@@ -982,12 +1083,14 @@ void ServerServiceProcessor::process_fireUpdated(int32_t seqid, ::apache::thrift
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postWrite(ctx, "ServerService.fireUpdated", bytes);
   }
 }
 
-::boost::shared_ptr< ::apache::thrift::TProcessor > ServerServiceProcessorFactory::getProcessor(const ::apache::thrift::TConnectionInfo& connInfo) {
+::boost::shared_ptr< ::apache::thrift::TProcessor > ServerServiceProcessorFactory::getProcessor(const ::apache::thrift::TConnectionInfo& connInfo)
+{
   ::apache::thrift::ReleaseHandler< ServerServiceIfFactory > cleanup(handlerFactory_);
   ::boost::shared_ptr< ServerServiceIf > handler(handlerFactory_->getHandler(connInfo), cleanup);
   ::boost::shared_ptr< ::apache::thrift::TProcessor > processor(new ServerServiceProcessor(handler));

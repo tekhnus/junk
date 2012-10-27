@@ -23,9 +23,10 @@ struct GameState {
 
 service ClientService {
 	i32 connect();
-	void move(1: i32 id, 2: Vector2f direction);
-	void rotate(1: i32 id, 2: Vector2f direction);
-	void fire(1: i32 id, 2: Vector2f direction);
 	#GameState getGameState(1: i32 id);
 	GameChanges getChanges(1: i32 id);
+
+	oneway void move(1: i32 id, 2: Vector2f direction);
+	oneway void rotate(1: i32 id, 2: Vector2f direction);
+	oneway void fire(1: i32 id, 2: Vector2f direction);
 }

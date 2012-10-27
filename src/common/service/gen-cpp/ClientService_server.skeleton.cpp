@@ -14,37 +14,45 @@ using namespace ::apache::thrift::server;
 
 using boost::shared_ptr;
 
-using namespace  ::junk;
+using namespace ::junk;
 
-class ClientServiceHandler : virtual public ClientServiceIf {
- public:
-  ClientServiceHandler() {
+class ClientServiceHandler : virtual public ClientServiceIf
+{
+public:
+
+  ClientServiceHandler()
+  {
     // Your initialization goes here
   }
 
-  void connect() {
+  void connect()
+  {
     // Your implementation goes here
     printf("connect\n");
   }
 
-  void move(const int32_t id, const Vector2f& direction) {
+  void move(const int32_t id, const Vector2f& direction)
+  {
     // Your implementation goes here
     printf("move\n");
   }
 
-  void rotate(const int32_t id, const Vector2f& direction) {
+  void rotate(const int32_t id, const Vector2f& direction)
+  {
     // Your implementation goes here
     printf("rotate\n");
   }
 
-  void fire(const int32_t id, const Vector2f& direction) {
+  void fire(const int32_t id, const Vector2f& direction)
+  {
     // Your implementation goes here
     printf("fire\n");
   }
 
 };
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   int port = 9090;
   shared_ptr<ClientServiceHandler> handler(new ClientServiceHandler());
   shared_ptr<TProcessor> processor(new ClientServiceProcessor(handler));

@@ -11,7 +11,7 @@ Server::Server()
 
 void Server::run()
 {
-	model.start();
+  model.start();
 }
 
 } // namespace junk

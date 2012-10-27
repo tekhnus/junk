@@ -4,11 +4,11 @@
 
 int main()
 {
-	junk::Server server;
-	server.run();
-	while (true)
-	{
-		
-	}
-	return 0;
+  junk::Server server;
+  server.run();
+  while (true)
+  {
+
+  }
+  return 0;
 }

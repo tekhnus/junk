@@ -6,11 +6,13 @@
  */
 #include "ServiceDefinition_constants.h"
 
-namespace junk {
+namespace junk
+{
 
 const ServiceDefinitionConstants g_ServiceDefinition_constants;
 
-ServiceDefinitionConstants::ServiceDefinitionConstants() {
+ServiceDefinitionConstants::ServiceDefinitionConstants()
+{
 }
 
 } // namespace

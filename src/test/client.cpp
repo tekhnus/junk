@@ -2,11 +2,11 @@
 
 int main()
 {
-	junk::Client client;
-	client.connectToServer("localhost", 7777);
-	while (true)
-	{
+  junk::Client client;
+  client.connectToServer("localhost", 7777);
+  while (true)
+  {
 
-	}
-	return 0;
+  }
+  return 0;
 }

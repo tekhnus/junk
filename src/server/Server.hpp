@@ -8,12 +8,12 @@ namespace junk
 class Server
 {
 public:
-	Server();
+  Server();
 
-	void run();
+  void run();
 
 private:
-	ServerModel model;
+  ServerModel model;
 
 }; // Server
 

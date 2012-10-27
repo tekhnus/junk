@@ -6,9 +6,11 @@
  */
 #include "ClientService.h"
 
-namespace junk {
+namespace junk
+{
 
-uint32_t ClientService_connect_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_connect_args::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -23,7 +25,8 @@ uint32_t ClientService_connect_args::read(::apache::thrift::protocol::TProtocol*
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -35,7 +38,8 @@ uint32_t ClientService_connect_args::read(::apache::thrift::protocol::TProtocol*
   return xfer;
 }
 
-uint32_t ClientService_connect_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_connect_args::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ClientService_connect_args");
 
@@ -44,7 +48,8 @@ uint32_t ClientService_connect_args::write(::apache::thrift::protocol::TProtocol
   return xfer;
 }
 
-uint32_t ClientService_connect_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_connect_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ClientService_connect_pargs");
 
@@ -53,7 +58,8 @@ uint32_t ClientService_connect_pargs::write(::apache::thrift::protocol::TProtoco
   return xfer;
 }
 
-uint32_t ClientService_connect_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_connect_result::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -68,7 +74,8 @@ uint32_t ClientService_connect_result::read(::apache::thrift::protocol::TProtoco
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -80,7 +87,8 @@ uint32_t ClientService_connect_result::read(::apache::thrift::protocol::TProtoco
   return xfer;
 }
 
-uint32_t ClientService_connect_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_connect_result::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
 
   uint32_t xfer = 0;
 
@@ -91,7 +99,8 @@ uint32_t ClientService_connect_result::write(::apache::thrift::protocol::TProtoc
   return xfer;
 }
 
-uint32_t ClientService_connect_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_connect_presult::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -106,7 +115,8 @@ uint32_t ClientService_connect_presult::read(::apache::thrift::protocol::TProtoc
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -118,7 +128,8 @@ uint32_t ClientService_connect_presult::read(::apache::thrift::protocol::TProtoc
   return xfer;
 }
 
-uint32_t ClientService_move_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_move_args::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -133,30 +144,37 @@ uint32_t ClientService_move_args::read(::apache::thrift::protocol::TProtocol* ip
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     switch (fid)
     {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->id);
-          this->__isset.id = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->direction.read(iprot);
-          this->__isset.direction = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
+    case 1:
+      if (ftype == ::apache::thrift::protocol::T_I32)
+      {
+        xfer += iprot->readI32(this->id);
+        this->__isset.id = true;
+      }
+      else
+      {
         xfer += iprot->skip(ftype);
-        break;
+      }
+      break;
+    case 2:
+      if (ftype == ::apache::thrift::protocol::T_STRUCT)
+      {
+        xfer += this->direction.read(iprot);
+        this->__isset.direction = true;
+      }
+      else
+      {
+        xfer += iprot->skip(ftype);
+      }
+      break;
+    default:
+      xfer += iprot->skip(ftype);
+      break;
     }
     xfer += iprot->readFieldEnd();
   }
@@ -166,7 +184,8 @@ uint32_t ClientService_move_args::read(::apache::thrift::protocol::TProtocol* ip
   return xfer;
 }
 
-uint32_t ClientService_move_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_move_args::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ClientService_move_args");
 
@@ -183,7 +202,8 @@ uint32_t ClientService_move_args::write(::apache::thrift::protocol::TProtocol* o
   return xfer;
 }
 
-uint32_t ClientService_move_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_move_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ClientService_move_pargs");
 
@@ -200,7 +220,8 @@ uint32_t ClientService_move_pargs::write(::apache::thrift::protocol::TProtocol* 
   return xfer;
 }
 
-uint32_t ClientService_move_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_move_result::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -215,7 +236,8 @@ uint32_t ClientService_move_result::read(::apache::thrift::protocol::TProtocol* 
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -227,7 +249,8 @@ uint32_t ClientService_move_result::read(::apache::thrift::protocol::TProtocol* 
   return xfer;
 }
 
-uint32_t ClientService_move_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_move_result::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
 
   uint32_t xfer = 0;
 
@@ -238,7 +261,8 @@ uint32_t ClientService_move_result::write(::apache::thrift::protocol::TProtocol*
   return xfer;
 }
 
-uint32_t ClientService_move_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_move_presult::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -253,7 +277,8 @@ uint32_t ClientService_move_presult::read(::apache::thrift::protocol::TProtocol*
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -265,7 +290,8 @@ uint32_t ClientService_move_presult::read(::apache::thrift::protocol::TProtocol*
   return xfer;
 }
 
-uint32_t ClientService_rotate_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_rotate_args::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -280,30 +306,37 @@ uint32_t ClientService_rotate_args::read(::apache::thrift::protocol::TProtocol* 
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     switch (fid)
     {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->id);
-          this->__isset.id = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->direction.read(iprot);
-          this->__isset.direction = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
+    case 1:
+      if (ftype == ::apache::thrift::protocol::T_I32)
+      {
+        xfer += iprot->readI32(this->id);
+        this->__isset.id = true;
+      }
+      else
+      {
         xfer += iprot->skip(ftype);
-        break;
+      }
+      break;
+    case 2:
+      if (ftype == ::apache::thrift::protocol::T_STRUCT)
+      {
+        xfer += this->direction.read(iprot);
+        this->__isset.direction = true;
+      }
+      else
+      {
+        xfer += iprot->skip(ftype);
+      }
+      break;
+    default:
+      xfer += iprot->skip(ftype);
+      break;
     }
     xfer += iprot->readFieldEnd();
   }
@@ -313,7 +346,8 @@ uint32_t ClientService_rotate_args::read(::apache::thrift::protocol::TProtocol* 
   return xfer;
 }
 
-uint32_t ClientService_rotate_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_rotate_args::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ClientService_rotate_args");
 
@@ -330,7 +364,8 @@ uint32_t ClientService_rotate_args::write(::apache::thrift::protocol::TProtocol*
   return xfer;
 }
 
-uint32_t ClientService_rotate_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_rotate_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ClientService_rotate_pargs");
 
@@ -347,7 +382,8 @@ uint32_t ClientService_rotate_pargs::write(::apache::thrift::protocol::TProtocol
   return xfer;
 }
 
-uint32_t ClientService_rotate_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_rotate_result::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -362,7 +398,8 @@ uint32_t ClientService_rotate_result::read(::apache::thrift::protocol::TProtocol
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -374,7 +411,8 @@ uint32_t ClientService_rotate_result::read(::apache::thrift::protocol::TProtocol
   return xfer;
 }
 
-uint32_t ClientService_rotate_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_rotate_result::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
 
   uint32_t xfer = 0;
 
@@ -385,7 +423,8 @@ uint32_t ClientService_rotate_result::write(::apache::thrift::protocol::TProtoco
   return xfer;
 }
 
-uint32_t ClientService_rotate_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_rotate_presult::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -400,7 +439,8 @@ uint32_t ClientService_rotate_presult::read(::apache::thrift::protocol::TProtoco
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -412,7 +452,8 @@ uint32_t ClientService_rotate_presult::read(::apache::thrift::protocol::TProtoco
   return xfer;
 }
 
-uint32_t ClientService_fire_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_fire_args::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -427,30 +468,37 @@ uint32_t ClientService_fire_args::read(::apache::thrift::protocol::TProtocol* ip
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     switch (fid)
     {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->id);
-          this->__isset.id = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->direction.read(iprot);
-          this->__isset.direction = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
+    case 1:
+      if (ftype == ::apache::thrift::protocol::T_I32)
+      {
+        xfer += iprot->readI32(this->id);
+        this->__isset.id = true;
+      }
+      else
+      {
         xfer += iprot->skip(ftype);
-        break;
+      }
+      break;
+    case 2:
+      if (ftype == ::apache::thrift::protocol::T_STRUCT)
+      {
+        xfer += this->direction.read(iprot);
+        this->__isset.direction = true;
+      }
+      else
+      {
+        xfer += iprot->skip(ftype);
+      }
+      break;
+    default:
+      xfer += iprot->skip(ftype);
+      break;
     }
     xfer += iprot->readFieldEnd();
   }
@@ -460,7 +508,8 @@ uint32_t ClientService_fire_args::read(::apache::thrift::protocol::TProtocol* ip
   return xfer;
 }
 
-uint32_t ClientService_fire_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_fire_args::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ClientService_fire_args");
 
@@ -477,7 +526,8 @@ uint32_t ClientService_fire_args::write(::apache::thrift::protocol::TProtocol* o
   return xfer;
 }
 
-uint32_t ClientService_fire_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_fire_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("ClientService_fire_pargs");
 
@@ -494,7 +544,8 @@ uint32_t ClientService_fire_pargs::write(::apache::thrift::protocol::TProtocol* 
   return xfer;
 }
 
-uint32_t ClientService_fire_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_fire_result::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -509,7 +560,8 @@ uint32_t ClientService_fire_result::read(::apache::thrift::protocol::TProtocol* 
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -521,7 +573,8 @@ uint32_t ClientService_fire_result::read(::apache::thrift::protocol::TProtocol* 
   return xfer;
 }
 
-uint32_t ClientService_fire_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ClientService_fire_result::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
 
   uint32_t xfer = 0;
 
@@ -532,7 +585,8 @@ uint32_t ClientService_fire_result::write(::apache::thrift::protocol::TProtocol*
   return xfer;
 }
 
-uint32_t ClientService_fire_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ClientService_fire_presult::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -547,7 +601,8 @@ uint32_t ClientService_fire_presult::read(::apache::thrift::protocol::TProtocol*
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     xfer += iprot->skip(ftype);
@@ -586,19 +641,22 @@ void ClientServiceClient::recv_connect()
   ::apache::thrift::protocol::TMessageType mtype;
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION)
+  {
     ::apache::thrift::TApplicationException x;
     x.read(iprot_);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
     throw x;
   }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+  if (mtype != ::apache::thrift::protocol::T_REPLY)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("connect") != 0) {
+  if (fname.compare("connect") != 0)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
@@ -640,19 +698,22 @@ void ClientServiceClient::recv_move()
   ::apache::thrift::protocol::TMessageType mtype;
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION)
+  {
     ::apache::thrift::TApplicationException x;
     x.read(iprot_);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
     throw x;
   }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+  if (mtype != ::apache::thrift::protocol::T_REPLY)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("move") != 0) {
+  if (fname.compare("move") != 0)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
@@ -694,19 +755,22 @@ void ClientServiceClient::recv_rotate()
   ::apache::thrift::protocol::TMessageType mtype;
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION)
+  {
     ::apache::thrift::TApplicationException x;
     x.read(iprot_);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
     throw x;
   }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+  if (mtype != ::apache::thrift::protocol::T_REPLY)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("rotate") != 0) {
+  if (fname.compare("rotate") != 0)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
@@ -748,19 +812,22 @@ void ClientServiceClient::recv_fire()
   ::apache::thrift::protocol::TMessageType mtype;
 
   iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION)
+  {
     ::apache::thrift::TApplicationException x;
     x.read(iprot_);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
     throw x;
   }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+  if (mtype != ::apache::thrift::protocol::T_REPLY)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("fire") != 0) {
+  if (fname.compare("fire") != 0)
+  {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
@@ -773,14 +840,16 @@ void ClientServiceClient::recv_fire()
   return;
 }
 
-bool ClientServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
+bool ClientServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext)
+{
   ProcessMap::iterator pfn;
   pfn = processMap_.find(fname);
-  if (pfn == processMap_.end()) {
+  if (pfn == processMap_.end())
+  {
     iprot->skip(::apache::thrift::protocol::T_STRUCT);
     iprot->readMessageEnd();
     iprot->getTransport()->readEnd();
-    ::apache::thrift::TApplicationException x(::apache::thrift::TApplicationException::UNKNOWN_METHOD, "Invalid method name: '"+fname+"'");
+    ::apache::thrift::TApplicationException x(::apache::thrift::TApplicationException::UNKNOWN_METHOD, "Invalid method name: '" + fname + "'");
     oprot->writeMessageBegin(fname, ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
@@ -795,12 +864,14 @@ bool ClientServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol*
 void ClientServiceProcessor::process_connect(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     ctx = this->eventHandler_->getContext("ClientService.connect", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "ClientService.connect");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preRead(ctx, "ClientService.connect");
   }
 
@@ -809,15 +880,20 @@ void ClientServiceProcessor::process_connect(int32_t seqid, ::apache::thrift::pr
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postRead(ctx, "ClientService.connect", bytes);
   }
 
   ClientService_connect_result result;
-  try {
+  try
+  {
     iface_->connect();
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+  }
+  catch (const std::exception& e)
+  {
+    if (this->eventHandler_.get() != NULL)
+    {
       this->eventHandler_->handlerError(ctx, "ClientService.connect");
     }
 
@@ -830,7 +906,8 @@ void ClientServiceProcessor::process_connect(int32_t seqid, ::apache::thrift::pr
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preWrite(ctx, "ClientService.connect");
   }
 
@@ -840,7 +917,8 @@ void ClientServiceProcessor::process_connect(int32_t seqid, ::apache::thrift::pr
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postWrite(ctx, "ClientService.connect", bytes);
   }
 }
@@ -848,12 +926,14 @@ void ClientServiceProcessor::process_connect(int32_t seqid, ::apache::thrift::pr
 void ClientServiceProcessor::process_move(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     ctx = this->eventHandler_->getContext("ClientService.move", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "ClientService.move");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preRead(ctx, "ClientService.move");
   }
 
@@ -862,15 +942,20 @@ void ClientServiceProcessor::process_move(int32_t seqid, ::apache::thrift::proto
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postRead(ctx, "ClientService.move", bytes);
   }
 
   ClientService_move_result result;
-  try {
+  try
+  {
     iface_->move(args.id, args.direction);
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+  }
+  catch (const std::exception& e)
+  {
+    if (this->eventHandler_.get() != NULL)
+    {
       this->eventHandler_->handlerError(ctx, "ClientService.move");
     }
 
@@ -883,7 +968,8 @@ void ClientServiceProcessor::process_move(int32_t seqid, ::apache::thrift::proto
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preWrite(ctx, "ClientService.move");
   }
 
@@ -893,7 +979,8 @@ void ClientServiceProcessor::process_move(int32_t seqid, ::apache::thrift::proto
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postWrite(ctx, "ClientService.move", bytes);
   }
 }
@@ -901,12 +988,14 @@ void ClientServiceProcessor::process_move(int32_t seqid, ::apache::thrift::proto
 void ClientServiceProcessor::process_rotate(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     ctx = this->eventHandler_->getContext("ClientService.rotate", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "ClientService.rotate");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preRead(ctx, "ClientService.rotate");
   }
 
@@ -915,15 +1004,20 @@ void ClientServiceProcessor::process_rotate(int32_t seqid, ::apache::thrift::pro
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postRead(ctx, "ClientService.rotate", bytes);
   }
 
   ClientService_rotate_result result;
-  try {
+  try
+  {
     iface_->rotate(args.id, args.direction);
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+  }
+  catch (const std::exception& e)
+  {
+    if (this->eventHandler_.get() != NULL)
+    {
       this->eventHandler_->handlerError(ctx, "ClientService.rotate");
     }
 
@@ -936,7 +1030,8 @@ void ClientServiceProcessor::process_rotate(int32_t seqid, ::apache::thrift::pro
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preWrite(ctx, "ClientService.rotate");
   }
 
@@ -946,7 +1041,8 @@ void ClientServiceProcessor::process_rotate(int32_t seqid, ::apache::thrift::pro
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postWrite(ctx, "ClientService.rotate", bytes);
   }
 }
@@ -954,12 +1050,14 @@ void ClientServiceProcessor::process_rotate(int32_t seqid, ::apache::thrift::pro
 void ClientServiceProcessor::process_fire(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     ctx = this->eventHandler_->getContext("ClientService.fire", callContext);
   }
   ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "ClientService.fire");
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preRead(ctx, "ClientService.fire");
   }
 
@@ -968,15 +1066,20 @@ void ClientServiceProcessor::process_fire(int32_t seqid, ::apache::thrift::proto
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postRead(ctx, "ClientService.fire", bytes);
   }
 
   ClientService_fire_result result;
-  try {
+  try
+  {
     iface_->fire(args.id, args.direction);
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
+  }
+  catch (const std::exception& e)
+  {
+    if (this->eventHandler_.get() != NULL)
+    {
       this->eventHandler_->handlerError(ctx, "ClientService.fire");
     }
 
@@ -989,7 +1092,8 @@ void ClientServiceProcessor::process_fire(int32_t seqid, ::apache::thrift::proto
     return;
   }
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->preWrite(ctx, "ClientService.fire");
   }
 
@@ -999,12 +1103,14 @@ void ClientServiceProcessor::process_fire(int32_t seqid, ::apache::thrift::proto
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
-  if (this->eventHandler_.get() != NULL) {
+  if (this->eventHandler_.get() != NULL)
+  {
     this->eventHandler_->postWrite(ctx, "ClientService.fire", bytes);
   }
 }
 
-::boost::shared_ptr< ::apache::thrift::TProcessor > ClientServiceProcessorFactory::getProcessor(const ::apache::thrift::TConnectionInfo& connInfo) {
+::boost::shared_ptr< ::apache::thrift::TProcessor > ClientServiceProcessorFactory::getProcessor(const ::apache::thrift::TConnectionInfo& connInfo)
+{
   ::apache::thrift::ReleaseHandler< ClientServiceIfFactory > cleanup(handlerFactory_);
   ::boost::shared_ptr< ClientServiceIf > handler(handlerFactory_->getHandler(connInfo), cleanup);
   ::boost::shared_ptr< ::apache::thrift::TProcessor > processor(new ClientServiceProcessor(handler));

@@ -10,160 +10,211 @@
 #include <thrift/TDispatchProcessor.h>
 #include "ServiceDefinition_types.h"
 
-namespace junk {
+namespace junk
+{
 
-class ClientServiceIf {
- public:
-  virtual ~ClientServiceIf() {}
+class ClientServiceIf
+{
+public:
+
+  virtual ~ClientServiceIf()
+  {
+  }
   virtual void connect() = 0;
   virtual void move(const int32_t id, const Vector2f& direction) = 0;
   virtual void rotate(const int32_t id, const Vector2f& direction) = 0;
   virtual void fire(const int32_t id, const Vector2f& direction) = 0;
 };
 
-class ClientServiceIfFactory {
- public:
+class ClientServiceIfFactory
+{
+public:
   typedef ClientServiceIf Handler;
 
-  virtual ~ClientServiceIfFactory() {}
+  virtual ~ClientServiceIfFactory()
+  {
+  }
 
   virtual ClientServiceIf* getHandler(const ::apache::thrift::TConnectionInfo& connInfo) = 0;
   virtual void releaseHandler(ClientServiceIf* /* handler */) = 0;
 };
 
-class ClientServiceIfSingletonFactory : virtual public ClientServiceIfFactory {
- public:
-  ClientServiceIfSingletonFactory(const boost::shared_ptr<ClientServiceIf>& iface) : iface_(iface) {}
-  virtual ~ClientServiceIfSingletonFactory() {}
+class ClientServiceIfSingletonFactory : virtual public ClientServiceIfFactory
+{
+public:
 
-  virtual ClientServiceIf* getHandler(const ::apache::thrift::TConnectionInfo&) {
+  ClientServiceIfSingletonFactory(const boost::shared_ptr<ClientServiceIf>& iface) : iface_(iface)
+  {
+  }
+
+  virtual ~ClientServiceIfSingletonFactory()
+  {
+  }
+
+  virtual ClientServiceIf* getHandler(const ::apache::thrift::TConnectionInfo&)
+  {
     return iface_.get();
   }
-  virtual void releaseHandler(ClientServiceIf* /* handler */) {}
 
- protected:
+  virtual void releaseHandler(ClientServiceIf* /* handler */)
+  {
+  }
+
+protected:
   boost::shared_ptr<ClientServiceIf> iface_;
 };
 
-class ClientServiceNull : virtual public ClientServiceIf {
- public:
-  virtual ~ClientServiceNull() {}
-  void connect() {
+class ClientServiceNull : virtual public ClientServiceIf
+{
+public:
+
+  virtual ~ClientServiceNull()
+  {
+  }
+
+  void connect()
+  {
     return;
   }
-  void move(const int32_t /* id */, const Vector2f& /* direction */) {
+
+  void move(const int32_t /* id */, const Vector2f& /* direction */)
+  {
     return;
   }
-  void rotate(const int32_t /* id */, const Vector2f& /* direction */) {
+
+  void rotate(const int32_t /* id */, const Vector2f& /* direction */)
+  {
     return;
   }
-  void fire(const int32_t /* id */, const Vector2f& /* direction */) {
+
+  void fire(const int32_t /* id */, const Vector2f& /* direction */)
+  {
     return;
   }
 };
 
+class ClientService_connect_args
+{
+public:
 
-class ClientService_connect_args {
- public:
-
-  ClientService_connect_args() {
+  ClientService_connect_args()
+  {
   }
 
-  virtual ~ClientService_connect_args() throw() {}
+  virtual ~ClientService_connect_args() throw ()
+  {
+  }
 
-
-  bool operator == (const ClientService_connect_args & /* rhs */) const
+  bool operator ==(const ClientService_connect_args & /* rhs */) const
   {
     return true;
   }
-  bool operator != (const ClientService_connect_args &rhs) const {
+
+  bool operator !=(const ClientService_connect_args &rhs) const
+  {
     return !(*this == rhs);
   }
 
-  bool operator < (const ClientService_connect_args & ) const;
+  bool operator<(const ClientService_connect_args &) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
+class ClientService_connect_pargs
+{
+public:
 
-class ClientService_connect_pargs {
- public:
-
-
-  virtual ~ClientService_connect_pargs() throw() {}
+  virtual ~ClientService_connect_pargs() throw ()
+  {
+  }
 
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
+class ClientService_connect_result
+{
+public:
 
-class ClientService_connect_result {
- public:
-
-  ClientService_connect_result() {
+  ClientService_connect_result()
+  {
   }
 
-  virtual ~ClientService_connect_result() throw() {}
+  virtual ~ClientService_connect_result() throw ()
+  {
+  }
 
-
-  bool operator == (const ClientService_connect_result & /* rhs */) const
+  bool operator ==(const ClientService_connect_result & /* rhs */) const
   {
     return true;
   }
-  bool operator != (const ClientService_connect_result &rhs) const {
+
+  bool operator !=(const ClientService_connect_result &rhs) const
+  {
     return !(*this == rhs);
   }
 
-  bool operator < (const ClientService_connect_result & ) const;
+  bool operator<(const ClientService_connect_result &) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
+class ClientService_connect_presult
+{
+public:
 
-class ClientService_connect_presult {
- public:
-
-
-  virtual ~ClientService_connect_presult() throw() {}
+  virtual ~ClientService_connect_presult() throw ()
+  {
+  }
 
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
 };
 
-typedef struct _ClientService_move_args__isset {
-  _ClientService_move_args__isset() : id(false), direction(false) {}
+typedef struct _ClientService_move_args__isset
+{
+
+  _ClientService_move_args__isset() : id(false), direction(false)
+  {
+  }
   bool id;
   bool direction;
 } _ClientService_move_args__isset;
 
-class ClientService_move_args {
- public:
+class ClientService_move_args
+{
+public:
 
-  ClientService_move_args() : id(0) {
+  ClientService_move_args() : id(0)
+  {
   }
 
-  virtual ~ClientService_move_args() throw() {}
+  virtual ~ClientService_move_args() throw ()
+  {
+  }
 
   int32_t id;
   Vector2f direction;
 
   _ClientService_move_args__isset __isset;
 
-  void __set_id(const int32_t val) {
+  void __set_id(const int32_t val)
+  {
     id = val;
   }
 
-  void __set_direction(const Vector2f& val) {
+  void __set_direction(const Vector2f& val)
+  {
     direction = val;
   }
 
-  bool operator == (const ClientService_move_args & rhs) const
+  bool operator ==(const ClientService_move_args & rhs) const
   {
     if (!(id == rhs.id))
       return false;
@@ -171,23 +222,26 @@ class ClientService_move_args {
       return false;
     return true;
   }
-  bool operator != (const ClientService_move_args &rhs) const {
+
+  bool operator !=(const ClientService_move_args &rhs) const
+  {
     return !(*this == rhs);
   }
 
-  bool operator < (const ClientService_move_args & ) const;
+  bool operator<(const ClientService_move_args &) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
+class ClientService_move_pargs
+{
+public:
 
-class ClientService_move_pargs {
- public:
-
-
-  virtual ~ClientService_move_pargs() throw() {}
+  virtual ~ClientService_move_pargs() throw ()
+  {
+  }
 
   const int32_t* id;
   const Vector2f* direction;
@@ -196,71 +250,86 @@ class ClientService_move_pargs {
 
 };
 
+class ClientService_move_result
+{
+public:
 
-class ClientService_move_result {
- public:
-
-  ClientService_move_result() {
+  ClientService_move_result()
+  {
   }
 
-  virtual ~ClientService_move_result() throw() {}
+  virtual ~ClientService_move_result() throw ()
+  {
+  }
 
-
-  bool operator == (const ClientService_move_result & /* rhs */) const
+  bool operator ==(const ClientService_move_result & /* rhs */) const
   {
     return true;
   }
-  bool operator != (const ClientService_move_result &rhs) const {
+
+  bool operator !=(const ClientService_move_result &rhs) const
+  {
     return !(*this == rhs);
   }
 
-  bool operator < (const ClientService_move_result & ) const;
+  bool operator<(const ClientService_move_result &) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
+class ClientService_move_presult
+{
+public:
 
-class ClientService_move_presult {
- public:
-
-
-  virtual ~ClientService_move_presult() throw() {}
+  virtual ~ClientService_move_presult() throw ()
+  {
+  }
 
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
 };
 
-typedef struct _ClientService_rotate_args__isset {
-  _ClientService_rotate_args__isset() : id(false), direction(false) {}
+typedef struct _ClientService_rotate_args__isset
+{
+
+  _ClientService_rotate_args__isset() : id(false), direction(false)
+  {
+  }
   bool id;
   bool direction;
 } _ClientService_rotate_args__isset;
 
-class ClientService_rotate_args {
- public:
+class ClientService_rotate_args
+{
+public:
 
-  ClientService_rotate_args() : id(0) {
+  ClientService_rotate_args() : id(0)
+  {
   }
 
-  virtual ~ClientService_rotate_args() throw() {}
+  virtual ~ClientService_rotate_args() throw ()
+  {
+  }
 
   int32_t id;
   Vector2f direction;
 
   _ClientService_rotate_args__isset __isset;
 
-  void __set_id(const int32_t val) {
+  void __set_id(const int32_t val)
+  {
     id = val;
   }
 
-  void __set_direction(const Vector2f& val) {
+  void __set_direction(const Vector2f& val)
+  {
     direction = val;
   }
 
-  bool operator == (const ClientService_rotate_args & rhs) const
+  bool operator ==(const ClientService_rotate_args & rhs) const
   {
     if (!(id == rhs.id))
       return false;
@@ -268,23 +337,26 @@ class ClientService_rotate_args {
       return false;
     return true;
   }
-  bool operator != (const ClientService_rotate_args &rhs) const {
+
+  bool operator !=(const ClientService_rotate_args &rhs) const
+  {
     return !(*this == rhs);
   }
 
-  bool operator < (const ClientService_rotate_args & ) const;
+  bool operator<(const ClientService_rotate_args &) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
+class ClientService_rotate_pargs
+{
+public:
 
-class ClientService_rotate_pargs {
- public:
-
-
-  virtual ~ClientService_rotate_pargs() throw() {}
+  virtual ~ClientService_rotate_pargs() throw ()
+  {
+  }
 
   const int32_t* id;
   const Vector2f* direction;
@@ -293,71 +365,86 @@ class ClientService_rotate_pargs {
 
 };
 
+class ClientService_rotate_result
+{
+public:
 
-class ClientService_rotate_result {
- public:
-
-  ClientService_rotate_result() {
+  ClientService_rotate_result()
+  {
   }
 
-  virtual ~ClientService_rotate_result() throw() {}
+  virtual ~ClientService_rotate_result() throw ()
+  {
+  }
 
-
-  bool operator == (const ClientService_rotate_result & /* rhs */) const
+  bool operator ==(const ClientService_rotate_result & /* rhs */) const
   {
     return true;
   }
-  bool operator != (const ClientService_rotate_result &rhs) const {
+
+  bool operator !=(const ClientService_rotate_result &rhs) const
+  {
     return !(*this == rhs);
   }
 
-  bool operator < (const ClientService_rotate_result & ) const;
+  bool operator<(const ClientService_rotate_result &) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
+class ClientService_rotate_presult
+{
+public:
 
-class ClientService_rotate_presult {
- public:
-
-
-  virtual ~ClientService_rotate_presult() throw() {}
+  virtual ~ClientService_rotate_presult() throw ()
+  {
+  }
 
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
 };
 
-typedef struct _ClientService_fire_args__isset {
-  _ClientService_fire_args__isset() : id(false), direction(false) {}
+typedef struct _ClientService_fire_args__isset
+{
+
+  _ClientService_fire_args__isset() : id(false), direction(false)
+  {
+  }
   bool id;
   bool direction;
 } _ClientService_fire_args__isset;
 
-class ClientService_fire_args {
- public:
+class ClientService_fire_args
+{
+public:
 
-  ClientService_fire_args() : id(0) {
+  ClientService_fire_args() : id(0)
+  {
   }
 
-  virtual ~ClientService_fire_args() throw() {}
+  virtual ~ClientService_fire_args() throw ()
+  {
+  }
 
   int32_t id;
   Vector2f direction;
 
   _ClientService_fire_args__isset __isset;
 
-  void __set_id(const int32_t val) {
+  void __set_id(const int32_t val)
+  {
     id = val;
   }
 
-  void __set_direction(const Vector2f& val) {
+  void __set_direction(const Vector2f& val)
+  {
     direction = val;
   }
 
-  bool operator == (const ClientService_fire_args & rhs) const
+  bool operator ==(const ClientService_fire_args & rhs) const
   {
     if (!(id == rhs.id))
       return false;
@@ -365,23 +452,26 @@ class ClientService_fire_args {
       return false;
     return true;
   }
-  bool operator != (const ClientService_fire_args &rhs) const {
+
+  bool operator !=(const ClientService_fire_args &rhs) const
+  {
     return !(*this == rhs);
   }
 
-  bool operator < (const ClientService_fire_args & ) const;
+  bool operator<(const ClientService_fire_args &) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
+class ClientService_fire_pargs
+{
+public:
 
-class ClientService_fire_pargs {
- public:
-
-
-  virtual ~ClientService_fire_pargs() throw() {}
+  virtual ~ClientService_fire_pargs() throw ()
+  {
+  }
 
   const int32_t* id;
   const Vector2f* direction;
@@ -390,61 +480,75 @@ class ClientService_fire_pargs {
 
 };
 
+class ClientService_fire_result
+{
+public:
 
-class ClientService_fire_result {
- public:
-
-  ClientService_fire_result() {
+  ClientService_fire_result()
+  {
   }
 
-  virtual ~ClientService_fire_result() throw() {}
+  virtual ~ClientService_fire_result() throw ()
+  {
+  }
 
-
-  bool operator == (const ClientService_fire_result & /* rhs */) const
+  bool operator ==(const ClientService_fire_result & /* rhs */) const
   {
     return true;
   }
-  bool operator != (const ClientService_fire_result &rhs) const {
+
+  bool operator !=(const ClientService_fire_result &rhs) const
+  {
     return !(*this == rhs);
   }
 
-  bool operator < (const ClientService_fire_result & ) const;
+  bool operator<(const ClientService_fire_result &) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
+class ClientService_fire_presult
+{
+public:
 
-class ClientService_fire_presult {
- public:
-
-
-  virtual ~ClientService_fire_presult() throw() {}
+  virtual ~ClientService_fire_presult() throw ()
+  {
+  }
 
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
 };
 
-class ClientServiceClient : virtual public ClientServiceIf {
- public:
+class ClientServiceClient : virtual public ClientServiceIf
+{
+public:
+
   ClientServiceClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) :
-    piprot_(prot),
-    poprot_(prot) {
+  piprot_(prot),
+  poprot_(prot)
+  {
     iprot_ = prot.get();
     oprot_ = prot.get();
   }
+
   ClientServiceClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> iprot, boost::shared_ptr< ::apache::thrift::protocol::TProtocol> oprot) :
-    piprot_(iprot),
-    poprot_(oprot) {
+  piprot_(iprot),
+  poprot_(oprot)
+  {
     iprot_ = iprot.get();
     oprot_ = oprot.get();
   }
-  boost::shared_ptr< ::apache::thrift::protocol::TProtocol> getInputProtocol() {
+
+  boost::shared_ptr< ::apache::thrift::protocol::TProtocol> getInputProtocol()
+  {
     return piprot_;
   }
-  boost::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
+
+  boost::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol()
+  {
     return poprot_;
   }
   void connect();
@@ -459,91 +563,120 @@ class ClientServiceClient : virtual public ClientServiceIf {
   void fire(const int32_t id, const Vector2f& direction);
   void send_fire(const int32_t id, const Vector2f& direction);
   void recv_fire();
- protected:
+protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
   ::apache::thrift::protocol::TProtocol* iprot_;
   ::apache::thrift::protocol::TProtocol* oprot_;
 };
 
-class ClientServiceProcessor : public ::apache::thrift::TDispatchProcessor {
- protected:
+class ClientServiceProcessor : public ::apache::thrift::TDispatchProcessor
+{
+protected:
   boost::shared_ptr<ClientServiceIf> iface_;
   virtual bool dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext);
- private:
-  typedef  void (ClientServiceProcessor::*ProcessFunction)(int32_t, ::apache::thrift::protocol::TProtocol*, ::apache::thrift::protocol::TProtocol*, void*);
+private:
+  typedef void (ClientServiceProcessor::*ProcessFunction)(int32_t, ::apache::thrift::protocol::TProtocol*, ::apache::thrift::protocol::TProtocol*, void*);
   typedef std::map<std::string, ProcessFunction> ProcessMap;
   ProcessMap processMap_;
   void process_connect(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_move(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_rotate(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_fire(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
- public:
+public:
+
   ClientServiceProcessor(boost::shared_ptr<ClientServiceIf> iface) :
-    iface_(iface) {
+  iface_(iface)
+  {
     processMap_["connect"] = &ClientServiceProcessor::process_connect;
     processMap_["move"] = &ClientServiceProcessor::process_move;
     processMap_["rotate"] = &ClientServiceProcessor::process_rotate;
     processMap_["fire"] = &ClientServiceProcessor::process_fire;
   }
 
-  virtual ~ClientServiceProcessor() {}
+  virtual ~ClientServiceProcessor()
+  {
+  }
 };
 
-class ClientServiceProcessorFactory : public ::apache::thrift::TProcessorFactory {
- public:
+class ClientServiceProcessorFactory : public ::apache::thrift::TProcessorFactory
+{
+public:
+
   ClientServiceProcessorFactory(const ::boost::shared_ptr< ClientServiceIfFactory >& handlerFactory) :
-      handlerFactory_(handlerFactory) {}
+  handlerFactory_(handlerFactory)
+  {
+  }
 
   ::boost::shared_ptr< ::apache::thrift::TProcessor > getProcessor(const ::apache::thrift::TConnectionInfo& connInfo);
 
- protected:
+protected:
   ::boost::shared_ptr< ClientServiceIfFactory > handlerFactory_;
 };
 
-class ClientServiceMultiface : virtual public ClientServiceIf {
- public:
-  ClientServiceMultiface(std::vector<boost::shared_ptr<ClientServiceIf> >& ifaces) : ifaces_(ifaces) {
+class ClientServiceMultiface : virtual public ClientServiceIf
+{
+public:
+
+  ClientServiceMultiface(std::vector<boost::shared_ptr<ClientServiceIf> >& ifaces) : ifaces_(ifaces)
+  {
   }
-  virtual ~ClientServiceMultiface() {}
- protected:
+
+  virtual ~ClientServiceMultiface()
+  {
+  }
+protected:
   std::vector<boost::shared_ptr<ClientServiceIf> > ifaces_;
-  ClientServiceMultiface() {}
-  void add(boost::shared_ptr<ClientServiceIf> iface) {
+
+  ClientServiceMultiface()
+  {
+  }
+
+  void add(boost::shared_ptr<ClientServiceIf> iface)
+  {
     ifaces_.push_back(iface);
   }
- public:
-  void connect() {
+public:
+
+  void connect()
+  {
     size_t sz = ifaces_.size();
     size_t i = 0;
-    for (; i < (sz - 1); ++i) {
+    for (; i < (sz - 1); ++i)
+    {
       ifaces_[i]->connect();
     }
     ifaces_[i]->connect();
   }
 
-  void move(const int32_t id, const Vector2f& direction) {
+  void move(const int32_t id, const Vector2f& direction)
+  {
     size_t sz = ifaces_.size();
     size_t i = 0;
-    for (; i < (sz - 1); ++i) {
+    for (; i < (sz - 1); ++i)
+    {
       ifaces_[i]->move(id, direction);
     }
     ifaces_[i]->move(id, direction);
   }
 
-  void rotate(const int32_t id, const Vector2f& direction) {
+  void rotate(const int32_t id, const Vector2f& direction)
+  {
     size_t sz = ifaces_.size();
     size_t i = 0;
-    for (; i < (sz - 1); ++i) {
+    for (; i < (sz - 1); ++i)
+    {
       ifaces_[i]->rotate(id, direction);
     }
     ifaces_[i]->rotate(id, direction);
   }
 
-  void fire(const int32_t id, const Vector2f& direction) {
+  void fire(const int32_t id, const Vector2f& direction)
+  {
     size_t sz = ifaces_.size();
     size_t i = 0;
-    for (; i < (sz - 1); ++i) {
+    for (; i < (sz - 1); ++i)
+    {
       ifaces_[i]->fire(id, direction);
     }
     ifaces_[i]->fire(id, direction);

@@ -3,9 +3,11 @@
 #include "client/model/ClientModel.hpp"
 #include <SFML/Window.hpp>
 
+#include <mutex>
+
 sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
 {
-	time = 1;
+  time = 1;
   float dx = 0;
   float dy = 0;
   if (up)
@@ -26,7 +28,7 @@ sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
     dy /= sqrt(2.0);
   }
   return sf::Vector2f(dx, dy);
-} 
+}
 
 bool prevUp, prevDown, prevLeft, prevRight;
 junk::ClientView view;
@@ -41,100 +43,99 @@ sf::RenderWindow window(sf::VideoMode(512, 512), "Title");
 
 void processInput()
 {
-	while (true)
-	{
-		if (id == -1)
-			continue;
+  while (true)
+  {
+    if (id == -1)
+      continue;
 
-		updateLock.lock();
+    updateLock.lock();
 
-		bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
-	  bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
-	  bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
-	  bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+    bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+    bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
+    bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+    bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
 
-	 	sf::Vector2f diff = getDiff(1.0, up, down, left, right);
-	 	if (up != prevUp || down != prevDown || left != prevLeft || right != prevRight)
-	 	{
-	 		view.move(diff);
-	 		prevUp = up;
-	 		prevDown = down;
-	 		prevLeft = left;
-	 		prevRight = right;
-	 	}
+    sf::Vector2f diff = getDiff(1.0, up, down, left, right);
+    if (up != prevUp || down != prevDown || left != prevLeft || right != prevRight)
+    {
+      view.move(diff);
+      prevUp = up;
+      prevDown = down;
+      prevLeft = left;
+      prevRight = right;
+    }
 
-	 	if (view.players.find(id) != view.players.end())
-	 	{
-	 		sf::Vector2i posI = sf::Mouse::getPosition(window);
-	   	sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
-	   	sf::Vector2f player = view.players.at(id).getPosition();
-	   	sf::Vector2f rot = player - pos;
-	   	view.rotate(-rot);
-	  }
+    if (view.players.find(id) != view.players.end())
+    {
+      sf::Vector2i posI = sf::Mouse::getPosition(window);
+      sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
+      sf::Vector2f player = view.players.at(id).getPosition();
+      sf::Vector2f rot = player - pos;
+      view.rotate(-rot);
+    }
 
-		updateLock.unlock();
+    updateLock.unlock();
 
-   	std::chrono::milliseconds tm(30);
-   	std::this_thread::sleep_for(tm);
-	}
+    std::chrono::milliseconds tm(30);
+    std::this_thread::sleep_for(tm);
+  }
 }
 
 int main()
 {
-	//sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
-	//window.show();
-	// junk::View view;
+  //sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
+  //window.show();
+  // junk::View view;
 
-	id = model.connectToServer("localhost", 7777);
-	//model.connectToServer("192.168.1.34", 7777);
-	window.setFramerateLimit(60);
+  id = model.connectToServer("localhost", 7777);
+  //model.connectToServer("192.168.1.34", 7777);
+  window.setFramerateLimit(60);
 
-	//junk::PlayerUnit u("Unit", sf::Vector2f(0.0, 0.0), sf::Vector2f(1.0, 1.0));
-	// view.addPlayer(sf::Vector2f(100.0, 100.0), sf::Vector2f(100.0, 100.0));
+  //junk::PlayerUnit u("Unit", sf::Vector2f(0.0, 0.0), sf::Vector2f(1.0, 1.0));
+  // view.addPlayer(sf::Vector2f(100.0, 100.0), sf::Vector2f(100.0, 100.0));
 
-	// u.setPosition(sf::Vector2f(100.0, 100.0));
-	//sf::Font font = sf::Font::getDefaultFont();
+  // u.setPosition(sf::Vector2f(100.0, 100.0));
+  //sf::Font font = sf::Font::getDefaultFont();
 
-	std::thread t(&processInput);
+  std::thread t(&processInput);
 
+  sf::Clock clock;
+  clock.restart();
+  int counter;
 
-	sf::Clock clock;
-	clock.restart();
-	int counter;
+  while (window.isOpen())
+  {
+    updateLock.lock();
 
-	while (window.isOpen())
-	{
-		updateLock.lock();
+    window.clear();
+    model.update();
+    view.update();
+    window.draw(view);
 
-		window.clear();
-		model.update();
-		view.update();
-		window.draw(view);
+    //processInput();
 
-		//processInput();
+    /*
+    if (players.find(clientID) != players.end())
+    //if(clientID != -1)
+    {
+      sf::Vector2i posI = sf::Mouse::getPosition();
+      sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
+      sf::Vector2f player = players.at(clientID).getPosition();
+      sf::Vector2f rot = player - pos;
+      logger << rot.x << rot.y;
+      //rotate(sf::Vector2f(-1,-1));
+    }*/
 
-   	/*
-   	if (players.find(clientID) != players.end())
-   	//if(clientID != -1)
-   	{
-   		sf::Vector2i posI = sf::Mouse::getPosition();
-	   	sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
-	   	sf::Vector2f player = players.at(clientID).getPosition();
-	   	sf::Vector2f rot = player - pos;
-	   	logger << rot.x << rot.y;
-	   	//rotate(sf::Vector2f(-1,-1));
-   	}*/
+    //u.update();
+    //window.draw(u);
+    //window.draw(sf::Text("Hello", font));
+    window.display();
+    counter++;
+    std::cerr << " FPS: " << float(counter) / clock.getElapsedTime().asSeconds() << std::endl;
 
-		//u.update();
-		//window.draw(u);
-		//window.draw(sf::Text("Hello", font));
-		window.display();
-		counter++;
-		std::cerr << " FPS: " << float(counter) / clock.getElapsedTime().asSeconds() << std::endl;
+    updateLock.unlock();
+    sf::sleep(sf::seconds(0.05f));
+  }
 
-		updateLock.unlock();
-   	sf::sleep(sf::seconds(0.05f));
-	}
-
-	return 0;
+  return 0;
 }

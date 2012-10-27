@@ -19,17 +19,17 @@ public:
 
 private:
 
-	GameChanges getChangesHandler(int32_t id);
-	int connectHandler();
-	void moveHandler(int32_t id, sf::Vector2f direction);
-	void rotateHandler(int32_t id, sf::Vector2f direction);
-	void fireHandler(int32_t id, sf::Vector2f direction);
+  GameChanges getChangesHandler(int32_t id);
+  int connectHandler();
+  void moveHandler(int32_t id, sf::Vector2f direction);
+  void rotateHandler(int32_t id, sf::Vector2f direction);
+  void fireHandler(int32_t id, sf::Vector2f direction);
 
-	ServerNetworkModel networkModel;
-	ServerGameModel gameModel;
+  ServerNetworkModel networkModel;
+  ServerGameModel gameModel;
 
   Logger logger;
-  
+
 }; // ServerModel
 
 } // namespace junk

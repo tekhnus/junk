@@ -8,12 +8,14 @@
 
 #include <algorithm>
 
-namespace junk {
+namespace junk
+{
 
 const char* Vector2f::ascii_fingerprint = "EA2086D2BB14222991D7B0497DE7B58B";
-const uint8_t Vector2f::binary_fingerprint[16] = {0xEA,0x20,0x86,0xD2,0xBB,0x14,0x22,0x29,0x91,0xD7,0xB0,0x49,0x7D,0xE7,0xB5,0x8B};
+const uint8_t Vector2f::binary_fingerprint[16] = {0xEA, 0x20, 0x86, 0xD2, 0xBB, 0x14, 0x22, 0x29, 0x91, 0xD7, 0xB0, 0x49, 0x7D, 0xE7, 0xB5, 0x8B};
 
-uint32_t Vector2f::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t Vector2f::read(::apache::thrift::protocol::TProtocol* iprot)
+{
 
   uint32_t xfer = 0;
   std::string fname;
@@ -28,30 +30,37 @@ uint32_t Vector2f::read(::apache::thrift::protocol::TProtocol* iprot) {
   while (true)
   {
     xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
+    if (ftype == ::apache::thrift::protocol::T_STOP)
+    {
       break;
     }
     switch (fid)
     {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
-          xfer += iprot->readDouble(this->x);
-          this->__isset.x = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
-          xfer += iprot->readDouble(this->y);
-          this->__isset.y = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
+    case 1:
+      if (ftype == ::apache::thrift::protocol::T_DOUBLE)
+      {
+        xfer += iprot->readDouble(this->x);
+        this->__isset.x = true;
+      }
+      else
+      {
         xfer += iprot->skip(ftype);
-        break;
+      }
+      break;
+    case 2:
+      if (ftype == ::apache::thrift::protocol::T_DOUBLE)
+      {
+        xfer += iprot->readDouble(this->y);
+        this->__isset.y = true;
+      }
+      else
+      {
+        xfer += iprot->skip(ftype);
+      }
+      break;
+    default:
+      xfer += iprot->skip(ftype);
+      break;
     }
     xfer += iprot->readFieldEnd();
   }
@@ -61,7 +70,8 @@ uint32_t Vector2f::read(::apache::thrift::protocol::TProtocol* iprot) {
   return xfer;
 }
 
-uint32_t Vector2f::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t Vector2f::write(::apache::thrift::protocol::TProtocol* oprot) const
+{
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("Vector2f");
 
@@ -78,7 +88,8 @@ uint32_t Vector2f::write(::apache::thrift::protocol::TProtocol* oprot) const {
   return xfer;
 }
 
-void swap(Vector2f &a, Vector2f &b) {
+void swap(Vector2f &a, Vector2f &b)
+{
   using ::std::swap;
   swap(a.x, b.x);
   swap(a.y, b.y);
