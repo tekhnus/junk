@@ -43,9 +43,21 @@ ClientView::~ClientView()
 {
 }
 
+void ClientView::setModel(ClientModel* clientModel)
+{
+  subscribeForFireSignal(sigc::mem_fun(clientModel, &ClientModel::fire));
+  subscribeForMoveSignal(sigc::mem_fun(clientModel, &ClientModel::move));
+  subscribeForRotateSignal(sigc::mem_fun(clientModel, &ClientModel::rotate));
+
+  clientModel->subscribeForGotClientIdSignal(sigc::mem_fun(this, &ClientView::setClientID));
+  clientModel->subscribeForClientAddedSignal(sigc::mem_fun(this, &ClientView::addPlayer));
+  clientModel->subscribeForClientPositionUpdatedSignal(sigc::mem_fun(this, &ClientView::setPlayerPosition));
+  clientModel->subscribeForClientDirectionUpdatedSignal(sigc::mem_fun(this, &ClientView::setPlayerRotation));
+}
+
 void ClientView::addPlayer(IDType playerID, sf::Vector2f position, sf::Vector2f rotation)
 {
-  logger << std::string("Adding player") + std::to_string(playerID);
+  logger << std::string("Adding player ") + std::to_string(playerID);
   assert(players.find(playerID) == players.end());
   players[playerID] = PlayerUnit(std::to_string(playerID), position, rotation);
 }
@@ -58,7 +70,6 @@ void ClientView::removePlayer(IDType playerID)
 void ClientView::setPlayerPosition(IDType playerID, sf::Vector2f position)
 {
   logger << std::string("setPlayerPosition invoked, id = ") + std::to_string(playerID);
-  logger << std::string("position ") + std::to_string(position.x) + std::string(" ") + std::to_string(position.y);
   if (players.find(playerID) != players.end())
   {
     players[playerID].setPosition(position);
@@ -106,7 +117,7 @@ void ClientView::rotate(sf::Vector2f rotation)
 
 void ClientView::setClientID(IDType clientID)
 {
-  logger << std::string("Setting client id ") + std::to_string(clientID);
+  logger << std::string("Setting client id to ") + std::to_string(clientID);
   this->clientID = clientID;
 }
 
@@ -122,10 +133,6 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   for (auto& player : players)
   {
-    if (players.find(clientID) != players.end())
-    {
-
-    }
     target.draw(player.second, states);
   }
 }

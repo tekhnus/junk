@@ -9,7 +9,7 @@ Logger& Logger::operator<<(const T &message)
   {
     return *this;
   }
-  std::unique_lock<std::mutex> lock(safelog);
+  std::lock_guard<std::mutex> lock(safelog);
   if (verbose)
   {
     writeHead(std::cerr, true, false);

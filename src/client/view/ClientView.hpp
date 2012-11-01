@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Unit.hpp"
+#include "client/model/ClientModel.hpp"
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -10,6 +11,7 @@
 
 #include <map>
 #include <cassert>
+#include <memory>
 
 //for std::this_thread::sleep_for
 #ifndef _GLIBCXX_USE_NANOSLEEP
@@ -28,6 +30,8 @@ class ClientView : public sf::Drawable
 public:
   ClientView();
   virtual ~ClientView();
+
+  void setModel(ClientModel* clientModel);
 
   void addPlayer(IDType playerID, sf::Vector2f position, sf::Vector2f rotation);
   void removePlayer(IDType playerID);

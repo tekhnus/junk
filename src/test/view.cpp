@@ -1,5 +1,4 @@
 #include "client/view/ClientView.hpp"
-#include "client/controller/ClientController.hpp"
 #include "client/model/ClientModel.hpp"
 #include <SFML/Window.hpp>
 
@@ -33,7 +32,6 @@ sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
 bool prevUp, prevDown, prevLeft, prevRight;
 junk::ClientView view;
 junk::ClientModel model;
-junk::ClientController control(view, model);
 
 std::mutex updateLock;
 
@@ -83,26 +81,22 @@ void processInput()
 
 int main(int argc, char** argv)
 {
+  std::cerr << "hello, world!" << std::endl;
   //sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
   //window.show();
-  // junk::View view;
   std::string address("localhost");
   if (argc > 1)
   {
     address = std::string(argv[1]);
   }
+  view.setModel(&model);
   id = model.connectToServer(address, 7777);
-  //model.connectToServer("192.168.1.34", 7777);
   window.setFramerateLimit(60);
-
-  //junk::PlayerUnit u("Unit", sf::Vector2f(0.0, 0.0), sf::Vector2f(1.0, 1.0));
-  // view.addPlayer(sf::Vector2f(100.0, 100.0), sf::Vector2f(100.0, 100.0));
 
   // u.setPosition(sf::Vector2f(100.0, 100.0));
   //sf::Font font = sf::Font::getDefaultFont();
 
   std::thread t(&processInput);
-
 
   sf::Clock clock;
   clock.restart();

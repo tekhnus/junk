@@ -3,8 +3,9 @@
 namespace junk
 {
 
-Client::Client() : controller(view, model)
+Client::Client()
 {
+  view.setModel(&model);
 }
 
 void Client::connectToServer(const std::string& serverIp, int port)
