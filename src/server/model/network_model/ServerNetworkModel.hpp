@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/System.hpp>
-#include <sigc++/sigc++.h>
 #include <common/logger/Logger.hpp>
 #include <common/service/client/ClientServiceHandler.hpp>
 
@@ -36,11 +35,11 @@ public:
 
   int addClient();
 
-  void subscribeForConnectSignal(sigc::slot<int32_t> slot);
-  void subscribeForGetChangesSignal(sigc::slot<GameChanges, int32_t> slot);
-  void subscribeForMoveSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
-  void subscribeForRotateSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
-  void subscribeForFireSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
+  boost::signals2::signal<int32_t (), boost::signals2::last_value<int32_t> > connectSignal;
+  boost::signals2::signal<GameChanges (int32_t), boost::signals2::last_value<GameChanges> > getChangesSignal;
+  boost::signals2::signal<void (int32_t, sf::Vector2f)> moveSignal;
+  boost::signals2::signal<void (int32_t, sf::Vector2f)> rotateSignal;
+  boost::signals2::signal<void (int32_t, sf::Vector2f)> fireSignal;
 
 private:
 

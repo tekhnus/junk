@@ -16,7 +16,7 @@ ClientModel::~ClientModel()
 int32_t ClientModel::connectToServer(const std::string& serverIp, int port)
 {
   clientId = networkModel.connectToServer(serverIp, port);
-  gotClientIdSignal.emit(clientId);
+  gotClientIdSignal(clientId);
   return clientId;
 }
 
@@ -38,7 +38,7 @@ void ClientModel::addPlayer(int32_t id, sf::Vector2f position, sf::Vector2f dire
 {
   logger << "Adding new player";
   players[id] = Player(id, position, direction);
-  clientAddedSignal.emit(id, position, direction);
+  clientAddedSignal(id, position, direction);
 }
 
 void ClientModel::updatePlayerPosition(int32_t id, sf::Vector2f position)
@@ -51,7 +51,7 @@ void ClientModel::updatePlayerPosition(int32_t id, sf::Vector2f position)
   else
   {
     players[id].setPosition(position);
-    clientPositionUpdatedSignal.emit(id, position);
+    clientPositionUpdatedSignal(id, position);
     return;
   }
 }
@@ -66,29 +66,9 @@ void ClientModel::updatePlayerDirection(int32_t id, sf::Vector2f direction)
   else
   {
     players[id].setDirection(direction);
-    clientDirectionUpdatedSignal.emit(id, direction);
+    clientDirectionUpdatedSignal(id, direction);
     return;
   }
-}
-
-void ClientModel::subscribeForGotClientIdSignal(sigc::slot<void, int32_t> slot)
-{
-  gotClientIdSignal.connect(slot);
-}
-
-void ClientModel::subscribeForClientAddedSignal(sigc::slot<void, int32_t, sf::Vector2f, sf::Vector2f> slot)
-{
-  clientAddedSignal.connect(slot);
-}
-
-void ClientModel::subscribeForClientPositionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)
-{
-  clientPositionUpdatedSignal.connect(slot);
-}
-
-void ClientModel::subscribeForClientDirectionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)
-{
-  clientDirectionUpdatedSignal.connect(slot);
 }
 
 void ClientModel::move(sf::Vector2f direction)

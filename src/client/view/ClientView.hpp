@@ -5,7 +5,7 @@
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include <sigc++/sigc++.h>
+#include <boost/signals2.hpp>
 
 #include <common/logger/Logger.hpp>
 
@@ -42,27 +42,22 @@ public:
   void move(sf::Vector2f direction);
   void rotate(sf::Vector2f rotation);
 
-  bool subscribeForFireSignal(sigc::slot<void, sf::Vector2f> slot);
-  bool subscribeForMoveSignal(sigc::slot<void, sf::Vector2f> slot);
-  bool subscribeForRotateSignal(sigc::slot<void, sf::Vector2f> slot);
-
   void setClientID(IDType clientID);
   void update();
 
   // Kostul'!!!
   std::map<IDType, PlayerUnit> players;
 
-private:
-  sigc::signal<void, sf::Vector2f> fireSignal;
-  sigc::signal<void, sf::Vector2f> moveSignal;
-  sigc::signal<void, sf::Vector2f> rotateSignal;
+  boost::signals2::signal<void (sf::Vector2f)> fireSignal;
+  boost::signals2::signal<void (sf::Vector2f)> moveSignal;
+  boost::signals2::signal<void (sf::Vector2f)> rotateSignal;
 
+private:
   IDType clientID;
   void processInput();
   Logger logger;
   std::thread inputThread;
   bool prevUp, prevDown, prevLeft, prevRight;
-
 
 protected:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;

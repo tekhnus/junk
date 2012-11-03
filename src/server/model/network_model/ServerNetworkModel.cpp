@@ -25,37 +25,18 @@ ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODEL", "serve
   serverThread = std::shared_ptr<std::thread >
     (new std::thread(&TNonblockingServer::serve, server.get()));
 
+  handler->moveSignal.connect(this->moveSignal);
+  handler->rotateSignal.connect(this->rotateSignal);
+  handler->fireSignal.connect(this->fireSignal);
+  handler->connectSignal.connect(this->connectSignal);
+  handler->getChangesSignal.connect(this->getChangesSignal);
+
   logger << "ServerNetworkModel created";
 }
 
 ServerNetworkModel::~ServerNetworkModel()
 {
   logger << "ServerNetworkModel destructed";
-}
-
-void ServerNetworkModel::subscribeForConnectSignal(sigc::slot<int32_t> slot)
-{
-  handler->subscribeForConnectSignal(slot);
-}
-
-void ServerNetworkModel::subscribeForGetChangesSignal(sigc::slot<GameChanges, int32_t> slot)
-{
-  handler->subscribeForGetChangesSignal(slot);
-}
-
-void ServerNetworkModel::subscribeForMoveSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)
-{
-  handler->subscribeForMoveSignal(slot);
-}
-
-void ServerNetworkModel::subscribeForRotateSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)
-{
-  handler->subscribeForRotateSignal(slot);
-}
-
-void ServerNetworkModel::subscribeForFireSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)
-{
-  handler->subscribeForFireSignal(slot);
 }
 
 Vector2f convertSFMLtoThrift(const sf::Vector2f& v)

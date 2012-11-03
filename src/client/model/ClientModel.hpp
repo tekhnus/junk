@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/System.hpp>
-#include <sigc++/sigc++.h>
+#include <boost/signals2.hpp>
 #include <common/logger/Logger.hpp>
 #include "network_model/ClientNetworkModel.hpp"
 
@@ -57,24 +57,19 @@ public:
   void updatePlayerPosition(int32_t id, sf::Vector2f position);
   void updatePlayerDirection(int32_t id, sf::Vector2f direction);
 
-  void subscribeForGotClientIdSignal(sigc::slot<void, int32_t> slot);
-  void subscribeForClientAddedSignal(sigc::slot<void, int32_t, sf::Vector2f, sf::Vector2f> slot);
-  void subscribeForClientPositionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
-  void subscribeForClientDirectionUpdatedSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
-
   void move(sf::Vector2f direction);
   void rotate(sf::Vector2f direction);
   void fire(sf::Vector2f direction);
+
+  boost::signals2::signal<void (int32_t)> gotClientIdSignal;
+  boost::signals2::signal<void (int32_t, sf::Vector2f, sf::Vector2f)> clientAddedSignal;
+  boost::signals2::signal<void (int32_t, sf::Vector2f)> clientPositionUpdatedSignal;
+  boost::signals2::signal<void (int32_t, sf::Vector2f)> clientDirectionUpdatedSignal;
 
 private:
   std::unordered_map<int32_t, Player> players;
   ClientNetworkModel networkModel;
   int32_t clientId;
-
-  sigc::signal<void, int32_t> gotClientIdSignal;
-  sigc::signal<void, int32_t, sf::Vector2f, sf::Vector2f> clientAddedSignal;
-  sigc::signal<void, int32_t, sf::Vector2f> clientPositionUpdatedSignal;
-  sigc::signal<void, int32_t, sf::Vector2f> clientDirectionUpdatedSignal;
 
   Logger logger;
 

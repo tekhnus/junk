@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/System.hpp>
-#include <sigc++/sigc++.h>
 #include <common/logger/Logger.hpp>
 #include "network_model/ServerNetworkModel.hpp"
 #include "game_model/ServerGameModel.hpp"

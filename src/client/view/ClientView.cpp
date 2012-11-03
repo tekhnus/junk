@@ -45,14 +45,14 @@ ClientView::~ClientView()
 
 void ClientView::setModel(ClientModel* clientModel)
 {
-  subscribeForFireSignal(sigc::mem_fun(clientModel, &ClientModel::fire));
-  subscribeForMoveSignal(sigc::mem_fun(clientModel, &ClientModel::move));
-  subscribeForRotateSignal(sigc::mem_fun(clientModel, &ClientModel::rotate));
+  fireSignal.connect(boost::bind(&ClientModel::fire, clientModel, _1));
+  moveSignal.connect(boost::bind(&ClientModel::move, clientModel, _1));
+  rotateSignal.connect(boost::bind(&ClientModel::rotate, clientModel, _1));
 
-  clientModel->subscribeForGotClientIdSignal(sigc::mem_fun(this, &ClientView::setClientID));
-  clientModel->subscribeForClientAddedSignal(sigc::mem_fun(this, &ClientView::addPlayer));
-  clientModel->subscribeForClientPositionUpdatedSignal(sigc::mem_fun(this, &ClientView::setPlayerPosition));
-  clientModel->subscribeForClientDirectionUpdatedSignal(sigc::mem_fun(this, &ClientView::setPlayerRotation));
+  clientModel->gotClientIdSignal.connect(boost::bind(&ClientView::setClientID, this, _1));
+  clientModel->clientAddedSignal.connect(boost::bind(&ClientView::addPlayer, this, _1, _2, _3));
+  clientModel->clientPositionUpdatedSignal.connect(boost::bind(&ClientView::setPlayerPosition, this, _1, _2));
+  clientModel->clientDirectionUpdatedSignal.connect(boost::bind(&ClientView::setPlayerRotation, this, _1, _2));
 }
 
 void ClientView::addPlayer(IDType playerID, sf::Vector2f position, sf::Vector2f rotation)
@@ -85,34 +85,16 @@ void ClientView::setPlayerRotation(IDType playerID, sf::Vector2f rotation)
   }
 }
 
-bool ClientView::subscribeForFireSignal(sigc::slot<void, sf::Vector2f> slot)
-{
-  fireSignal.connect(slot);
-  return true;
-}
-
-bool ClientView::subscribeForMoveSignal(sigc::slot<void, sf::Vector2f> slot)
-{
-  moveSignal.connect(slot);
-  return true;
-}
-
-bool ClientView::subscribeForRotateSignal(sigc::slot<void, sf::Vector2f> slot)
-{
-  rotateSignal.connect(slot);
-  return true;
-}
-
 void ClientView::move(sf::Vector2f direction)
 {
   logger << "move invoked";
-  moveSignal.emit(direction);
+  moveSignal(direction);
 }
 
 void ClientView::rotate(sf::Vector2f rotation)
 {
   logger << "rotate invoked";
-  rotateSignal.emit(rotation);
+  rotateSignal(rotation);
 }
 
 void ClientView::setClientID(IDType clientID)
