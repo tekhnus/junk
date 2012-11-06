@@ -43,9 +43,21 @@ ClientView::~ClientView()
 {
 }
 
+void ClientView::setModel(ClientModel* clientModel)
+{
+  fireSignal.connect(boost::bind(&ClientModel::fire, clientModel, _1));
+  moveSignal.connect(boost::bind(&ClientModel::move, clientModel, _1));
+  rotateSignal.connect(boost::bind(&ClientModel::rotate, clientModel, _1));
+
+  clientModel->gotClientIdSignal.connect(boost::bind(&ClientView::setClientID, this, _1));
+  clientModel->clientAddedSignal.connect(boost::bind(&ClientView::addPlayer, this, _1, _2, _3));
+  clientModel->clientPositionUpdatedSignal.connect(boost::bind(&ClientView::setPlayerPosition, this, _1, _2));
+  clientModel->clientDirectionUpdatedSignal.connect(boost::bind(&ClientView::setPlayerRotation, this, _1, _2));
+}
+
 void ClientView::addPlayer(IDType playerID, sf::Vector2f position, sf::Vector2f rotation)
 {
-  logger << std::string("Adding player") + std::to_string(playerID);
+  logger << std::string("Adding player ") + std::to_string(playerID);
   assert(players.find(playerID) == players.end());
   players[playerID] = PlayerUnit(std::to_string(playerID), position, rotation);
 }
@@ -58,7 +70,6 @@ void ClientView::removePlayer(IDType playerID)
 void ClientView::setPlayerPosition(IDType playerID, sf::Vector2f position)
 {
   logger << std::string("setPlayerPosition invoked, id = ") + std::to_string(playerID);
-  logger << std::string("position ") + std::to_string(position.x) + std::string(" ") + std::to_string(position.y);
   if (players.find(playerID) != players.end())
   {
     players[playerID].setPosition(position);
@@ -74,39 +85,21 @@ void ClientView::setPlayerRotation(IDType playerID, sf::Vector2f rotation)
   }
 }
 
-bool ClientView::subscribeForFireSignal(sigc::slot<void, sf::Vector2f> slot)
-{
-  fireSignal.connect(slot);
-  return true;
-}
-
-bool ClientView::subscribeForMoveSignal(sigc::slot<void, sf::Vector2f> slot)
-{
-  moveSignal.connect(slot);
-  return true;
-}
-
-bool ClientView::subscribeForRotateSignal(sigc::slot<void, sf::Vector2f> slot)
-{
-  rotateSignal.connect(slot);
-  return true;
-}
-
 void ClientView::move(sf::Vector2f direction)
 {
   logger << "move invoked";
-  moveSignal.emit(direction);
+  moveSignal(direction);
 }
 
 void ClientView::rotate(sf::Vector2f rotation)
 {
   logger << "rotate invoked";
-  rotateSignal.emit(rotation);
+  rotateSignal(rotation);
 }
 
 void ClientView::setClientID(IDType clientID)
 {
-  logger << std::string("Setting client id ") + std::to_string(clientID);
+  logger << std::string("Setting client id to ") + std::to_string(clientID);
   this->clientID = clientID;
 }
 
@@ -122,10 +115,6 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   for (auto& player : players)
   {
-    if (players.find(clientID) != players.end())
-    {
-
-    }
     target.draw(player.second, states);
   }
 }

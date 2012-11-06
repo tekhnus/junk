@@ -8,6 +8,26 @@ sf::Vector2f convert(const Vector2f& v)
   return sf::Vector2f(v.x, v.y);
 }
 
+class MonitoringServerEventHandler : public TServerEventHandler
+{
+public:
+  virtual void* createContext(boost::shared_ptr<protocol::TProtocol> input,
+                              boost::shared_ptr<protocol::TProtocol> output)
+  {
+    printf("SampleEventHandler callback: Client connected\n");
+    return NULL;
+  }
+
+  virtual void deleteContext(void* serverContext,
+    boost::shared_ptr<protocol::TProtocol>input,
+    boost::shared_ptr<protocol::TProtocol>output)
+  {
+    std::cout << ((TSocket*)(input->getTransport().get()))->getSocketInfo() << std::endl;
+    printf("SampleEventHandler callback: Client disconnected\n");
+    return (void)NULL;
+  }
+};
+
 ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODEL", "server_model.log", true)
 {
   handler = boost::shared_ptr<ClientServiceHandler > (new ClientServiceHandler());
@@ -22,8 +42,17 @@ ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODEL", "serve
   server = boost::shared_ptr<TNonblockingServer >
     (new TNonblockingServer(processor, protocolFactory, 7777, threadManager));
 
+  server->setServerEventHandler(boost::shared_ptr<MonitoringServerEventHandler>
+                                (new MonitoringServerEventHandler));
+
   serverThread = std::shared_ptr<std::thread >
     (new std::thread(&TNonblockingServer::serve, server.get()));
+
+  handler->moveSignal.connect(this->moveSignal);
+  handler->rotateSignal.connect(this->rotateSignal);
+  handler->fireSignal.connect(this->fireSignal);
+  handler->connectSignal.connect(this->connectSignal);
+  handler->getChangesSignal.connect(this->getChangesSignal);
 
   logger << "ServerNetworkModel created";
 }
@@ -31,31 +60,6 @@ ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODEL", "serve
 ServerNetworkModel::~ServerNetworkModel()
 {
   logger << "ServerNetworkModel destructed";
-}
-
-void ServerNetworkModel::subscribeForConnectSignal(sigc::slot<int32_t> slot)
-{
-  handler->subscribeForConnectSignal(slot);
-}
-
-void ServerNetworkModel::subscribeForGetChangesSignal(sigc::slot<GameChanges, int32_t> slot)
-{
-  handler->subscribeForGetChangesSignal(slot);
-}
-
-void ServerNetworkModel::subscribeForMoveSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)
-{
-  handler->subscribeForMoveSignal(slot);
-}
-
-void ServerNetworkModel::subscribeForRotateSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)
-{
-  handler->subscribeForRotateSignal(slot);
-}
-
-void ServerNetworkModel::subscribeForFireSignal(sigc::slot<void, int32_t, sf::Vector2f> slot)
-{
-  handler->subscribeForFireSignal(slot);
 }
 
 Vector2f convertSFMLtoThrift(const sf::Vector2f& v)

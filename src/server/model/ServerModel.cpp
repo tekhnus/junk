@@ -1,5 +1,4 @@
 #include <SFML/System.hpp>
-#include <sigc++/sigc++.h>
 #include "ServerModel.hpp"
 
 namespace junk
@@ -7,11 +6,11 @@ namespace junk
 
 ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
 {
-  networkModel.subscribeForConnectSignal(sigc::mem_fun(this, &ServerModel::connectHandler));
-  networkModel.subscribeForGetChangesSignal(sigc::mem_fun(this, &ServerModel::getChangesHandler));
-  networkModel.subscribeForMoveSignal(sigc::mem_fun(this, &ServerModel::moveHandler));
-  networkModel.subscribeForRotateSignal(sigc::mem_fun(this, &ServerModel::rotateHandler));
-  networkModel.subscribeForFireSignal(sigc::mem_fun(this, &ServerModel::fireHandler));
+  networkModel.connectSignal.connect(boost::bind(&ServerModel::connectHandler, this));
+  networkModel.getChangesSignal.connect(boost::bind(&ServerModel::getChangesHandler, this, _1));
+  networkModel.moveSignal.connect(boost::bind(&ServerModel::moveHandler, this, _1, _2));
+  networkModel.rotateSignal.connect(boost::bind(&ServerModel::rotateHandler, this, _1, _2));
+  networkModel.fireSignal.connect(boost::bind(&ServerModel::fireHandler, this, _1, _2));
 
   logger << "ServerModel created";
 }
@@ -33,8 +32,7 @@ int32_t ServerModel::connectHandler()
 
 GameChanges ServerModel::getChangesHandler(int32_t id)
 {
-  GameChanges gameChanges = gameModel.getChanges(id);
-  return gameChanges;
+  return gameModel.getChanges(id);
 }
 
 void ServerModel::moveHandler(int32_t id, sf::Vector2f direction)

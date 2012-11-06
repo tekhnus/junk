@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/System.hpp>
-#include <sigc++/sigc++.h>
 #include <common/logger/Logger.hpp>
 #include "network_model/ServerNetworkModel.hpp"
 #include "game_model/ServerGameModel.hpp"
@@ -20,7 +19,7 @@ public:
 private:
 
   GameChanges getChangesHandler(int32_t id);
-  int connectHandler();
+  int32_t connectHandler();
   void moveHandler(int32_t id, sf::Vector2f direction);
   void rotateHandler(int32_t id, sf::Vector2f direction);
   void fireHandler(int32_t id, sf::Vector2f direction);

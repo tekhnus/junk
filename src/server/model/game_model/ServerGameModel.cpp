@@ -1,5 +1,4 @@
 #include "ServerGameModel.hpp"
-#include "sigc++/sigc++.h"
 #include <functional>
 
 namespace junk
@@ -142,23 +141,6 @@ GameChanges ServerGameModel::getChanges(IDType id)
 
   gameChangesMutex.unlock();
 }*/
-
-/*bool ServerGameModel::subscribeForFireSignal(sigc::slot<void, IDType, sf::Vector2f> slot)
-{
-  fireSignal.connect(slot);
-}*/
-
-void ServerGameModel::subscribeForPositionUpdatedSignal(sigc::slot<void, IDType, sf::Vector2f> slot)
-{
-  logger << "Subscribing for positionUpdatedSignal";
-  positionUpdatedSignal.connect(slot);
-}
-
-void ServerGameModel::subscribeForDirectionUpdatedSignal(sigc::slot<void, IDType, sf::Vector2f> slot)
-{
-  logger << "Subscribing for directionUpdatedSignal";
-  directionUpdatedSignal.connect(slot);
-}
 
 void ServerGameModel::operator()()
 {

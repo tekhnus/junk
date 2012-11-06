@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/System.hpp>
-#include <sigc++/sigc++.h>
+#include <boost/signals2.hpp>
 #include <common/logger/Logger.hpp>
 
 #include <gen-cpp/ClientService.h>
@@ -23,19 +23,13 @@ public:
   void rotate(int32_t id, const Vector2f& direction);
   void fire(int32_t id, const Vector2f& direction);
 
-  void subscribeForConnectSignal(sigc::slot<int32_t> slot);
-  void subscribeForGetChangesSignal(sigc::slot<GameChanges, int32_t> slot);
-  void subscribeForMoveSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
-  void subscribeForRotateSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
-  void subscribeForFireSignal(sigc::slot<void, int32_t, sf::Vector2f> slot);
+  boost::signals2::signal<int32_t (), boost::signals2::last_value<int32_t> > connectSignal;
+  boost::signals2::signal<GameChanges (int32_t), boost::signals2::last_value<GameChanges> > getChangesSignal;
+  boost::signals2::signal<void (int32_t, sf::Vector2f)> moveSignal;
+  boost::signals2::signal<void (int32_t, sf::Vector2f)> rotateSignal;
+  boost::signals2::signal<void (int32_t, sf::Vector2f)> fireSignal;
 
 private:
-  sigc::signal<int32_t> connectSignal;
-  sigc::signal<GameChanges, int32_t> getChangesSignal;
-  sigc::signal<void, int32_t, sf::Vector2f> moveSignal;
-  sigc::signal<void, int32_t, sf::Vector2f> rotateSignal;
-  sigc::signal<void, int32_t, sf::Vector2f> fireSignal;
-  
   std::mutex getChangesMutex;
 
 }; // ClientServiceHandle

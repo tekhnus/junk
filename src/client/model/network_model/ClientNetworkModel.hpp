@@ -40,7 +40,6 @@ private:
 
   int32_t id;
 
-
   // Client
   boost::shared_ptr<TSocket> socket;
   boost::shared_ptr<TTransport> transport;

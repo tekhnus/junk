@@ -2,7 +2,6 @@
 
 #include "client/view/ClientView.hpp"
 #include "client/model/ClientModel.hpp"
-#include "client/controller/ClientController.hpp"
 
 namespace junk
 {
@@ -23,7 +22,6 @@ public:
 private:
   ClientView view;
   ClientModel model;
-  ClientController controller;
 }; // Client
 
 } // namespace junk
