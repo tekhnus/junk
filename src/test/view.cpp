@@ -37,6 +37,7 @@ std::mutex updateLock;
 
 int32_t id = -1;
 
+//sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
 sf::RenderWindow window(sf::VideoMode(512, 512), "Title");
 
 void processInput()
@@ -116,7 +117,7 @@ int main(int argc, char** argv)
     std::cerr << " FPS: " << float(counter) / clock.getElapsedTime().asSeconds() << std::endl;
 
     updateLock.unlock();
-    sf::sleep(sf::seconds(0.05f));
+    sf::sleep(sf::milliseconds(30));
   }
 
   return 0;

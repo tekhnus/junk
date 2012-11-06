@@ -33,11 +33,11 @@ void ClientServiceHandler::fire(int32_t id, const Vector2f& direction)
 
 void ClientServiceHandler::getChanges(GameChanges& gameChanges, int32_t id)
 {
-  getChangesMutex.lock();
+  //getChangesMutex.lock();
 
   gameChanges = getChangesSignal(id);
 
-  getChangesMutex.unlock();
+  //getChangesMutex.unlock();
 }
 
 } // namespace junk

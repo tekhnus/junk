@@ -19,7 +19,7 @@ public:
 private:
 
   GameChanges getChangesHandler(int32_t id);
-  int connectHandler();
+  int32_t connectHandler();
   void moveHandler(int32_t id, sf::Vector2f direction);
   void rotateHandler(int32_t id, sf::Vector2f direction);
   void fireHandler(int32_t id, sf::Vector2f direction);
