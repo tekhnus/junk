@@ -86,6 +86,7 @@ int main(int argc, char** argv)
   //sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
   //window.show();
   std::string address("localhost");
+  //std::string address("192.168.1.36");
   if (argc > 1)
   {
     address = std::string(argv[1]);

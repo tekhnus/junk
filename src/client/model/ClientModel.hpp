@@ -57,9 +57,7 @@ public:
   void updatePlayerPosition(int32_t id, sf::Vector2f position);
   void updatePlayerDirection(int32_t id, sf::Vector2f direction);
 
-  void move(sf::Vector2f direction);
-  void rotate(sf::Vector2f direction);
-  void fire(sf::Vector2f direction);
+  void makeAction(const Action& action);
 
   boost::signals2::signal<void (int32_t)> gotClientIdSignal;
   boost::signals2::signal<void (int32_t, sf::Vector2f, sf::Vector2f)> clientAddedSignal;
@@ -67,9 +65,16 @@ public:
   boost::signals2::signal<void (int32_t, sf::Vector2f)> clientDirectionUpdatedSignal;
 
 private:
+  struct ClientInfo
+  {
+    ClientInfo(int32_t id = -1): id(id) {}
+    int32_t id;
+  };
+
   std::unordered_map<int32_t, Player> players;
   ClientNetworkModel networkModel;
-  int32_t clientId;
+
+  ClientInfo clientInfo;
 
   Logger logger;
 

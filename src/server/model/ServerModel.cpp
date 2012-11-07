@@ -6,11 +6,12 @@ namespace junk
 
 ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
 {
-  networkModel.connectSignal.connect(boost::bind(&ServerModel::connectHandler, this));
+  networkModel.connectSignal.connect(boost::bind(&ServerModel::connectHandler, this, _1));
   networkModel.getChangesSignal.connect(boost::bind(&ServerModel::getChangesHandler, this, _1));
-  networkModel.moveSignal.connect(boost::bind(&ServerModel::moveHandler, this, _1, _2));
-  networkModel.rotateSignal.connect(boost::bind(&ServerModel::rotateHandler, this, _1, _2));
-  networkModel.fireSignal.connect(boost::bind(&ServerModel::fireHandler, this, _1, _2));
+  networkModel.makeActionSignal.connect(boost::bind(&ServerModel::makeActionHandler, this, _1, _2));
+
+  random.seed(42);
+  sessionExpirationTime = sf::seconds(5.0f);
 
   logger << "ServerModel created";
 }
@@ -20,34 +21,140 @@ ServerModel::~ServerModel()
   logger << "ServerModel destroyed";
 }
 
+void ServerModel::expiredSessionsCleaner()
+{
+  while (serverIsRunning)
+  {
+    clientInfoMutex.lock();
+
+    logger << "Cleaning expired sessions";
+
+    sf::Time currentTime = clock.getElapsedTime();
+
+    std::vector<int32_t> eraseCandidates;
+    for (const auto& it : clientInfo)
+    {
+      if (currentTime - it.second.lastUpdateTime > sessionExpirationTime)
+      {
+        eraseCandidates.push_back(it.first);
+      }
+    }
+    for (auto index : eraseCandidates)
+    {
+      logger << std::string("Cleaning ") + std::to_string(index);
+      clientInfo.erase(index);
+    }
+
+    clientInfoMutex.unlock();
+
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+  }
+}
+
 void ServerModel::start()
 {
+  serverIsRunning = true;
+
   gameModel.start();
+
+  expiredSessionsCleanerThread = std::shared_ptr<std::thread>
+      (new std::thread(&ServerModel::expiredSessionsCleaner, this));
+
+  clock.restart();
 }
 
-int32_t ServerModel::connectHandler()
+SessionInfo ServerModel::addClient(int32_t id)
 {
-  return gameModel.addPlayer();
+  clientInfoMutex.lock();
+
+  ClientInfo client(id);
+  client.uuid = generator();
+  client.lastUpdateTime = clock.getElapsedTime();
+  clientInfo.insert(std::make_pair(id, client));
+
+  SessionInfo sessionInfo;
+  sessionInfo.id = client.id;
+  sessionInfo.uuid = boost::uuids::to_string(client.uuid);
+
+  clientInfoMutex.unlock();
+
+  return sessionInfo;
 }
 
-GameChanges ServerModel::getChangesHandler(int32_t id)
+void ServerModel::updateLastUpdateTime(int32_t id)
 {
-  return gameModel.getChanges(id);
+  clientInfo[id].lastUpdateTime = clock.getElapsedTime();
 }
 
-void ServerModel::moveHandler(int32_t id, sf::Vector2f direction)
+ServerModel::CheckStatus ServerModel::checkClientSessionInfo(const SessionInfo& sessionInfo)
 {
-  gameModel.move(id, direction);
+  clientInfoMutex.lock();
+
+  ServerModel::CheckStatus checkStatus;
+
+  if (clientInfo.find(sessionInfo.id) == clientInfo.end())
+  {
+    checkStatus = ServerModel::CheckStatus::CLIENT_NOT_FOUND;
+  }
+  else
+  if (boost::uuids::to_string(clientInfo[sessionInfo.id].uuid) != sessionInfo.uuid)
+  {
+    checkStatus = ServerModel::CheckStatus::WROND_UUID;
+  }
+  else
+  {
+    checkStatus = ServerModel::CheckStatus::CORRECT_UUID;
+  }
+
+  clientInfoMutex.unlock();
+
+  return checkStatus;
 }
 
-void ServerModel::rotateHandler(int32_t id, sf::Vector2f direction)
+SessionInfo ServerModel::connectHandler(const ConnectInfo& connectInfo)
 {
-  gameModel.rotate(id, direction);
+  int playerID = gameModel.addPlayer();
+  return addClient(playerID);
 }
 
-void ServerModel::fireHandler(int32_t id, sf::Vector2f direction)
+GameChanges ServerModel::getChangesHandler(const SessionInfo& sessionInfo)
 {
-  //gameModel.fire(id, position);
+  if (checkClientSessionInfo(sessionInfo) != ServerModel::CheckStatus::CORRECT_UUID)
+  {
+    throw BadLogin();
+  }
+
+  updateLastUpdateTime(sessionInfo.id);
+
+  return gameModel.getChanges(sessionInfo.id);
+}
+
+void ServerModel::makeActionHandler(const SessionInfo& sessionInfo, const Action& action)
+{
+  if (checkClientSessionInfo(sessionInfo) != ServerModel::CheckStatus::CORRECT_UUID)
+  {
+    throw BadLogin();
+  }
+
+  updateLastUpdateTime(sessionInfo.id);
+
+  switch (action.actionType)
+  {
+    case ActionType::MOVE:
+      //gameModel.move(action.playerID, action.moveAction);
+      break;
+
+    case ActionType::ROTATE:
+      //gameModel.rotate(action.playerID, action.rotateAction);
+      break;
+
+    case ActionType::FIRE:
+      //gameModel.fire(action.playerID, action.fireAction);
+      break;
+
+    default:
+      logger << "Error: Unrecognized action";
+  }
 }
 
 } // namespace junk

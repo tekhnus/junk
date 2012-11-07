@@ -2,26 +2,30 @@
 
 namespace cpp junk
 
-struct Vector2f {
-  1: double x,
-  2: double y
-}
-
-struct PlayerInfo {
-	1: i32 id,
-	2: Vector2f position,
-	3: Vector2f direction
-}
+include "Shared.thrift"
+include "Patches.thrift"
+include "Actions.thrift"
 
 struct GameChanges {
-	1: list<PlayerInfo> players
+  1: list<Patches.ModelPatch> patches
+}
+
+struct SessionInfo {
+  1: i32 id,
+  2: binary uuid
+}
+
+struct ConnectInfo {
+  1: string name
+}
+
+exception BadLogin {
 }
 
 service ClientService {
-  i32 connect();
-  GameChanges getChanges(1: i32 id);
+  SessionInfo connect(1: ConnectInfo connectInfo);
 
-  oneway void move(1: i32 id, 2: Vector2f direction);
-	oneway void rotate(1: i32 id, 2: Vector2f direction);
-	oneway void fire(1: i32 id, 2: Vector2f direction);
+  GameChanges getChanges(1: SessionInfo sessionInfo) throws (1: BadLogin badLogin);
+
+  void makeAction(1: SessionInfo sessionInfo, 2: Actions.Action action) throws (1: BadLogin badLogin);
 }

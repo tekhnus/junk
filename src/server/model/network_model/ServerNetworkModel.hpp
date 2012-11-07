@@ -33,13 +33,12 @@ public:
   ServerNetworkModel();
   ~ServerNetworkModel();
 
-  int addClient();
+  boost::signals2::signal<SessionInfo (const ConnectInfo&),
+    boost::signals2::last_value<SessionInfo> > connectSignal;
 
-  boost::signals2::signal<int32_t (), boost::signals2::last_value<int32_t> > connectSignal;
-  boost::signals2::signal<GameChanges (int32_t), boost::signals2::last_value<GameChanges> > getChangesSignal;
-  boost::signals2::signal<void (int32_t, sf::Vector2f)> moveSignal;
-  boost::signals2::signal<void (int32_t, sf::Vector2f)> rotateSignal;
-  boost::signals2::signal<void (int32_t, sf::Vector2f)> fireSignal;
+  boost::signals2::signal<GameChanges (const SessionInfo&), boost::signals2::last_value<GameChanges> > getChangesSignal;
+
+  boost::signals2::signal<void (const SessionInfo&, const Action& action)> makeActionSignal;
 
 private:
 

@@ -42,15 +42,15 @@ public:
   void move(sf::Vector2f direction);
   void rotate(sf::Vector2f rotation);
 
+  void makeAction(const Action& action);
+
   void setClientID(IDType clientID);
   void update();
 
   // Kostul'!!!
   std::map<IDType, PlayerUnit> players;
 
-  boost::signals2::signal<void (sf::Vector2f)> fireSignal;
-  boost::signals2::signal<void (sf::Vector2f)> moveSignal;
-  boost::signals2::signal<void (sf::Vector2f)> rotateSignal;
+  boost::signals2::signal<void (const Action& action)> makeActionSignal;
 
 private:
   IDType clientID;

@@ -3,11 +3,6 @@
 namespace junk
 {
 
-sf::Vector2f convert(const Vector2f& v)
-{
-  return sf::Vector2f(v.x, v.y);
-}
-
 ClientNetworkModel::ClientNetworkModel() : logger("CLIENT_NETWORK_MODEL", "client_model.log", true)
 {
   logger << "ClientNetworkModel created";
@@ -23,11 +18,13 @@ int32_t ClientNetworkModel::connectToServer(const std::string& serverIp, int por
   clientServiceClient = boost::shared_ptr<ClientServiceClient > (new ClientServiceClient(protocol));
 
   transport->open();
-  id = clientServiceClient->connect();
 
-  std::string message = "Connected to server, id = " + std::to_string(id);
+  ConnectInfo connectInfo;
+  clientServiceClient->connect(sessionInfo, connectInfo);
+
+  std::string message = "Connected to server, id = " + std::to_string(sessionInfo.id);
   logger << message;
-  return id;
+  return sessionInfo.id;
 }
 
 ClientNetworkModel::~ClientNetworkModel()
@@ -40,45 +37,18 @@ GameChanges ClientNetworkModel::getGameChanges()
   socketMutex.lock();
 
   GameChanges gameChanges;
-  clientServiceClient->getChanges(gameChanges, id);
+  clientServiceClient->getChanges(gameChanges, sessionInfo);
 
   socketMutex.unlock();
+
   return gameChanges;
 }
 
-void ClientNetworkModel::move(sf::Vector2f direction_)
+void ClientNetworkModel::makeAction(const Action& action)
 {
   socketMutex.lock();
 
-  logger << std::string("move ") + std::to_string(direction_.x) + std::string(" ") + std::to_string(direction_.y);
-  Vector2f direction;
-  direction.x = direction_.x;
-  direction.y = direction_.y;
-  clientServiceClient->move(id, direction);
-
-  socketMutex.unlock();
-}
-
-void ClientNetworkModel::rotate(sf::Vector2f direction_)
-{
-  socketMutex.lock();
-
-  Vector2f direction;
-  direction.x = direction_.x;
-  direction.y = direction_.y;
-  clientServiceClient->rotate(id, direction);
-
-  socketMutex.unlock();
-}
-
-void ClientNetworkModel::fire(sf::Vector2f direction_)
-{
-  socketMutex.lock();
-
-  Vector2f direction;
-  direction.x = direction_.x;
-  direction.y = direction_.y;
-  clientServiceClient->fire(id, direction);
+  clientServiceClient->makeAction(sessionInfo, action);
 
   socketMutex.unlock();
 }

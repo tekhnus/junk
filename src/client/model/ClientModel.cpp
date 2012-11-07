@@ -15,22 +15,22 @@ ClientModel::~ClientModel()
 
 int32_t ClientModel::connectToServer(const std::string& serverIp, int port)
 {
-  clientId = networkModel.connectToServer(serverIp, port);
-  gotClientIdSignal(clientId);
-  return clientId;
+  clientInfo.id = networkModel.connectToServer(serverIp, port);
+  gotClientIdSignal(clientInfo.id);
+  return clientInfo.id;
 }
 
 void ClientModel::update()
 {
   logger << "update";
   GameChanges gameChanges = networkModel.getGameChanges();
-  for (auto& player : gameChanges.players)
+  for (auto& patch : gameChanges.patches)
   {
-    logger << std::to_string(player.id) + std::string(" ")
-      + std::to_string(player.position.x) + std::string(" ") + std::to_string(player.position.y);
-
-    updatePlayerPosition(player.id, sf::Vector2f(player.position.x, player.position.y));
-    updatePlayerDirection(player.id, sf::Vector2f(player.direction.x, player.direction.y));
+    switch (patch.modelPatchType)
+    {
+      case ModelPatchType::MODEL_UNIT_PATCH:
+        break;
+    }
   }
 }
 
@@ -71,19 +71,9 @@ void ClientModel::updatePlayerDirection(int32_t id, sf::Vector2f direction)
   }
 }
 
-void ClientModel::move(sf::Vector2f direction)
+void ClientModel::makeAction(const Action& action)
 {
-  networkModel.move(direction);
-}
-
-void ClientModel::fire(sf::Vector2f direction)
-{
-  networkModel.fire(direction);
-}
-
-void ClientModel::rotate(sf::Vector2f direction)
-{
-  networkModel.rotate(direction);
+  networkModel.makeAction(action);
 }
 
 } // namespace junk

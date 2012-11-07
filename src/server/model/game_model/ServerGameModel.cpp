@@ -123,14 +123,14 @@ GameChanges ServerGameModel::getChanges(IDType id)
   GameChanges gameChanges;
   for (const auto& unit : units)
   {
-    PlayerInfo playerInfo;
+    /*PlayerInfo playerInfo;
     playerInfo.id = unit.first;
     playerInfo.position.x = unit.second->getPosition().x;
     playerInfo.position.y = unit.second->getPosition().y;
     //#KoCTblJlb!
     playerInfo.direction.x = dynamic_cast<unit::RotatableUnit*> (unit.second.get())->getRotation().x;
     playerInfo.direction.y = dynamic_cast<unit::RotatableUnit*> (unit.second.get())->getRotation().y;
-    gameChanges.players.push_back(playerInfo);
+    gameChanges.players.push_back(playerInfo);*/
   }
   return gameChanges;
 }

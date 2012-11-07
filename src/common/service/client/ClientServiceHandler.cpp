@@ -11,33 +11,27 @@ ClientServiceHandler::~ClientServiceHandler()
 {
 }
 
-int32_t ClientServiceHandler::connect()
+void ClientServiceHandler::connect(SessionInfo &sessionInfo, const ConnectInfo &connectInfo)
 {
-  return connectSignal();
+  serviceMutex.lock();
+
+  sessionInfo = connectSignal(connectInfo);
+
+  serviceMutex.unlock();
 }
 
-void ClientServiceHandler::move(int32_t id, const Vector2f& direction)
+void ClientServiceHandler::makeAction(const SessionInfo &sessionInfo, const Action& action)
 {
-  moveSignal(id, sf::Vector2f(direction.x, direction.y));
+  makeActionSignal(sessionInfo, action);
 }
 
-void ClientServiceHandler::rotate(int32_t id, const Vector2f& direction)
+void ClientServiceHandler::getChanges(GameChanges& gameChanges, const SessionInfo& sessionInfo)
 {
-  rotateSignal(id, sf::Vector2f(direction.x, direction.y));
-}
+  serviceMutex.lock();
 
-void ClientServiceHandler::fire(int32_t id, const Vector2f& direction)
-{
-  fireSignal(id, sf::Vector2f(direction.x, direction.y));
-}
+  gameChanges = getChangesSignal(sessionInfo);
 
-void ClientServiceHandler::getChanges(GameChanges& gameChanges, int32_t id)
-{
-  //getChangesMutex.lock();
-
-  gameChanges = getChangesSignal(id);
-
-  //getChangesMutex.unlock();
+  serviceMutex.unlock();
 }
 
 } // namespace junk

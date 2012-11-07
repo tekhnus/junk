@@ -17,20 +17,21 @@ public:
   ClientServiceHandler();
   ~ClientServiceHandler();
 
-  int32_t connect();
-  void getChanges(GameChanges& gameChanges, int32_t id);
-  void move(int32_t id, const Vector2f& direction);
-  void rotate(int32_t id, const Vector2f& direction);
-  void fire(int32_t id, const Vector2f& direction);
+  void connect(SessionInfo& sessionInfo, const ConnectInfo& connectInfo);
 
-  boost::signals2::signal<int32_t (), boost::signals2::last_value<int32_t> > connectSignal;
-  boost::signals2::signal<GameChanges (int32_t), boost::signals2::last_value<GameChanges> > getChangesSignal;
-  boost::signals2::signal<void (int32_t, sf::Vector2f)> moveSignal;
-  boost::signals2::signal<void (int32_t, sf::Vector2f)> rotateSignal;
-  boost::signals2::signal<void (int32_t, sf::Vector2f)> fireSignal;
+  void getChanges(GameChanges& gameChanges, const SessionInfo& sessionInfo);
+
+  void makeAction(const SessionInfo& sessionInfo, const Action& action);
+
+  boost::signals2::signal<SessionInfo (const ConnectInfo& connectInfo), boost::signals2::last_value<SessionInfo> > connectSignal;
+
+  boost::signals2::signal<GameChanges (const SessionInfo& sessionInfo),
+    boost::signals2::last_value<GameChanges> > getChangesSignal;
+
+  boost::signals2::signal<void (const SessionInfo&, const Action& action)> makeActionSignal;
 
 private:
-  std::mutex getChangesMutex;
+  std::mutex serviceMutex;
 
 }; // ClientServiceHandle
 

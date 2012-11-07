@@ -1,9 +1,10 @@
 #pragma once
 
 #include <SFML/System.hpp>
-#include <sigc++/sigc++.h>
 #include <common/logger/Logger.hpp>
 #include <common/service/client/ClientServiceHandler.hpp>
+
+#include <boost/uuid/uuid.hpp>
 
 #include <thrift/concurrency/ThreadManager.h>
 #include <thrift/concurrency/PosixThreadFactory.h>
@@ -32,15 +33,11 @@ public:
   int32_t connectToServer(const std::string& serverIp, int port);
 
   GameChanges getGameChanges();
-  void move(sf::Vector2f direction);
-  void fire(sf::Vector2f direction);
-  void rotate(sf::Vector2f direction);
+  void makeAction(const Action& action);
 
 private:
+  SessionInfo sessionInfo;
 
-  int32_t id;
-
-  // Client
   boost::shared_ptr<TSocket> socket;
   boost::shared_ptr<TTransport> transport;
   boost::shared_ptr<TProtocol> protocol;

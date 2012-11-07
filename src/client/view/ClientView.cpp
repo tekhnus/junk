@@ -45,9 +45,7 @@ ClientView::~ClientView()
 
 void ClientView::setModel(ClientModel* clientModel)
 {
-  fireSignal.connect(boost::bind(&ClientModel::fire, clientModel, _1));
-  moveSignal.connect(boost::bind(&ClientModel::move, clientModel, _1));
-  rotateSignal.connect(boost::bind(&ClientModel::rotate, clientModel, _1));
+  makeActionSignal.connect(boost::bind(&ClientModel::makeAction, clientModel, _1));
 
   clientModel->gotClientIdSignal.connect(boost::bind(&ClientView::setClientID, this, _1));
   clientModel->clientAddedSignal.connect(boost::bind(&ClientView::addPlayer, this, _1, _2, _3));
@@ -85,16 +83,34 @@ void ClientView::setPlayerRotation(IDType playerID, sf::Vector2f rotation)
   }
 }
 
+void ClientView::makeAction(const Action& action)
+{
+  logger << "makeAction invoked";
+  makeActionSignal(action);
+}
+
 void ClientView::move(sf::Vector2f direction)
 {
   logger << "move invoked";
-  moveSignal(direction);
+
+  Action action;
+  action.actionType = ActionType::MOVE;
+  action.moveAction.direction.x = direction.x;
+  action.moveAction.direction.y = direction.y;
+
+  makeAction(action);
 }
 
-void ClientView::rotate(sf::Vector2f rotation)
+void ClientView::rotate(sf::Vector2f direction)
 {
   logger << "rotate invoked";
-  rotateSignal(rotation);
+
+  Action action;
+  action.actionType = ActionType::ROTATE;
+  action.rotateAction.direction.x = direction.x;
+  action.rotateAction.direction.y = direction.y;
+
+  makeAction(action);
 }
 
 void ClientView::setClientID(IDType clientID)
