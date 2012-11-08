@@ -1,7 +1,8 @@
 #include "client/view/ClientView.hpp"
 #include "client/model/ClientModel.hpp"
-#include <SFML/Window.hpp>
 #include "client/config/ClientConfig.hpp"
+#include "client/menu/ScreenManager.hpp"
+#include <SFML/Window.hpp>
 
 #include <mutex>
 
@@ -85,6 +86,7 @@ int main(int argc, char** argv)
 {
   //sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
   //window.show();
+  junk::ScreenManager manager;
   junk::ClientConfig config;
   try {
     config.load("client_config.json");
