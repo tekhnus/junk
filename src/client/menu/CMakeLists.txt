@@ -1,0 +1,1 @@
+add_library (screenmanager ScreenManager.cpp)

@@ -1,0 +1,1 @@
+add_library (clientconfig ClientConfig.cpp)

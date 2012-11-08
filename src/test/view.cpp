@@ -1,5 +1,7 @@
 #include "client/view/ClientView.hpp"
 #include "client/model/ClientModel.hpp"
+#include "client/config/ClientConfig.hpp"
+#include "client/menu/ScreenManager.hpp"
 #include <SFML/Window.hpp>
 
 #include <mutex>
@@ -82,10 +84,30 @@ void processInput()
 
 int main(int argc, char** argv)
 {
-  std::cerr << "hello, world!" << std::endl;
   //sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
   //window.show();
-  std::string address("localhost");
+  junk::ScreenManager manager;
+  junk::ClientConfig config;
+  try {
+    config.load("client_config.json");
+  }
+  catch(std::exception ex) {
+    std::cerr << "Config file not found or it's invalid" << std::endl;
+    config.recent.push_back("localhost");
+  }
+  std::string address;
+  if (!config.recent.empty()) {
+    std::cout << "Enter server address (hit ENTER for " << config.recent.back() << "): ";
+    getline(std::cin, address);
+    if (address.empty()) {
+      address = config.recent.back();
+    }
+  } else {
+    std::cout << "Enter server address: ";
+    std::cin >> address;
+  }
+  config.recent.push_back(address);
+  config.save("client_config.json");
   //std::string address("192.168.1.36");
   if (argc > 1)
   {
@@ -116,7 +138,7 @@ int main(int argc, char** argv)
     window.display();
     counter++;
     std::cerr << " FPS: " << float(counter) / clock.getElapsedTime().asSeconds() << std::endl;
-
+    clock.restart();
     updateLock.unlock();
     sf::sleep(sf::milliseconds(30));
   }
