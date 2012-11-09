@@ -1,9 +1,9 @@
 #include "client/view/ClientView.hpp"
 #include "client/model/ClientModel.hpp"
 #include "client/config/ClientConfig.hpp"
-#include "client/menu/ScreenManager.hpp"
+#include "client/gui/AddressFetch.hpp"
 #include <SFML/Window.hpp>
-
+#include <SFGUI/SFGUI.hpp>
 #include <mutex>
 
 sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
@@ -40,7 +40,9 @@ std::mutex updateLock;
 int32_t id = -1;
 
 //sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
+sfg::SFGUI sfgui;
 sf::RenderWindow window(sf::VideoMode(512, 512), "Title");
+junk::AddressFetch fetcher;
 
 void processInput()
 {
@@ -82,63 +84,73 @@ void processInput()
   }
 }
 
+void connect()
+{
+  id = model.connectToServer(fetcher.getAddress(), 7777);
+  fetcher.getWindow()->Show(false);
+}
+
+void drawWorld()
+{
+  model.update();
+  view.update();
+  window.draw(view);
+}
+
 int main(int argc, char** argv)
 {
-  //sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
-  //window.show();
-  junk::ScreenManager manager;
-  junk::ClientConfig config;
-  try {
-    config.load("client_config.json");
-  }
-  catch(std::exception ex) {
-    std::cerr << "Config file not found or it's invalid" << std::endl;
-    config.recent.push_back("localhost");
-  }
-  std::string address;
-  if (!config.recent.empty()) {
-    std::cout << "Enter server address (hit ENTER for " << config.recent.back() << "): ";
-    getline(std::cin, address);
-    if (address.empty()) {
-      address = config.recent.back();
-    }
-  } else {
-    std::cout << "Enter server address: ";
-    std::cin >> address;
-  }
-  config.recent.push_back(address);
-  config.save("client_config.json");
-  //std::string address("192.168.1.36");
-  if (argc > 1)
-  {
-    address = std::string(argv[1]);
-  }
-  view.setModel(&model);
-  id = model.connectToServer(address, 7777);
-  window.setFramerateLimit(60);
+  
+  fetcher.onOK(connect);
+  window.resetGLStates();
 
-  // u.setPosition(sf::Vector2f(100.0, 100.0));
-  //sf::Font font = sf::Font::getDefaultFont();
+  // std::string address;
+  // if (!config.recent.empty()) {
+  //   std::cout << "Enter server address (hit ENTER for " << config.recent.back() << "): ";
+  //   getline(std::cin, address);
+  //   if (address.empty()) {
+  //     address = config.recent.back();
+  //   }
+  // } else {
+  //   std::cout << "Enter server address: ";
+  //   std::cin >> address;
+  // }
+  // config.recent.push_back(address);
+  // config.save("client_config.json");
+
+  view.setModel(&model);
+  window.setFramerateLimit(60);
 
   std::thread t(&processInput);
 
   sf::Clock clock;
-  clock.restart();
-  int counter;
-
-  while (window.isOpen())
+  for (int counter = 0; window.isOpen(); ++counter)
   {
     updateLock.lock();
 
+    sf::Event event;
+    while(window.pollEvent(event))
+    {
+      fetcher.getWindow()->HandleEvent(event);
+      if(event.type == sf::Event::Closed)
+      {
+        window.close();
+      }
+    }
+
+    double t = clock.restart().asSeconds();
+
     window.clear();
-    model.update();
-    view.update();
-    window.draw(view);
+
+    if (id != -1)
+    {
+      drawWorld();
+    }
+
+    fetcher.getWindow()->Update(t);
+    sfgui.Display(window);
 
     window.display();
-    counter++;
-    std::cerr << " FPS: " << float(counter) / clock.getElapsedTime().asSeconds() << std::endl;
-    clock.restart();
+
     updateLock.unlock();
     sf::sleep(sf::milliseconds(30));
   }
