@@ -6,19 +6,23 @@ include "Shared.thrift"
 
 typedef Shared.Vector2f Vector2f
 
-struct ModelUnitPatch {
-  1: Vector2f position,
-  2: Vector2f direction
+struct GameObjectPatch {
+  1: i32 objectID
 }
 
-enum ModelPatchType {
-  MODEL_UNIT_PATCH = 1,
+struct UnitPatch {
+  1: GameObjectPatch gameObjectPatch,
+  2: Vector2f position,
+  3: Vector2f direction
 }
 
-struct ModelPatch {
-  1: ModelPatchType modelPatchType,
-  2: i32 objectID,
+struct PlayerPatch {
+  1: UnitPatch unitPatch
+}
 
+struct Patch {
   // Possible patches
-  10: ModelUnitPatch modelUnitPatch
+  1: optional GameObjectPatch gameObjectPatch,
+  2: optional UnitPatch unitPatch,
+  3: optional PlayerPatch playerPatch
 }

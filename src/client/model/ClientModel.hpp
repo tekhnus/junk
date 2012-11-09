@@ -7,41 +7,8 @@
 
 #include <unordered_map>
 
-namespace junk
-{
-
-class Player
-{
-public:
-
-  Player()
-  {
-  }
-
-  Player(int32_t id, sf::Vector2f position, sf::Vector2f direction) : id(id), position(position), direction(direction)
-  {
-  }
-
-  void setPosition(sf::Vector2f position)
-  {
-    this->position = position;
-  }
-
-  void setDirection(sf::Vector2f direction)
-  {
-    this->direction = direction;
-  }
-
-  int32_t getId() const
-  {
-    return id;
-  }
-
-private:
-  int32_t id;
-  sf::Vector2f position;
-  sf::Vector2f direction;
-};
+namespace junk {
+namespace client {
 
 class ClientModel
 {
@@ -80,4 +47,4 @@ private:
 
 }; // ClientModel
 
-} // namespace junk
+}} // namespace junk::client

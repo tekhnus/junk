@@ -26,11 +26,7 @@ void ClientModel::update()
   GameChanges gameChanges = networkModel.getGameChanges();
   for (auto& patch : gameChanges.patches)
   {
-    switch (patch.modelPatchType)
-    {
-      case ModelPatchType::MODEL_UNIT_PATCH:
-        break;
-    }
+    //clientGameObject[patch.id].applyPatch(patch);
   }
 }
 
