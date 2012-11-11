@@ -9,6 +9,8 @@ public:
     GameObject();
     virtual ~GameObject();
 
+    int32_t getId() const;
+
 private:
     int32_t id;
 

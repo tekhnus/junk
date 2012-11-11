@@ -9,11 +9,11 @@ namespace view {
 
 class Player : public virtual Unit, public virtual junk::common::Player
 {
+  VIEW_GAME_OBJECT_DEF(Player)
+
 public:
   Player();
   virtual ~Player();
-
-  virtual void update(const model::GameObject& gameObject);
 
   void updatePlayer(const model::Player& player);
 

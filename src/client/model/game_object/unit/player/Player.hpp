@@ -9,12 +9,14 @@ namespace model {
 
 class Player : public virtual Unit, public virtual junk::common::Player
 {
-public:
-    Player();
-    virtual ~Player();
+  MODEL_GAME_OBJECT_DEF(Player)
 
-    virtual void applyPatch(const Patch& patch);
-    void applyPlayerPatch(const PlayerPatch& playerPatch);
+public:
+  Player();
+  virtual ~Player();
+
+  virtual void applyPatch(const Patch& patch);
+  void applyPlayerPatch(const PlayerPatch& playerPatch);
 
 }; // Player
 

@@ -4,17 +4,14 @@ namespace junk {
 namespace client {
 namespace view {
 
+VIEW_GAME_OBJECT_IMPL(Unit, unit)
+
 Unit::Unit()
 {
 }
 
 Unit::~Unit()
 {
-}
-
-Unit::update(const model::GameObject& gameObject)
-{
-  updateUnit(reinterpret_cast<const model::Unit&> gameObject);
 }
 
 void Unit::updateUnit(const model::Unit& unit)

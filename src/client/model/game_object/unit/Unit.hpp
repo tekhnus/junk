@@ -9,12 +9,13 @@ namespace model {
 
 class Unit : public virtual GameObject, public virtual junk::common::Unit
 {
-public:
-    Unit();
-    virtual ~Unit();
+  MODEL_GAME_OBJECT_DEF(Unit)
 
-    virtual void applyPatch(const Patch& patch);
-    void applyUnitPatch(const UnitPatch& unitPatch);
+public:
+  Unit();
+  virtual ~Unit();
+
+  void applyUnitPatch(const UnitPatch& unitPatch);
 
 }; // Unit
 

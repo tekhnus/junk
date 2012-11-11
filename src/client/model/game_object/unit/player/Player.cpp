@@ -4,18 +4,14 @@ namespace junk {
 namespace client {
 namespace model {
 
+MODEL_GAME_OBJECT_IMPL(Player, player)
+
 Player::Player()
 {
 }
 
 Player::~Player()
 {
-}
-
-void Player::applyPatch(const Patch& patch)
-{
-  applyPlayerPatch(patch.playerPatch);
-  updateSignal(this);
 }
 
 void Player::applyPlayerPatch(const PlayerPatch& playerPatch)

@@ -5,6 +5,7 @@
 #include <common/logger/Logger.hpp>
 #include "network_model/ClientNetworkModel.hpp"
 #include "game_object/GameObject.hpp"
+#include "game_object/GameObjectFactory.hpp"
 
 #include <unordered_map>
 
@@ -22,16 +23,12 @@ public:
 
   void update();
 
-  void addGameObject(int32_t id);
-  void updatePlayerPosition(int32_t id, sf::Vector2f position);
-  void updatePlayerDirection(int32_t id, sf::Vector2f direction);
+  void addGameObject(const Patch &patch);
 
   void makeAction(const Action& action);
 
   boost::signals2::signal<void (int32_t)> gotClientIdSignal;
-  boost::signals2::signal<void (int32_t, GameObject*)> gameObjectAddedSignal;
-  boost::signals2::signal<void (int32_t, sf::Vector2f)> clientPositionUpdatedSignal;
-  boost::signals2::signal<void (int32_t, sf::Vector2f)> clientDirectionUpdatedSignal;
+  boost::signals2::signal<void (const GameObjectType::type&, GameObject*)> gameObjectAddedSignal;
 
 private:
   struct ClientInfo
@@ -40,7 +37,9 @@ private:
     int32_t id;
   };
 
+  GameObjectFactory gameObjectFactory;
   std::unordered_map< int32_t, std::unique_ptr<GameObject> > gameObjects;
+
   ClientNetworkModel networkModel;
 
   ClientInfo clientInfo;

@@ -4,6 +4,8 @@ namespace junk {
 namespace client {
 namespace view {
 
+VIEW_GAME_OBJECT_IMPL(GameObject, gameObject)
+
 GameObject::GameObject()
 {
 }
@@ -12,14 +14,9 @@ GameObject::~GameObject()
 {
 }
 
-GameObject::setModelObject(model::GameObject& gameObject)
+void GameObject::setModelObject(model::GameObject* gameObject)
 {
-  gameObject.updateSignal.connect(boost::bind(&GameObject::update, this, _1));
-}
-
-GameObject::update(const model::GameObject& gameObject)
-{
-  updateGameObject(reinterpret_cast<const model::GameObject&> gameObject);
+  gameObject->updateSignal.connect(boost::bind(&GameObject::update, this, _1));
 }
 
 void GameObject::updateGameObject(const model::GameObject& gameObject)

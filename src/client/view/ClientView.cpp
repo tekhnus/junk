@@ -44,27 +44,27 @@ ClientView::~ClientView()
 
 void ClientView::setModel(model::ClientModel* clientModel)
 {
-  makeActionSignal.connect(boost::bind(&ClientModel::makeAction, clientModel, _1));
+  makeActionSignal.connect(boost::bind(&model::ClientModel::makeAction, clientModel, _1));
 
   clientModel->gotClientIdSignal.connect(boost::bind(&ClientView::setClientID, this, _1));
-  clientModel->clientAddedSignal.connect(boost::bind(&ClientView::addPlayer, this, _1, _2, _3));
-  clientModel->clientPositionUpdatedSignal.connect(boost::bind(&ClientView::setPlayerPosition, this, _1, _2));
-  clientModel->clientDirectionUpdatedSignal.connect(boost::bind(&ClientView::setPlayerRotation, this, _1, _2));
+  clientModel->gameObjectAddedSignal.connect(boost::bind(&ClientView::addGameObject, this, _1, _2));
 }
 
-void ClientView::addPlayer(IDType playerID, sf::Vector2f position, sf::Vector2f rotation)
+void ClientView::addGameObject(const GameObjectType::type& gameObjectType, model::GameObject* gameObject)
 {
-  logger << std::string("Adding player ") + std::to_string(playerID);
-  assert(players.find(playerID) == players.end());
-  players[playerID] = PlayerUnit(std::to_string(playerID), position, rotation);
+  logger << std::string("Adding object ") + std::to_string(gameObject->getId());
+  gameObjects.insert(std::make_pair(gameObject->getId(),
+    std::unique_ptr<GameObject> (gameObjectFactory.create(gameObjectType))));
+  gameObjects[gameObject->getId()]->setModelObject(gameObject);
 }
 
-void ClientView::removePlayer(IDType playerID)
+/*
+void ClientView::removePlayer(int32_t playerID)
 {
   players.erase(playerID);
 }
 
-void ClientView::setPlayerPosition(IDType playerID, sf::Vector2f position)
+void ClientView::setPlayerPosition(int32_t playerID, sf::Vector2f position)
 {
   logger << std::string("setPlayerPosition invoked, id = ") + std::to_string(playerID);
   if (players.find(playerID) != players.end())
@@ -73,7 +73,7 @@ void ClientView::setPlayerPosition(IDType playerID, sf::Vector2f position)
   }
 }
 
-void ClientView::setPlayerRotation(IDType playerID, sf::Vector2f rotation)
+void ClientView::setPlayerRotation(int32_t playerID, sf::Vector2f rotation)
 {
   logger << std::string("setPlayerRotation invoked, id = ") + std::to_string(playerID);
   if (players.find(playerID) != players.end())
@@ -81,6 +81,7 @@ void ClientView::setPlayerRotation(IDType playerID, sf::Vector2f rotation)
     players[playerID].setRotation(rotation);
   }
 }
+*/
 
 void ClientView::makeAction(const Action& action)
 {
@@ -112,12 +113,13 @@ void ClientView::rotate(sf::Vector2f direction)
   makeAction(action);
 }
 
-void ClientView::setClientID(IDType clientID)
+void ClientView::setClientID(int32_t clientID)
 {
   logger << std::string("Setting client id to ") + std::to_string(clientID);
   this->clientID = clientID;
 }
 
+/*
 void ClientView::update()
 {
   for (auto& player : players)
@@ -125,12 +127,13 @@ void ClientView::update()
     player.second.update();
   }
 }
+*/
 
 void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-  for (auto& player : players)
+  for (auto& gameObject : gameObjects)
   {
-    target.draw(player.second, states);
+    //target.draw(gameObject.second, states);
   }
 }
 
@@ -154,8 +157,8 @@ void ClientView::processInput()
       prevLeft = left;
       prevRight = right;
     }
-    if (players.find(clientID) != players.end())
-      //if(clientID != -1)
+    /*
+    if (gameObjects.find(clientID) != gameObjects.end())
     {
       sf::Vector2i posI = sf::Mouse::getPosition();
       sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
@@ -164,6 +167,7 @@ void ClientView::processInput()
       logger << rot.x << rot.y;
       //rotate(sf::Vector2f(-1,-1));
     }
+    */
     std::chrono::milliseconds tm(30);
     std::this_thread::sleep_for(tm);
   }

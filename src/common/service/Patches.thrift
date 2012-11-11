@@ -20,9 +20,18 @@ struct PlayerPatch {
   1: UnitPatch unitPatch
 }
 
+enum GameObjectType {
+  GAME_OBJECT = 1,
+  UNIT = 2,
+  PLAYER = 3
+}
+
 struct Patch {
+  1: i32 id,
+  2: GameObjectType gameObjectType,
+
   // Possible patches
-  1: optional GameObjectPatch gameObjectPatch,
-  2: optional UnitPatch unitPatch,
-  3: optional PlayerPatch playerPatch
+  10: optional GameObjectPatch gameObjectPatch,
+  11: optional UnitPatch unitPatch,
+  12: optional PlayerPatch playerPatch
 }

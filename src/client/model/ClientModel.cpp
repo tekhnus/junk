@@ -27,45 +27,21 @@ void ClientModel::update()
   GameChanges gameChanges = networkModel.getGameChanges();
   for (auto& patch : gameChanges.patches)
   {
-    //clientGameObject[patch.id].applyPatch(patch);
+    if (gameObjects.find(patch.id) == gameObjects.end())
+    {
+      addGameObject(patch);
+    }
+    gameObjects[patch.id]->applyPatch(patch);
   }
 }
 
-void ClientModel::addGameObject(int32_t id)
+void ClientModel::addGameObject(const Patch& patch)
 {
   logger << "Adding new GameObject";
-  //players[id] = Player(id, position, direction);
-  gameObjectAddedSignal(id, gameObjects[id].get());
-}
 
-void ClientModel::updatePlayerPosition(int32_t id, sf::Vector2f position)
-{
-  logger << "Updating player position";
-  if (players.find(id) == players.end())
-  {
-    addPlayer(id, position, sf::Vector2f(1.0, 1.0));
-  }
-  else
-  {
-    players[id].setPosition(position);
-    clientPositionUpdatedSignal(id, position);
-    return;
-  }
-}
-
-void ClientModel::updatePlayerDirection(int32_t id, sf::Vector2f direction)
-{
-  logger << "Updating player direction";
-  if (players.find(id) == players.end())
-  {
-    addPlayer(id, sf::Vector2f(1.0, 1.0), direction);
-  }
-  else
-  {
-    players[id].setDirection(direction);
-    clientDirectionUpdatedSignal(id, direction);
-    return;
-  }
+  gameObjects.insert(std::make_pair(patch.id,
+    std::unique_ptr<GameObject> (gameObjectFactory.create(patch.gameObjectType))));
+  gameObjectAddedSignal(patch.gameObjectType, gameObjects[patch.id].get());
 }
 
 void ClientModel::makeAction(const Action& action)
@@ -73,4 +49,4 @@ void ClientModel::makeAction(const Action& action)
   networkModel.makeAction(action);
 }
 
-} // namespace junk::client::model
+}}} // namespace junk::client::model
