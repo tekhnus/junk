@@ -8,4 +8,4 @@ add_executable (servertest server.cpp)
 target_link_libraries(servertest server servermodel servernetworkmodel servergamemodel unitservermodel clientservicehandler logger sfml-graphics sfml-window sfml-system sigc-2.0 pthread thrift)
 
 add_executable (clienttest client.cpp)
-target_link_libraries(clienttest client clientview clientviewgameobjectfactory clientviewgameobject unitview clientmodel clientnetworkmodel clientservicehandler logger sfml-graphics sfml-window sfml-system sigc-2.0 pthread thrift)
+target_link_libraries(clienttest client clientview clientmodel clientmodelgameobjectfactory clientviewgameobjectfactory clientviewgameobject commongameobject unitview clientnetworkmodel clientservicehandler logger sfml-graphics sfml-window sfml-system sigc-2.0 pthread thrift)
