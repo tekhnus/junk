@@ -8,16 +8,18 @@ GameObjectFactory::GameObjectFactory()
 {
 }
 
-//std::unordered_map<int, std::function<GameObject* ()> > GameObjectFactory::gameObjectCreator;
+std::unordered_map<int, std::function<GameObject* ()> > GameObjectFactory::gameObjectCreator;
 
 GameObject* GameObjectFactory::create(const GameObjectType::type &gameObjectType)
 {
   return gameObjectCreator[gameObjectType]();
 }
 
-void GameObjectFactory::registerCreator(GameObjectType gameObjectType, std::function<GameObject *()> creator)
+bool GameObjectFactory::registerCreator(GameObjectType::type gameObjectType,
+                                        std::function<GameObject *()> creator)
 {
   gameObjectCreator[gameObjectType] = creator;
+  return true;
 }
 
 }}} // namespace junk::client::model

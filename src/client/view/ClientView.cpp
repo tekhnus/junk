@@ -119,6 +119,10 @@ void ClientView::setClientID(int32_t clientID)
   this->clientID = clientID;
 }
 
+void ClientView::update()
+{
+}
+
 /*
 void ClientView::update()
 {

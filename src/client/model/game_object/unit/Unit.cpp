@@ -4,7 +4,7 @@ namespace junk {
 namespace client {
 namespace model {
 
-MODEL_GAME_OBJECT_IMPL(Unit, unit)
+MODEL_GAME_OBJECT_IMPL(Unit, unit, UNIT)
 
 Unit::Unit()
 {

@@ -11,12 +11,14 @@
 public: \
 virtual void update(const model::GameObject& gameObject);
 
-#define VIEW_GAME_OBJECT_IMPL( _Name, _name, _NAME )
-//void _Name::update(const model::GameObject& gameObject) \
-//{ }
-  //update ## _Name (reinterpret_cast<const model::_Name&> gameObject); \
-//static bool _name ## _creator_registred = \
-  //GameObjectFactory::registerCreator(_Name ## Type::_NAME, std::function(new _Name())); \
+#define VIEW_GAME_OBJECT_IMPL( _Name, _name, _NAME ) \
+void _Name::update(const model::GameObject& gameObject) \
+{ \
+  update ## _Name (reinterpret_cast<const model::_Name&> (gameObject)); \
+} \
+_Name *create_ ## _Name() { return new _Name; } \
+static bool _name ## _creator_registred = \
+  GameObjectFactory::registerCreator(GameObjectType::_NAME, create_ ## _Name);
 
 namespace junk {
 namespace client {

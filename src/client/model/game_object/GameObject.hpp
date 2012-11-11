@@ -7,16 +7,17 @@
 #include <boost/signals2.hpp>
 
 #define MODEL_GAME_OBJECT_DEF( _name ) \
-public: virtual void applyPatch(const Patch& patch);  \
+public: virtual void applyPatch(const Patch& patch);
 
-#define MODEL_GAME_OBJECT_IMPL( _Name, _name ) \
+#define MODEL_GAME_OBJECT_IMPL( _Name, _name, _NAME) \
 void _Name::applyPatch(const Patch& patch) \
 { \
   apply ##_Name ## Patch(patch._name##Patch); \
-  updateSignal(this); \
+  updateSignal(*this); \
 } \
+_Name *create_ ## _Name() { return new _Name; } \
 static bool _name ## _creator_registred = \
-  GameObjectFactory::registerCreator(_Name ## Type::_NAME, std::function(new _Name())); \
+  GameObjectFactory::registerCreator(GameObjectType::_NAME, create_ ## _Name);
 
 namespace junk {
 namespace client {

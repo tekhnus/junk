@@ -17,7 +17,7 @@ public:
   GameObjectFactory();
 
   GameObject* create(const GameObjectType::type &gameObjectType);
-  static void registerCreator(GameObjectType::type gameObjectType, std::function<GameObject* (void)> creator);
+  static bool registerCreator(GameObjectType::type gameObjectType, std::function<GameObject* (void)> creator);
 
 private:
 

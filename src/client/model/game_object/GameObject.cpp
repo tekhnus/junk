@@ -4,7 +4,7 @@ namespace junk {
 namespace client {
 namespace model {
 
-MODEL_GAME_OBJECT_IMPL(GameObject, gameObject)
+MODEL_GAME_OBJECT_IMPL(GameObject, gameObject, GAME_OBJECT)
 
 GameObject::GameObject()
 {
@@ -21,4 +21,4 @@ void GameObject::applyGameObjectPatch(const GameObjectPatch &gameObjectPatch)
   */
 }
 
-} // namespace junk::client::model
+}}} // namespace junk::client::model
