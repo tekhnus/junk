@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Unit.hpp"
+#include "client/model/game_object/unit/Unit.hpp"
 #include "common/game_object/unit/player/Player.hpp"
 
 namespace junk {
@@ -15,7 +15,6 @@ public:
   Player();
   virtual ~Player();
 
-  virtual void applyPatch(const Patch& patch);
   void applyPlayerPatch(const PlayerPatch& playerPatch);
 
 }; // Player

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <SFML/System.hpp>
+#include <cstdint>
+
 namespace junk {
 namespace common {
 

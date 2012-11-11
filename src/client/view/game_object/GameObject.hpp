@@ -7,20 +7,20 @@
 
 #include <boost/signals2.hpp>
 
+#define VIEW_GAME_OBJECT_DEF( _name ) \
+public: \
+virtual void update(const model::GameObject& gameObject);
+
+#define VIEW_GAME_OBJECT_IMPL( _Name, _name, _NAME )
+//void _Name::update(const model::GameObject& gameObject) \
+//{ }
+  //update ## _Name (reinterpret_cast<const model::_Name&> gameObject); \
+//static bool _name ## _creator_registred = \
+  //GameObjectFactory::registerCreator(_Name ## Type::_NAME, std::function(new _Name())); \
+
 namespace junk {
 namespace client {
 namespace view {
-
-#define VIEW_GAME_OBJECT_DEF( _name ) \
-public: virtual void update(const model::GameObject& gameObject);  \
-
-#define VIEW_GAME_OBJECT_IMPL( _Name, _name ) \
-void _Name##::update(const model::GameObject& gameObject) \
-{ \
-  update ## _Name ## (reinterpret_cast<const model:: ## _Name ##&> gameObject) \
-} \
-static bool _name ## _creator_registred = \
-  GameObjectFactory::registerCreator(_name, std::function(new ##_name())); \
 
 class GameObject : public virtual common::GameObject
 {

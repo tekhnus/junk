@@ -4,7 +4,7 @@ namespace junk {
 namespace client {
 namespace view {
 
-VIEW_GAME_OBJECT_IMPL(Player, player)
+VIEW_GAME_OBJECT_IMPL(Player, player, PLAYER)
 
 Player::Player()
 {

@@ -6,21 +6,21 @@
 
 #include <boost/signals2.hpp>
 
-namespace junk {
-namespace client {
-namespace model {
-
 #define MODEL_GAME_OBJECT_DEF( _name ) \
 public: virtual void applyPatch(const Patch& patch);  \
 
 #define MODEL_GAME_OBJECT_IMPL( _Name, _name ) \
-void _Name##::applyPatch(const Patch& patch) \
+void _Name::applyPatch(const Patch& patch) \
 { \
-  apply ## _Name ## Patch(patch. ## _name ## Patch); \
+  apply ##_Name ## Patch(patch._name##Patch); \
   updateSignal(this); \
 } \
 static bool _name ## _creator_registred = \
-  GameObjectFactory::registerCreator(_name, std::function(new ##_name())); \
+  GameObjectFactory::registerCreator(_Name ## Type::_NAME, std::function(new _Name())); \
+
+namespace junk {
+namespace client {
+namespace model {
 
 class GameObject : public virtual junk::common::GameObject
 {

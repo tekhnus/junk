@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.hpp"
+#include "common/game_object/GameObject.hpp"
 
 namespace junk {
 namespace common {
@@ -12,8 +12,8 @@ public:
     virtual ~Unit();
 
 private:
-    Vector2f position;
-    Vector2f direction;
+    sf::Vector2f position;
+    sf::Vector2f direction;
 };
 
 }} // namespace junk::common
