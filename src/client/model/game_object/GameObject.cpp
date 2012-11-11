@@ -12,9 +12,10 @@ GameObject::~GameObject()
 {
 }
 
-Patch GameObject::applyPatch(const Patch &patch)
+void GameObject::applyPatch(const Patch &patch)
 {
-  patch.gameObjectPatch = applyGameObjectPatch(patch.gameObjectPatch);
+  applyGameObjectPatch(patch.gameObjectPatch);
+  updateSignal(this);
 }
 
 void GameObject::applyGameObjectPatch(const GameObjectPatch &gameObjectPatch)

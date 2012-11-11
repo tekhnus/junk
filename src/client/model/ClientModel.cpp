@@ -1,7 +1,8 @@
 #include "ClientModel.hpp"
 
-namespace junk
-{
+namespace junk {
+namespace client {
+namespace model {
 
 ClientModel::ClientModel() : logger("CLIENT_MODEL", "client_model.log", true)
 {
@@ -30,11 +31,11 @@ void ClientModel::update()
   }
 }
 
-void ClientModel::addPlayer(int32_t id, sf::Vector2f position, sf::Vector2f direction)
+void ClientModel::addGameObject(int32_t id)
 {
-  logger << "Adding new player";
-  players[id] = Player(id, position, direction);
-  clientAddedSignal(id, position, direction);
+  logger << "Adding new GameObject";
+  //players[id] = Player(id, position, direction);
+  gameObjectAddedSignal(id, gameObjects[id].get());
 }
 
 void ClientModel::updatePlayerPosition(int32_t id, sf::Vector2f position)
@@ -72,4 +73,4 @@ void ClientModel::makeAction(const Action& action)
   networkModel.makeAction(action);
 }
 
-} // namespace junk
+} // namespace junk::client::model

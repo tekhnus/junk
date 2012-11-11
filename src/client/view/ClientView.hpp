@@ -20,8 +20,9 @@
 
 #include <thread>
 
-namespace junk
-{
+namespace junk {
+namespace client {
+namespace view {
 
 typedef unsigned int IDType;
 
@@ -31,7 +32,7 @@ public:
   ClientView();
   virtual ~ClientView();
 
-  void setModel(ClientModel* clientModel);
+  void setModel(model::ClientModel* clientModel);
 
   void addPlayer(IDType playerID, sf::Vector2f position, sf::Vector2f rotation);
   void removePlayer(IDType playerID);
@@ -63,4 +64,4 @@ protected:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
-}
+}}} // namespace junk::client::view

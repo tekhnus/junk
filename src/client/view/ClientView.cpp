@@ -1,9 +1,8 @@
 #include "ClientView.hpp"
 
-
-
-namespace junk
-{
+namespace junk {
+namespace client {
+namespace view {
 
 sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
 {
@@ -43,7 +42,7 @@ ClientView::~ClientView()
 {
 }
 
-void ClientView::setModel(ClientModel* clientModel)
+void ClientView::setModel(model::ClientModel* clientModel)
 {
   makeActionSignal.connect(boost::bind(&ClientModel::makeAction, clientModel, _1));
 
@@ -170,4 +169,4 @@ void ClientView::processInput()
   }
 }
 
-}
+}}} // namespace junk::client::view

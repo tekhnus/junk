@@ -3,6 +3,8 @@
 #include "common/game_object/GameObject.hpp"
 #include <gen-cpp/Patches_types.h>
 
+#include <boost/signals2.hpp>
+
 namespace junk {
 namespace client {
 namespace model {
@@ -15,6 +17,8 @@ public:
 
     virtual void applyPatch(const Patch& patch);
     void applyGameObjectPatch(const GameObjectPatch& gameObjectPatch);
+
+    boost::signals2::signal<void (const GameObject&)> updateSignal;
 
 }; // GameObject
 

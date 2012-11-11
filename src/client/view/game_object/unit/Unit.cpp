@@ -12,17 +12,13 @@ Unit::~Unit()
 {
 }
 
-void Unit::applyPatch(const Patch& patch)
+Unit::update(const model::GameObject& gameObject)
 {
-  applyUnitPatch(patch.unitPatch);
+  updateUnit(reinterpret_cast<const model::Unit&> gameObject);
 }
 
-void Unit::applyUnitPatch(const UnitPatch& unitPatch)
+void Unit::updateUnit(const model::Unit& unit)
 {
-  applyGameObjectPatch(unitPatch.gameObjectPatch);
-  /*
-    Apply patch here
-  */
 }
 
 }}} // namespace junk::client::view

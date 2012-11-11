@@ -12,16 +12,18 @@ GameObject::~GameObject()
 {
 }
 
-Patch GameObject::applyPatch(const Patch &patch)
+GameObject::setModelObject(model::GameObject& gameObject)
 {
-  patch.gameObjectPatch = applyGameObjectPatch(patch.gameObjectPatch);
+  gameObject.updateSignal.connect(boost::bind(&GameObject::update, this, _1));
 }
 
-void GameObject::applyGameObjectPatch(const GameObjectPatch &gameObjectPatch)
+GameObject::update(const model::GameObject& gameObject)
 {
-  /*
-    Apply patch here
-  */
+  updateGameObject(reinterpret_cast<const model::GameObject&> gameObject);
+}
+
+void GameObject::updateGameObject(const model::GameObject& gameObject)
+{
 }
 
 } // namespace junk::client::view

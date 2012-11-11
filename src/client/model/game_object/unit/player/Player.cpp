@@ -15,6 +15,7 @@ Player::~Player()
 void Player::applyPatch(const Patch& patch)
 {
   applyPlayerPatch(patch.playerPatch);
+  updateSignal(this);
 }
 
 void Player::applyPlayerPatch(const PlayerPatch& playerPatch)

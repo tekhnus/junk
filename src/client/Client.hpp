@@ -20,8 +20,8 @@ public:
   void connectToServer(const std::string& serverIp, int port);
 
 private:
-  ClientView view;
-  ClientModel model;
+  client::view::ClientView view;
+  client::model::ClientModel model;
 }; // Client
 
 } // namespace junk
