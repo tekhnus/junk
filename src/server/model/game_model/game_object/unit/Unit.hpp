@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.hpp"
+#include "server/model/game_model/game_object/GameObject.hpp"
 #include "common/game_object/unit/Unit.hpp"
 
 namespace junk {

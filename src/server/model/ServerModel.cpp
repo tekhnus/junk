@@ -1,8 +1,9 @@
 #include <SFML/System.hpp>
 #include "ServerModel.hpp"
 
-namespace junk
-{
+namespace junk {
+namespace server {
+namespace model {
 
 ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
 {
@@ -113,7 +114,7 @@ ServerModel::CheckStatus ServerModel::checkClientSessionInfo(const SessionInfo& 
 
 SessionInfo ServerModel::connectHandler(const ConnectInfo& connectInfo)
 {
-  int playerID = gameModel.addPlayer();
+  int playerID = gameModel.addPlayer(new Player());
   return addClient(playerID);
 }
 
@@ -137,24 +138,7 @@ void ServerModel::makeActionHandler(const SessionInfo& sessionInfo, const Action
   }
 
   updateLastUpdateTime(sessionInfo.id);
-
-  switch (action.actionType)
-  {
-    case ActionType::MOVE:
-      //gameModel.move(action.playerID, action.moveAction);
-      break;
-
-    case ActionType::ROTATE:
-      //gameModel.rotate(action.playerID, action.rotateAction);
-      break;
-
-    case ActionType::FIRE:
-      //gameModel.fire(action.playerID, action.fireAction);
-      break;
-
-    default:
-      logger << "Error: Unrecognized action";
-  }
+  gameModel.makeAction(action);
 }
 
-} // namespace junk
+}}} // namespace junk::server::model

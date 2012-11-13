@@ -4,7 +4,7 @@
 
 int main()
 {
-  junk::Server server;
+  junk::server::Server server;
   server.run();
   while (true)
   {

@@ -30,4 +30,4 @@ GameObjectPatch GameObject::getGameObjectPatch()
   return gameObjectPatch;
 }
 
-} // namespace junk::server::model
+}}} // namespace junk::server::model

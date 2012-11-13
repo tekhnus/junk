@@ -26,7 +26,7 @@ enum ActionType {
 
 struct Action {
   1: ActionType actionType,
-  2: i32 playerID,
+  2: i32 playerId,
 
   // Possible Actions
   10: optional MoveAction moveAction,

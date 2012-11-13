@@ -1,13 +1,15 @@
 #include "ServerGameModel.hpp"
 #include <functional>
 
-namespace junk
-{
+namespace junk {
+namespace server {
+namespace model {
 
 ServerGameModel::ServerGameModel()
 : logger("SERVER_GAME_MODEL", "server_model.log", true), isRunning(false)
 {
   logger << "ServerGameModel created";
+  firstFreeId = 0;
 }
 
 ServerGameModel::~ServerGameModel()
@@ -35,93 +37,96 @@ void ServerGameModel::stop()
   logger << "Game model stopped";
 }
 
-IDType ServerGameModel::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
+int32_t ServerGameModel::addPlayer(Player* player)
 {
   gameChangesMutex.lock();
 
   logger << "Adding a player...";
 
-  IDType newPlayerID = 0;
-  for (auto &unit : units)
-  {
-    if (newPlayerID == unit.first)
-    {
-      newPlayerID++;
-    }
-  }
+  int32_t newPlayerId = firstFreeId++;
 
-  logger << std::string("New player ID = ") + std::to_string(newPlayerID);
+  logger << std::string("New player ID = ") + std::to_string(newPlayerId);
 
-  std::shared_ptr<unit::Unit> newPlayerPtr;
-  newPlayerPtr = std::move(std::shared_ptr<unit::Unit > (new unit::Player(position, rotation)));
-
-  units.insert(std::make_pair(newPlayerID, std::move(newPlayerPtr)));
+  gameObjects.insert(std::make_pair(newPlayerId,
+                    std::unique_ptr<GameObject> (player)));
 
   logger << "Player added";
 
   gameChangesMutex.unlock();
 
-  return newPlayerID;
+  return newPlayerId;
 }
 
-void ServerGameModel::removePlayer(IDType playerID)
+void ServerGameModel::removePlayer(int32_t playerId)
 {
   gameChangesMutex.lock();
 
-  logger << std::string("Removing a player with ID = ") + std::to_string(playerID);
+  logger << std::string("Removing a player with ID = ") + std::to_string(playerId);
 
-  if (units.find(playerID) == units.end())
+  if (gameObjects.find(playerId) == gameObjects.end())
   {
-    logger << std::string("There is no such player, id = ") + std::to_string(playerID);
+    logger << std::string("There is no such player, id = ") + std::to_string(playerId);
   }
   else
   {
-    units.erase(playerID);
+    gameObjects.erase(playerId);
     logger << "Player removed";
   }
 
   gameChangesMutex.unlock();
 }
 
-void ServerGameModel::move(IDType playerID, sf::Vector2f vector)
+void ServerGameModel::makeAction(const Action& action)
+{
+  gameChangesMutex.lock();
+
+  // I think we should check it in ServerModel, not here
+  if (gameObjects.find(action.playerId) == gameObjects.end())
+  {
+    logger << "There is no such player with id " + std::to_string(action.playerId);
+    return;
+  }
+  Player* player = dynamic_cast<Player*> (gameObjects[action.playerId].get());
+
+  switch (action.actionType)
+  {
+    case ActionType::MOVE:
+      move(player, action.moveAction);
+      break;
+
+    case ActionType::ROTATE:
+      rotate(player, action.rotateAction);
+      break;
+
+    case ActionType::FIRE:
+      fire(player, action.fireAction);
+      break;
+  }
+
+  gameChangesMutex.unlock();
+}
+
+void ServerGameModel::move(Player* player, const MoveAction& moveAction)
 {
   static const float speed = 250.0; // will be deleted
 
-  gameChangesMutex.lock();
-
-  if (units.find(playerID) == units.end())
-  {
-    logger << "There is no such player";
-  }
-  else
-  {
-    units.at(playerID)->setMoveVector(vector);
-    units.at(playerID)->setMoveSpeed(speed);
-  }
-
-  gameChangesMutex.unlock();
+  //player->setMoveVector(vector);
+  //player->setMoveSpeed(speed);
 }
 
-void ServerGameModel::rotate(IDType playerID, sf::Vector2f rotation)
+void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
 {
-  gameChangesMutex.lock();
-
-  if (units.find(playerID) == units.end())
-  {
-    logger << "There is no such player";
-  }
-  else
-  {
-    dynamic_cast<unit::RotatableUnit*> (units.at(playerID).get())->setRotation(rotation);
-  }
-
-  gameChangesMutex.unlock();
+  //player->setRotation(rotation);
 }
 
-GameChanges ServerGameModel::getChanges(IDType id)
+void ServerGameModel::fire(Player* player, const FireAction& fireAction)
+{
+}
+
+GameChanges ServerGameModel::getChanges(int32_t id)
 {
   GameChanges gameChanges;
-  for (const auto& unit : units)
+  for (const auto& gameObject : gameObjects)
   {
     /*PlayerInfo playerInfo;
     playerInfo.id = unit.first;
@@ -135,13 +140,6 @@ GameChanges ServerGameModel::getChanges(IDType id)
   return gameChanges;
 }
 
-/*void ServerGameModel::fire(IDType playerID)
-{
-  gameChangesMutex.lock();
-
-  gameChangesMutex.unlock();
-}*/
-
 void ServerGameModel::operator()()
 {
   while (true)
@@ -154,9 +152,9 @@ void ServerGameModel::operator()()
       break;
     }
 
-    for (auto &unit : units)
+    for (auto &gameObject : gameObjects)
     {
-      unit.second->synchronize(gameLoopTimer);
+      //unit.second->synchronize(gameLoopTimer);
     }
 
     /*for (auto player : players)
@@ -173,6 +171,6 @@ void ServerGameModel::operator()()
   }
 
   return;
-} // namespace unit
+}
 
-} // namespace junk
+}}} // namespace junk::server::model

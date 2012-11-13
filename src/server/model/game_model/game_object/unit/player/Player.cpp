@@ -21,7 +21,7 @@ Patch Player::getPatch()
 
 PlayerPatch Player::getPlayerPatch()
 {
-  Patch playerPatch;
+  PlayerPatch playerPatch;
   playerPatch.unitPatch = getUnitPatch();
 
   /*

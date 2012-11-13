@@ -3,16 +3,17 @@
 #include "SFML/System.hpp"
 #include "Unit.hpp"
 #include <common/logger/Logger.hpp>
+#include <gen-cpp/ClientService.h>
 #include <map>
 #include <thread>
 #include <mutex>
 
-#include <gen-cpp/ClientService.h>
+#include "game_object/GameObject.hpp"
+#include "game_object/unit/player/Player.hpp"
 
-namespace junk
-{
-
-typedef int32_t IDType;
+namespace junk {
+namespace server {
+namespace model {
 
 class ServerGameModel
 {
@@ -23,23 +24,23 @@ public:
   void start();
   void stop();
 
-  IDType addPlayer(sf::Vector2f position = sf::Vector2f(0.0, 0.0),
-                   sf::Vector2f rotation = sf::Vector2f(1.0, 1.0));
+  int32_t addPlayer(Player* player);
 
-  void removePlayer(IDType playerID);
-  void move(IDType playerID, sf::Vector2f position);
-  void rotate(IDType playerID, sf::Vector2f rotation);
-  //void fire(IDType playerID);
+  void removePlayer(int32_t playerId);
+  void makeAction(const Action& action);
 
-  GameChanges getChanges(IDType id);
+  GameChanges getChanges(int32_t id);
 
   void operator()();
 
 private:
-  std::map<IDType, std::shared_ptr<unit::Unit > > units;
-  //std::map<IDType, unit::Player> players;
-  //std::map<IDType, unit::Bullet> bullets;
+  std::map<int32_t, std::unique_ptr<GameObject > > gameObjects;
 
+  void move(Player* player, const MoveAction& moveAction);
+  void rotate(Player* player, const RotateAction& rotateAction);
+  void fire(Player* player, const FireAction& fireAction);
+
+  int32_t firstFreeId;
   bool isRunning;
   sf::Clock gameLoopTimer;
 
@@ -50,4 +51,4 @@ private:
 
 };
 
-} // namespace junk
+}}} // namespace junk::server::model
