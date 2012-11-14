@@ -58,8 +58,8 @@ void ClientView::addGameObject(const GameObjectType::type& gameObjectType, model
 {
   logger << std::string("Adding object ") + std::to_string(gameObject->id);
 
-  GameObject go;
-  Unit ut;
+  // GameObject go;
+  // Unit ut;
   Player pl;
 
   gameObjects.insert(std::make_pair(gameObject->id,
