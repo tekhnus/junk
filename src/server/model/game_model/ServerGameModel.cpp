@@ -1,5 +1,7 @@
 #include "ServerGameModel.hpp"
+#include "common/utils/Convert.hpp"
 #include <functional>
+#include <math.h>
 
 namespace junk {
 namespace server {
@@ -108,10 +110,20 @@ void ServerGameModel::makeAction(const Action& action)
 
 void ServerGameModel::move(Player* player, const MoveAction& moveAction)
 {
+  logger << "Move invoked";
+
   static const float speed = 250.0; // will be deleted
 
-  //player->setMoveVector(vector);
-  //player->setMoveSpeed(speed);
+  sf::Vector2f direction = common::to_SFML_Vector2f(moveAction.direction);
+  double length = sqrt(direction.x * direction.x + direction.y * direction.y);
+  if (length < 1e-4)
+    return;
+
+  length *= speed;
+  direction.x /= length;
+  direction.y /= length;
+
+  player->position += direction;
 }
 
 void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
@@ -128,14 +140,7 @@ GameChanges ServerGameModel::getChanges(int32_t id)
   GameChanges gameChanges;
   for (const auto& gameObject : gameObjects)
   {
-    /*PlayerInfo playerInfo;
-    playerInfo.id = unit.first;
-    playerInfo.position.x = unit.second->getPosition().x;
-    playerInfo.position.y = unit.second->getPosition().y;
-    //#KoCTblJlb!
-    playerInfo.direction.x = dynamic_cast<unit::RotatableUnit*> (unit.second.get())->getRotation().x;
-    playerInfo.direction.y = dynamic_cast<unit::RotatableUnit*> (unit.second.get())->getRotation().y;
-    gameChanges.players.push_back(playerInfo);*/
+    gameChanges.patches.push_back(gameObject.second->getPatch());
   }
   return gameChanges;
 }

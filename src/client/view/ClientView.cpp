@@ -52,10 +52,10 @@ void ClientView::setModel(model::ClientModel* clientModel)
 
 void ClientView::addGameObject(const GameObjectType::type& gameObjectType, model::GameObject* gameObject)
 {
-  logger << std::string("Adding object ") + std::to_string(gameObject->getId());
-  gameObjects.insert(std::make_pair(gameObject->getId(),
+  logger << std::string("Adding object ") + std::to_string(gameObject->id);
+  gameObjects.insert(std::make_pair(gameObject->id,
     std::unique_ptr<GameObject> (gameObjectFactory.create(gameObjectType))));
-  gameObjects[gameObject->getId()]->setModelObject(gameObject);
+  gameObjects[gameObject->id]->setModelObject(gameObject);
 }
 
 /*

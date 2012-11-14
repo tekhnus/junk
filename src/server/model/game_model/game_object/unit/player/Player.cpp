@@ -15,6 +15,7 @@ Player::~Player()
 Patch Player::getPatch()
 {
   Patch patch;
+  patch.id = id;
   patch.playerPatch = getPlayerPatch();
   return patch;
 }

@@ -8,12 +8,11 @@ namespace common {
 class Unit : public virtual GameObject
 {
 public:
-    Unit();
-    virtual ~Unit();
+  Unit();
+  virtual ~Unit();
 
-private:
-    sf::Vector2f position;
-    sf::Vector2f direction;
+  sf::Vector2f position;
+  sf::Vector2f direction;
 };
 
 }} // namespace junk::common

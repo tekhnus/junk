@@ -8,8 +8,8 @@ namespace common {
 class Player : public virtual Unit
 {
 public:
-    Player();
-    virtual ~Player();
+  Player();
+  virtual ~Player();
 };
 
 }} // namespace junk::common

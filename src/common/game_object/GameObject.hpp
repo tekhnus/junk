@@ -9,13 +9,10 @@ namespace common {
 class GameObject
 {
 public:
-    GameObject();
-    virtual ~GameObject();
+  GameObject();
+  virtual ~GameObject();
 
-    int32_t getId() const;
-
-private:
-    int32_t id;
+  int32_t id;
 
 }; // GameObject
 

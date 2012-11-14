@@ -11,9 +11,4 @@ GameObject::~GameObject()
 {
 }
 
-int32_t GameObject::getId() const
-{
-  return id;
-}
-
 }} // namespace junk::common

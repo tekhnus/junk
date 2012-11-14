@@ -1,4 +1,5 @@
 #include "Unit.hpp"
+#include "common/utils/Convert.hpp"
 
 namespace junk {
 namespace server {
@@ -15,6 +16,7 @@ Unit::~Unit()
 Patch Unit::getPatch()
 {
   Patch patch;
+  patch.id = id;
   patch.unitPatch = getUnitPatch();
   return patch;
 }
@@ -24,9 +26,8 @@ UnitPatch Unit::getUnitPatch()
   UnitPatch unitPatch;
   unitPatch.gameObjectPatch = getGameObjectPatch();
 
-  /*
-    Set fields here
-  */
+  unitPatch.position = common::to_thrift_Vector2f(position);
+  unitPatch.direction = common::to_thrift_Vector2f(direction);
 
   return unitPatch;
 }

@@ -15,6 +15,7 @@ GameObject::~GameObject()
 Patch GameObject::getPatch()
 {
   Patch patch;
+  patch.id = id;
   patch.gameObjectPatch = getGameObjectPatch();
   return patch;
 }
@@ -23,9 +24,7 @@ GameObjectPatch GameObject::getGameObjectPatch()
 {
   GameObjectPatch gameObjectPatch;
 
-  /*
-    Set fields here
-  */
+  gameObjectPatch.id = id;
 
   return gameObjectPatch;
 }

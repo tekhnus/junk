@@ -7,7 +7,7 @@ include "Shared.thrift"
 typedef Shared.Vector2f Vector2f
 
 struct GameObjectPatch {
-  1: i32 objectID
+  1: i32 id
 }
 
 struct UnitPatch {
