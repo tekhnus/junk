@@ -29,6 +29,7 @@ void ClientModel::update()
   GameChanges gameChanges = networkModel.getGameChanges();
   for (auto& patch : gameChanges.patches)
   {
+    logger << "patch received";
     if (gameObjects.find(patch.id) == gameObjects.end())
     {
       addGameObject(patch);

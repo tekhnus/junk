@@ -147,7 +147,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   for (auto& gameObject : gameObjects)
   {
-    //target.draw(gameObject.second, states);
+    target.draw(*gameObject.second, states);
   }
 }
 
