@@ -18,6 +18,10 @@ public:
 
   void updatePlayer(const model::Player& player);
 
+  virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+private:
+  sf::CircleShape body;
+
 }; // Player
 
 }}} // namespace junk::client::view

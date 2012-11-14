@@ -35,6 +35,7 @@ ClientNetworkModel::~ClientNetworkModel()
 GameChanges ClientNetworkModel::getGameChanges()
 {
   socketMutex.lock();
+  logger << "Getting changes";
 
   GameChanges gameChanges;
   clientServiceClient->getChanges(gameChanges, sessionInfo);

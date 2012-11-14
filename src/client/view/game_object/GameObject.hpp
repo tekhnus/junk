@@ -4,6 +4,7 @@
 #include "client/model/game_object/GameObject.hpp"
 #include "GameObjectFactory.hpp"
 #include <gen-cpp/Patches_types.h>
+#include <SFML/Graphics.hpp>
 
 #include <boost/signals2.hpp>
 
@@ -24,7 +25,7 @@ namespace junk {
 namespace client {
 namespace view {
 
-class GameObject : public virtual common::GameObject
+class GameObject : public virtual common::GameObject, public virtual sf::Drawable
 {
   VIEW_GAME_OBJECT_DEF(GameObject)
 
