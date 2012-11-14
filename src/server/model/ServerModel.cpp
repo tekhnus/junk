@@ -120,7 +120,7 @@ SessionInfo ServerModel::connectHandler(const ConnectInfo& connectInfo)
 
 GameChanges ServerModel::getChangesHandler(const SessionInfo& sessionInfo)
 {
-  looger << "getChanges invoked";
+  logger << "getChanges invoked";
 
   if (checkClientSessionInfo(sessionInfo) != ServerModel::CheckStatus::CORRECT_UUID)
   {
@@ -134,7 +134,7 @@ GameChanges ServerModel::getChangesHandler(const SessionInfo& sessionInfo)
 
 void ServerModel::makeActionHandler(const SessionInfo& sessionInfo, const Action& action)
 {
-  looger << "getAction invoked";
+  logger << "makeAction invoked";
 
   if (checkClientSessionInfo(sessionInfo) != ServerModel::CheckStatus::CORRECT_UUID)
   {

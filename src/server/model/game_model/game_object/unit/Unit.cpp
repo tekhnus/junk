@@ -17,6 +17,7 @@ Patch Unit::getPatch()
 {
   Patch patch;
   patch.id = id;
+  patch.gameObjectType = GameObjectType::UNIT;
   patch.unitPatch = getUnitPatch();
   return patch;
 }

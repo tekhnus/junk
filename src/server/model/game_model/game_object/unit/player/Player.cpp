@@ -16,6 +16,7 @@ Patch Player::getPatch()
 {
   Patch patch;
   patch.id = id;
+  patch.gameObjectType = GameObjectType::PLAYER;
   patch.playerPatch = getPlayerPatch();
   return patch;
 }

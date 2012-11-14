@@ -1,9 +1,10 @@
 #include "GameObjectFactory.hpp"
 
+#include <iostream>
+
 namespace junk {
 namespace client {
 namespace model {
-
 
 GameObjectFactory::GameObjectFactory() : logger("CLIENT_GAME_OBJECT_FACTORY", "client_model.log", true)
 {
@@ -26,6 +27,8 @@ GameObject* GameObjectFactory::create(const GameObjectType::type &gameObjectType
 bool GameObjectFactory::registerCreator(GameObjectType::type gameObjectType,
                                         std::function<GameObject *()> creator)
 {
+  //cerr
+  std::cerr << "Registring new creator of type " + std::to_string(gameObjectType) << std::endl;
   gameObjectCreator[gameObjectType] = creator;
   return true;
 }

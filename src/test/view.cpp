@@ -82,7 +82,6 @@ void processInput()
 
 int main(int argc, char** argv)
 {
-  std::cerr << "hello, world!" << std::endl;
   //sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
   //window.show();
   std::string address("localhost");
@@ -106,6 +105,7 @@ int main(int argc, char** argv)
 
   while (window.isOpen())
   {
+    std::cerr << "HERE" << std::endl;
     updateLock.lock();
 
     window.clear();

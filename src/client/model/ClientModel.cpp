@@ -1,4 +1,6 @@
 #include "ClientModel.hpp"
+#include "game_object/unit/Unit.hpp"
+#include "game_object/unit/player/Player.hpp"
 
 namespace junk {
 namespace client {
@@ -37,10 +39,15 @@ void ClientModel::update()
 
 void ClientModel::addGameObject(const Patch& patch)
 {
+  GameObject go;
+  Unit ut;
+  Player pl;
   logger << "Adding new GameObject";
 
   gameObjects.insert(std::make_pair(patch.id,
     std::unique_ptr<GameObject> (gameObjectFactory.create(patch.gameObjectType))));
+
+  gameObjects[patch.id]->id = patch.id;
 
   gameObjectAddedSignal(patch.gameObjectType, gameObjects[patch.id].get());
 }

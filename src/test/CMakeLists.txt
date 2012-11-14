@@ -3,7 +3,10 @@ target_link_libraries(log logger)
 
 add_executable (view view.cpp)
 target_link_libraries(view clientview unitview clientmodel clientmodelgameobjectfactory
-                      clientviewgameobjectfactory clientviewgameobject commongameobject
+                      clientviewgameobjectfactory
+                      clientviewplayer clientviewunit clientviewgameobject
+                      clientmodelplayer clientmodelunit clientmodelgameobject
+                      commonunit commonplayer commongameobject
                       unitview clientnetworkmodel clientservicehandler logger utils
                       sfml-graphics sfml-window sfml-system sigc-2.0 pthread thrift)
 
@@ -15,6 +18,9 @@ target_link_libraries(servertest server servermodel servernetworkmodel servergam
 
 add_executable (clienttest client.cpp)
 target_link_libraries(clienttest client clientview clientmodel clientmodelgameobjectfactory
-                      clientviewgameobjectfactory clientviewgameobject commongameobject unitview
+                      clientviewgameobjectfactory
+                      clientviewplayer clientviewunit clientviewgameobject
+                      clientmodelplayer clientmodelunit clientmodelgameobject
+                      commonplayer commonunit commongameobject unitview
                       clientnetworkmodel clientservicehandler logger utils
                       sfml-graphics sfml-window sfml-system sigc-2.0 pthread thrift)
