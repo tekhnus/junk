@@ -49,6 +49,8 @@ int32_t ServerGameModel::addPlayer(Player* player)
 
   logger << std::string("New player ID = ") + std::to_string(newPlayerId);
 
+  player->id = newPlayerId;
+
   gameObjects.insert(std::make_pair(newPlayerId,
                     std::unique_ptr<GameObject> (player)));
 
@@ -81,8 +83,6 @@ void ServerGameModel::removePlayer(int32_t playerId)
 void ServerGameModel::makeAction(const Action& action)
 {
   gameChangesMutex.lock();
-
-  logger << "TEST TEST " << action.moveAction.direction.x;
 
   // I think we should check it in ServerModel, not here
   if (gameObjects.find(action.playerId) == gameObjects.end())

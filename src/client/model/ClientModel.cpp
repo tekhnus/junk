@@ -44,7 +44,7 @@ void ClientModel::update()
 
 void ClientModel::addGameObject(const Patch& patch)
 {
-  logger << "Adding new GameObject";
+  logger << "Adding new GameObject " + std::to_string(patch.id);
 
   gameObjects.insert(std::make_pair(patch.id,
     std::unique_ptr<GameObject> (gameObjectFactory.create(patch.gameObjectType))));

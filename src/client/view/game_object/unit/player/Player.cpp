@@ -6,7 +6,7 @@ namespace view {
 
 VIEW_GAME_OBJECT_IMPL(Player, player, PLAYER)
 
-Player::Player() : body(150)
+Player::Player() : body(15)
 {
   body.setFillColor(sf::Color::Green);
 }
