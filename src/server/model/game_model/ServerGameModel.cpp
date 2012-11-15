@@ -112,16 +112,21 @@ void ServerGameModel::move(Player* player, const MoveAction& moveAction)
 {
   logger << "Move invoked";
 
-  static const float speed = 250.0; // will be deleted
+  static const float speed = 25.0; // will be deleted
 
   sf::Vector2f direction = common::to_SFML_Vector2f(moveAction.direction);
   double length = sqrt(direction.x * direction.x + direction.y * direction.y);
+
   if (length < 1e-4)
     return;
 
-  length *= speed;
   direction.x /= length;
   direction.y /= length;
+  direction.x *= speed;
+  direction.y *= speed;
+
+  logger << player->position.x;
+  logger << player->position.y;
 
   player->position += direction;
 }

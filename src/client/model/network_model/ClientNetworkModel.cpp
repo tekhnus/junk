@@ -49,6 +49,8 @@ void ClientNetworkModel::makeAction(const Action& action)
 {
   socketMutex.lock();
 
+  logger << action.moveAction.direction.x;
+  logger << action.moveAction.direction.y;
   clientServiceClient->makeAction(sessionInfo, action);
 
   socketMutex.unlock();

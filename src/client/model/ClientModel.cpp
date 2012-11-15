@@ -26,10 +26,14 @@ int32_t ClientModel::connectToServer(const std::string& serverIp, int port)
 void ClientModel::update()
 {
   logger << "update";
+
   GameChanges gameChanges = networkModel.getGameChanges();
+
+  logger << std::to_string(gameChanges.patches.size()) + " patches";
+
   for (auto& patch : gameChanges.patches)
   {
-    logger << "patch received";
+    logger << "patch received " + std::to_string(patch.id);
     if (gameObjects.find(patch.id) == gameObjects.end())
     {
       addGameObject(patch);
@@ -55,6 +59,7 @@ void ClientModel::addGameObject(const Patch& patch)
 
 void ClientModel::makeAction(const Action& action)
 {
+  logger << "makeAction invoked";
   networkModel.makeAction(action);
 }
 

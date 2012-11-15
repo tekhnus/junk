@@ -107,6 +107,7 @@ void ClientView::move(sf::Vector2f direction)
   action.actionType = ActionType::MOVE;
   action.moveAction.direction.x = direction.x;
   action.moveAction.direction.y = direction.y;
+  action.__set_moveAction(action.moveAction);
 
   makeAction(action);
 }
