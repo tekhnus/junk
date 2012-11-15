@@ -2,7 +2,6 @@
 
 #include "common/game_object/GameObject.hpp"
 #include <gen-cpp/Patches_types.h>
-#include "GameObjectFactory.hpp"
 
 #include <boost/signals2.hpp>
 
@@ -14,10 +13,7 @@ void _Name::applyPatch(const Patch& patch) \
 { \
   apply ##_Name ## Patch(patch._name##Patch); \
   updateSignal(*this); \
-} \
-_Name *create_ ## _Name() { return new _Name; } \
-static bool _name ## _creator_registred = \
-  GameObjectFactory::registerCreator(GameObjectType::_NAME, create_ ## _Name);
+}
 
 namespace junk {
 namespace client {

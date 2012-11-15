@@ -2,11 +2,22 @@
 
 #include <iostream>
 
+#include "unit/player/Player.hpp"
+
 namespace junk {
 namespace client {
 namespace model {
 
-GameObjectFactory::GameObjectFactory() : logger("CLIENT_GAME_OBJECT_FACTORY", "client_model.log", true)
+#define MODEL_GAME_OBJECT_REG( _Name, _name, _NAME) \
+static bool model ## _Name ## _creator_registred = \
+  GameObjectFactory::registerCreator<_Name>(GameObjectType::_NAME);
+
+std::unordered_map<int, std::function<GameObject* ()> > GameObjectFactory::gameObjectCreator;
+Logger GameObjectFactory::logger("CLIENT_GAME_OBJECT_FACTORY", "client_model.log", true);
+
+MODEL_GAME_OBJECT_REG(Player, player, PLAYER)
+
+GameObjectFactory::GameObjectFactory()
 {
   logger << "GameObjectFactory created";
 }
@@ -16,21 +27,10 @@ GameObjectFactory::~GameObjectFactory()
   logger << "GameObjectFactory destructed";
 }
 
-std::unordered_map<int, std::function<GameObject* ()> > GameObjectFactory::gameObjectCreator;
-
 GameObject* GameObjectFactory::create(const GameObjectType::type &gameObjectType)
 {
   logger << "Creating new object of type " + std::to_string(gameObjectType);
   return gameObjectCreator[gameObjectType]();
-}
-
-bool GameObjectFactory::registerCreator(GameObjectType::type gameObjectType,
-                                        std::function<GameObject *()> creator)
-{
-  //cerr
-  std::cerr << "Registring new creator of type " + std::to_string(gameObjectType) << std::endl;
-  gameObjectCreator[gameObjectType] = creator;
-  return true;
 }
 
 }}} // namespace junk::client::model
