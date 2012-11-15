@@ -2,7 +2,6 @@
 
 #include "common/game_object/GameObject.hpp"
 #include "client/model/game_object/GameObject.hpp"
-#include "GameObjectFactory.hpp"
 #include <gen-cpp/Patches_types.h>
 
 #include <boost/signals2.hpp>
@@ -16,9 +15,6 @@ void _Name::update(const model::GameObject& gameObject) \
 { \
   update ## _Name (reinterpret_cast<const model::_Name&> (gameObject)); \
 } \
-_Name *create_ ## _Name() { return new _Name; } \
-static bool _name ## _creator_registred = \
-  GameObjectFactory::registerCreator(GameObjectType::_NAME, create_ ## _Name);
 
 namespace junk {
 namespace client {

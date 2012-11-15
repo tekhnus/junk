@@ -5,6 +5,7 @@
 #include "common/logger/Logger.hpp"
 
 #include <unordered_map>
+#include <functional>
 
 namespace junk {
 namespace client {
@@ -20,12 +21,19 @@ public:
   ~GameObjectFactory();
 
   GameObject* create(const GameObjectType::type& gameObjectType);
-  static bool registerCreator(GameObjectType::type gameObjectType, std::function<GameObject* (void)> creator);
+
+  template <class T>
+  static bool registerCreator(GameObjectType::type gameObjectType)
+  {
+    logger << "Registring new creator of type " + std::to_string(gameObjectType);
+    gameObjectCreator[gameObjectType] = std::function<GameObject* ()> ([&] { return new T(); });
+    return true;
+  }
 
 private:
 
   static std::unordered_map<int, std::function<GameObject* ()> > gameObjectCreator;
-  Logger logger;
+  static Logger logger;
 };
 
 }}} // namespace junk::client::model
