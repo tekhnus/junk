@@ -29,9 +29,6 @@ UnitPatch Unit::getUnitPatch()
   UnitPatch unitPatch;
   unitPatch.gameObjectPatch = getGameObjectPatch();
 
-  std::cerr << "getUnitPatch()" << std::endl;
-  std::cerr << position.x << " " << position.y << std::endl;
-
   unitPatch.position = common::to_thrift_Vector2f(position);
   unitPatch.direction = common::to_thrift_Vector2f(direction);
 

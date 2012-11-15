@@ -49,6 +49,7 @@ void ClientNetworkModel::makeAction(const Action& action)
 {
   socketMutex.lock();
 
+  logger << "ClientNetworkModel::makeAction(), id = " + std::to_string(sessionInfo.id);
   logger << action.moveAction.direction.x;
   logger << action.moveAction.direction.y;
   clientServiceClient->makeAction(sessionInfo, action);
