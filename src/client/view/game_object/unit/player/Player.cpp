@@ -19,7 +19,7 @@ Player::~Player()
 void Player::updatePlayer(const model::Player& player)
 {
   std::cerr << "I'm being updated!" << std::endl;
-  std::cerr << player.position.x << std::endl;
+  std::cerr << player.position.x << " " << player.position.y << std::endl;
   body.setPosition(player.position);
 }
 

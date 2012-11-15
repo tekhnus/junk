@@ -1,5 +1,7 @@
 #include "Player.hpp"
 
+#include <iostream>
+
 namespace junk {
 namespace server {
 namespace model {
@@ -16,8 +18,10 @@ Patch Player::getPatch()
 {
   Patch patch;
   patch.id = id;
+
   patch.gameObjectType = GameObjectType::PLAYER;
   patch.__set_playerPatch(getPlayerPatch());
+
   return patch;
 }
 

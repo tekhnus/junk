@@ -1,5 +1,7 @@
 #include "Player.hpp"
 
+#include <iostream>
+
 namespace junk {
 namespace client {
 namespace model {
@@ -18,9 +20,7 @@ void Player::applyPlayerPatch(const PlayerPatch& playerPatch)
 {
   applyUnitPatch(playerPatch.unitPatch);
 
-  /*
-    Apply patch here
-  */
+  std::cerr << "Player.position: " << position.x << " " << position.y << std::endl;
 }
 
 }}} // namespace junk::client::model

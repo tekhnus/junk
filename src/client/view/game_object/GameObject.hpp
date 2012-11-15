@@ -14,7 +14,7 @@ virtual void update(const model::GameObject& gameObject);
 #define VIEW_GAME_OBJECT_IMPL( _Name, _name, _NAME ) \
 void _Name::update(const model::GameObject& gameObject) \
 { \
-  update ## _Name (reinterpret_cast<const model::_Name&> (gameObject)); \
+  update ## _Name (dynamic_cast<const model::_Name&> (gameObject)); \
 } \
 
 namespace junk {

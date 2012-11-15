@@ -1,5 +1,7 @@
 #include "Unit.hpp"
 
+#include <iostream>
+
 namespace junk {
 namespace client {
 namespace model {
@@ -17,9 +19,11 @@ Unit::~Unit()
 void Unit::applyUnitPatch(const UnitPatch& unitPatch)
 {
   applyGameObjectPatch(unitPatch.gameObjectPatch);
-  /*
-    Apply patch here
-  */
+
+  position = common::to_SFML_Vector2f(unitPatch.position);
+
+  std::cerr << "Applying UnitPatch" << std::endl;
+  std::cerr << position.x << " " << position.y << std::endl;
 }
 
 }}} // namespace junk::client::model
