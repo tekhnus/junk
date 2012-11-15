@@ -48,7 +48,7 @@ GameChanges ClientNetworkModel::getGameChanges()
 void ClientNetworkModel::makeAction(const Action& action)
 {
   socketMutex.lock();
-
+  logger << "Action performed " << action.moveAction.direction.x;
   clientServiceClient->makeAction(sessionInfo, action);
 
   socketMutex.unlock();

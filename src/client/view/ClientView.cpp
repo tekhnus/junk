@@ -58,8 +58,8 @@ void ClientView::addGameObject(const GameObjectType::type& gameObjectType, model
 {
   logger << std::string("Adding object ") + std::to_string(gameObject->id);
 
-  GameObject go;
-  Unit ut;
+  // GameObject go;
+  // Unit ut;
   Player pl;
 
   gameObjects.insert(std::make_pair(gameObject->id,
@@ -101,8 +101,7 @@ void ClientView::makeAction(const Action& action)
 
 void ClientView::move(sf::Vector2f direction)
 {
-  logger << "move invoked";
-
+  logger << "move invoked " << direction.x << " " << direction.y;
   Action action;
   action.actionType = ActionType::MOVE;
   action.moveAction.direction.x = direction.x;
