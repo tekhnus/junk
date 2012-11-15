@@ -101,8 +101,7 @@ void ClientView::makeAction(const Action& action)
 
 void ClientView::move(sf::Vector2f direction)
 {
-  logger << "move invoked";
-
+  logger << "move invoked " << direction.x << " " << direction.y;
   Action action;
   action.actionType = ActionType::MOVE;
   action.moveAction.direction.x = direction.x;

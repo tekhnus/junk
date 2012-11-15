@@ -82,6 +82,8 @@ void ServerGameModel::makeAction(const Action& action)
 {
   gameChangesMutex.lock();
 
+  logger << "TEST TEST " << action.moveAction.direction.x;
+
   // I think we should check it in ServerModel, not here
   if (gameObjects.find(action.playerId) == gameObjects.end())
   {
@@ -111,6 +113,7 @@ void ServerGameModel::makeAction(const Action& action)
 void ServerGameModel::move(Player* player, const MoveAction& moveAction)
 {
   logger << "Move invoked";
+  logger << moveAction.direction.x;
 
   static const float speed = 25.0; // will be deleted
 

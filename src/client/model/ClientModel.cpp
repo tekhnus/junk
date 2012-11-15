@@ -44,9 +44,6 @@ void ClientModel::update()
 
 void ClientModel::addGameObject(const Patch& patch)
 {
-  /*GameObject go;
-  Unit ut;
-  Player pl;*/
   logger << "Adding new GameObject";
 
   gameObjects.insert(std::make_pair(patch.id,

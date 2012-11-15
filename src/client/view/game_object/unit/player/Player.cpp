@@ -15,12 +15,14 @@ Player::~Player()
 {
 }
 
+#include <iostream>
 void Player::updatePlayer(const model::Player& player)
 {
-    body.setPosition(player.position);
+  std::cerr << "I'm being updated!" << std::endl;
+  std::cerr << player.position.x << std::endl;
+  body.setPosition(player.position);
 }
 
-#include <iostream>
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   std::cerr << "I'm being drawn!" << std::endl;
