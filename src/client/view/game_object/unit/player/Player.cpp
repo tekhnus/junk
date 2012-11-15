@@ -6,7 +6,7 @@ namespace view {
 
 VIEW_GAME_OBJECT_IMPL(Player, player, PLAYER)
 
-Player::Player() : body(15)
+Player::Player() : body(20)
 {
   body.setFillColor(sf::Color::Green);
 }
@@ -20,7 +20,7 @@ void Player::updatePlayer(const model::Player& player)
 {
   std::cerr << "I'm being updated!" << std::endl;
   std::cerr << player.position.x << " " << player.position.y << std::endl;
-  body.setPosition(player.position);
+  body.setPosition(20.0f * player.position);
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const

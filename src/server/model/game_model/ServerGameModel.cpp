@@ -11,6 +11,8 @@ ServerGameModel::ServerGameModel()
 : logger("SERVER_GAME_MODEL", "server_model.log", true), isRunning(false)
 {
   b2AABB aabb;
+  aabb.lowerBound.Set(-1000, -1000);
+  aabb.upperBound.Set(1000, 1000);
   world = new b2World(aabb, b2Vec2(0, 0), true);
   logger << "ServerGameModel created";
   firstFreeId = 0;
@@ -56,6 +58,17 @@ int32_t ServerGameModel::addPlayer(Player* player)
 
   gameObjects.insert(std::make_pair(newPlayerId,
                     std::unique_ptr<GameObject> (player)));
+
+  b2BodyDef bodyDef;
+  bodyDef.position.Set(0, 0);
+  b2Body* body = world->CreateBody(&bodyDef);
+  b2CircleDef shapeDef;
+  shapeDef.radius = 1;
+  shapeDef.density = 40;
+  body->CreateShape(&shapeDef);
+  body->SetMassFromShapes();
+
+  player->body = body;
 
   logger << "Player added";
 
@@ -116,7 +129,9 @@ void ServerGameModel::makeAction(const Action& action)
 void ServerGameModel::move(Player* player, const MoveAction& moveAction)
 {
   logger << "Move invoked";
-  logger << moveAction.direction.x;
+  b2Vec2 force(moveAction.direction.x, moveAction.direction.y);
+  player->force = force;
+  /*logger << moveAction.direction.x;
 
   static const float speed = 25.0; // will be deleted
 
@@ -134,7 +149,7 @@ void ServerGameModel::move(Player* player, const MoveAction& moveAction)
   logger << player->position.x;
   logger << player->position.y;
 
-  player->position += direction;
+  player->position += direction;*/
 }
 
 void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
@@ -167,12 +182,15 @@ void ServerGameModel::operator()()
       gameChangesMutex.unlock();
       break;
     }
-
-    for (auto &gameObject : gameObjects)
-    {
-      //unit.second->synchronize(gameLoopTimer);
+    world->Step(1.0/60, 4);
+    for (auto& go : gameObjects) {
+      //#kocTbl^U!
+      Player* kost = dynamic_cast<Player*>(go.second.get());
+      kost->body->ApplyForce(kost->force, kost->body->GetWorldCenter());
+      b2Vec2 pos = kost->body->GetWorldCenter();
+      kost->position.x = pos.x;
+      kost->position.y = pos.y;
     }
-
 
     gameChangesMutex.unlock();
   }

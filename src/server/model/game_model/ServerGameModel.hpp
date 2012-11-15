@@ -14,7 +14,7 @@
 
 namespace junk {
 namespace server {
-namespace model {
+namespace model { 
 
 class ServerGameModel
 {

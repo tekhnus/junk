@@ -3,6 +3,8 @@
 #include "server/model/game_model/game_object/GameObject.hpp"
 #include "common/game_object/unit/Unit.hpp"
 
+#include <Box2D.h>
+
 namespace junk {
 namespace server {
 namespace model {
@@ -15,6 +17,9 @@ public:
 
     virtual Patch getPatch();
     UnitPatch getUnitPatch();
+
+    b2Body* body;
+    b2Vec2 force;
 
 }; // Unit
 
