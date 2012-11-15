@@ -109,7 +109,6 @@ int main(int argc, char** argv)
 
     window.clear();
     model.update();
-    view.update();
     window.draw(view);
 
     window.display();
