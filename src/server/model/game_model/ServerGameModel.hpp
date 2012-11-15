@@ -7,6 +7,7 @@
 #include <map>
 #include <thread>
 #include <mutex>
+#include <Box2D.h>
 
 #include "game_object/GameObject.hpp"
 #include "game_object/unit/player/Player.hpp"
@@ -48,7 +49,7 @@ private:
   std::mutex gameChangesMutex;
 
   Logger logger;
-
+  b2World* world;
 };
 
 }}} // namespace junk::server::model

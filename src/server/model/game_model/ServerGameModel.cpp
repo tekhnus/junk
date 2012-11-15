@@ -10,6 +10,8 @@ namespace model {
 ServerGameModel::ServerGameModel()
 : logger("SERVER_GAME_MODEL", "server_model.log", true), isRunning(false)
 {
+  b2AABB aabb;
+  world = new b2World(aabb, b2Vec2(0, 0), true);
   logger << "ServerGameModel created";
   firstFreeId = 0;
 }
@@ -17,6 +19,7 @@ ServerGameModel::ServerGameModel()
 ServerGameModel::~ServerGameModel()
 {
   logger << "ServerGameModel destroyed";
+  delete world;
 }
 
 void ServerGameModel::start()
@@ -170,15 +173,6 @@ void ServerGameModel::operator()()
       //unit.second->synchronize(gameLoopTimer);
     }
 
-    /*for (auto player : players)
-    {
-      for (auto bullet : bullets)
-      {
-        if (player.second.interactsWith(bullet.second))
-        {
-        }
-      }
-    }*/
 
     gameChangesMutex.unlock();
   }
