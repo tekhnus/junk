@@ -35,20 +35,14 @@ public:
   void setModel(model::ClientModel* clientModel);
 
   void addGameObject(const GameObjectType::type &gameObjectType, model::GameObject* gameObject);
-  /*
-  void removePlayer(int32_t playerID);
-
-  void setPlayerPosition(int32_t playerID, sf::Vector2f position);
-  void setPlayerRotation(int32_t playerID, sf::Vector2f rotation);
-  */
+  void removeGameObject(int32_t gameObjectId);
 
   void move(sf::Vector2f direction);
   void rotate(sf::Vector2f rotation);
 
-  void makeAction(const Action& action);
+  void makeAction(Action& action);
 
-  void setClientID(int32_t clientID);
-  void update();
+  void setClientId(int32_t clientId);
 
   boost::signals2::signal<void (const Action& action)> makeActionSignal;
 
@@ -57,7 +51,7 @@ private:
   GameObjectFactory gameObjectFactory;
   std::unordered_map<int32_t, std::unique_ptr<GameObject> > gameObjects;
 
-  int32_t clientID;
+  int32_t clientId;
   void processInput();
   Logger logger;
   std::thread inputThread;

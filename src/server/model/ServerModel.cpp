@@ -134,7 +134,7 @@ GameChanges ServerModel::getChangesHandler(const SessionInfo& sessionInfo)
 
 void ServerModel::makeActionHandler(const SessionInfo& sessionInfo, const Action& action)
 {
-  logger << "makeAction invoked";
+  logger << "makeAction invoked, id = " + std::to_string(sessionInfo.id);
 
   if (checkClientSessionInfo(sessionInfo) != ServerModel::CheckStatus::CORRECT_UUID)
   {
@@ -142,6 +142,9 @@ void ServerModel::makeActionHandler(const SessionInfo& sessionInfo, const Action
   }
 
   updateLastUpdateTime(sessionInfo.id);
+
+  logger << "action.playerId: " + std::to_string(action.playerId);
+
   gameModel.makeAction(action);
 }
 

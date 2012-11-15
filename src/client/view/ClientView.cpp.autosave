@@ -36,7 +36,7 @@ sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
 //#KoCTblJIb
 
 ClientView::ClientView()
-: logger("CLIENT_VIEW", "client_view.log", true), clientID(-1)
+: logger("CLIENT_VIEW", "client_view.log", true), clientId(-1)
 , inputThread(&ClientView::processInput, this)
 {
 
@@ -50,7 +50,7 @@ void ClientView::setModel(model::ClientModel* clientModel)
 {
   makeActionSignal.connect(boost::bind(&model::ClientModel::makeAction, clientModel, _1));
 
-  clientModel->gotClientIdSignal.connect(boost::bind(&ClientView::setClientID, this, _1));
+  clientModel->gotClientIdSignal.connect(boost::bind(&ClientView::setClientId, this, _1));
   clientModel->gameObjectAddedSignal.connect(boost::bind(&ClientView::addGameObject, this, _1, _2));
 }
 
@@ -72,7 +72,7 @@ void ClientView::removeGameObject(int32_t gameObjectId)
 void ClientView::makeAction(Action& action)
 {
   logger << "makeAction invoked";
-  action.playerId = clientID;
+  action.playerId = clientId;
   makeActionSignal(action);
 }
 
@@ -101,10 +101,10 @@ void ClientView::rotate(sf::Vector2f direction)
   makeAction(action);
 }
 
-void ClientView::setClientID(int32_t clientID)
+void ClientView::setClientId(int32_t clientID)
 {
   logger << std::string("Setting client id to ") + std::to_string(clientID);
-  this->clientID = clientID;
+  this->clientId = clientID;
 }
 
 void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
