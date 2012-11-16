@@ -210,20 +210,12 @@ void ServerGameModel::operator()()
       break;
     }
 
-<<<<<<< HEAD
     for (auto& gameObject : gameObjects)
     {
       gameObject.second->process();
     }
 
     world->Step(1.0/60, 6, 2);
-=======
-    for (auto& go : gameObjects) {
-      go.second->process();
-    }
-
-    world->Step(1.0/60, 7);
->>>>>>> 0639832deb13bb7bc50d32a84132e670c617047d
 
     gameChangesMutex.unlock();
   }
