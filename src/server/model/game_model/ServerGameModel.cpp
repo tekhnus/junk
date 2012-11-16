@@ -64,7 +64,7 @@ int32_t ServerGameModel::addPlayer(Player* player)
   b2Body* body = world->CreateBody(&bodyDef);
   b2CircleDef shapeDef;
   shapeDef.radius = 1;
-  shapeDef.density = 40;
+  shapeDef.density = 60;
   body->CreateShape(&shapeDef);
   body->SetMassFromShapes();
 
@@ -182,15 +182,12 @@ void ServerGameModel::operator()()
       gameChangesMutex.unlock();
       break;
     }
-    world->Step(1.0/60, 4);
+
     for (auto& go : gameObjects) {
-      //#kocTbl^U!
-      Player* kost = dynamic_cast<Player*>(go.second.get());
-      kost->body->ApplyForce(kost->force, kost->body->GetWorldCenter());
-      b2Vec2 pos = kost->body->GetWorldCenter();
-      kost->position.x = pos.x;
-      kost->position.y = pos.y;
+      go.second->process();
     }
+
+    world->Step(1.0/60, 7);
 
     gameChangesMutex.unlock();
   }

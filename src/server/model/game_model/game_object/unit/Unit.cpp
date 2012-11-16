@@ -35,4 +35,12 @@ UnitPatch Unit::getUnitPatch()
   return unitPatch;
 }
 
+void Unit::process()
+{
+  b2Vec2 pos = body->GetWorldCenter();
+  body->ApplyForce(force, body->GetWorldCenter());
+  position.x = pos.x;
+  position.y = pos.y;
+}
+
 }}} // namespace junk::server::model

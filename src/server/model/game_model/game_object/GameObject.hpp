@@ -16,6 +16,8 @@ public:
     virtual Patch getPatch();
     GameObjectPatch getGameObjectPatch();
 
+    virtual void process() = 0;
+
 }; // GameObject
 
 }}} // namespace junk::client::model

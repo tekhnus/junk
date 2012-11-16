@@ -18,6 +18,8 @@ public:
     virtual Patch getPatch();
     UnitPatch getUnitPatch();
 
+    virtual void process();
+
     b2Body* body;
     b2Vec2 force;
 
