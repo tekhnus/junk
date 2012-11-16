@@ -20,7 +20,8 @@ public:
 
   virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 private:
-  sf::CircleShape body;
+  sf::CircleShape body, inner;
+  sf::RectangleShape gun;
 
 }; // Player
 

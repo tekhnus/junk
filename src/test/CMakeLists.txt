@@ -8,13 +8,13 @@ target_link_libraries(view clientview clientmodel clientmodelgameobjectfactory
                       clientmodelplayer clientmodelunit clientmodelgameobject
                       commonplayer commonunit commongameobject
                       clientnetworkmodel clientservicehandler logger utils
-                      sfml-graphics sfml-window sfml-system sigc-2.0 pthread thrift)
+                      sfml-graphics sfml-window sfml-system pthread thrift)
 
 add_executable (servertest server.cpp)
 target_link_libraries(servertest server servermodel servernetworkmodel servergamemodel unitservermodel
                       servermodelplayer servermodelunit servermodelgameobject
                       commonplayer commonunit commongameobject clientservicehandler logger utils
-                      sfml-graphics sfml-window sfml-system sigc-2.0 pthread thrift Box2D)
+                      sfml-graphics sfml-window sfml-system pthread thrift Box2D)
 
 add_executable (clienttest client.cpp)
 target_link_libraries(clienttest client clientview clientmodel
@@ -24,4 +24,4 @@ target_link_libraries(clienttest client clientview clientmodel
                       clientmodelplayer clientmodelunit clientmodelgameobject
                       commonplayer commonunit commongameobject
                       clientnetworkmodel clientservicehandler logger utils
-                      sfml-graphics sfml-window sfml-system sigc-2.0 pthread thrift)
+                      sfml-graphics sfml-window sfml-system pthread thrift)
