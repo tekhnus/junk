@@ -10,10 +10,20 @@ namespace model {
 ServerGameModel::ServerGameModel()
 : logger("SERVER_GAME_MODEL", "server_model.log", true), isRunning(false)
 {
-  b2AABB aabb;
-  aabb.lowerBound.Set(-1000, -1000);
-  aabb.upperBound.Set(1000, 1000);
-  world = new b2World(aabb, b2Vec2(0, 0), true);
+  //world = new b2World(aabb, b2Vec2(0, 0), true);
+  world = new b2World(b2Vec2(0, 0));
+  world->SetAllowSleeping(true);
+
+  /*b2BodyDef groundBodyDef;
+  groundBodyDef.position.Set(0.0f, -10.0f);
+  b2Body* groundBody = world->CreateBody(&groundBodyDef);
+
+  b2PolygonShape groundBox;
+
+  groundBox.SetAsBox(1000, 1000);
+
+  groundBody->CreateFixture(&groundBox, 0.0f);*/
+
   logger << "ServerGameModel created";
   firstFreeId = 0;
 }
@@ -60,13 +70,20 @@ int32_t ServerGameModel::addPlayer(Player* player)
                     std::unique_ptr<GameObject> (player)));
 
   b2BodyDef bodyDef;
-  bodyDef.position.Set(0, 0);
+  bodyDef.type = b2_dynamicBody;
+  bodyDef.position.Set(0.0f, 0.0f);
+
   b2Body* body = world->CreateBody(&bodyDef);
-  b2CircleDef shapeDef;
-  shapeDef.radius = 1;
-  shapeDef.density = 1;
-  body->CreateShape(&shapeDef);
-  body->SetMassFromShapes();
+
+  b2CircleShape circleShape;
+  circleShape.m_radius = 1.0f;
+
+  b2FixtureDef fixtureDef;
+  fixtureDef.shape = &circleShape;
+  fixtureDef.density = 1.0f;
+  fixtureDef.friction = 0.3f;
+
+  body->CreateFixture(&fixtureDef);
 
   player->body = body;
 
@@ -129,7 +146,18 @@ void ServerGameModel::makeAction(const Action& action)
 void ServerGameModel::move(Player* player, const MoveAction& moveAction)
 {
   logger << "Move invoked";
-  b2Vec2 force(moveAction.direction.x / 50.0, moveAction.direction.y / 50.0);
+
+  sf::Vector2f direction = common::to_SFML_Vector2f(moveAction.direction);
+  double length = sqrt(direction.x * direction.x + direction.y * direction.y);
+
+  if (length > 1e-4)
+  {
+    length *= 60;
+    direction.x /= length;
+    direction.y /= length;
+  }
+
+  b2Vec2 force(direction.x, direction.y);
   player->force = force;
   /*logger << moveAction.direction.x;
 
@@ -183,11 +211,12 @@ void ServerGameModel::operator()()
       break;
     }
 
-    for (auto& go : gameObjects) {
-      go.second->process();
+    for (auto& gameObject : gameObjects)
+    {
+      gameObject.second->process();
     }
 
-    world->Step(1.0/60, 10);
+    world->Step(1.0/60, 6, 2);
 
     gameChangesMutex.unlock();
   }
