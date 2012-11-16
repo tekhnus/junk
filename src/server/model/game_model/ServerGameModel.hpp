@@ -7,7 +7,7 @@
 #include <map>
 #include <thread>
 #include <mutex>
-#include <Box2D.h>
+#include <Box2D/Box2D.h>
 
 #include "game_object/GameObject.hpp"
 #include "game_object/unit/player/Player.hpp"

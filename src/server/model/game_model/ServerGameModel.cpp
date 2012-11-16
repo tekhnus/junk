@@ -96,6 +96,7 @@ int32_t ServerGameModel::addPlayer(Player* player)
   bodyDef.position.Set(3.0f, 3.0f);
 
   b2Body* body = world->CreateBody(&bodyDef);
+
   b2CircleShape circleShape;
   circleShape.m_radius = 1.0f;
 

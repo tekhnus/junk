@@ -135,17 +135,9 @@ void ClientView::processInput()
       prevLeft = left;
       prevRight = right;
     }
-    /*
-    if (gameObjects.find(clientID) != gameObjects.end())
-    {
-      sf::Vector2i posI = sf::Mouse::getPosition();
-      sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
-      sf::Vector2f player = players.at(clientID).getPosition();
-      sf::Vector2f rot = player - pos;
-      logger << rot.x << rot.y;
-      //rotate(sf::Vector2f(-1,-1));
-    }
-    */
+    
+    
+    
     std::chrono::milliseconds tm(30);
     std::this_thread::sleep_for(tm);
   }
