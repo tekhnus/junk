@@ -38,7 +38,8 @@ UnitPatch Unit::getUnitPatch()
 void Unit::process()
 {
   b2Vec2 pos = body->GetWorldCenter();
-  body->ApplyForce(force, body->GetWorldCenter());
+  body->ApplyForceToCenter(force);
+//  body->Dump();
   position.x = pos.x;
   position.y = pos.y;
 }

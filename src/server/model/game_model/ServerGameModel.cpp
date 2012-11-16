@@ -14,6 +14,26 @@ ServerGameModel::ServerGameModel()
   world = new b2World(b2Vec2(0, 0));
   world->SetAllowSleeping(true);
 
+  int size = 25;
+  for(int i = -1; i <= 1; ++i) {
+    for (int j = -1; j <=1; ++j) {
+      if (i*i+j*j!=1)
+        continue;
+      b2BodyDef bodyDef;
+      bodyDef.position.Set(i * size, j * size);
+
+      b2Body* body = world->CreateBody(&bodyDef);
+      b2PolygonShape polyShape;
+      polyShape.SetAsBox(size/2, size/2, b2Vec2(size/2, size/2), 0);
+
+      b2FixtureDef fixtureDef;
+      fixtureDef.shape = &polyShape;
+      fixtureDef.restitution = 0.5f;
+
+      body->CreateFixture(&fixtureDef);
+    }
+  }
+
   /*b2BodyDef groundBodyDef;
   groundBodyDef.position.Set(0.0f, -10.0f);
   b2Body* groundBody = world->CreateBody(&groundBodyDef);
@@ -69,9 +89,11 @@ int32_t ServerGameModel::addPlayer(Player* player)
   gameObjects.insert(std::make_pair(newPlayerId,
                     std::unique_ptr<GameObject> (player)));
 
+
+
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
-  bodyDef.position.Set(0.0f, 0.0f);
+  bodyDef.position.Set(3.0f, 3.0f);
 
   b2Body* body = world->CreateBody(&bodyDef);
   b2CircleShape circleShape;
@@ -80,11 +102,13 @@ int32_t ServerGameModel::addPlayer(Player* player)
   b2FixtureDef fixtureDef;
   fixtureDef.shape = &circleShape;
   fixtureDef.density = 1.0f;
-  fixtureDef.friction = 0.3f;
+  fixtureDef.restitution = 0.5f;
 
   body->CreateFixture(&fixtureDef);
+  body->SetLinearDamping(0.99);
 
   player->body = body;
+  player->force.SetZero();
 
   logger << "Player added";
 
@@ -147,14 +171,15 @@ void ServerGameModel::move(Player* player, const MoveAction& moveAction)
   logger << "Move invoked";
 
   sf::Vector2f direction = common::to_SFML_Vector2f(moveAction.direction);
-  double length = sqrt(direction.x * direction.x + direction.y * direction.y);
-
-  if (length > 1e-4)
-  {
-    length *= 60;
-    direction.x /= length;
-    direction.y /= length;
-  }
+  direction = 100.0f* direction;
+//  double length = sqrt(direction.x * direction.x + direction.y * direction.y);
+//
+//  if (length > 1e-4)
+//  {
+//    length *= 6;
+//    direction.x /= length;
+//    direction.y /= length;
+//  }
 
   b2Vec2 force(direction.x, direction.y);
   player->force = force;
@@ -218,6 +243,8 @@ void ServerGameModel::operator()()
     world->Step(1.0/60, 6, 2);
 
     gameChangesMutex.unlock();
+    std::chrono::milliseconds tm(20);
+    std::this_thread::sleep_for(tm);
   }
 
   return;
