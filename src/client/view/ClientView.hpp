@@ -56,6 +56,7 @@ private:
   Logger logger;
   std::thread inputThread;
   bool prevUp, prevDown, prevLeft, prevRight;
+  sf::Vector2i prevPos;
 
 protected:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;

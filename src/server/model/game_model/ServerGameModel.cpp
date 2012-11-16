@@ -64,7 +64,7 @@ int32_t ServerGameModel::addPlayer(Player* player)
   b2Body* body = world->CreateBody(&bodyDef);
   b2CircleDef shapeDef;
   shapeDef.radius = 1;
-  shapeDef.density = 60;
+  shapeDef.density = 1;
   body->CreateShape(&shapeDef);
   body->SetMassFromShapes();
 
@@ -129,7 +129,7 @@ void ServerGameModel::makeAction(const Action& action)
 void ServerGameModel::move(Player* player, const MoveAction& moveAction)
 {
   logger << "Move invoked";
-  b2Vec2 force(moveAction.direction.x, moveAction.direction.y);
+  b2Vec2 force(moveAction.direction.x / 50.0, moveAction.direction.y / 50.0);
   player->force = force;
   /*logger << moveAction.direction.x;
 
@@ -187,7 +187,7 @@ void ServerGameModel::operator()()
       go.second->process();
     }
 
-    world->Step(1.0/60, 7);
+    world->Step(1.0/60, 10);
 
     gameChangesMutex.unlock();
   }
