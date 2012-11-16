@@ -7,3 +7,4 @@ cmake_install.cmake
 *.log
 *.json
 *.swp
+junk.*
