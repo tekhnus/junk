@@ -184,6 +184,7 @@ void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
                               + std::to_string(rotateAction.direction.y);
 
   sf::Vector2f direction = common::to_SFML_Vector2f(rotateAction.direction);
+  direction /= 20.0f;
   direction -= player->position;
 
   double desiredAngle = atan2(direction.y, direction.x);
@@ -193,13 +194,11 @@ void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
 
   float torque = totalRotation < 0 ? -10 : 10;
 
-  /*
-  double DEGTORAD = M_PI / 180;
+  /*double DEGTORAD = M_PI / 180;
   while ( totalRotation < -180 * DEGTORAD ) totalRotation += 360 * DEGTORAD;
   while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
   float desiredAngularVelocity = totalRotation * 60;
-  float torque = player->body->GetInertia() * desiredAngularVelocity / (1/60.0);
-  */
+  float torque = player->body->GetInertia() * desiredAngularVelocity / (1 / 3.0);*/
 
   player->torque = torque;
 }

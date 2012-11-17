@@ -44,7 +44,7 @@ void Player::updatePlayer(const model::Player& player)
   gun.setPosition(body.getPosition());
   sf::Vector2f direction = player.direction;
 
-  gun.setRotation((atan2(direction.y, direction.x) / M_PI) * 180);
+  gun.setRotation((atan2(direction.y, direction.x) * 180) / M_PI);
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
