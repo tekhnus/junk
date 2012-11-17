@@ -22,7 +22,7 @@ public:
 
     b2Body* body;
     b2Vec2 force;
-    double torque;
+    double angularImpulse;
 
 }; // Unit
 

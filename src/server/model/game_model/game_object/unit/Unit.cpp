@@ -40,7 +40,7 @@ void Unit::process()
   b2Vec2 pos = body->GetWorldCenter();
   double angle = body->GetAngle();
   body->ApplyForceToCenter(force);
-  body->ApplyTorque(torque);
+  body->ApplyAngularImpulse(angularImpulse);
 //  body->Dump();
   position.x = pos.x;
   position.y = pos.y;
