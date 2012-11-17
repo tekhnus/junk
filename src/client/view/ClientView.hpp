@@ -38,7 +38,7 @@ public:
   void removeGameObject(int32_t gameObjectId);
 
   void move(sf::Vector2f direction);
-  void rotate(sf::Vector2f rotation);
+  void rotate(sf::Vector2f direction);
 
   void makeAction(Action& action);
 

@@ -97,6 +97,7 @@ void ClientView::rotate(sf::Vector2f direction)
   action.actionType = ActionType::ROTATE;
   action.rotateAction.direction.x = direction.x;
   action.rotateAction.direction.y = direction.y;
+  action.__set_rotateAction(action.rotateAction);
 
   makeAction(action);
 }

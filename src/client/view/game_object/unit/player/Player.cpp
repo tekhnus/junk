@@ -36,9 +36,11 @@ void Player::updatePlayer(const model::Player& player)
 {
   std::cerr << "I'm being updated!" << std::endl;
   std::cerr << player.position.x << " " << player.position.y << std::endl;
+  std::cerr << player.direction.x << " " << player.direction.y << std::endl;
   body.setPosition(20.0f * player.position);
   inner.setPosition(body.getPosition());
   gun.setPosition(body.getPosition());
+  std::cerr << "gun rotation: " + std::to_string(gun.getRotation()) << std::endl;
   gun.setRotation(atan2(player.direction.y, player.direction.x));
 }
 

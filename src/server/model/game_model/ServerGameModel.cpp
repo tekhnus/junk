@@ -173,41 +173,31 @@ void ServerGameModel::move(Player* player, const MoveAction& moveAction)
 
   sf::Vector2f direction = common::to_SFML_Vector2f(moveAction.direction);
   direction = 100.0f* direction;
-//  double length = sqrt(direction.x * direction.x + direction.y * direction.y);
-//
-//  if (length > 1e-4)
-//  {
-//    length *= 6;
-//    direction.x /= length;
-//    direction.y /= length;
-//  }
 
   b2Vec2 force(direction.x, direction.y);
   player->force = force;
-  /*logger << moveAction.direction.x;
-
-  static const float speed = 25.0; // will be deleted
-
-  sf::Vector2f direction = common::to_SFML_Vector2f(moveAction.direction);
-  double length = sqrt(direction.x * direction.x + direction.y * direction.y);
-
-  if (length < 1e-4)
-    return;
-
-  direction.x /= length;
-  direction.y /= length;
-  direction.x *= speed;
-  direction.y *= speed;
-
-  logger << player->position.x;
-  logger << player->position.y;
-
-  player->position += direction;*/
 }
 
 void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
 {
-  //player->setRotation(rotation);
+  logger << "Rotate invoked " + std::to_string(rotateAction.direction.x) + " "
+                              + std::to_string(rotateAction.direction.y);
+
+  sf::Vector2f direction = common::to_SFML_Vector2f(rotateAction.direction);
+
+  double desiredAngle = atan2(direction.y, direction.x);
+  double bodyAngle = player->body->GetAngle();
+  double nextAngle = bodyAngle + player->body->GetAngularVelocity() / 60.0;
+  double totalRotation = desiredAngle - nextAngle;
+
+  double DEGTORAD = M_PI / 180;
+
+  while ( totalRotation < -180 * DEGTORAD ) totalRotation += 360 * DEGTORAD;
+  while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
+  float desiredAngularVelocity = totalRotation * 60;
+  float torque = player->body->GetInertia() * desiredAngularVelocity / (1/60.0);
+
+  player->torque = torque;
 }
 
 void ServerGameModel::fire(Player* player, const FireAction& fireAction)
