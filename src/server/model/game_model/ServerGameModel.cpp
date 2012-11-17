@@ -14,13 +14,13 @@ ServerGameModel::ServerGameModel()
   world = new b2World(b2Vec2(0, 0));
   world->SetAllowSleeping(true);
 
-  int size = 25;
+  double size = 24.5f;
   for(int i = -1; i <= 1; ++i) {
     for (int j = -1; j <=1; ++j) {
       if (i*i+j*j!=1)
         continue;
       b2BodyDef bodyDef;
-      bodyDef.position.Set(i * size, j * size);
+      bodyDef.position.Set(i * (size + 0.5f) + 0.5f, j * (size + 0.5f) + 0.5f);
 
       b2Body* body = world->CreateBody(&bodyDef);
       b2PolygonShape polyShape;
