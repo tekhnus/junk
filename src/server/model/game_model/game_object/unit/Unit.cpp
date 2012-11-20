@@ -35,19 +35,4 @@ UnitPatch Unit::getUnitPatch()
   return unitPatch;
 }
 
-void Unit::process()
-{
-  b2Vec2 pos = body->GetWorldCenter();
-  double angle = body->GetAngle();
-  body->ApplyForceToCenter(force);
-  body->ApplyAngularImpulse(angularImpulse);
-//  body->Dump();
-  position.x = pos.x;
-  position.y = pos.y;
-
-  std::cerr << angle << std::endl;
-  direction.x = cos(angle);
-  direction.y = sin(angle);
-}
-
 }}} // namespace junk::server::model

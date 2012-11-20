@@ -15,6 +15,10 @@ public:
 
     virtual Patch getPatch();
     PlayerPatch getPlayerPatch();
+    virtual void process();
+
+    b2Vec2 force;
+    double angularImpulse;
 
 }; // Player
 

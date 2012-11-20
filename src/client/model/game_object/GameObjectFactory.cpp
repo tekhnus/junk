@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "unit/player/Player.hpp"
+#include "unit/bullet/Bullet.hpp"
 
 namespace junk {
 namespace client {
@@ -16,6 +17,7 @@ std::unordered_map<int, std::function<GameObject* ()> > GameObjectFactory::gameO
 Logger GameObjectFactory::logger("CLIENT_GAME_OBJECT_FACTORY", "client_model.log", true);
 
 MODEL_GAME_OBJECT_REG(Player, player, PLAYER)
+MODEL_GAME_OBJECT_REG(Bullet, bullet, BULLET)
 
 GameObjectFactory::GameObjectFactory()
 {

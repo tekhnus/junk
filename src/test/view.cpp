@@ -32,6 +32,7 @@ sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
 }
 
 bool prevUp, prevDown, prevLeft, prevRight;
+bool prevClicked;
 junk::client::view::ClientView view;
 junk::client::model::ClientModel model;
 
@@ -41,7 +42,7 @@ int32_t id = -1;
 
 //sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
 sfg::SFGUI sfgui;
-sf::RenderWindow window(sf::VideoMode(512, 512), "Title");
+sf::RenderWindow window(sf::VideoMode(720, 720), "Title");
 junk::AddressFetch fetcher;
 
 void processInput()
@@ -66,6 +67,13 @@ void processInput()
       prevDown = down;
       prevLeft = left;
       prevRight = right;
+    }
+
+    bool clicked = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+    if (clicked != prevClicked) {
+      if(clicked)
+        view.fire();
+      prevClicked = clicked;
     }
 
     sf::Vector2i posI = sf::Mouse::getPosition(window);

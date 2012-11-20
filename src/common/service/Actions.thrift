@@ -15,7 +15,7 @@ struct RotateAction {
 }
 
 struct FireAction {
-  1: Vector2f direction
+  
 }
 
 enum ActionType {

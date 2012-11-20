@@ -37,4 +37,20 @@ PlayerPatch Player::getPlayerPatch()
   return playerPatch;
 }
 
+void Player::process()
+{
+  b2Vec2 pos = body->GetWorldCenter();
+  double angle = body->GetAngle();
+  body->ApplyForceToCenter(force);
+  body->ApplyAngularImpulse(angularImpulse);
+
+  position.x = pos.x;
+  position.y = pos.y;
+
+  direction.x = cos(angle);
+  direction.y = sin(angle);
+}
+
+
+
 }}} // namespace junk::server::model

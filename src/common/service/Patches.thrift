@@ -20,10 +20,15 @@ struct PlayerPatch {
   1: UnitPatch unitPatch
 }
 
+struct BulletPatch {
+  1: UnitPatch unitPatch
+}
+
 enum GameObjectType {
   GAME_OBJECT = 1,
   UNIT = 2,
-  PLAYER = 3
+  PLAYER = 3,
+  BULLET = 4
 }
 
 struct Patch {
@@ -33,5 +38,6 @@ struct Patch {
   // Possible patches
   10: optional GameObjectPatch gameObjectPatch,
   11: optional UnitPatch unitPatch,
-  12: optional PlayerPatch playerPatch
+  12: optional PlayerPatch playerPatch,
+  13: optional BulletPatch bulletPatch
 }
