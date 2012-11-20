@@ -14,7 +14,7 @@ ServerGameModel::ServerGameModel()
   world = new b2World(b2Vec2(0, 0));
   world->SetAllowSleeping(true);
 
-  double size = 24.5f;
+  double size = 720.0f / 20;
   for(int i = -1; i <= 1; ++i) {
     for (int j = -1; j <=1; ++j) {
       if (i*i+j*j!=1)
@@ -214,6 +214,45 @@ void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
 
 void ServerGameModel::fire(Player* player, const FireAction& fireAction)
 {
+
+  logger << "Adding a bullet...";
+
+  int32_t newBulletId = firstFreeId++;
+
+  logger << std::string("New bullet ID = ") + std::to_string(newBulletId);
+
+  Bullet* bullet = new Bullet();
+  bullet->id = newBulletId;
+
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_dynamicBody;
+  logger << "POSITION IS " << player->position.x << player->position.y;
+
+  double angle = player->body->GetAngle();
+  double rad = 1.5;
+  bodyDef.position.Set(player->position.x + rad * cos(angle), player->position.y + rad * sin(angle));
+  bodyDef.bullet = true;
+
+  b2Body* body = world->CreateBody(&bodyDef);
+
+  b2CircleShape circleShape;
+  circleShape.m_radius = 1.0f / 3;
+
+  b2FixtureDef fixtureDef;
+  fixtureDef.shape = &circleShape;
+  fixtureDef.density = 2.0f;
+  fixtureDef.restitution = 0.7f;
+
+  body->CreateFixture(&fixtureDef);
+  body->SetLinearDamping(0.1);
+
+  double power = 100;
+  body->ApplyLinearImpulse(b2Vec2(power * cos(angle), power*sin(angle)), body->GetWorldCenter());
+
+  bullet->body = body;
+
+  gameObjects.insert(std::make_pair(newBulletId,
+                   std::unique_ptr<GameObject> (bullet)));
 }
 
 GameChanges ServerGameModel::getChanges(int32_t id)

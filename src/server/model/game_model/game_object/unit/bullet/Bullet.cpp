@@ -37,4 +37,10 @@ BulletPatch Bullet::getBulletPatch()
   return bulletPatch;
 }
 
+void Bullet::process() {
+  b2Vec2 pos = body->GetWorldCenter();
+  position.x = pos.x;
+  position.y = pos.y;
+}
+
 }}} // namespace junk::server::model

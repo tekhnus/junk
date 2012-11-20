@@ -102,6 +102,16 @@ void ClientView::rotate(sf::Vector2f direction)
   makeAction(action);
 }
 
+void ClientView::fire() {
+  logger << "fire invoked";
+
+  Action action;
+  action.actionType = ActionType::FIRE;
+  action.__set_fireAction(action.fireAction);
+
+  makeAction(action);
+}
+
 void ClientView::setClientId(int32_t clientID)
 {
   logger << std::string("Setting client id to ") + std::to_string(clientID);

@@ -11,6 +11,7 @@
 
 #include "game_object/GameObject.hpp"
 #include "game_object/unit/player/Player.hpp"
+#include "game_object/unit/bullet/Bullet.hpp"
 
 namespace junk {
 namespace server {

@@ -39,6 +39,7 @@ public:
 
   void move(sf::Vector2f direction);
   void rotate(sf::Vector2f direction);
+  void fire();
 
   void makeAction(Action& action);
 
