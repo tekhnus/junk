@@ -2,8 +2,8 @@
 
 #include "server/model/ServerModel.hpp"
 
-namespace junk
-{
+namespace junk {
+namespace server {
 
 class Server
 {
@@ -13,8 +13,8 @@ public:
   void run();
 
 private:
-  ServerModel model;
+  model::ServerModel model;
 
 }; // Server
 
-} // namespace junk
+}} // namespace junk::server

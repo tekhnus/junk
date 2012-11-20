@@ -32,8 +32,8 @@ sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
 }
 
 bool prevUp, prevDown, prevLeft, prevRight;
-junk::ClientView view;
-junk::ClientModel model;
+junk::client::view::ClientView view;
+junk::client::model::ClientModel model;
 
 std::mutex updateLock;
 
@@ -68,14 +68,9 @@ void processInput()
       prevRight = right;
     }
 
-    if (view.players.find(id) != view.players.end())
-    {
-      sf::Vector2i posI = sf::Mouse::getPosition(window);
-      sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
-      sf::Vector2f player = view.players.at(id).getPosition();
-      sf::Vector2f rot = player - pos;
-      view.rotate(-rot);
-    }
+    sf::Vector2i posI = sf::Mouse::getPosition(window);
+    sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
+    view.rotate(pos);
 
     updateLock.unlock();
 
@@ -93,7 +88,6 @@ void connect()
 void drawWorld()
 {
   model.update();
-  view.update();
   window.draw(view);
 }
 

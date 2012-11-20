@@ -2,6 +2,8 @@
 
 #include "Unit.hpp"
 #include "client/model/ClientModel.hpp"
+#include "game_object/GameObject.hpp"
+#include "game_object/GameObjectFactory.hpp"
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -9,7 +11,7 @@
 
 #include <common/logger/Logger.hpp>
 
-#include <map>
+#include <unordered_map>
 #include <cassert>
 #include <memory>
 
@@ -20,10 +22,9 @@
 
 #include <thread>
 
-namespace junk
-{
-
-typedef unsigned int IDType;
+namespace junk {
+namespace client {
+namespace view {
 
 class ClientView : public sf::Drawable
 {
@@ -31,36 +32,34 @@ public:
   ClientView();
   virtual ~ClientView();
 
-  void setModel(ClientModel* clientModel);
+  void setModel(model::ClientModel* clientModel);
 
-  void addPlayer(IDType playerID, sf::Vector2f position, sf::Vector2f rotation);
-  void removePlayer(IDType playerID);
-
-  void setPlayerPosition(IDType playerID, sf::Vector2f position);
-  void setPlayerRotation(IDType playerID, sf::Vector2f rotation);
+  void addGameObject(const GameObjectType::type &gameObjectType, model::GameObject* gameObject);
+  void removeGameObject(int32_t gameObjectId);
 
   void move(sf::Vector2f direction);
-  void rotate(sf::Vector2f rotation);
+  void rotate(sf::Vector2f direction);
 
-  void makeAction(const Action& action);
+  void makeAction(Action& action);
 
-  void setClientID(IDType clientID);
-  void update();
-
-  // Kostul'!!!
-  std::map<IDType, PlayerUnit> players;
+  void setClientId(int32_t clientId);
 
   boost::signals2::signal<void (const Action& action)> makeActionSignal;
 
 private:
-  IDType clientID;
+
+  GameObjectFactory gameObjectFactory;
+  std::unordered_map<int32_t, std::unique_ptr<GameObject> > gameObjects;
+
+  int32_t clientId;
   void processInput();
   Logger logger;
   std::thread inputThread;
   bool prevUp, prevDown, prevLeft, prevRight;
+  sf::Vector2i prevPos;
 
 protected:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
-}
+}}} // namespace junk::client::view

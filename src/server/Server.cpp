@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-namespace junk
-{
+namespace junk {
+namespace server {
 
 Server::Server()
 {
@@ -14,4 +14,4 @@ void Server::run()
   model.start();
 }
 
-} // namespace junk
+}} // namespace junk::server

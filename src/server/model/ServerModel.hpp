@@ -17,8 +17,9 @@
 #include "game_model/ServerGameModel.hpp"
 
 
-namespace junk
-{
+namespace junk {
+namespace server {
+namespace model {
 
 class ServerModel
 {
@@ -76,4 +77,4 @@ private:
 
 }; // ServerModel
 
-} // namespace junk
+}}} // namespace junk::server::model

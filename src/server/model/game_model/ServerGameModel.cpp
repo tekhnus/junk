@@ -1,18 +1,57 @@
 #include "ServerGameModel.hpp"
+#include "common/utils/Convert.hpp"
 #include <functional>
+#include <math.h>
 
-namespace junk
-{
+namespace junk {
+namespace server {
+namespace model {
 
 ServerGameModel::ServerGameModel()
 : logger("SERVER_GAME_MODEL", "server_model.log", true), isRunning(false)
 {
+  //world = new b2World(aabb, b2Vec2(0, 0), true);
+  world = new b2World(b2Vec2(0, 0));
+  world->SetAllowSleeping(true);
+
+  double size = 24.5f;
+  for(int i = -1; i <= 1; ++i) {
+    for (int j = -1; j <=1; ++j) {
+      if (i*i+j*j!=1)
+        continue;
+      b2BodyDef bodyDef;
+      bodyDef.position.Set(i * (size + 0.5f) + 0.5f, j * (size + 0.5f) + 0.5f);
+
+      b2Body* body = world->CreateBody(&bodyDef);
+      b2PolygonShape polyShape;
+      polyShape.SetAsBox(size/2, size/2, b2Vec2(size/2, size/2), 0);
+
+      b2FixtureDef fixtureDef;
+      fixtureDef.shape = &polyShape;
+      fixtureDef.restitution = 0.5f;
+
+      body->CreateFixture(&fixtureDef);
+    }
+  }
+
+  /*b2BodyDef groundBodyDef;
+  groundBodyDef.position.Set(0.0f, -10.0f);
+  b2Body* groundBody = world->CreateBody(&groundBodyDef);
+
+  b2PolygonShape groundBox;
+
+  groundBox.SetAsBox(1000, 1000);
+
+  groundBody->CreateFixture(&groundBox, 0.0f);*/
+
   logger << "ServerGameModel created";
+  firstFreeId = 0;
 }
 
 ServerGameModel::~ServerGameModel()
 {
   logger << "ServerGameModel destroyed";
+  delete world;
 }
 
 void ServerGameModel::start()
@@ -35,112 +74,157 @@ void ServerGameModel::stop()
   logger << "Game model stopped";
 }
 
-IDType ServerGameModel::addPlayer(sf::Vector2f position, sf::Vector2f rotation)
+int32_t ServerGameModel::addPlayer(Player* player)
 {
   gameChangesMutex.lock();
 
   logger << "Adding a player...";
 
-  IDType newPlayerID = 0;
-  for (auto &unit : units)
-  {
-    if (newPlayerID == unit.first)
-    {
-      newPlayerID++;
-    }
-  }
+  int32_t newPlayerId = firstFreeId++;
 
-  logger << std::string("New player ID = ") + std::to_string(newPlayerID);
+  logger << std::string("New player ID = ") + std::to_string(newPlayerId);
 
-  std::shared_ptr<unit::Unit> newPlayerPtr;
-  newPlayerPtr = std::move(std::shared_ptr<unit::Unit > (new unit::Player(position, rotation)));
+  player->id = newPlayerId;
 
-  units.insert(std::make_pair(newPlayerID, std::move(newPlayerPtr)));
+  gameObjects.insert(std::make_pair(newPlayerId,
+                    std::unique_ptr<GameObject> (player)));
+
+
+
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_dynamicBody;
+  bodyDef.position.Set(3.0f, 3.0f);
+
+  b2Body* body = world->CreateBody(&bodyDef);
+
+  b2CircleShape circleShape;
+  circleShape.m_radius = 1.0f;
+
+  b2FixtureDef fixtureDef;
+  fixtureDef.shape = &circleShape;
+  fixtureDef.density = 1.0f;
+  fixtureDef.restitution = 0.5f;
+
+  body->CreateFixture(&fixtureDef);
+  body->SetLinearDamping(0.99);
+
+  player->body = body;
+  player->force.SetZero();
 
   logger << "Player added";
 
   gameChangesMutex.unlock();
 
-  return newPlayerID;
+  return newPlayerId;
 }
 
-void ServerGameModel::removePlayer(IDType playerID)
+void ServerGameModel::removePlayer(int32_t playerId)
 {
   gameChangesMutex.lock();
 
-  logger << std::string("Removing a player with ID = ") + std::to_string(playerID);
+  logger << std::string("Removing a player with ID = ") + std::to_string(playerId);
 
-  if (units.find(playerID) == units.end())
+  if (gameObjects.find(playerId) == gameObjects.end())
   {
-    logger << std::string("There is no such player, id = ") + std::to_string(playerID);
+    logger << std::string("There is no such player, id = ") + std::to_string(playerId);
   }
   else
   {
-    units.erase(playerID);
+    gameObjects.erase(playerId);
     logger << "Player removed";
   }
 
   gameChangesMutex.unlock();
 }
 
-void ServerGameModel::move(IDType playerID, sf::Vector2f vector)
+void ServerGameModel::makeAction(const Action& action)
 {
-  static const float speed = 250.0; // will be deleted
-
   gameChangesMutex.lock();
 
-  if (units.find(playerID) == units.end())
+  // I think we should check it in ServerModel, not here
+  if (gameObjects.find(action.playerId) == gameObjects.end())
   {
-    logger << "There is no such player";
+    logger << "There is no such player with id " + std::to_string(action.playerId);
+    return;
   }
-  else
+  Player* player = dynamic_cast<Player*> (gameObjects[action.playerId].get());
+
+  switch (action.actionType)
   {
-    units.at(playerID)->setMoveVector(vector);
-    units.at(playerID)->setMoveSpeed(speed);
+    case ActionType::MOVE:
+      move(player, action.moveAction);
+      break;
+
+    case ActionType::ROTATE:
+      rotate(player, action.rotateAction);
+      break;
+
+    case ActionType::FIRE:
+      fire(player, action.fireAction);
+      break;
   }
 
   gameChangesMutex.unlock();
 }
 
-void ServerGameModel::rotate(IDType playerID, sf::Vector2f rotation)
+void ServerGameModel::move(Player* player, const MoveAction& moveAction)
 {
-  gameChangesMutex.lock();
+  logger << "Move invoked";
 
-  if (units.find(playerID) == units.end())
-  {
-    logger << "There is no such player";
-  }
-  else
-  {
-    dynamic_cast<unit::RotatableUnit*> (units.at(playerID).get())->setRotation(rotation);
-  }
+  sf::Vector2f direction = common::to_SFML_Vector2f(moveAction.direction);
+  direction = 100.0f* direction;
 
-  gameChangesMutex.unlock();
+  b2Vec2 force(direction.x, direction.y);
+  player->force = force;
 }
 
-GameChanges ServerGameModel::getChanges(IDType id)
+void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
+{
+  logger << "Rotate invoked " + std::to_string(rotateAction.direction.x) + " "
+                              + std::to_string(rotateAction.direction.y);
+
+  sf::Vector2f direction = common::to_SFML_Vector2f(rotateAction.direction);
+  direction /= 20.0f;
+  direction -= player->position;
+
+  double desiredAngle = atan2(direction.y, direction.x);
+  double bodyAngle = player->body->GetAngle();
+  double nextAngle = bodyAngle + player->body->GetAngularVelocity() / 10.0;
+  double totalRotation = desiredAngle - nextAngle;
+
+  //float torque = totalRotation < 0 ? -10 : 10;
+  //float nextAngle = bodyAngle + body->GetAngularVelocity() / 60.0;
+  //float totalRotation = desiredAngle - nextAngle;
+  double DEGTORAD = M_PI / 180;
+  while ( totalRotation < -180 * DEGTORAD ) totalRotation += 360 * DEGTORAD;
+  while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
+  float desiredAngularVelocity = totalRotation * 10;
+  float impulse = player->body->GetInertia() * desiredAngularVelocity;
+
+  player->angularImpulse = impulse;
+
+  /*double DEGTORAD = M_PI / 180;
+  while ( totalRotation < -180 * DEGTORAD ) totalRotation += 360 * DEGTORAD;
+  while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
+  float desiredAngularVelocity = totalRotation * 60;
+  float torque = player->body->GetInertia() * desiredAngularVelocity / (1 / 3.0);*/
+
+  //player->torque = torque;
+}
+
+void ServerGameModel::fire(Player* player, const FireAction& fireAction)
+{
+}
+
+GameChanges ServerGameModel::getChanges(int32_t id)
 {
   GameChanges gameChanges;
-  for (const auto& unit : units)
+  for (const auto& gameObject : gameObjects)
   {
-    /*PlayerInfo playerInfo;
-    playerInfo.id = unit.first;
-    playerInfo.position.x = unit.second->getPosition().x;
-    playerInfo.position.y = unit.second->getPosition().y;
-    //#KoCTblJlb!
-    playerInfo.direction.x = dynamic_cast<unit::RotatableUnit*> (unit.second.get())->getRotation().x;
-    playerInfo.direction.y = dynamic_cast<unit::RotatableUnit*> (unit.second.get())->getRotation().y;
-    gameChanges.players.push_back(playerInfo);*/
+    gameChanges.patches.push_back(gameObject.second->getPatch());
   }
   return gameChanges;
 }
-
-/*void ServerGameModel::fire(IDType playerID)
-{
-  gameChangesMutex.lock();
-
-  gameChangesMutex.unlock();
-}*/
 
 void ServerGameModel::operator()()
 {
@@ -154,25 +238,19 @@ void ServerGameModel::operator()()
       break;
     }
 
-    for (auto &unit : units)
+    for (auto& gameObject : gameObjects)
     {
-      unit.second->synchronize(gameLoopTimer);
+      gameObject.second->process();
     }
 
-    /*for (auto player : players)
-    {
-      for (auto bullet : bullets)
-      {
-        if (player.second.interactsWith(bullet.second))
-        {
-        }
-      }
-    }*/
+    world->Step(1.0/60, 6, 2);
 
     gameChangesMutex.unlock();
+    std::chrono::milliseconds tm(20);
+    std::this_thread::sleep_for(tm);
   }
 
   return;
-} // namespace unit
+}
 
-} // namespace junk
+}}} // namespace junk::server::model

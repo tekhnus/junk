@@ -1,5 +1,7 @@
 #include "ClientServiceHandler.hpp"
 
+#include <iostream>
+
 namespace junk
 {
 
@@ -22,6 +24,8 @@ void ClientServiceHandler::connect(SessionInfo &sessionInfo, const ConnectInfo &
 
 void ClientServiceHandler::makeAction(const SessionInfo &sessionInfo, const Action& action)
 {
+  std::cerr << "ACTION" << std::endl;
+  std::cerr << action.moveAction.direction.x << " " << action.moveAction.direction.y << std::endl;
   makeActionSignal(sessionInfo, action);
 }
 
