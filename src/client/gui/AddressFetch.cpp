@@ -22,7 +22,7 @@ AddressFetch::AddressFetch() :  window(sfg::Window::Create()),
   }
 
   ok->GetSignal(sfg::Widget::OnLeftClick).Connect(&AddressFetch::updateHistory, this);
-  field->SetRequisition( sf::Vector2f( 300.f, 0.f ) );
+  field->SetRequisition(sf::Vector2f(300.f, 0.f));
 }
 
 void AddressFetch::onOK(sfg::Delegate slot)
