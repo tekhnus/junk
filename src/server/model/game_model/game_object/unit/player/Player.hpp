@@ -19,6 +19,7 @@ public:
 
     b2Vec2 force;
     double angularImpulse;
+    double torque;
 
 }; // Player
 

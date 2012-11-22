@@ -42,7 +42,8 @@ void Player::process()
   b2Vec2 pos = body->GetWorldCenter();
   double angle = body->GetAngle();
   body->ApplyForceToCenter(force);
-  body->ApplyAngularImpulse(angularImpulse);
+  //body->ApplyAngularImpulse(angularImpulse);
+  body->ApplyTorque(torque);
 
   position.x = pos.x;
   position.y = pos.y;

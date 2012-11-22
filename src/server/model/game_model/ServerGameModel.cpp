@@ -187,29 +187,18 @@ void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
   direction /= 20.0f;
   direction -= player->position;
 
+  double DEGTORAD = M_PI / 180;
   double desiredAngle = atan2(direction.y, direction.x);
   double bodyAngle = player->body->GetAngle();
-  double nextAngle = bodyAngle + player->body->GetAngularVelocity() / 10.0;
-  double totalRotation = desiredAngle - nextAngle;
+  float nextAngle = bodyAngle + player->body->GetAngularVelocity() / 10.0;
+  float totalRotation = desiredAngle - nextAngle;
 
-  //float torque = totalRotation < 0 ? -10 : 10;
-  //float nextAngle = bodyAngle + body->GetAngularVelocity() / 60.0;
-  //float totalRotation = desiredAngle - nextAngle;
-  double DEGTORAD = M_PI / 180;
   while ( totalRotation < -180 * DEGTORAD ) totalRotation += 360 * DEGTORAD;
   while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
   float desiredAngularVelocity = totalRotation * 10;
-  float impulse = player->body->GetInertia() * desiredAngularVelocity;
+  float torque = player->body->GetInertia() * desiredAngularVelocity / (1/10.0);
 
-  player->angularImpulse = impulse;
-
-  /*double DEGTORAD = M_PI / 180;
-  while ( totalRotation < -180 * DEGTORAD ) totalRotation += 360 * DEGTORAD;
-  while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
-  float desiredAngularVelocity = totalRotation * 60;
-  float torque = player->body->GetInertia() * desiredAngularVelocity / (1 / 3.0);*/
-
-  //player->torque = torque;
+  player->torque = torque;
 }
 
 void ServerGameModel::fire(Player* player, const FireAction& fireAction)
