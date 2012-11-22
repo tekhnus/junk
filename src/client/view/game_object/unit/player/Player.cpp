@@ -6,7 +6,7 @@ namespace view {
 
 VIEW_GAME_OBJECT_IMPL(Player, player, PLAYER)
 
-Player::Player() : body(20), inner(12), gun(sf::Vector2f(15.0, 2.0))
+Player::Player() : body(20), inner(12), gun(sf::Vector2f(25.0, 4.0))
 {
     body.setOrigin(sf::Vector2f(body.getRadius(), body.getRadius()));
     inner.setOrigin(sf::Vector2f(inner.getRadius(), inner.getRadius()));
@@ -14,14 +14,12 @@ Player::Player() : body(20), inner(12), gun(sf::Vector2f(15.0, 2.0))
     body.setFillColor(sf::Color::Yellow);
     inner.setFillColor(sf::Color::Cyan);
 
-    body.setOutlineThickness(1.0);
-    body.setOutlineColor(sf::Color::White);
+    body.setOutlineThickness(2.0);
+    body.setOutlineColor(sf::Color::Green);
 
-    //inner.setOutlineThickness(3);
-    inner.setOutlineColor(sf::Color::White);
+    inner.setOutlineThickness(1);
+    inner.setOutlineColor(sf::Color::Black);
 
-    gun.setOutlineThickness(1.0);
-    gun.setOutlineColor(sf::Color::White);
     gun.setFillColor(sf::Color::Red);
 
     gun.setOrigin(sf::Vector2f(1.0, gun.getSize().y / 2.0));

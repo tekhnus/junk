@@ -106,7 +106,7 @@ int32_t ServerGameModel::addPlayer(Player* player)
   fixtureDef.restitution = 0.5f;
 
   body->CreateFixture(&fixtureDef);
-  body->SetLinearDamping(0.99);
+  body->SetLinearDamping(1.5);
 
   player->body = body;
   player->force.SetZero();

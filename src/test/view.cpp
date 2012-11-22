@@ -5,6 +5,7 @@
 #include <SFML/Window.hpp>
 #include <SFGUI/SFGUI.hpp>
 #include <mutex>
+#include <iostream>
 
 sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
 {
@@ -42,7 +43,8 @@ int32_t id = -1;
 
 //sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
 sfg::SFGUI sfgui;
-sf::RenderWindow window(sf::VideoMode(720, 720), "Title");
+sf::ContextSettings settings(0, 0, 2);
+sf::RenderWindow window(sf::VideoMode(720, 720), "Title", sf::Style::Default, settings);
 junk::AddressFetch fetcher;
 
 void processInput()
@@ -101,6 +103,8 @@ void drawWorld()
 
 int main(int argc, char** argv)
 {
+
+  std::cerr << window.getSettings().antialiasingLevel << std::endl;
   
   fetcher.onOK(connect);
   window.resetGLStates();
