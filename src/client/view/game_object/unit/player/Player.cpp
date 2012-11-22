@@ -11,18 +11,18 @@ Player::Player() : body(20), inner(12), gun(sf::Vector2f(15.0, 2.0))
     body.setOrigin(sf::Vector2f(body.getRadius(), body.getRadius()));
     inner.setOrigin(sf::Vector2f(inner.getRadius(), inner.getRadius()));
 
-    body.setFillColor(sf::Color(184, 115, 51));
-    inner.setFillColor(sf::Color(128, 128, 128));
+    body.setFillColor(sf::Color::Yellow);
+    inner.setFillColor(sf::Color::Cyan);
 
-    body.setOutlineThickness(3);
-    body.setOutlineColor(sf::Color(244, 196, 48));
+    body.setOutlineThickness(1.0);
+    body.setOutlineColor(sf::Color::White);
 
-    inner.setOutlineThickness(3);
-    inner.setOutlineColor(sf::Color(244, 196, 48));
+    //inner.setOutlineThickness(3);
+    inner.setOutlineColor(sf::Color::White);
 
     gun.setOutlineThickness(1.0);
-    gun.setOutlineColor(sf::Color::Black);
-    gun.setFillColor(sf::Color(215, 147, 50));
+    gun.setOutlineColor(sf::Color::White);
+    gun.setFillColor(sf::Color::Red);
 
     gun.setOrigin(sf::Vector2f(1.0, gun.getSize().y / 2.0));
 }
