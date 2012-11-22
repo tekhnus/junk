@@ -95,16 +95,29 @@ void connect()
   fetcher.getWindow()->Show(false);
 }
 
+sf::Shader effect;
+sf::RenderTexture tex;
+
 void drawWorld()
 {
   model.update();
-  window.draw(view);
+  tex.clear();
+  tex.draw(view);
+  tex.display();
+  sf::Sprite screen(tex.getTexture());
+  window.draw(screen, sf::RenderStates(&effect));
 }
 
 int main(int argc, char** argv)
 {
+  tex.create(720, 720);
 
   std::cerr << window.getSettings().antialiasingLevel << std::endl;
+
+  if (!effect.loadFromFile("fx.frag", sf::Shader::Type::Fragment))
+  {
+    std::cerr << "Superweak" << std::endl;
+  }
   
   fetcher.onOK(connect);
   window.resetGLStates();
