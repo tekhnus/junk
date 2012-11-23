@@ -1,6 +1,5 @@
 #include "Unit.hpp"
-
-#include <iostream>
+#include "common/logger/Logger.hpp"
 
 namespace junk {
 namespace client {
@@ -23,8 +22,8 @@ void Unit::applyUnitPatch(const UnitPatch& unitPatch)
   position = common::to_SFML_Vector2f(unitPatch.position);
   direction = common::to_SFML_Vector2f(unitPatch.direction);
 
-  std::cerr << "Applying UnitPatch" << std::endl;
-  std::cerr << position.x << " " << position.y << std::endl;
+  dbg << "Applying UnitPatch";
+  dbg.debug(position.x, " ", position.y);
 }
 
 }}} // namespace junk::client::model

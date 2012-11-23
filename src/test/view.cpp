@@ -2,6 +2,7 @@
 #include "client/model/ClientModel.hpp"
 #include "client/config/ClientConfig.hpp"
 #include "client/gui/AddressFetch.hpp"
+#include "common/logger/Logger.hpp"
 #include <SFML/Window.hpp>
 #include <SFGUI/SFGUI.hpp>
 #include <mutex>
@@ -112,11 +113,11 @@ int main(int argc, char** argv)
 {
   tex.create(720, 720);
 
-  std::cerr << window.getSettings().antialiasingLevel << std::endl;
+  junk::dbg.debug("antialiasing: ", window.getSettings().antialiasingLevel);
 
   if (!effect.loadFromFile("fx.frag", sf::Shader::Type::Fragment))
   {
-    std::cerr << "Superweak" << std::endl;
+    junk::dbg << "Superweak";
   }
   
   fetcher.onOK(connect);

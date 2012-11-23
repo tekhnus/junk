@@ -1,6 +1,5 @@
 #include "Player.hpp"
-
-#include <iostream>
+#include "common/logger/Logger.hpp"
 
 namespace junk {
 namespace client {
@@ -20,7 +19,7 @@ void Player::applyPlayerPatch(const PlayerPatch& playerPatch)
 {
   applyUnitPatch(playerPatch.unitPatch);
 
-  std::cerr << "Player.position: " << position.x << " " << position.y << std::endl;
+  dbg.debug("Player.position: ", position.x, " ", position.y);
 }
 
 }}} // namespace junk::client::model

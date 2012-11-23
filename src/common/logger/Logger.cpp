@@ -4,6 +4,8 @@
 namespace junk
 {
 
+Logger dbg("debug", "debug.log");
+
 static unsigned globalCount = 0;
 
 static unsigned nextColor()

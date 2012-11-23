@@ -1,4 +1,5 @@
 #include "Bullet.hpp"
+#include "common/logger/Logger.hpp"
 
 namespace junk {
 namespace client {
@@ -16,7 +17,6 @@ Bullet::~Bullet()
 {
 }
 
-#include <iostream>
 void Bullet::updateBullet(const model::Bullet& bullet)
 {
   body.setPosition(20.0f * bullet.position);
@@ -24,7 +24,7 @@ void Bullet::updateBullet(const model::Bullet& bullet)
 
 void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-  std::cerr << "I'm being drawn!" << std::endl;
+  dbg << "I'm being drawn!";
   target.draw(body, states);
 }
 

@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "common/logger/Logger.hpp"
 
 namespace junk {
 namespace client {
@@ -29,13 +30,12 @@ Player::~Player()
 {
 }
 
-#include <iostream>
 void Player::updatePlayer(const model::Player& player)
 {
-  std::cerr << "I'm being updated!" << std::endl;
-  std::cerr << player.position.x << " " << player.position.y << std::endl;
-  std::cerr << player.direction.x << " " << player.direction.y << std::endl;
-  std::cerr << "gun rotation: " + std::to_string(gun.getRotation()) << std::endl;
+  dbg << "I'm being updated!";
+  dbg.debug(player.position.x, " ", player.position.y);
+  dbg.debug(player.direction.x, " ", player.direction.y);
+  dbg.debug("gun rotation: ", std::to_string(gun.getRotation()));
 
   body.setPosition(20.0f * player.position);
   inner.setPosition(body.getPosition());
@@ -47,7 +47,7 @@ void Player::updatePlayer(const model::Player& player)
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-  std::cerr << "I'm being drawn!" << std::endl;
+  dbg << "I'm being drawn!";
   target.draw(body, states);
   target.draw(inner, states);
   target.draw(gun, states);

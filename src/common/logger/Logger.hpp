@@ -19,6 +19,7 @@ public:
   explicit Logger(const std::string& title, const std::string& filename, bool verbose = true);
   explicit Logger(const std::string& title);
   ~Logger();
+
   template<typename T>
   Logger& operator<<(const T& message);
 
@@ -45,6 +46,8 @@ private:
   bool verbose;
   Settings settings;
 };
+
+extern Logger dbg;
 
 } // junk
 
