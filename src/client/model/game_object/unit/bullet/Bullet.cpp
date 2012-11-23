@@ -1,6 +1,5 @@
 #include "Bullet.hpp"
-
-#include <iostream>
+#include "common/logger/Logger.hpp"
 
 namespace junk {
 namespace client {
@@ -20,7 +19,7 @@ void Bullet::applyBulletPatch(const BulletPatch& bulletPatch)
 {
   applyUnitPatch(bulletPatch.unitPatch);
 
-  std::cerr << "Bullet.position: " << position.x << " " << position.y << std::endl;
+  dbg.debug("Bullet.position: ", position.x, " ", position.y);
 }
 
 }}} // namespace junk::client::model

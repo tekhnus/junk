@@ -1,6 +1,11 @@
 #include "Logger.hpp"
 #include <mutex>
 
+namespace junk
+{
+
+Logger dbg("debug", "debug.log");
+
 static unsigned globalCount = 0;
 
 static unsigned nextColor()
@@ -11,13 +16,15 @@ static unsigned nextColor()
 Logger::Logger(const std::string& title,
                const std::string& filename, bool verbose)
 : file(filename.c_str(), std::ios::app), title(title),
-color(nextColor()), verbose(verbose), enabled(true)
+color(nextColor()), verbose(verbose)
 {
+	settings.load("logger_config.json");
 }
 
 Logger::Logger(const std::string& title)
-: title(title), color(nextColor()), verbose(true), enabled(true)
+: title(title), color(nextColor()), verbose(true)
 {
+	settings.load("logger_config.json");
 }
 
 Logger::~Logger()
@@ -26,11 +33,6 @@ Logger::~Logger()
   {
     file.close();
   }
-}
-
-void Logger::set(bool active)
-{
-  enabled = active;
 }
 
 void Logger::writeHead(std::ostream& stream, bool colored, bool dated)
@@ -49,4 +51,9 @@ void Logger::writeHead(std::ostream& stream, bool colored, bool dated)
   {
     stream << title << ": ";
   }
+}
+
+void Logger::_log(int level)
+{}
+
 }
