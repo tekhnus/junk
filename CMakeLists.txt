@@ -2,6 +2,8 @@ cmake_minimum_required (VERSION 2.6)
 
 project (junk CXX)
 
+set (CMAKE_CXX_COMPILER g++-4.6)
+
 IF(APPLE)
 	#set (CMAKE_CXX_COMPILER clang++)
 	#set (CMAKE_CXX_COMPILER g++)

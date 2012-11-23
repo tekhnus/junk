@@ -110,6 +110,7 @@ int32_t ServerGameModel::addPlayer(Player* player)
 
   player->body = body;
   player->force.SetZero();
+  player->torque = 0.0f;
 
   logger << "Player added";
 
