@@ -79,6 +79,8 @@ int32_t ServerGameModel::addPlayer(Player* player)
   gameChangesMutex.lock();
 
   logger << "Adding a player...";
+  int newPlayerId = addGameObject(player);
+  //int32_t newPlayerId = firstFreeId++;
 
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
@@ -110,8 +112,10 @@ int32_t ServerGameModel::addPlayer(Player* player)
 
 int32_t ServerGameModel::addGameObject(GameObject *gameObject)
 {
+  logger << "Adding new object";
   int32_t newId = firstFreeId++;
   gameObject->id = newId;
+  gameObject->model = this;
 
   logger << std::string("New game object ID = ") + std::to_string(newId);
 
@@ -233,40 +237,7 @@ void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
 
 void ServerGameModel::fire(Player* player, const FireAction& fireAction)
 {
-  logger << "Fire invoked";
-
-  logger << "Adding a bullet...";
-
-  Bullet* bullet = new Bullet();
-
-  b2BodyDef bodyDef;
-  bodyDef.type = b2_dynamicBody;
-  logger << "POSITION IS " << player->position.x << player->position.y;
-
-  double angle = player->body->GetAngle();
-  double rad = 1.5;
-  bodyDef.position.Set(player->position.x + rad * cos(angle), player->position.y + rad * sin(angle));
-  bodyDef.bullet = true;
-
-  b2Body* body = world->CreateBody(&bodyDef);
-
-  b2CircleShape circleShape;
-  circleShape.m_radius = 1.0f / 3;
-
-  b2FixtureDef fixtureDef;
-  fixtureDef.shape = &circleShape;
-  fixtureDef.density = 2.0f;
-  fixtureDef.restitution = 0.7f;
-
-  body->CreateFixture(&fixtureDef);
-  body->SetLinearDamping(0.1);
-
-  double power = 100;
-  body->ApplyLinearImpulse(b2Vec2(power * cos(angle), power*sin(angle)), body->GetWorldCenter());
-
-  bullet->body = body;
-
-  addGameObject(bullet);
+  player->fireOn = fireAction.on;
 }
 
 GameChanges ServerGameModel::getChanges(int32_t id)

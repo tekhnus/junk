@@ -43,14 +43,15 @@ public:
 
   void move(sf::Vector2f direction);
   void rotate(sf::Vector2f direction);
-  void fire();
+  void fire(bool on);
 
   void makeAction(Action& action);
 
   void setClientId(int32_t clientId);
 
   boost::signals2::signal<void (const Action& action)> makeActionSignal;
-
+  mutable std::mutex safe;
+  sf::RenderWindow* window;
 private:
 
   GameObjectFactory gameObjectFactory;
@@ -60,8 +61,9 @@ private:
   void processInput();
   Logger logger;
   std::thread inputThread;
-  bool prevUp, prevDown, prevLeft, prevRight;
+  bool prevUp, prevDown, prevLeft, prevRight, prevClicked;
   sf::Vector2i prevPos;
+  bool alive;
 
 protected:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;

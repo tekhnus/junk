@@ -9,11 +9,12 @@ target_link_libraries(view clientview clientmodel clientmodelgameobjectfactory
                       commonbullet commonplayer commonunit commongameobject
                       clientnetworkmodel clientservicehandler logger utils
                       sfml-graphics sfml-window sfml-system pthread thrift
-                      sfgui addressfetch clientconfig simplemenu)
+                      sfgui addressfetch clientconfig simplemenu hud)
 
 add_executable (servertest server.cpp)
+
 target_link_libraries(servertest server servermodel servernetworkmodel servergamemodel
-                      servermodelbullet servermodelplayer servermodelunit servermodelgameobject
+                      servermodelplayer servermodelbullet servermodelunit servermodelgameobject
                       commonbullet commonplayer commonunit commongameobject clientservicehandler logger utils
                       sfml-graphics sfml-window sfml-system pthread thrift Box2D)
 
