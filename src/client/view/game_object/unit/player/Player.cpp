@@ -22,8 +22,18 @@ Player::Player() : body(20), inner(12), gun(sf::Vector2f(25.0, 4.0))
     inner.setOutlineColor(sf::Color::Black);
 
     gun.setFillColor(sf::Color::Red);
-
     gun.setOrigin(sf::Vector2f(1.0, gun.getSize().y / 2.0));
+
+    healthBarBackground.setFillColor(sf::Color::Black);
+    healthBarBackground.setOutlineColor(sf::Color::White);
+    healthBarBackground.setOutlineThickness(1.0);
+
+    healthBar.setFillColor(sf::Color::White);
+    healthBar.setOutlineColor(sf::Color::Transparent);
+    healthBar.setOutlineThickness(1.0);
+
+    healthBarBackground.setOrigin(sf::Vector2f(body.getRadius(), 8 + body.getRadius()));
+    healthBar.setOrigin(healthBarBackground.getOrigin());
 }
 
 Player::~Player()
@@ -40,7 +50,17 @@ void Player::updatePlayer(const model::Player& player)
   body.setPosition(20.0f * player.position);
   inner.setPosition(body.getPosition());
   gun.setPosition(body.getPosition());
+  healthBarBackground.setPosition(body.getPosition());
+  healthBar.setPosition(body.getPosition());
   sf::Vector2f direction = player.direction;
+
+  float healthScale = float(getHealth()) / float(getMaxHealth());
+
+  healthBarBackground.setSize(sf::Vector2f(body.getRadius() * 2, 4.0f));
+  healthBar.setSize(sf::Vector2f(body.getRadius() * 2 * healthScale, 4.0f));
+
+  setHealth(player.getHealth());
+  setMaxHealth(player.getMaxHealth());
 
   gun.setRotation((atan2(direction.y, direction.x) * 180) / M_PI);
 }
@@ -50,6 +70,8 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
   target.draw(body, states);
   target.draw(inner, states);
   target.draw(gun, states);
+  target.draw(healthBarBackground, states);
+  target.draw(healthBar, states);
 }
 
 }}} // namespace junk::client::view
