@@ -90,7 +90,7 @@ int main(int argc, char** argv)
     sf::Event event;
     while(window.pollEvent(event))
     {
-      desktop.HandleEvent(event);
+      //desktop.HandleEvent(event);
       mainMenu.getWindow()->HandleEvent(event);
       fetcher.getWindow()->HandleEvent(event);
       if(event.type == sf::Event::Closed)
@@ -115,7 +115,7 @@ int main(int argc, char** argv)
     window.display();
 
     view.safe.unlock();
-    // sf::sleep(sf::milliseconds(30));
+    sf::sleep(sf::milliseconds(30));
   }
 
   return 0;
