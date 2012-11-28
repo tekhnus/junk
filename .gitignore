@@ -9,4 +9,3 @@ cmake_install.cmake
 *.swp
 junk.*
 Junk.*
-*.theme
