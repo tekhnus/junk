@@ -10,7 +10,7 @@ namespace junk
 class AddressFetch
 {
 public:
-  AddressFetch();
+  AddressFetch(sfg::Desktop& desktop);
   void onOK(sfg::Delegate slot);
   sf::String getAddress();
   sfg::Window::Ptr getWindow();
@@ -21,6 +21,7 @@ private:
   sfg::Entry::Ptr field;
   sfg::Button::Ptr ok;
   junk::ClientConfig config;
+  sfg::Desktop& m_desktop;
 };
 
 }

@@ -3,10 +3,12 @@
 namespace junk
 {
 
-SimpleMenu::SimpleMenu() :  window(sfg::Window::Create()),
-                            box(sfg::Box::Create(sfg::Box::VERTICAL))
+SimpleMenu::SimpleMenu(sfg::Desktop& desktop) :  window(sfg::Window::Create()),
+                            box(sfg::Box::Create(sfg::Box::VERTICAL)),
+                            m_desktop(desktop)
 {
   window->Add(box);
+  m_desktop.Add(window);
 }
 
 void SimpleMenu::addItem(std::string name, sfg::Delegate slot)

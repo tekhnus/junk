@@ -16,10 +16,11 @@ junk::client::model::ClientModel model;
 int32_t id = -1;
 
 sfg::SFGUI sfgui;
+sfg::Desktop desktop;
 sf::ContextSettings settings(0, 0, 2);
 sf::RenderWindow window(sf::VideoMode(720, 720), "Title", sf::Style::Default, settings);
-junk::SimpleMenu mainMenu;
-junk::AddressFetch fetcher;
+junk::SimpleMenu mainMenu(desktop);
+junk::AddressFetch fetcher(desktop);
 junk::HUD hud;
 
 void play()
@@ -54,6 +55,10 @@ void drawWorld()
 
 int main(int argc, char** argv)
 {
+  if(!desktop.LoadThemeFromFile("Theme.theme"))
+  {
+    junk::dbg << "Theme was not loaded";
+  }
   hud.addState("connect", play);
   hud.addState("game", connect);
   hud.addState("exit", quit);
@@ -68,7 +73,7 @@ int main(int argc, char** argv)
 
   if (!effect.loadFromFile("fx.frag", sf::Shader::Type::Fragment))
   {
-    junk::dbg << "Superweak";
+    junk::dbg << "Superweak. shader not loaded";
   }
 
   window.resetGLStates();
@@ -84,6 +89,7 @@ int main(int argc, char** argv)
     sf::Event event;
     while(window.pollEvent(event))
     {
+      desktop.HandleEvent(event);
       mainMenu.getWindow()->HandleEvent(event);
       fetcher.getWindow()->HandleEvent(event);
       if(event.type == sf::Event::Closed)
