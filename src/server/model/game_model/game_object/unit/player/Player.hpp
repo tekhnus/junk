@@ -16,6 +16,8 @@ public:
     virtual Patch getPatch();
     PlayerPatch getPlayerPatch();
     virtual void process();
+    virtual int getType();
+    virtual void onBulletHit();
 
     b2Vec2 force;
     double angularImpulse;

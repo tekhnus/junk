@@ -8,11 +8,13 @@ namespace server {
 namespace model {
 
 ServerGameModel::ServerGameModel()
-: logger("SERVER_GAME_MODEL", "server_model.log", true), isRunning(false)
+: logger("SERVER_GAME_MODEL", "server_model.log", true), isRunning(false),
+  handler(new CollisionHandler())
 {
   //world = new b2World(aabb, b2Vec2(0, 0), true);
   world = new b2World(b2Vec2(0, 0));
   world->SetAllowSleeping(true);
+  world->SetContactListener(handler.get());
 
   double size = 720.0f / 20;
   for(int i = -1; i <= 1; ++i) {
@@ -98,6 +100,7 @@ int32_t ServerGameModel::addPlayer(Player* player)
 
   body->CreateFixture(&fixtureDef);
   body->SetLinearDamping(1.5);
+  body->SetUserData(player);
 
   player->body = body;
   player->force.SetZero();
@@ -264,6 +267,7 @@ void ServerGameModel::operator()()
 
     for (auto& gameObject : gameObjects)
     {
+      logger.debug("Type is ", gameObject.second->getType());
       gameObject.second->process();
     }
 

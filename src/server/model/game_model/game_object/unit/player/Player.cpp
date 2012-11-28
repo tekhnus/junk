@@ -87,6 +87,7 @@ void Player::processFire()
   bodyDef.bullet = true;
 
   b2Body* bulletBody = body->GetWorld()->CreateBody(&bodyDef);
+  bulletBody->SetUserData(bullet);
   dbg << "bullet adding I";
 
   b2CircleShape circleShape;
@@ -109,6 +110,14 @@ void Player::processFire()
   dbg << "Bullet added successfully";
 }
 
+int Player::getType()
+{
+  return TYPE_PLAYER;
+}
 
+void Player::onBulletHit()
+{
+  setHealth(getHealth() - getMaxHealth() / 10);
+}
 
 }}} // namespace junk::server::model

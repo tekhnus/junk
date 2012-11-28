@@ -8,6 +8,9 @@ namespace junk {
 namespace server {
 namespace model {
 
+extern int TYPE_PLAYER;
+extern int TYPE_BULLET;
+
 class ServerGameModel;
 
 class GameObject : public virtual junk::common::GameObject
@@ -22,6 +25,8 @@ public:
     virtual void process();
     virtual void destroy() = 0;
     virtual void startDestruction() = 0;
+
+    virtual int getType() = 0;
 
     ServerGameModel* model;
     int lifetime;

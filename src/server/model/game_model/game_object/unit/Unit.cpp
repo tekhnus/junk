@@ -46,4 +46,7 @@ void Unit::startDestruction()
   destroyInfo.destroyCountdown = 10;
 }
 
+void Unit::onBulletHit()
+{}
+
 }}} // namespace junk::server::model

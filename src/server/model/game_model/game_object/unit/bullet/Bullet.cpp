@@ -52,4 +52,9 @@ void Bullet::process() {
   }
 }
 
+int Bullet::getType()
+{
+  return TYPE_BULLET;
+}
+
 }}} // namespace junk::server::model
