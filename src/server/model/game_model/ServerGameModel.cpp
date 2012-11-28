@@ -299,6 +299,9 @@ void ServerGameModel::operator()()
     world->Step(1.0/60, 6, 2);
 
     gameChangesMutex.unlock();
+
+    removeObsoleteGameObjects();
+
     std::chrono::milliseconds tm(20);
     std::this_thread::sleep_for(tm);
   }
