@@ -35,4 +35,15 @@ UnitPatch Unit::getUnitPatch()
   return unitPatch;
 }
 
+void Unit::destroy()
+{
+  body->GetWorld()->DestroyBody(body);
+}
+
+void Unit::startDestruction()
+{
+  destroyInfo.isDestroyed = true;
+  destroyInfo.destroyCountdown = 10;
+}
+
 }}} // namespace junk::server::model

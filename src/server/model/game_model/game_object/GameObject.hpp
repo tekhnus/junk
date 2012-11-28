@@ -17,6 +17,8 @@ public:
     GameObjectPatch getGameObjectPatch();
 
     virtual void process() = 0;
+    virtual void destroy() = 0;
+    virtual void startDestruction() = 0;
 
 }; // GameObject
 

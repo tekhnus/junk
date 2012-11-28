@@ -1,7 +1,6 @@
 #pragma once
 
 #include "SFML/System.hpp"
-#include "Unit.hpp"
 #include <common/logger/Logger.hpp>
 #include <gen-cpp/ClientService.h>
 #include <map>
@@ -27,6 +26,11 @@ public:
   void stop();
 
   int32_t addPlayer(Player* player);
+
+  int32_t addGameObject(GameObject* gameObject);
+
+  void removeObsoleteGameObjects();
+  void removeGameObject(int32_t id);
 
   void removePlayer(int32_t playerId);
   void makeAction(const Action& action);

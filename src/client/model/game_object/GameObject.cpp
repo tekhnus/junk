@@ -16,9 +16,11 @@ GameObject::~GameObject()
 
 void GameObject::applyGameObjectPatch(const GameObjectPatch &gameObjectPatch)
 {
-  /*
-    Apply patch here
-  */
+  destroyInfo.isDestroyed = gameObjectPatch.destroyInfo.isDestroyed;
+  if (gameObjectPatch.destroyInfo.isDestroyed)
+  {
+    destroyInfo.destroyCountdown = gameObjectPatch.destroyInfo.destroyCountdown;
+  }
 }
 
 }}} // namespace junk::client::model

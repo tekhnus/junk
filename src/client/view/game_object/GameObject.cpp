@@ -21,6 +21,11 @@ void GameObject::setModelObject(model::GameObject* gameObject)
 
 void GameObject::updateGameObject(const model::GameObject& gameObject)
 {
+  if (gameObject.destroyInfo.isDestroyed)
+  {
+    destroyInfo.isDestroyed = true;
+    destroyInfo.destroyCountdown = gameObject.destroyInfo.destroyCountdown;
+  }
 }
 
 }}} // namespace junk::client::view

@@ -54,6 +54,11 @@ void ClientView::setModel(model::ClientModel* clientModel)
   clientModel->gameObjectAddedSignal.connect(boost::bind(&ClientView::addGameObject, this, _1, _2));
 }
 
+void ClientView::update()
+{
+  removeObsoleteGameObjects();
+}
+
 void ClientView::addGameObject(const GameObjectType::type& gameObjectType, model::GameObject* gameObject)
 {
   logger << std::string("Adding object ") + std::to_string(gameObject->id);
@@ -62,6 +67,25 @@ void ClientView::addGameObject(const GameObjectType::type& gameObjectType, model
     std::unique_ptr<GameObject> (gameObjectFactory.create(gameObjectType))));
 
   gameObjects[gameObject->id]->setModelObject(gameObject);
+}
+
+void ClientView::removeObsoleteGameObjects()
+{
+  std::vector<int32_t> destroyCandidates;
+  for (auto& gameObject : gameObjects)
+  {
+    if (gameObject.second->destroyInfo.isDestroyed)
+    {
+      if (gameObject.second->destroyInfo.destroyCountdown == 0)
+      {
+        destroyCandidates.push_back(gameObject.second->id);
+      }
+    }
+  }
+  for (int i = 0; i < destroyCandidates.size(); ++i)
+  {
+    gameObjects.erase(destroyCandidates[i]);
+  }
 }
 
 void ClientView::removeGameObject(int32_t gameObjectId)
@@ -146,8 +170,6 @@ void ClientView::processInput()
       prevLeft = left;
       prevRight = right;
     }
-    
-    
     
     std::chrono::milliseconds tm(30);
     std::this_thread::sleep_for(tm);

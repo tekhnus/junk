@@ -34,7 +34,11 @@ public:
 
   void setModel(model::ClientModel* clientModel);
 
+  void update();
+
   void addGameObject(const GameObjectType::type &gameObjectType, model::GameObject* gameObject);
+
+  void removeObsoleteGameObjects();
   void removeGameObject(int32_t gameObjectId);
 
   void move(sf::Vector2f direction);

@@ -54,6 +54,11 @@ void Player::process()
 
   direction.x = cos(angle);
   direction.y = sin(angle);
+
+  if (destroyInfo.isDestroyed)
+  {
+    destroyInfo.destroyCountdown = std::max(0, destroyInfo.destroyCountdown - 1);
+  }
 }
 
 
