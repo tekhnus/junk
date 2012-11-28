@@ -40,6 +40,28 @@ void ClientModel::update()
     }
     gameObjects[patch.id]->applyPatch(patch);
   }
+
+  removeObsoleteGameObjects();
+}
+
+void ClientModel::removeObsoleteGameObjects()
+{
+  std::vector<int32_t> destroyCandidates;
+  for (auto& gameObject : gameObjects)
+  {
+    if (gameObject.second->destroyInfo.isDestroyed)
+    {
+      if (gameObject.second->destroyInfo.destroyCountdown == 0)
+      {
+        destroyCandidates.push_back(gameObject.second->id);
+      }
+    }
+  }
+
+  for (int i = 0; i < destroyCandidates.size(); ++i)
+  {
+    gameObjects.erase(destroyCandidates[i]);
+  }
 }
 
 void ClientModel::addGameObject(const Patch& patch)
@@ -52,6 +74,19 @@ void ClientModel::addGameObject(const Patch& patch)
   gameObjects[patch.id]->id = patch.id;
 
   gameObjectAddedSignal(patch.gameObjectType, gameObjects[patch.id].get());
+}
+
+void ClientModel::removeGameObject(int32_t id)
+{
+  if (gameObjects.find(id) == gameObjects.end())
+  {
+    logger << std::string("There is no such game object, id = ") + std::to_string(id);
+  }
+  else
+  {
+    gameObjects.erase(id);
+    logger << "Game object removed, id = " + std::to_string(id);
+  }
 }
 
 void ClientModel::makeAction(const Action& action)

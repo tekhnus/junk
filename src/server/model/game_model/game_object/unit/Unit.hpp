@@ -18,6 +18,9 @@ public:
     virtual Patch getPatch();
     UnitPatch getUnitPatch();
 
+    virtual void destroy();
+    virtual void startDestruction();
+
     b2Body* body;
 
 }; // Unit

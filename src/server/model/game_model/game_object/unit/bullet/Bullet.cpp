@@ -41,6 +41,11 @@ void Bullet::process() {
   b2Vec2 pos = body->GetWorldCenter();
   position.x = pos.x;
   position.y = pos.y;
+
+  if (destroyInfo.isDestroyed)
+  {
+    destroyInfo.destroyCountdown = std::max(0, destroyInfo.destroyCountdown - 1);
+  }
 }
 
 }}} // namespace junk::server::model

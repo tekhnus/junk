@@ -5,6 +5,8 @@ namespace common {
 
 GameObject::GameObject()
 {
+  destroyInfo.isDestroyed = false;
+  destroyInfo.destroyCountdown = 0;
 }
 
 GameObject::~GameObject()

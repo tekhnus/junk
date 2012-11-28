@@ -26,6 +26,11 @@ GameObjectPatch GameObject::getGameObjectPatch()
   GameObjectPatch gameObjectPatch;
 
   gameObjectPatch.id = id;
+  gameObjectPatch.destroyInfo.isDestroyed = destroyInfo.isDestroyed;
+  if (destroyInfo.isDestroyed)
+  {
+    gameObjectPatch.destroyInfo.destroyCountdown = destroyInfo.destroyCountdown;
+  }
 
   return gameObjectPatch;
 }

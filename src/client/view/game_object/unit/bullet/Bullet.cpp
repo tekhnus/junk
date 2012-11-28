@@ -24,7 +24,6 @@ void Bullet::updateBullet(const model::Bullet& bullet)
 
 void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-  dbg << "I'm being drawn!";
   target.draw(body, states);
 }
 

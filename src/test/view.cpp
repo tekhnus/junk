@@ -102,6 +102,7 @@ sf::RenderTexture tex;
 void drawWorld()
 {
   model.update();
+  view.update();
   tex.clear();
   tex.draw(view);
   tex.display();

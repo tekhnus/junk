@@ -22,8 +22,10 @@ public:
   int32_t connectToServer(const std::string& serverIp, int port);
 
   void update();
+  void removeObsoleteGameObjects();
 
   void addGameObject(const Patch &patch);
+  void removeGameObject(int32_t id);
 
   void makeAction(const Action& action);
 

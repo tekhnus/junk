@@ -7,7 +7,7 @@ include "Patches.thrift"
 include "Actions.thrift"
 
 struct GameChanges {
-  1: list<Patches.Patch> patches
+  1: list<Patches.Patch> patches,
 }
 
 struct SessionInfo {

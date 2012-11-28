@@ -47,7 +47,6 @@ void Player::updatePlayer(const model::Player& player)
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-  dbg << "I'm being drawn!";
   target.draw(body, states);
   target.draw(inner, states);
   target.draw(gun, states);

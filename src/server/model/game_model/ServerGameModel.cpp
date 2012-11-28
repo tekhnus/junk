@@ -80,17 +80,6 @@ int32_t ServerGameModel::addPlayer(Player* player)
 
   logger << "Adding a player...";
 
-  int32_t newPlayerId = firstFreeId++;
-
-  logger << std::string("New player ID = ") + std::to_string(newPlayerId);
-
-  player->id = newPlayerId;
-
-  gameObjects.insert(std::make_pair(newPlayerId,
-                    std::unique_ptr<GameObject> (player)));
-
-
-
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
   bodyDef.position.Set(3.0f, 3.0f);
@@ -112,28 +101,68 @@ int32_t ServerGameModel::addPlayer(Player* player)
   player->force.SetZero();
   player->torque = 0.0f;
 
-  logger << "Player added";
+  int32_t playerId = addGameObject(player);
 
   gameChangesMutex.unlock();
 
-  return newPlayerId;
+  return playerId;
+}
+
+int32_t ServerGameModel::addGameObject(GameObject *gameObject)
+{
+  int32_t newId = firstFreeId++;
+  gameObject->id = newId;
+
+  logger << std::string("New game object ID = ") + std::to_string(newId);
+
+  gameObjects.insert(std::make_pair(newId,
+                    std::unique_ptr<GameObject> (gameObject)));
+
+  return newId;
+}
+
+void ServerGameModel::removeObsoleteGameObjects()
+{
+  gameChangesMutex.lock();
+
+  std::vector<int32_t> destroyCandidates;
+  for (auto& gameObject : gameObjects)
+  {
+    if (gameObject.second->destroyInfo.isDestroyed)
+    {
+      if (gameObject.second->destroyInfo.destroyCountdown == 0)
+      {
+        destroyCandidates.push_back(gameObject.second->id);
+      }
+    }
+  }
+  for (int32_t destroyCandidateId : destroyCandidates)
+  {
+    gameObjects[destroyCandidateId]->destroy();
+    gameObjects.erase(destroyCandidateId);
+  }
+
+  gameChangesMutex.unlock();
+}
+
+void ServerGameModel::removeGameObject(int32_t id)
+{
+  if (gameObjects.find(id) == gameObjects.end())
+  {
+    logger << std::string("There is no such game object, id = ") + std::to_string(id);
+  }
+  else
+  {
+    gameObjects.erase(id);
+    logger << "Game object removed, id = " + std::to_string(id);
+  }
 }
 
 void ServerGameModel::removePlayer(int32_t playerId)
 {
   gameChangesMutex.lock();
 
-  logger << std::string("Removing a player with ID = ") + std::to_string(playerId);
-
-  if (gameObjects.find(playerId) == gameObjects.end())
-  {
-    logger << std::string("There is no such player, id = ") + std::to_string(playerId);
-  }
-  else
-  {
-    gameObjects.erase(playerId);
-    logger << "Player removed";
-  }
+  removeGameObject(playerId);
 
   gameChangesMutex.unlock();
 }
@@ -204,15 +233,11 @@ void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
 
 void ServerGameModel::fire(Player* player, const FireAction& fireAction)
 {
+  logger << "Fire invoked";
 
   logger << "Adding a bullet...";
 
-  int32_t newBulletId = firstFreeId++;
-
-  logger << std::string("New bullet ID = ") + std::to_string(newBulletId);
-
   Bullet* bullet = new Bullet();
-  bullet->id = newBulletId;
 
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
@@ -241,8 +266,7 @@ void ServerGameModel::fire(Player* player, const FireAction& fireAction)
 
   bullet->body = body;
 
-  gameObjects.insert(std::make_pair(newBulletId,
-                   std::unique_ptr<GameObject> (bullet)));
+  addGameObject(bullet);
 }
 
 GameChanges ServerGameModel::getChanges(int32_t id)
