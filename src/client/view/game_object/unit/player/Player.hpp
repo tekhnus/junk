@@ -22,6 +22,7 @@ public:
 private:
   sf::CircleShape body, inner;
   sf::RectangleShape gun;
+  sf::RectangleShape healthBar, healthBarBackground;
 
 }; // Player
 

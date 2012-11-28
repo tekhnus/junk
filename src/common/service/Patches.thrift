@@ -18,6 +18,8 @@ struct UnitPatch {
 
 struct PlayerPatch {
   1: UnitPatch unitPatch
+  2: i32 health
+  3: i32 maxHealth
 }
 
 struct BulletPatch {

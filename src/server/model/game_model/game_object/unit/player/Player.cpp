@@ -8,6 +8,8 @@ namespace model {
 
 Player::Player()
 {
+    setMaxHealth(100);
+    setHealth(getMaxHealth() - 20);
 }
 
 Player::~Player()
@@ -29,6 +31,8 @@ PlayerPatch Player::getPlayerPatch()
 {
   PlayerPatch playerPatch;
   playerPatch.unitPatch = getUnitPatch();
+  playerPatch.health = getHealth();
+  playerPatch.maxHealth = getMaxHealth();
 
   /*
     Set fields here
