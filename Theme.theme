@@ -1,0 +1,16 @@
+Window {
+  BackgroundColor: #0066ffff;
+  TitleBackgroundColor: #00ff66ff;
+}
+
+Button {
+  BackgroundColor: #0000ffff;
+}
+
+Button:PRELIGHT {
+  BackgroundColor: #00ff44ff;
+}
+
+Entry {
+  BackgroundColor: #334477ff;
+}
