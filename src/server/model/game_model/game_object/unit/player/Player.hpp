@@ -20,6 +20,9 @@ public:
     b2Vec2 force;
     double angularImpulse;
     double torque;
+    bool fireOn;
+private:
+    virtual void processFire();
 
 }; // Player
 

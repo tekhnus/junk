@@ -8,9 +8,9 @@ namespace junk {
 namespace client {
 namespace view {
 
-sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
+sf::Vector2f getDiff(bool up, bool down, bool left, bool right)
 {
-  time = 1;
+  float time = 1;
   float dx = 0;
   float dy = 0;
   if (up)
@@ -37,13 +37,15 @@ sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
 
 ClientView::ClientView()
 : logger("CLIENT_VIEW", "client_view.log", true), clientId(-1)
-, inputThread(&ClientView::processInput, this)
+, inputThread(&ClientView::processInput, this), alive(true)
 {
 
 }
 
 ClientView::~ClientView()
 {
+  alive = false;
+  inputThread.join();
 }
 
 void ClientView::setModel(model::ClientModel* clientModel)
@@ -102,11 +104,12 @@ void ClientView::rotate(sf::Vector2f direction)
   makeAction(action);
 }
 
-void ClientView::fire() {
+void ClientView::fire(bool on) {
   logger << "fire invoked";
 
   Action action;
   action.actionType = ActionType::FIRE;
+  action.fireAction.on = on;
   action.__set_fireAction(action.fireAction);
 
   makeAction(action);
@@ -128,16 +131,23 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void ClientView::processInput()
 {
-  logger << "processInput thread started";
-  return;
-  while (true)
+  while (alive)
   {
+    if (clientId == -1)
+      continue;
+
+    logger << "Processing input";
+
+    safe.lock();
+
     bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
     bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
     bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
     bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
 
-    sf::Vector2f diff = getDiff(1.0, up, down, left, right);
+    logger << "Processed keyboard";
+
+    sf::Vector2f diff = getDiff(up, down, left, right);
     if (up != prevUp || down != prevDown || left != prevLeft || right != prevRight)
     {
       move(diff);
@@ -146,9 +156,23 @@ void ClientView::processInput()
       prevLeft = left;
       prevRight = right;
     }
-    
-    
-    
+
+    logger << "Processing mouse";
+
+    bool clicked = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+    if (clicked != prevClicked) {
+      fire(clicked);
+      prevClicked = clicked;
+    }
+
+    sf::Vector2i posI = sf::Mouse::getPosition(*window);
+    sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
+    rotate(pos);
+
+    logger << "Processed mouse";
+
+    safe.unlock();
+
     std::chrono::milliseconds tm(30);
     std::this_thread::sleep_for(tm);
   }

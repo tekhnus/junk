@@ -4,7 +4,7 @@ namespace junk {
 namespace server {
 namespace model {
 
-GameObject::GameObject()
+GameObject::GameObject() : lifetime(0)
 {
 }
 
@@ -28,6 +28,11 @@ GameObjectPatch GameObject::getGameObjectPatch()
   gameObjectPatch.id = id;
 
   return gameObjectPatch;
+}
+
+void GameObject::process()
+{
+    ++lifetime;
 }
 
 }}} // namespace junk::server::model

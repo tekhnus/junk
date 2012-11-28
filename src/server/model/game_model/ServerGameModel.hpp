@@ -35,6 +35,8 @@ public:
 
   void operator()();
 
+  int addGameObject(GameObject* obj);
+
 private:
   std::map<int32_t, std::unique_ptr<GameObject > > gameObjects;
 

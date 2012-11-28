@@ -9,7 +9,11 @@ namespace junk
 
 class HUD
 {
-
+public:
+    void addState(std::string name, sfg::Delegate delegate);
+    sfg::Delegate getEvent(std::string name);
+private:
+    std::map<std::string, sfg::Delegate> bindings;
 };
 
 }

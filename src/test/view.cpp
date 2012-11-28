@@ -2,98 +2,41 @@
 #include "client/model/ClientModel.hpp"
 #include "client/config/ClientConfig.hpp"
 #include "client/gui/AddressFetch.hpp"
+#include "client/gui/HUD.hpp"
+#include "client/gui/SimpleMenu.hpp"
 #include "common/logger/Logger.hpp"
 #include <SFML/Window.hpp>
 #include <SFGUI/SFGUI.hpp>
 #include <mutex>
 #include <iostream>
 
-sf::Vector2f getDiff(float time, bool up, bool down, bool left, bool right)
-{
-  time = 1;
-  float dx = 0;
-  float dy = 0;
-  if (up)
-    dy += -time;
-
-  if (down)
-    dy += time;
-
-  if (left)
-    dx += -time;
-
-  if (right)
-    dx += time;
-
-  if (fabs(dx) > 0.0 && fabs(dy) > 0.0)
-  {
-    dx /= sqrt(2.0);
-    dy /= sqrt(2.0);
-  }
-  return sf::Vector2f(dx, dy);
-}
-
-bool prevUp, prevDown, prevLeft, prevRight;
-bool prevClicked;
 junk::client::view::ClientView view;
 junk::client::model::ClientModel model;
 
-std::mutex updateLock;
-
 int32_t id = -1;
 
-//sf::RenderWindow window(sf::VideoMode(512, 512), "Title", sf::Style::Fullscreen);
 sfg::SFGUI sfgui;
 sf::ContextSettings settings(0, 0, 2);
 sf::RenderWindow window(sf::VideoMode(720, 720), "Title", sf::Style::Default, settings);
+junk::SimpleMenu mainMenu;
 junk::AddressFetch fetcher;
+junk::HUD hud;
 
-void processInput()
+void play()
 {
-  while (true)
-  {
-    if (id == -1)
-      continue;
-
-    updateLock.lock();
-
-    bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
-    bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
-    bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
-    bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
-
-    sf::Vector2f diff = getDiff(1.0, up, down, left, right);
-    if (up != prevUp || down != prevDown || left != prevLeft || right != prevRight)
-    {
-      view.move(diff);
-      prevUp = up;
-      prevDown = down;
-      prevLeft = left;
-      prevRight = right;
-    }
-
-    bool clicked = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
-    if (clicked != prevClicked) {
-      if(clicked)
-        view.fire();
-      prevClicked = clicked;
-    }
-
-    sf::Vector2i posI = sf::Mouse::getPosition(window);
-    sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
-    view.rotate(pos);
-
-    updateLock.unlock();
-
-    std::chrono::milliseconds tm(30);
-    std::this_thread::sleep_for(tm);
-  }
+  mainMenu.getWindow()->Show(false);
+  fetcher.getWindow()->Show(true);
 }
 
 void connect()
 {
   id = model.connectToServer(fetcher.getAddress(), 7777);
   fetcher.getWindow()->Show(false);
+}
+
+void quit()
+{
+  window.close();
 }
 
 sf::Shader effect;
@@ -111,6 +54,14 @@ void drawWorld()
 
 int main(int argc, char** argv)
 {
+  hud.addState("connect", play);
+  hud.addState("game", connect);
+  hud.addState("exit", quit);
+  mainMenu.addItem("Play", hud.getEvent("connect"));
+  mainMenu.addItem("Exit", hud.getEvent("exit"));
+  fetcher.onOK(hud.getEvent("game"));
+  fetcher.getWindow()->Show(false);
+  view.window = &window;
   tex.create(720, 720);
 
   junk::dbg.debug("antialiasing: ", window.getSettings().antialiasingLevel);
@@ -119,37 +70,21 @@ int main(int argc, char** argv)
   {
     junk::dbg << "Superweak";
   }
-  
-  fetcher.onOK(connect);
-  window.resetGLStates();
 
-  // std::string address;
-  // if (!config.recent.empty()) {
-  //   std::cout << "Enter server address (hit ENTER for " << config.recent.back() << "): ";
-  //   getline(std::cin, address);
-  //   if (address.empty()) {
-  //     address = config.recent.back();
-  //   }
-  // } else {
-  //   std::cout << "Enter server address: ";
-  //   std::cin >> address;
-  // }
-  // config.recent.push_back(address);
-  // config.save("client_config.json");
+  window.resetGLStates();
 
   view.setModel(&model);
   window.setFramerateLimit(60);
 
-  std::thread t(&processInput);
-
   sf::Clock clock;
   for (int counter = 0; window.isOpen(); ++counter)
   {
-    updateLock.lock();
+    view.safe.lock();
 
     sf::Event event;
     while(window.pollEvent(event))
     {
+      mainMenu.getWindow()->HandleEvent(event);
       fetcher.getWindow()->HandleEvent(event);
       if(event.type == sf::Event::Closed)
       {
@@ -167,12 +102,13 @@ int main(int argc, char** argv)
     }
 
     fetcher.getWindow()->Update(t);
+    mainMenu.getWindow()->Update(t);
     sfgui.Display(window);
 
     window.display();
 
-    updateLock.unlock();
-    sf::sleep(sf::milliseconds(30));
+    view.safe.unlock();
+    // sf::sleep(sf::milliseconds(30));
   }
 
   return 0;
