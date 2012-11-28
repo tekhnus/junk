@@ -4,6 +4,9 @@ namespace junk {
 namespace server {
 namespace model {
 
+int TYPE_PLAYER = 1;
+int TYPE_BULLET = 2;
+
 GameObject::GameObject() : lifetime(0)
 {
 }

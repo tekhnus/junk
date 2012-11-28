@@ -12,9 +12,13 @@
 #include "game_object/unit/player/Player.hpp"
 #include "game_object/unit/bullet/Bullet.hpp"
 
+#include "CollisionHandler.hpp"
+
 namespace junk {
 namespace server {
 namespace model { 
+
+class CollisionHandler;
 
 class ServerGameModel
 {
@@ -55,6 +59,8 @@ private:
 
   Logger logger;
   b2World* world;
+
+  std::unique_ptr<CollisionHandler> handler;
 };
 
 }}} // namespace junk::server::model

@@ -21,6 +21,8 @@ public:
     virtual void destroy();
     virtual void startDestruction();
 
+    virtual void onBulletHit();
+
     b2Body* body;
 
 }; // Unit

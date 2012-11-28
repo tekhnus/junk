@@ -16,10 +16,11 @@
 #include "network_model/ServerNetworkModel.hpp"
 #include "game_model/ServerGameModel.hpp"
 
-
 namespace junk {
 namespace server {
 namespace model {
+
+//class CollisionHandler;
 
 class ServerModel
 {
@@ -72,6 +73,7 @@ private:
 
   std::shared_ptr<std::thread> expiredSessionsCleanerThread;
   std::mutex clientInfoMutex;
+  CollisionHandler handler;
 
   Logger logger;
 
