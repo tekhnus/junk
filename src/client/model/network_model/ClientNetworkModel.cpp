@@ -29,6 +29,7 @@ int32_t ClientNetworkModel::connectToServer(const std::string& serverIp, int por
 
 ClientNetworkModel::~ClientNetworkModel()
 {
+  transport->close();
   logger << "ClientNetworkModel destructed";
 }
 

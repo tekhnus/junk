@@ -9,12 +9,13 @@ namespace junk
 class SimpleMenu
 {
 public:
-  SimpleMenu();
+  SimpleMenu(sfg::Desktop& desktop);
   void addItem(std::string name, sfg::Delegate slot);
   sfg::Window::Ptr getWindow();
 private:
   sfg::Window::Ptr window;
   sfg::Box::Ptr box;
+  sfg::Desktop m_desktop;
 };
 
 }
