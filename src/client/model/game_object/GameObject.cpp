@@ -1,4 +1,5 @@
 #include "GameObject.hpp"
+#include "common/logger/Logger.hpp"
 
 namespace junk {
 namespace client {
@@ -19,6 +20,8 @@ void GameObject::applyGameObjectPatch(const GameObjectPatch &gameObjectPatch)
   destroyInfo.isDestroyed = gameObjectPatch.destroyInfo.isDestroyed;
   if (gameObjectPatch.destroyInfo.isDestroyed)
   {
+    dbg << "Object destroyed " + std::to_string(id);
+
     destroyInfo.destroyCountdown = gameObjectPatch.destroyInfo.destroyCountdown;
   }
 }

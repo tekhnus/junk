@@ -51,15 +51,22 @@ void ClientModel::removeObsoleteGameObjects()
   {
     if (gameObject.second->destroyInfo.isDestroyed)
     {
+      logger << "destroyCountdown " + std::to_string(gameObject.second->destroyInfo.destroyCountdown);
+
       if (gameObject.second->destroyInfo.destroyCountdown == 0)
       {
         destroyCandidates.push_back(gameObject.second->id);
+      }
+      else
+      {
+        gameObject.second->destroyInfo.destroyCountdown--;
       }
     }
   }
 
   for (int i = 0; i < destroyCandidates.size(); ++i)
   {
+    logger << "removing " + std::to_string(destroyCandidates[i]);
     gameObjects.erase(destroyCandidates[i]);
   }
 }

@@ -79,8 +79,6 @@ int32_t ServerGameModel::addPlayer(Player* player)
   gameChangesMutex.lock();
 
   logger << "Adding a player...";
-  int newPlayerId = addGameObject(player);
-  //int32_t newPlayerId = firstFreeId++;
 
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
@@ -103,7 +101,12 @@ int32_t ServerGameModel::addPlayer(Player* player)
   player->force.SetZero();
   player->torque = 0.0f;
 
-  int32_t playerId = addGameObject(player);
+  player->body->SetUserData((void*) &player->id);
+
+  int t = *((int*)(player->body->GetUserData()));
+  dbg << "USER DATA: " + std::to_string(t);
+
+  int playerId = addGameObject(player);
 
   gameChangesMutex.unlock();
 
@@ -140,8 +143,11 @@ void ServerGameModel::removeObsoleteGameObjects()
       }
     }
   }
+
   for (int32_t destroyCandidateId : destroyCandidates)
   {
+    logger << "removing object, id = " + std::to_string(destroyCandidateId);
+
     gameObjects[destroyCandidateId]->destroy();
     gameObjects.erase(destroyCandidateId);
   }
@@ -164,11 +170,9 @@ void ServerGameModel::removeGameObject(int32_t id)
 
 void ServerGameModel::removePlayer(int32_t playerId)
 {
-  gameChangesMutex.lock();
+  logger << "starting destruction of player, id = " + std::to_string(playerId);
 
-  removeGameObject(playerId);
-
-  gameChangesMutex.unlock();
+  gameObjects[playerId]->startDestruction();
 }
 
 void ServerGameModel::makeAction(const Action& action)

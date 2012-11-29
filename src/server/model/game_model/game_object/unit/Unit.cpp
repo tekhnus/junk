@@ -37,7 +37,8 @@ UnitPatch Unit::getUnitPatch()
 
 void Unit::destroy()
 {
-  body->GetWorld()->DestroyBody(body);
+  b2World* world = body->GetWorld();
+  world->DestroyBody(body);
 }
 
 void Unit::startDestruction()

@@ -12,7 +12,7 @@ ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
   networkModel.makeActionSignal.connect(boost::bind(&ServerModel::makeActionHandler, this, _1, _2));
 
   random.seed(42);
-  sessionExpirationTime = sf::seconds(5.0f);
+  sessionExpirationTime = sf::seconds(0.1f);
 
   logger << "ServerModel created";
 }
@@ -40,10 +40,11 @@ void ServerModel::expiredSessionsCleaner()
         eraseCandidates.push_back(it.first);
       }
     }
-    for (auto index : eraseCandidates)
+    for (auto id : eraseCandidates)
     {
-      logger << std::string("Cleaning ") + std::to_string(index);
-      clientInfo.erase(index);
+      logger << std::string("Cleaning ") + std::to_string(id);
+      gameModel.removePlayer(id);
+      clientInfo.erase(id);
     }
 
     clientInfoMutex.unlock();
