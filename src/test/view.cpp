@@ -34,6 +34,8 @@ void play()
 
 void connect()
 {
+  model.reset();
+  view.reset();
   model.connectToServer(fetcher.getAddress(), 7777);
   fetcher.getWindow()->Show(false);
   view.wake();
