@@ -17,6 +17,11 @@ ClientModel::~ClientModel()
   shutdown();
 }
 
+void ClientModel::reset()
+{
+  gameObjects.clear();
+}
+
 void ClientModel::shutdown()
 {
   logger << "ClientModel shut down";

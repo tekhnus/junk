@@ -162,6 +162,11 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
   }
 }
 
+void ClientView::reset()
+{
+  gameObjects.clear();
+}
+
 void ClientView::processInput()
 {
   while(true){

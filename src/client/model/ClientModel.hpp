@@ -19,6 +19,8 @@ public:
   ClientModel();
   ~ClientModel();
 
+  void reset();
+
   void shutdown();
 
   int32_t connectToServer(const std::string& serverIp, int port);

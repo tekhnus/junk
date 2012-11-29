@@ -53,6 +53,8 @@ public:
 
   void wake();
 
+  void reset();
+
   boost::signals2::signal<void (const Action& action)> makeActionSignal;
   mutable std::mutex safe;
   sf::RenderWindow* window;
