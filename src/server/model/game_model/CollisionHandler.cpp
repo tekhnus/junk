@@ -20,20 +20,14 @@ void CollisionHandler::BeginContact(b2Contact* contact)
   }
   Unit* aUnit = (Unit*)aRaw;
   Unit* bUnit = (Unit*)bRaw;
-  dbg << aUnit;
-  dbg << typeid(*aUnit).name();
-  dbg << aUnit->getType();
   if (aUnit->getType() == TYPE_BULLET)
   {
-    dbg << "YYYYYY";
     bUnit->onBulletHit();
   }
-  dbg << "XXXXXXXX";
   if (bUnit->getType() == TYPE_BULLET)
   {
     aUnit->onBulletHit();
   }
-  dbg << "BBBBBBBBBB";
 }
 
 }}} // namespace junk::server::model

@@ -19,6 +19,8 @@ public:
   ClientModel();
   ~ClientModel();
 
+  void shutdown();
+
   int32_t connectToServer(const std::string& serverIp, int port);
 
   void update();
@@ -31,6 +33,9 @@ public:
 
   boost::signals2::signal<void (int32_t)> gotClientIdSignal;
   boost::signals2::signal<void (const GameObjectType::type&, GameObject*)> gameObjectAddedSignal;
+  boost::signals2::signal<void ()> shutdownSignal;
+
+  bool alive;
 
 private:
   struct ClientInfo

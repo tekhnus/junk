@@ -37,7 +37,7 @@ sf::Vector2f getDiff(bool up, bool down, bool left, bool right)
 
 ClientView::ClientView()
 : logger("CLIENT_VIEW", "client_view.log", true), clientId(-1)
-, inputThread(&ClientView::processInput, this), alive(true)
+, inputThread(&ClientView::processInput, this), alive(false)
 {
 
 }
@@ -54,6 +54,7 @@ void ClientView::setModel(model::ClientModel* clientModel)
 
   clientModel->gotClientIdSignal.connect(boost::bind(&ClientView::setClientId, this, _1));
   clientModel->gameObjectAddedSignal.connect(boost::bind(&ClientView::addGameObject, this, _1, _2));
+  clientModel->shutdownSignal.connect(boost::bind(&ClientView::shutdown, this));
 }
 
 void ClientView::update()
@@ -163,6 +164,8 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void ClientView::processInput()
 {
+  while(true){
+
   while (alive)
   {
     if (clientId == -1)
@@ -208,6 +211,19 @@ void ClientView::processInput()
     std::chrono::milliseconds tm(30);
     std::this_thread::sleep_for(tm);
   }
+  std::chrono::milliseconds tm(300);
+  std::this_thread::sleep_for(tm);
+  }
+}
+
+void ClientView::shutdown()
+{
+  alive = false;
+}
+
+void ClientView::wake()
+{
+  alive = true;
 }
 
 }}} // namespace junk::client::view

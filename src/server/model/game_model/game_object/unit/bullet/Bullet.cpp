@@ -39,9 +39,9 @@ BulletPatch Bullet::getBulletPatch()
 
 void Bullet::process() {
   GameObject::process();
-  // if (lifetime == 100) {
-  //   body->GetWorld()->DestroyBody(body);
-  // }
+  if (lifetime == 50) {
+    startDestruction();
+  }
   b2Vec2 pos = body->GetWorldCenter();
   position.x = pos.x;
   position.y = pos.y;

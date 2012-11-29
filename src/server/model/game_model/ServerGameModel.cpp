@@ -98,13 +98,11 @@ int32_t ServerGameModel::addPlayer(Player* player)
 
   body->CreateFixture(&fixtureDef);
   body->SetLinearDamping(1.5);
-  body->SetUserData(player);
+  body->SetUserData((Unit*)player);
 
   player->body = body;
   player->force.SetZero();
   player->torque = 0.0f;
-
-  player->body->SetUserData((void*) &player->id);
 
   int t = *((int*)(player->body->GetUserData()));
   dbg << "USER DATA: " + std::to_string(t);
@@ -173,14 +171,14 @@ void ServerGameModel::removeGameObject(int32_t id)
 
 void ServerGameModel::removePlayer(int32_t playerId)
 {
-  logger << "starting destruction of player, id = " + std::to_string(playerId);
-
-  gameObjects[playerId]->startDestruction();
+  logger.debug("starting destruction of player, id = ", playerId);
+  if (gameObjects.find(playerId) != gameObjects.end())
+    gameObjects[playerId]->startDestruction();
 }
 
 void ServerGameModel::makeAction(const Action& action)
 {
-  gameChangesMutex.lock();
+  std::lock_guard<std::mutex> guard(gameChangesMutex);
 
   // I think we should check it in ServerModel, not here
   if (gameObjects.find(action.playerId) == gameObjects.end())
@@ -204,8 +202,6 @@ void ServerGameModel::makeAction(const Action& action)
       fire(player, action.fireAction);
       break;
   }
-
-  gameChangesMutex.unlock();
 }
 
 void ServerGameModel::move(Player* player, const MoveAction& moveAction)
@@ -271,7 +267,7 @@ void ServerGameModel::operator()()
 
     for (auto& gameObject : gameObjects)
     {
-      logger.debug("Type is ", gameObject.second->getType());
+      // logger.debug("Type is ", gameObject.second->getType());
       gameObject.second->process();
     }
 

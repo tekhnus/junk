@@ -49,6 +49,10 @@ public:
 
   void setClientId(int32_t clientId);
 
+  void shutdown();
+
+  void wake();
+
   boost::signals2::signal<void (const Action& action)> makeActionSignal;
   mutable std::mutex safe;
   sf::RenderWindow* window;

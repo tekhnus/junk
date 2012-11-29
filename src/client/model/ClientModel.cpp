@@ -6,20 +6,31 @@ namespace junk {
 namespace client {
 namespace model {
 
-ClientModel::ClientModel() : logger("CLIENT_MODEL", "client_model.log", true)
+ClientModel::ClientModel() : logger("CLIENT_MODEL", "client_model.log", true),
+  alive(false)
 {
   logger << "ClientModel created";
 }
 
 ClientModel::~ClientModel()
 {
-  logger << "ClientModel destructed";
+  shutdown();
+}
+
+void ClientModel::shutdown()
+{
+  logger << "ClientModel shut down";
+  alive = false;
+  networkModel.shutdown();
+  shutdownSignal();
+  // gameObjects.clear();
 }
 
 int32_t ClientModel::connectToServer(const std::string& serverIp, int port)
 {
   clientInfo.id = networkModel.connectToServer(serverIp, port);
   gotClientIdSignal(clientInfo.id);
+  alive = true;
   return clientInfo.id;
 }
 
@@ -67,6 +78,11 @@ void ClientModel::removeObsoleteGameObjects()
   for (int i = 0; i < destroyCandidates.size(); ++i)
   {
     logger << "removing " + std::to_string(destroyCandidates[i]);
+    if (gameObjects[destroyCandidates[i]]->id == clientInfo.id)
+    {
+      logger << "You are killed";
+      shutdown();
+    }
     gameObjects.erase(destroyCandidates[i]);
   }
 }

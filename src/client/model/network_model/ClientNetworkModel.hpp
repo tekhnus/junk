@@ -35,6 +35,8 @@ public:
   GameChanges getGameChanges();
   void makeAction(const Action& action);
 
+  void shutdown();
+
 private:
   SessionInfo sessionInfo;
 
@@ -46,6 +48,8 @@ private:
   std::mutex socketMutex;
 
   Logger logger;
+
+  bool alive;
 
 }; // ClientNetworkModel
 

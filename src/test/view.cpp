@@ -13,8 +13,6 @@
 junk::client::view::ClientView view;
 junk::client::model::ClientModel model;
 
-int32_t id = -1;
-
 sfg::SFGUI sfgui;
 sfg::Desktop desktop;
 sf::ContextSettings settings(0, 0, 2);
@@ -22,6 +20,11 @@ sf::RenderWindow window(sf::VideoMode(720, 720), "Title", sf::Style::Default, se
 junk::SimpleMenu mainMenu(desktop);
 junk::AddressFetch fetcher(desktop);
 junk::HUD hud;
+
+void init()
+{
+  mainMenu.getWindow()->Show(true);
+}
 
 void play()
 {
@@ -31,8 +34,9 @@ void play()
 
 void connect()
 {
-  id = model.connectToServer(fetcher.getAddress(), 7777);
+  model.connectToServer(fetcher.getAddress(), 7777);
   fetcher.getWindow()->Show(false);
+  view.wake();
 }
 
 void quit()
@@ -60,9 +64,11 @@ int main(int argc, char** argv)
   {
     junk::dbg << "Theme was not loaded";
   }
+  hud.addState("init", init);
   hud.addState("connect", play);
   hud.addState("game", connect);
   hud.addState("exit", quit);
+  model.shutdownSignal.connect(boost::bind(init));
   mainMenu.addItem("Play", hud.getEvent("connect"));
   mainMenu.addItem("Exit", hud.getEvent("exit"));
   fetcher.onOK(hud.getEvent("game"));
@@ -103,7 +109,7 @@ int main(int argc, char** argv)
 
     window.clear();
 
-    if (id != -1)
+    if (model.alive)
     {
       drawWorld();
     }
