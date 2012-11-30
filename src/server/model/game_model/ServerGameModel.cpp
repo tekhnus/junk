@@ -78,7 +78,7 @@ void ServerGameModel::stop()
 
 int32_t ServerGameModel::addPlayer(Player* player)
 {
-  gameChangesMutex.lock();
+  std::lock_guard<std::mutex> lock(gameChangesMutex);
 
   logger << "Adding a player...";
 
@@ -109,8 +109,6 @@ int32_t ServerGameModel::addPlayer(Player* player)
 
   int playerId = addGameObject(player);
 
-  gameChangesMutex.unlock();
-
   return playerId;
 }
 
@@ -131,8 +129,6 @@ int32_t ServerGameModel::addGameObject(GameObject *gameObject)
 
 void ServerGameModel::removeObsoleteGameObjects()
 {
-  gameChangesMutex.lock();
-
   std::vector<int32_t> destroyCandidates;
   for (auto& gameObject : gameObjects)
   {
@@ -152,8 +148,6 @@ void ServerGameModel::removeObsoleteGameObjects()
     gameObjects[destroyCandidateId]->destroy();
     gameObjects.erase(destroyCandidateId);
   }
-
-  gameChangesMutex.unlock();
 }
 
 void ServerGameModel::removeGameObject(int32_t id)
@@ -257,25 +251,23 @@ void ServerGameModel::operator()()
 {
   while (true)
   {
-    gameChangesMutex.lock();
-
-    if (!isRunning)
     {
-      gameChangesMutex.unlock();
-      break;
+      std::lock_guard<std::mutex> lock(gameChangesMutex);
+
+      if (!isRunning)
+      {
+        break;
+      }
+
+      for (auto& gameObject : gameObjects)
+      {
+        gameObject.second->process();
+      }
+
+      world->Step(1.0/60, 6, 2);
+
+      removeObsoleteGameObjects();
     }
-
-    for (auto& gameObject : gameObjects)
-    {
-      // logger.debug("Type is ", gameObject.second->getType());
-      gameObject.second->process();
-    }
-
-    world->Step(1.0/60, 6, 2);
-
-    gameChangesMutex.unlock();
-
-    removeObsoleteGameObjects();
 
     std::chrono::milliseconds tm(20);
     std::this_thread::sleep_for(tm);
