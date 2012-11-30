@@ -15,7 +15,10 @@ public:
 
     virtual Patch getPatch();
     BulletPatch getBulletPatch();
+
     virtual void process();
+    virtual void startDestruction();
+
     virtual int getType();
 
 }; // Bullet
