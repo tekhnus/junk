@@ -17,6 +17,7 @@ Player::Player() : fireOn(false)
 
 Player::~Player()
 {
+  dbg << "Player " << this << " is destroyed";
 }
 
 Patch Player::getPatch()
@@ -87,7 +88,7 @@ void Player::processFire()
   bodyDef.bullet = true;
 
   b2Body* bulletBody = body->GetWorld()->CreateBody(&bodyDef);
-  bulletBody->SetUserData(bullet);
+  bulletBody->SetUserData((Unit*) bullet);
   dbg << "bullet adding I";
 
   b2CircleShape circleShape;

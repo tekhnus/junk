@@ -51,9 +51,13 @@ void ClientModel::removeObsoleteGameObjects()
   {
     if (gameObject.second->destroyInfo.isDestroyed)
     {
-      if (gameObject.second->destroyInfo.destroyCountdown == 0)
+      if (gameObject.second->destroyInfo.destroyCountdown < 5)
       {
         destroyCandidates.push_back(gameObject.second->id);
+      }
+      else
+      {
+        gameObject.second->destroyInfo.destroyCountdown--;
       }
     }
   }

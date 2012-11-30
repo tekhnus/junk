@@ -81,8 +81,8 @@ int32_t ServerGameModel::addPlayer(Player* player)
   gameChangesMutex.lock();
 
   logger << "Adding a player...";
+
   int newPlayerId = addGameObject(player);
-  //int32_t newPlayerId = firstFreeId++;
 
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
@@ -100,17 +100,15 @@ int32_t ServerGameModel::addPlayer(Player* player)
 
   body->CreateFixture(&fixtureDef);
   body->SetLinearDamping(1.5);
-  body->SetUserData(player);
+  body->SetUserData((Unit*) player);
 
   player->body = body;
   player->force.SetZero();
   player->torque = 0.0f;
 
-  int32_t playerId = addGameObject(player);
-
   gameChangesMutex.unlock();
 
-  return playerId;
+  return newPlayerId;
 }
 
 int32_t ServerGameModel::addGameObject(GameObject *gameObject)
@@ -267,7 +265,6 @@ void ServerGameModel::operator()()
 
     for (auto& gameObject : gameObjects)
     {
-      logger.debug("Type is ", gameObject.second->getType());
       gameObject.second->process();
     }
 
