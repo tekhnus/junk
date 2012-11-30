@@ -1,6 +1,6 @@
 #include "ClientServiceHandler.hpp"
 
-#include <iostream>
+#include <common/logger/Logger.hpp>
 
 namespace junk
 {
@@ -15,25 +15,23 @@ ClientServiceHandler::~ClientServiceHandler()
 
 void ClientServiceHandler::connect(SessionInfo &sessionInfo, const ConnectInfo &connectInfo)
 {
-  serviceMutex.lock();
+  std::lock_guard<std::mutex> lock(serviceMutex);
 
   sessionInfo = connectSignal(connectInfo);
-
-  serviceMutex.unlock();
 }
 
 void ClientServiceHandler::makeAction(const SessionInfo &sessionInfo, const Action& action)
 {
+  std::lock_guard<std::mutex> lock(serviceMutex);
+
   makeActionSignal(sessionInfo, action);
 }
 
 void ClientServiceHandler::getChanges(GameChanges& gameChanges, const SessionInfo& sessionInfo)
 {
-  serviceMutex.lock();
+  std::lock_guard<std::mutex> lock(serviceMutex);
 
   gameChanges = getChangesSignal(sessionInfo);
-
-  serviceMutex.unlock();
 }
 
 } // namespace junk
