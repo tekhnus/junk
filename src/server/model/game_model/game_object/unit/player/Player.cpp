@@ -88,6 +88,7 @@ void Player::processFire()
 
   b2Body* bulletBody = body->GetWorld()->CreateBody(&bodyDef);
   bulletBody->SetUserData((Unit*)bullet);
+
   dbg << "bullet adding I";
 
   b2CircleShape circleShape;

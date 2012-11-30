@@ -100,6 +100,7 @@ int32_t ServerGameModel::addPlayer(Player* player)
   body->SetLinearDamping(1.5);
   body->SetUserData((Unit*)player);
 
+
   player->body = body;
   player->force.SetZero();
   player->torque = 0.0f;
@@ -267,7 +268,6 @@ void ServerGameModel::operator()()
 
     for (auto& gameObject : gameObjects)
     {
-      // logger.debug("Type is ", gameObject.second->getType());
       gameObject.second->process();
     }
 
