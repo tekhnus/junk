@@ -52,6 +52,12 @@ void Bullet::process() {
   }
 }
 
+void Bullet::startDestruction()
+{
+  destroyInfo.isDestroyed = true;
+  destroyInfo.destroyCountdown = 5;
+}
+
 int Bullet::getType()
 {
   return TYPE_BULLET;
