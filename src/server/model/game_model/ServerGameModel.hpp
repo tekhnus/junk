@@ -43,12 +43,10 @@ public:
 
   void operator()();
 
+  b2World* world;
+
 private:
   std::map<int32_t, std::unique_ptr<GameObject > > gameObjects;
-
-  void move(Player* player, const MoveAction& moveAction);
-  void rotate(Player* player, const RotateAction& rotateAction);
-  void fire(Player* player, const FireAction& fireAction);
 
   int32_t firstFreeId;
   bool isRunning;
@@ -58,7 +56,6 @@ private:
   std::mutex gameChangesMutex;
 
   Logger logger;
-  b2World* world;
 
   std::unique_ptr<CollisionHandler> handler;
 };

@@ -82,31 +82,6 @@ int32_t ServerGameModel::addPlayer(Player* player)
 
   logger << "Adding a player...";
 
-  b2BodyDef bodyDef;
-  bodyDef.type = b2_dynamicBody;
-  bodyDef.position.Set(3.0f, 3.0f);
-
-  b2Body* body = world->CreateBody(&bodyDef);
-
-  b2CircleShape circleShape;
-  circleShape.m_radius = 1.0f;
-
-  b2FixtureDef fixtureDef;
-  fixtureDef.shape = &circleShape;
-  fixtureDef.density = 1.0f;
-  fixtureDef.restitution = 0.5f;
-
-  body->CreateFixture(&fixtureDef);
-  body->SetLinearDamping(1.5);
-  body->SetUserData((Unit*)player);
-
-  player->body = body;
-  player->force.SetZero();
-  player->torque = 0.0f;
-
-  int t = *((int*)(player->body->GetUserData()));
-  dbg << "USER DATA: " + std::to_string(t);
-
   int playerId = addGameObject(player);
 
   return playerId;
@@ -118,6 +93,7 @@ int32_t ServerGameModel::addGameObject(GameObject *gameObject)
   int32_t newId = firstFreeId++;
   gameObject->id = newId;
   gameObject->model = this;
+  gameObject->init();
 
   logger << std::string("New game object ID = ") + std::to_string(newId);
 
@@ -185,56 +161,17 @@ void ServerGameModel::makeAction(const Action& action)
   switch (action.actionType)
   {
     case ActionType::MOVE:
-      move(player, action.moveAction);
+      player->move(action.moveAction);
       break;
 
     case ActionType::ROTATE:
-      rotate(player, action.rotateAction);
+      player->rotate(action.rotateAction);
       break;
 
     case ActionType::FIRE:
-      fire(player, action.fireAction);
+      player->fire(action.fireAction);
       break;
   }
-}
-
-void ServerGameModel::move(Player* player, const MoveAction& moveAction)
-{
-  logger << "Move invoked";
-
-  sf::Vector2f direction = common::to_SFML_Vector2f(moveAction.direction);
-  direction = 100.0f* direction;
-
-  b2Vec2 force(direction.x, direction.y);
-  player->force = force;
-}
-
-void ServerGameModel::rotate(Player* player, const RotateAction& rotateAction)
-{
-  logger << "Rotate invoked " + std::to_string(rotateAction.direction.x) + " "
-                              + std::to_string(rotateAction.direction.y);
-
-  sf::Vector2f direction = common::to_SFML_Vector2f(rotateAction.direction);
-  direction /= 20.0f;
-  direction -= player->position;
-
-  double DEGTORAD = M_PI / 180;
-  double desiredAngle = atan2(direction.y, direction.x);
-  double bodyAngle = player->body->GetAngle();
-  float nextAngle = bodyAngle + player->body->GetAngularVelocity() / 10.0;
-  float totalRotation = desiredAngle - nextAngle;
-
-  while ( totalRotation < -180 * DEGTORAD ) totalRotation += 360 * DEGTORAD;
-  while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
-  float desiredAngularVelocity = totalRotation * 10;
-  float torque = player->body->GetInertia() * desiredAngularVelocity / (1/10.0);
-
-  player->torque = torque;
-}
-
-void ServerGameModel::fire(Player* player, const FireAction& fireAction)
-{
-  player->fireOn = fireAction.on;
 }
 
 GameChanges ServerGameModel::getChanges(int32_t id)

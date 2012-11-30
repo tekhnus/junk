@@ -1,18 +1,48 @@
 #include "Bullet.hpp"
 
 #include <iostream>
+#include "server/model/game_model/ServerGameModel.hpp"
 
 namespace junk {
 namespace server {
 namespace model {
 
-Bullet::Bullet()
+Bullet::Bullet(Player* creator)
 {
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_dynamicBody;
+
+  double angle = creator->body->GetAngle();
+  double rad = 1.5;
+  bodyDef.position.Set(creator->position.x + rad * cos(angle),
+    creator->position.y + rad * sin(angle));
+
+  bodyDef.bullet = true;
+
+  body = creator->model->world->CreateBody(&bodyDef);
+  body->SetUserData((Unit*)this);
+
+  b2CircleShape circleShape;
+  circleShape.m_radius = 1.0f / 7;
+
+  b2FixtureDef fixtureDef;
+  fixtureDef.shape = &circleShape;
+  fixtureDef.density = 2.0f;
+  fixtureDef.restitution = 0.7f;
+
+  body->CreateFixture(&fixtureDef);
+  body->SetLinearDamping(0.1);
+
+  double power = 100;
+  body->ApplyLinearImpulse(b2Vec2(power * cos(angle), power*sin(angle)), body->GetWorldCenter());
 }
 
 Bullet::~Bullet()
 {
 }
+
+void Bullet::init()
+{}
 
 Patch Bullet::getPatch()
 {

@@ -2,6 +2,8 @@
 
 #include "server/model/game_model/game_object/unit/Unit.hpp"
 #include "common/game_object/unit/player/Player.hpp"
+#include <gen-cpp/ClientService.h>
+#include "common/utils/Convert.hpp"
 
 namespace junk {
 namespace server {
@@ -18,6 +20,12 @@ public:
     virtual void process();
     virtual int getType();
     virtual void onBulletHit();
+
+    virtual void init();
+
+    virtual void rotate(const RotateAction& rotateAction);
+    virtual void move(const MoveAction& moveAction);
+    virtual void fire(const FireAction& fireAction);
 
     b2Vec2 force;
     double angularImpulse;
