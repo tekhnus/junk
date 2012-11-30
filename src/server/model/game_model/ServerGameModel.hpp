@@ -3,9 +3,11 @@
 #include "SFML/System.hpp"
 #include <common/logger/Logger.hpp>
 #include <gen-cpp/ClientService.h>
+
 #include <map>
 #include <thread>
 #include <mutex>
+#include <chrono>
 #include <Box2D/Box2D.h>
 
 #include "game_object/GameObject.hpp"
@@ -58,6 +60,8 @@ private:
   Logger logger;
 
   std::unique_ptr<CollisionHandler> handler;
+
+  std::chrono::steady_clock::time_point currentTime;
 };
 
 }}} // namespace junk::server::model
