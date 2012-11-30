@@ -78,10 +78,15 @@ int main(int argc, char** argv)
 
   junk::dbg.debug("antialiasing: ", window.getSettings().antialiasingLevel);
 
-  if (!effect.loadFromFile("fx.frag", sf::Shader::Type::Fragment))
+  if (!effect.loadFromFile("fx.vert", "fx.frag"))
   {
     junk::dbg << "Superweak. shader not loaded";
   }
+
+  effect.setParameter("normal", 0.0f, 0.0f, 1.0f);
+  effect.setParameter("vertex_to_light_vector", 1.0f, 0.0f, 0.0f);
+  //effect.setParameter("texture", sf::Shader::CurrentTexture);
+  //effect.setParameter("blur_radius", 0.05f);
 
   window.resetGLStates();
 
