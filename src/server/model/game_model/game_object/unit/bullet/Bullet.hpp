@@ -13,12 +13,22 @@ class Bullet : public virtual Unit, public virtual junk::common::Bullet
   MODEL_GAME_OBJECT_DEF(Bullet)
 
 public:
+<<<<<<< HEAD
   Bullet(Player* creator);
   virtual ~Bullet();
 
   virtual void init();
 
   BulletPatch getBulletPatch();
+=======
+    Bullet(Player* creator);
+    virtual ~Bullet();
+
+    virtual void init();
+
+    virtual Patch getPatch();
+    BulletPatch getBulletPatch();
+>>>>>>> Removed functionality from SGM
 
   virtual void process();
   virtual void startDestruction();

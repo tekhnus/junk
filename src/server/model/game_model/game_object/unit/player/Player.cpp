@@ -102,6 +102,7 @@ void Player::rotate(const RotateAction& rotateAction)
   while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
   float desiredAngularVelocity = totalRotation * 10;
   torque = body->GetInertia() * desiredAngularVelocity / (1/10.0);
+<<<<<<< HEAD
 }
 
 void Player::move(const MoveAction& moveAction)
@@ -114,6 +115,20 @@ void Player::move(const MoveAction& moveAction)
   force.Set(moveDirection.x, moveDirection.y);
 }
 
+=======
+}
+
+void Player::move(const MoveAction& moveAction)
+{
+  dbg << "Move invoked";
+
+  sf::Vector2f moveDirection = common::to_SFML_Vector2f(moveAction.direction);
+  moveDirection = 100.0f * moveDirection;
+
+  force.Set(moveDirection.x, moveDirection.y);
+}
+
+>>>>>>> Removed functionality from SGM
 void Player::fire(const FireAction& fireAction)
 {
   fireOn = fireAction.on;

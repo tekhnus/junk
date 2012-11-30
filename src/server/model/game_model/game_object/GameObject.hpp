@@ -40,9 +40,16 @@ public:
 
   GameObjectPatch getGameObjectPatch();
 
+<<<<<<< HEAD
   virtual void process();
   virtual void destroy() = 0;
   virtual void startDestruction() = 0;
+=======
+    virtual void init() = 0;
+
+    virtual Patch getPatch();
+    GameObjectPatch getGameObjectPatch();
+>>>>>>> Removed functionality from SGM
 
   virtual int getType() = 0;
 

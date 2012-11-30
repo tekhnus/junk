@@ -48,11 +48,18 @@ public:
   void operator()();
 
   b2World* world;
+<<<<<<< HEAD
 
 private:
   std::unordered_map<int32_t, std::unique_ptr<GameObject > > gameObjects;
   std::queue<GameObject*> gameObjectAddQueue;
 
+=======
+
+private:
+  std::map<int32_t, std::unique_ptr<GameObject > > gameObjects;
+
+>>>>>>> Removed functionality from SGM
   int32_t firstFreeId;
   bool isRunning;
   sf::Clock gameLoopTimer;

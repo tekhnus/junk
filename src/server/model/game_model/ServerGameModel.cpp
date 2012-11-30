@@ -83,6 +83,7 @@ int32_t ServerGameModel::addPlayer(Player* player)
   logger << "Adding a player...";
 
   int playerId = addGameObject(player);
+<<<<<<< HEAD
 
   return playerId;
 }
@@ -95,6 +96,8 @@ void ServerGameModel::processGameObjectAddQueue()
   {
     GameObject* gameObject = gameObjectAddQueue.front();
     gameObjectAddQueue.pop();
+=======
+>>>>>>> Removed functionality from SGM
 
     gameObjects.insert(std::make_pair(gameObject->id,
                       std::unique_ptr<GameObject>(gameObject)));
