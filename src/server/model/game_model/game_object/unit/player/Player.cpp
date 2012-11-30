@@ -75,41 +75,70 @@ void Player::processFire()
     return;
   dbg << "Adding a bullet...";
 
-  Bullet* bullet = new Bullet();
-
-  b2BodyDef bodyDef;
-  bodyDef.type = b2_dynamicBody;
-  dbg.debug("POSITION IS ", position.x, position.y);
-
-  double angle = body->GetAngle();
-  double rad = 1.5;
-  bodyDef.position.Set(position.x + rad * cos(angle), position.y + rad * sin(angle));
-  bodyDef.bullet = true;
-
-  b2Body* bulletBody = body->GetWorld()->CreateBody(&bodyDef);
-  bulletBody->SetUserData((Unit*)bullet);
-
-  dbg << "bullet adding I";
-
-  b2CircleShape circleShape;
-  circleShape.m_radius = 1.0f / 7;
-
-  b2FixtureDef fixtureDef;
-  fixtureDef.shape = &circleShape;
-  fixtureDef.density = 2.0f;
-  fixtureDef.restitution = 0.7f;
-  dbg << "bullet adding II";
-
-  bulletBody->CreateFixture(&fixtureDef);
-  bulletBody->SetLinearDamping(0.1);
-
-  double power = 100;
-  bulletBody->ApplyLinearImpulse(b2Vec2(power * cos(angle), power*sin(angle)), bulletBody->GetWorldCenter());
-
-  bullet->body = bulletBody;
+  Bullet* bullet = new Bullet(this);
   model->addGameObject(bullet);
   dbg << "Bullet added successfully";
 }
+
+void Player::init()
+{
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_dynamicBody;
+  bodyDef.position.Set(3.0f, 3.0f);
+
+  body = model->world->CreateBody(&bodyDef);
+
+  b2CircleShape circleShape;
+  circleShape.m_radius = 1.0f;
+
+  b2FixtureDef fixtureDef;
+  fixtureDef.shape = &circleShape;
+  fixtureDef.density = 1.0f;
+  fixtureDef.restitution = 0.5f;
+
+  body->CreateFixture(&fixtureDef);
+  body->SetLinearDamping(1.5);
+  body->SetUserData((Unit*)this);
+
+  force.SetZero();
+  torque = 0.0f;
+}
+
+void Player::rotate(const RotateAction& rotateAction)
+{
+  dbg.debug("Rotate invoked ", rotateAction.direction.x, " ", rotateAction.direction.y);
+
+  sf::Vector2f rotDirection = common::to_SFML_Vector2f(rotateAction.direction);
+  rotDirection /= 20.0f;
+  rotDirection -= position;
+
+  double DEGTORAD = M_PI / 180;
+  double desiredAngle = atan2(rotDirection.y, rotDirection.x);
+  double bodyAngle = body->GetAngle();
+  float nextAngle = bodyAngle + body->GetAngularVelocity() / 10.0;
+  float totalRotation = desiredAngle - nextAngle;
+
+  while ( totalRotation < -180 * DEGTORAD ) totalRotation += 360 * DEGTORAD;
+  while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
+  float desiredAngularVelocity = totalRotation * 10;
+  torque = body->GetInertia() * desiredAngularVelocity / (1/10.0);
+}
+
+void Player::move(const MoveAction& moveAction)
+{
+  dbg << "Move invoked";
+
+  sf::Vector2f moveDirection = common::to_SFML_Vector2f(moveAction.direction);
+  moveDirection = 100.0f * moveDirection;
+
+  force.Set(moveDirection.x, moveDirection.y);
+}
+
+void Player::fire(const FireAction& fireAction)
+{
+  fireOn = fireAction.on;
+}
+
 
 int Player::getType()
 {

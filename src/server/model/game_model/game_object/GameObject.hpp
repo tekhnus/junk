@@ -19,6 +19,8 @@ public:
     GameObject();
     virtual ~GameObject();
 
+    virtual void init() = 0;
+
     virtual Patch getPatch();
     GameObjectPatch getGameObjectPatch();
 
