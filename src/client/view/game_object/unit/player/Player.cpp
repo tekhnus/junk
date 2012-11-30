@@ -63,12 +63,6 @@ void Player::updatePlayer(const model::Player& player)
   setMaxHealth(player.getMaxHealth());
 
   gun.setRotation((atan2(direction.y, direction.x) * 180) / M_PI);
-
-  if (player.destroyInfo.isDestroyed)
-  {
-    destroyInfo.isDestroyed = true;
-    destroyInfo.destroyCountdown = player.destroyInfo.destroyCountdown;
-  }
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const

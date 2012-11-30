@@ -14,7 +14,6 @@
 #include <unordered_map>
 #include <cassert>
 #include <memory>
-#include <mutex>
 
 //for std::this_thread::sleep_for
 #ifndef _GLIBCXX_USE_NANOSLEEP
@@ -57,7 +56,6 @@ private:
 
   GameObjectFactory gameObjectFactory;
   std::unordered_map<int32_t, std::unique_ptr<GameObject> > gameObjects;
-  std::mutex viewChangesMutex;
 
   int32_t clientId;
   void processInput();

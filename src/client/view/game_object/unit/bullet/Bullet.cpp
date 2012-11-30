@@ -20,12 +20,6 @@ Bullet::~Bullet()
 void Bullet::updateBullet(const model::Bullet& bullet)
 {
   body.setPosition(20.0f * bullet.position);
-
-  if (bullet.destroyInfo.isDestroyed)
-  {
-    destroyInfo.isDestroyed = true;
-    destroyInfo.destroyCountdown = bullet.destroyInfo.destroyCountdown;
-  }
 }
 
 void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const

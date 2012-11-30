@@ -14,22 +14,26 @@ void CollisionHandler::BeginContact(b2Contact* contact)
   b2Body* b = bF->GetBody();
   void* aRaw = a->GetUserData();
   void* bRaw = b->GetUserData();
-  if (aRaw == nullptr || bRaw == nullptr)
+  if (aRaw == NULL || bRaw == NULL)
   {
     return;
   }
-  Unit* aUnit = (Unit*) (aRaw);
-  Unit* bUnit = (Unit*) (bRaw);
+  Unit* aUnit = (Unit*)aRaw;
+  Unit* bUnit = (Unit*)bRaw;
+  dbg << aUnit;
+  dbg << typeid(*aUnit).name();
+  dbg << aUnit->getType();
   if (aUnit->getType() == TYPE_BULLET)
   {
+    dbg << "YYYYYY";
     bUnit->onBulletHit();
-    aUnit->startDestruction();
   }
+  dbg << "XXXXXXXX";
   if (bUnit->getType() == TYPE_BULLET)
   {
     aUnit->onBulletHit();
-    bUnit->startDestruction();
   }
+  dbg << "BBBBBBBBBB";
 }
 
 }}} // namespace junk::server::model

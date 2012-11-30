@@ -63,34 +63,24 @@ void ClientView::update()
 
 void ClientView::addGameObject(const GameObjectType::type& gameObjectType, model::GameObject* gameObject)
 {
-  viewChangesMutex.lock();
-
   logger << std::string("Adding object ") + std::to_string(gameObject->id);
 
   gameObjects.insert(std::make_pair(gameObject->id,
     std::unique_ptr<GameObject> (gameObjectFactory.create(gameObjectType))));
 
   gameObjects[gameObject->id]->setModelObject(gameObject);
-
-  viewChangesMutex.unlock();
 }
 
 void ClientView::removeObsoleteGameObjects()
 {
-  viewChangesMutex.lock();
-
   std::vector<int32_t> destroyCandidates;
   for (auto& gameObject : gameObjects)
   {
     if (gameObject.second->destroyInfo.isDestroyed)
     {
-      if (gameObject.second->destroyInfo.destroyCountdown < 5)
+      if (gameObject.second->destroyInfo.destroyCountdown == 0)
       {
         destroyCandidates.push_back(gameObject.second->id);
-      }
-      else
-      {
-        gameObject.second->destroyInfo.destroyCountdown--;
       }
     }
   }
@@ -98,8 +88,6 @@ void ClientView::removeObsoleteGameObjects()
   {
     gameObjects.erase(destroyCandidates[i]);
   }
-
-  viewChangesMutex.unlock();
 }
 
 void ClientView::removeGameObject(int32_t gameObjectId)

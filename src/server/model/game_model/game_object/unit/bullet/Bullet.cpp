@@ -1,5 +1,6 @@
 #include "Bullet.hpp"
-#include "common/logger/Logger.hpp"
+
+#include <iostream>
 
 namespace junk {
 namespace server {
@@ -49,14 +50,6 @@ void Bullet::process() {
   {
     destroyInfo.destroyCountdown = std::max(0, destroyInfo.destroyCountdown - 1);
   }
-}
-
-void Bullet::startDestruction()
-{
-  dbg << "Bullet " + std::to_string(id) + " destruction started";
-
-  destroyInfo.isDestroyed = true;
-  destroyInfo.destroyCountdown = 2;
 }
 
 int Bullet::getType()
