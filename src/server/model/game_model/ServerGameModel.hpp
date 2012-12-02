@@ -61,7 +61,7 @@ private:
 
   std::unique_ptr<CollisionHandler> handler;
 
-  std::chrono::steady_clock::time_point currentTime;
+  std::chrono::high_resolution_clock::time_point currentTime;
 };
 
 }}} // namespace junk::server::model

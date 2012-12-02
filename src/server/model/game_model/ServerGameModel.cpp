@@ -191,7 +191,7 @@ void ServerGameModel::operator()()
     {
       std::lock_guard<std::mutex> lock(gameChangesMutex);
 
-      currentTime = std::chrono::steady_clock::now();
+      currentTime = std::chrono::high_resolution_clock::now();
 
       if (!isRunning)
       {
