@@ -6,6 +6,7 @@ namespace model {
 
 int TYPE_PLAYER = 1;
 int TYPE_BULLET = 2;
+int TYPE_BONUS = 3;
 
 GameObject::GameObject() : lifetime(0)
 {

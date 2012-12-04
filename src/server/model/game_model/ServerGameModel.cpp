@@ -191,6 +191,15 @@ void ServerGameModel::operator()()
     {
       std::lock_guard<std::mutex> lock(gameChangesMutex);
 
+      /*
+      if (rand() % 10 == 0)
+      {
+          Bonus *bonus = new Bonus();
+          bonus->position = sf::Vector2f(rand() % 600, rand() % 600);
+          addGameObject(new Bonus);
+      }
+        */
+
       if (!isRunning)
       {
         break;

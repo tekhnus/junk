@@ -30,18 +30,21 @@ UnitPatch Unit::getUnitPatch()
   unitPatch.gameObjectPatch = getGameObjectPatch();
 
   unitPatch.position = common::to_thrift_Vector2f(position);
+  unitPatch.direction = common::to_thrift_Vector2f(direction);
 
   return unitPatch;
 }
 
 void Unit::destroy()
 {
+  b2World* world = body->GetWorld();
+  world->DestroyBody(body);
 }
 
 void Unit::startDestruction()
 {
   destroyInfo.isDestroyed = true;
-  destroyInfo.destroyCountdown = 1;
+  destroyInfo.destroyCountdown = 10;
 }
 
 void Unit::onBulletHit()

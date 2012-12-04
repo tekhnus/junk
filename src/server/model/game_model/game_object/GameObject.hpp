@@ -10,6 +10,7 @@ namespace model {
 
 extern int TYPE_PLAYER;
 extern int TYPE_BULLET;
+extern int TYPE_BONUS;
 
 class ServerGameModel;
 
