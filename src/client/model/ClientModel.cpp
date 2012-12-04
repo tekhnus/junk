@@ -50,8 +50,12 @@ void ClientModel::update()
   for (auto& patch : gameChanges.patches)
   {
     logger << "patch received " + std::to_string(patch.id);
-    if (gameObjects.find(patch.id) == gameObjects.end())
+    if ((gameObjects.find(patch.id) == gameObjects.end()))
     {
+      if (patch.isCleanedUp)
+      {
+        continue;
+      }
       addGameObject(patch);
     }
     gameObjects[patch.id]->applyPatch(patch);
@@ -72,10 +76,6 @@ void ClientModel::removeObsoleteGameObjects()
       if (gameObject.second->destroyInfo.destroyCountdown == 0)
       {
         destroyCandidates.push_back(gameObject.second->id);
-      }
-      else
-      {
-        gameObject.second->destroyInfo.destroyCountdown--;
       }
     }
   }

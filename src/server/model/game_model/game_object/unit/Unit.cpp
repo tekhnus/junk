@@ -7,21 +7,14 @@ namespace junk {
 namespace server {
 namespace model {
 
+MODEL_GAME_OBJECT_IMPL(Unit, unit, UNIT)
+
 Unit::Unit()
 {
 }
 
 Unit::~Unit()
 {
-}
-
-Patch Unit::getPatch()
-{
-  Patch patch;
-  patch.id = id;
-  patch.gameObjectType = GameObjectType::UNIT;
-  patch.unitPatch = getUnitPatch();
-  return patch;
 }
 
 UnitPatch Unit::getUnitPatch()
@@ -43,8 +36,12 @@ void Unit::destroy()
 
 void Unit::startDestruction()
 {
-  destroyInfo.isDestroyed = true;
-  destroyInfo.destroyCountdown = 10;
+  if (!destroyInfo.isDestroyed)
+  {
+    destroyInfo.isDestroyed = true;
+    destroyInfo.destroyCountdown = 10;
+    cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
+  }
 }
 
 void Unit::onBulletHit()

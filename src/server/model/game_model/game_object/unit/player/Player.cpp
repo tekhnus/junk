@@ -9,6 +9,8 @@ namespace junk {
 namespace server {
 namespace model {
 
+MODEL_GAME_OBJECT_IMPL(Player, player, PLAYER)
+
 Player::Player() : fireOn(false)
 {
     setMaxHealth(100);
@@ -19,27 +21,12 @@ Player::~Player()
 {
 }
 
-Patch Player::getPatch()
-{
-  Patch patch;
-  patch.id = id;
-
-  patch.gameObjectType = GameObjectType::PLAYER;
-  patch.__set_playerPatch(getPlayerPatch());
-
-  return patch;
-}
-
 PlayerPatch Player::getPlayerPatch()
 {
   PlayerPatch playerPatch;
   playerPatch.unitPatch = getUnitPatch();
   playerPatch.health = getHealth();
   playerPatch.maxHealth = getMaxHealth();
-
-  /*
-    Set fields here
-  */
 
   return playerPatch;
 }
@@ -60,13 +47,6 @@ void Player::process()
   direction.y = sin(angle);
 
   processFire();
-
-  if (destroyInfo.isDestroyed)
-  {
-    destroyInfo.destroyCountdown = std::max(0, destroyInfo.destroyCountdown - 1);
-  }
-
-  
 }
 
 void Player::processFire()

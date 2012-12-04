@@ -11,28 +11,29 @@ namespace model {
 
 class Player : public virtual Unit, public virtual junk::common::Player
 {
+  MODEL_GAME_OBJECT_DEF(Player)
+
 public:
-    Player();
-    virtual ~Player();
+  Player();
+  virtual ~Player();
 
-    virtual Patch getPatch();
-    PlayerPatch getPlayerPatch();
-    virtual void process();
-    virtual int getType();
-    virtual void onBulletHit();
+  PlayerPatch getPlayerPatch();
+  virtual void process();
+  virtual int getType();
+  virtual void onBulletHit();
 
-    virtual void init();
+  virtual void init();
 
-    virtual void rotate(const RotateAction& rotateAction);
-    virtual void move(const MoveAction& moveAction);
-    virtual void fire(const FireAction& fireAction);
+  virtual void rotate(const RotateAction& rotateAction);
+  virtual void move(const MoveAction& moveAction);
+  virtual void fire(const FireAction& fireAction);
 
-    b2Vec2 force;
-    double angularImpulse;
-    double torque;
-    bool fireOn;
+  b2Vec2 force;
+  double angularImpulse;
+  double torque;
+  bool fireOn;
 private:
-    virtual void processFire();
+  virtual void processFire();
 
 }; // Player
 

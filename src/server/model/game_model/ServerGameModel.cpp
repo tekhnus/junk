@@ -106,11 +106,12 @@ int32_t ServerGameModel::addGameObject(GameObject *gameObject)
 void ServerGameModel::removeObsoleteGameObjects()
 {
   std::vector<int32_t> destroyCandidates;
+
   for (auto& gameObject : gameObjects)
   {
     if (gameObject.second->destroyInfo.isDestroyed)
     {
-      if (gameObject.second->destroyInfo.destroyCountdown == 0)
+      if (gameObject.second->cleanupTime <= currentTime)
       {
         destroyCandidates.push_back(gameObject.second->id);
       }
@@ -176,6 +177,8 @@ void ServerGameModel::makeAction(const Action& action)
 
 GameChanges ServerGameModel::getChanges(int32_t id)
 {
+  std::lock_guard<std::mutex> guard(gameChangesMutex);
+
   GameChanges gameChanges;
   for (const auto& gameObject : gameObjects)
   {
@@ -189,7 +192,7 @@ void ServerGameModel::operator()()
   while (true)
   {
     {
-      std::lock_guard<std::mutex> lock(gameChangesMutex);
+      std::lock_guard<std::mutex> guard(gameChangesMutex);
 
       currentTime = std::chrono::high_resolution_clock::now();
 

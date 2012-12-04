@@ -10,19 +10,20 @@ namespace model {
 
 class Bullet : public virtual Unit, public virtual junk::common::Bullet
 {
+  MODEL_GAME_OBJECT_DEF(Bullet)
+
 public:
-    Bullet(Player* creator);
-    virtual ~Bullet();
+  Bullet(Player* creator);
+  virtual ~Bullet();
 
-    virtual void init();
+  virtual void init();
 
-    virtual Patch getPatch();
-    BulletPatch getBulletPatch();
+  BulletPatch getBulletPatch();
 
-    virtual void process();
-    virtual void startDestruction();
+  virtual void process();
+  virtual void startDestruction();
 
-    virtual int getType();
+  virtual int getType();
 
 }; // Bullet
 

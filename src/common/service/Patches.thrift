@@ -42,6 +42,7 @@ enum GameObjectType {
 struct Patch {
   1: i32 id,
   2: GameObjectType gameObjectType,
+  3: bool isCleanedUp,
 
   // Possible patches
   10: optional GameObjectPatch gameObjectPatch,

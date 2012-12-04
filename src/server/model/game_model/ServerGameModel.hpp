@@ -4,7 +4,7 @@
 #include <common/logger/Logger.hpp>
 #include <gen-cpp/ClientService.h>
 
-#include <map>
+#include <unordered_map>
 #include <thread>
 #include <mutex>
 #include <chrono>
@@ -48,7 +48,7 @@ public:
   b2World* world;
 
 private:
-  std::map<int32_t, std::unique_ptr<GameObject > > gameObjects;
+  std::unordered_map<int32_t, std::unique_ptr<GameObject > > gameObjects;
 
   int32_t firstFreeId;
   bool isRunning;

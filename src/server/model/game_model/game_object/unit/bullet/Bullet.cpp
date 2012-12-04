@@ -7,6 +7,8 @@ namespace junk {
 namespace server {
 namespace model {
 
+MODEL_GAME_OBJECT_IMPL(Bullet, bullet, BULLET)
+
 Bullet::Bullet(Player* creator)
 {
   b2BodyDef bodyDef;
@@ -44,17 +46,6 @@ Bullet::~Bullet()
 void Bullet::init()
 {}
 
-Patch Bullet::getPatch()
-{
-  Patch patch;
-  patch.id = id;
-
-  patch.gameObjectType = GameObjectType::BULLET;
-  patch.__set_bulletPatch(getBulletPatch());
-
-  return patch;
-}
-
 BulletPatch Bullet::getBulletPatch()
 {
   BulletPatch bulletPatch;
@@ -68,6 +59,7 @@ BulletPatch Bullet::getBulletPatch()
 }
 
 void Bullet::process() {
+
   GameObject::process();
   if (lifetime == 50) {
     startDestruction();
@@ -76,16 +68,16 @@ void Bullet::process() {
   position.x = pos.x;
   position.y = pos.y;
 
-  if (destroyInfo.isDestroyed)
-  {
-    destroyInfo.destroyCountdown = std::max(0, destroyInfo.destroyCountdown - 1);
-  }
 }
 
 void Bullet::startDestruction()
 {
-  destroyInfo.isDestroyed = true;
-  destroyInfo.destroyCountdown = 5;
+  if (!destroyInfo.isDestroyed)
+  {
+    destroyInfo.isDestroyed = true;
+    destroyInfo.destroyCountdown = 5;
+    cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(100);
+  }
 }
 
 int Bullet::getType()

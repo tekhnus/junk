@@ -86,10 +86,6 @@ void ClientView::removeObsoleteGameObjects()
       {
         destroyCandidates.push_back(gameObject.first);
       }
-      else
-      {
-        gameObject.second->destroyInfo.destroyCountdown--;
-      }
     }
   }
   for (int i = 0; i < destroyCandidates.size(); ++i)
