@@ -5,12 +5,17 @@ namespace common {
 
 GameObject::GameObject()
 {
-  destroyInfo.isDestroyed = false;
+  destroyInfo.isDestructing = false;
   destroyInfo.destroyCountdown = 0;
 }
 
 GameObject::~GameObject()
 {
+}
+
+bool GameObject::isDestroyed() const
+{
+  return destroyInfo.isDestructing && (destroyInfo.destroyCountdown == 0);
 }
 
 }} // namespace junk::common

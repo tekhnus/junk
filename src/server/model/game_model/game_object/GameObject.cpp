@@ -22,8 +22,8 @@ GameObjectPatch GameObject::getGameObjectPatch()
   GameObjectPatch gameObjectPatch;
 
   gameObjectPatch.id = id;
-  gameObjectPatch.destroyInfo.isDestroyed = destroyInfo.isDestroyed;
-  if (destroyInfo.isDestroyed)
+  gameObjectPatch.destroyInfo.isDestructing = destroyInfo.isDestructing;
+  if (destroyInfo.isDestructing)
   {
     gameObjectPatch.destroyInfo.destroyCountdown = destroyInfo.destroyCountdown;
   }
@@ -34,7 +34,7 @@ GameObjectPatch GameObject::getGameObjectPatch()
 void GameObject::process()
 {
     ++lifetime;
-    if (destroyInfo.isDestroyed)
+    if (destroyInfo.isDestructing)
     {
       destroyInfo.destroyCountdown = std::max(0, destroyInfo.destroyCountdown - 1);
     }
