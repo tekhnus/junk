@@ -14,9 +14,11 @@ public:
 
   struct DestroyInfo
   {
-    bool isDestroyed;
+    bool isDestructing;
     int32_t destroyCountdown;
   };
+
+  bool isDestroyed() const;
 
   int32_t id;
 

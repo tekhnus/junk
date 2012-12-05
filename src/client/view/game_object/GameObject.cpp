@@ -21,9 +21,9 @@ void GameObject::setModelObject(model::GameObject* gameObject)
 
 void GameObject::updateGameObject(const model::GameObject& gameObject)
 {
-  if (gameObject.destroyInfo.isDestroyed)
+  if (gameObject.destroyInfo.isDestructing)
   {
-    destroyInfo.isDestroyed = true;
+    destroyInfo.isDestructing = true;
     destroyInfo.destroyCountdown = gameObject.destroyInfo.destroyCountdown;
   }
 }

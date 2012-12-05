@@ -64,9 +64,9 @@ void Player::updatePlayer(const model::Player& player)
 
   gun.setRotation((atan2(direction.y, direction.x) * 180) / M_PI);
 
-  if (player.destroyInfo.isDestroyed)
+  if (player.destroyInfo.isDestructing)
   {
-    destroyInfo.isDestroyed = true;
+    destroyInfo.isDestructing = true;
     destroyInfo.destroyCountdown = player.destroyInfo.destroyCountdown;
   }
 }
