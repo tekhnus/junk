@@ -72,11 +72,11 @@ void Bullet::process() {
 
 void Bullet::startDestruction()
 {
-  if (!destroyInfo.isDestructing)
+  if (!destroyInfo.isDestroyed)
   {
-    destroyInfo.isDestructing = true;
-    destroyInfo.destroyCountdown = 2;
-    cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
+    destroyInfo.isDestroyed = true;
+    destroyInfo.destroyCountdown = 5;
+    cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(100);
   }
 }
 

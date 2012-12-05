@@ -14,7 +14,7 @@ Patch _Name::getPatch() \
   Patch patch; \
   patch.id = id; \
   patch.gameObjectType = GameObjectType::_NAME; \
-  patch.isCleanedUp = isRemoved; \
+  patch.isCleanedUp = destroyInfo.isDestroyed && (destroyInfo.destroyCountdown == 0); \
   patch.__set_ ##_name## Patch(get ##_Name## Patch()); \
   return patch; \
 }
@@ -49,8 +49,6 @@ public:
   ServerGameModel* model;
   int lifetime;
   std::chrono::high_resolution_clock::time_point cleanupTime;
-
-  bool isRemoved;
 
 }; // GameObject
 

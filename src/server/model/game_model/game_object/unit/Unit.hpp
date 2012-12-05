@@ -25,7 +25,6 @@ public:
   virtual void onBulletHit();
 
   b2Body* body;
-  bool isRemovedFromWorld;
 
 }; // Unit
 

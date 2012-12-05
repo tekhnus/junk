@@ -30,20 +30,16 @@ UnitPatch Unit::getUnitPatch()
 
 void Unit::destroy()
 {
-  if (!isRemoved)
-  {
-    b2World* world = body->GetWorld();
-    world->DestroyBody(body);
-    isRemoved = true;
-  }
+  b2World* world = body->GetWorld();
+  world->DestroyBody(body);
 }
 
 void Unit::startDestruction()
 {
-  if (!destroyInfo.isDestructing)
+  if (!destroyInfo.isDestroyed)
   {
-    destroyInfo.isDestructing = true;
-    destroyInfo.destroyCountdown = 2;
+    destroyInfo.isDestroyed = true;
+    destroyInfo.destroyCountdown = 10;
     cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
   }
 }

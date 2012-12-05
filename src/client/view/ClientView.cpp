@@ -78,7 +78,7 @@ void ClientView::removeObsoleteGameObjects()
   std::vector<int32_t> destroyCandidates;
   for (auto& gameObject : gameObjects)
   {
-    if (gameObject.second->destroyInfo.isDestructing)
+    if (gameObject.second->destroyInfo.isDestroyed)
     {
       logger << "destroyCountdown " + std::to_string(gameObject.second->destroyInfo.destroyCountdown);
 

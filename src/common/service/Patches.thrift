@@ -7,7 +7,7 @@ include "Shared.thrift"
 typedef Shared.Vector2f Vector2f
 
 struct DestroyInfo {
-  1: bool isDestructing,
+  1: bool isDestroyed,
   2: i32 destroyCountdown;
 }
 

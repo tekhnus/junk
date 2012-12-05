@@ -78,7 +78,7 @@ void ServerGameModel::stop()
 
 int32_t ServerGameModel::addPlayer(Player* player)
 {
-  std::lock_guard<std::mutex> guard(gameChangesMutex);
+  std::lock_guard<std::mutex> lock(gameChangesMutex);
 
   logger << "Adding a player...";
 
@@ -87,24 +87,8 @@ int32_t ServerGameModel::addPlayer(Player* player)
   return playerId;
 }
 
-void ServerGameModel::processGameObjectAddQueue()
-{
-  std::lock_guard<std::mutex> guard(gameObjectAddMutex);
-
-  while (!gameObjectAddQueue.empty())
-  {
-    GameObject* gameObject = gameObjectAddQueue.front();
-    gameObjectAddQueue.pop();
-
-    gameObjects.insert(std::make_pair(gameObject->id,
-                      std::unique_ptr<GameObject>(gameObject)));
-  }
-}
-
 int32_t ServerGameModel::addGameObject(GameObject *gameObject)
 {
-  std::lock_guard<std::mutex> guard(gameObjectAddMutex);
-
   logger << "Adding new object";
   int32_t newId = firstFreeId++;
   gameObject->id = newId;
@@ -113,7 +97,8 @@ int32_t ServerGameModel::addGameObject(GameObject *gameObject)
 
   logger << std::string("New game object ID = ") + std::to_string(newId);
 
-  gameObjectAddQueue.push(gameObject);
+  gameObjects.insert(std::make_pair(newId,
+                    std::unique_ptr<GameObject> (gameObject)));
 
   return newId;
 }
@@ -124,12 +109,8 @@ void ServerGameModel::removeObsoleteGameObjects()
 
   for (auto& gameObject : gameObjects)
   {
-    if (gameObject.second->destroyInfo.isDestructing)
+    if (gameObject.second->destroyInfo.isDestroyed)
     {
-      if (gameObject.second->isDestroyed())
-      {
-        gameObject.second->destroy();
-      }
       if (gameObject.second->cleanupTime <= currentTime)
       {
         destroyCandidates.push_back(gameObject.second->id);
@@ -222,16 +203,12 @@ void ServerGameModel::operator()()
 
       for (auto& gameObject : gameObjects)
       {
-        if (!gameObject.second->isDestroyed())
-        {
-          gameObject.second->process();
-        }
+        gameObject.second->process();
       }
 
       world->Step(1.0/60, 6, 2);
 
       removeObsoleteGameObjects();
-      processGameObjectAddQueue();
     }
 
     std::chrono::milliseconds tm(20);
