@@ -9,7 +9,7 @@ int TYPE_BULLET = 2;
 
 MODEL_GAME_OBJECT_IMPL(GameObject, gameObject, GAME_OBJECT)
 
-GameObject::GameObject() : lifetime(0)
+GameObject::GameObject() : lifetime(0), isRemoved(0)
 {
 }
 
