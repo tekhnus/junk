@@ -37,4 +37,19 @@ void Wall::destroy()
 void Wall::onBulletHit()
 {}
 
+void Wall::init()
+{
+}
+
+int Wall::getType()
+{
+  return TYPE_WALL;
+}
+
+void Wall::setCorners(const std::vector<b2Vec2>& corners)
+{
+  
+}
+
+
 }}} // namespace junk::server::model

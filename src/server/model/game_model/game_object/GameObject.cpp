@@ -6,6 +6,7 @@ namespace model {
 
 int TYPE_PLAYER = 1;
 int TYPE_BULLET = 2;
+int TYPE_WALL = 3;
 
 MODEL_GAME_OBJECT_IMPL(GameObject, gameObject, GAME_OBJECT)
 

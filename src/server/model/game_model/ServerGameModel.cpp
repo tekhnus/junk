@@ -3,6 +3,11 @@
 #include <functional>
 #include <math.h>
 
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
+using boost::property_tree::ptree;
+
 namespace junk {
 namespace server {
 namespace model {
@@ -61,6 +66,8 @@ void ServerGameModel::start()
   isRunning = true;
   gameLoopTimer.restart();
   gameLoopThread = std::thread(std::ref(*this));
+
+  loadMap("map.json");
 
   logger << "Game model started";
 }
@@ -240,6 +247,25 @@ void ServerGameModel::operator()()
   }
 
   return;
+}
+
+void ServerGameModel::loadMap(std::string filename) {
+  logger.warn("loading map...");
+  ptree tree;
+  read_json(filename, tree);
+  for (const auto& entry : tree.get_child("walls")) {
+    logger.debug("adding a wall...");
+    std::vector<b2Vec2> corners;
+    for (const auto& point : entry.second) {
+      float x = point.second.get<float>("x");
+      float y = point.second.get<float>("y");
+      logger.debug("point: (", x, "; ", y, ")");
+      corners.push_back(b2Vec2(x, y));
+    }
+    Wall* wall = new Wall();
+    wall->setCorners(corners);
+    addGameObject(wall);
+  }
 }
 
 }}} // namespace junk::server::model

@@ -20,9 +20,12 @@ public:
   WallPatch getWallPatch();
 
   virtual void destroy();
-  virtual void startDestruction();
 
   virtual void onBulletHit();
+
+  virtual void init();
+  virtual int getType();
+  void setCorners(const std::vector<b2Vec2>& corners);
 
 }; // Wall
 
