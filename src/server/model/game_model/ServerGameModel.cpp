@@ -215,6 +215,7 @@ void ServerGameModel::operator()()
 
       currentTime = std::chrono::high_resolution_clock::now();
 
+
       if (!isRunning)
       {
         break;

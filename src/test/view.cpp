@@ -46,18 +46,12 @@ void quit()
   window.close();
 }
 
-sf::Shader effect;
-sf::RenderTexture tex;
-
 void drawWorld()
 {
   model.update();
   view.update();
-  tex.clear();
-  tex.draw(view);
-  tex.display();
-  sf::Sprite screen(tex.getTexture());
-  window.draw(screen, sf::RenderStates(&effect));
+  window.draw(view);
+  // window.update();
 }
 
 int main(int argc, char** argv)
@@ -76,14 +70,8 @@ int main(int argc, char** argv)
   fetcher.onOK(hud.getEvent("game"));
   fetcher.getWindow()->Show(false);
   view.window = &window;
-  tex.create(720, 720);
 
   junk::dbg.debug("antialiasing: ", window.getSettings().antialiasingLevel);
-
-  if (!effect.loadFromFile("fx.frag", sf::Shader::Type::Fragment))
-  {
-    junk::dbg << "Superweak. shader not loaded";
-  }
 
   window.resetGLStates();
 
