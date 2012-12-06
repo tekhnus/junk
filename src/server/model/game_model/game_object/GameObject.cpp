@@ -40,4 +40,14 @@ void GameObject::process()
     }
 }
 
+void GameObject::startDestruction()
+{
+  if (!destroyInfo.isDestructing)
+  {
+    destroyInfo.isDestructing = true;
+    destroyInfo.destroyCountdown = 2;
+    cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
+  }
+}
+
 }}} // namespace junk::server::model

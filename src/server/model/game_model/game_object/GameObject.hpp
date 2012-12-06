@@ -42,7 +42,7 @@ public:
 
   virtual void process();
   virtual void destroy() = 0;
-  virtual void startDestruction() = 0;
+  virtual void startDestruction();
 
   virtual int getType() = 0;
 
