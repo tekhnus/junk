@@ -31,7 +31,7 @@ void Bonus::destroy()
 
 void Bonus::startDestruction()
 {
-  destroyInfo.isDestructing = true;
+  destroyInfo.isDestroyed = true;
   destroyInfo.destroyCountdown = 5;
 }
 

@@ -42,7 +42,6 @@ public:
   virtual void process();
   virtual void destroy() = 0;
   virtual void startDestruction() = 0;
-  virtual Patch getPatch();
   GameObjectPatch getGameObjectPatch();
 
   virtual int getType() = 0;
