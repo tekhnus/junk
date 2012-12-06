@@ -17,6 +17,9 @@ public:
   virtual ~Wall();
 
   void updateWall(const model::Wall& wall);
+  virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+private:
+  sf::ConvexShape body;
 
 }; // Wall
 

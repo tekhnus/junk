@@ -17,6 +17,8 @@ public:
 
   void applyWallPatch(const WallPatch& wallPatch);
 
+  std::vector<sf::Vector2f> corners;
+  
 }; // Wall
 
 }}} // namespace junk::client::model
