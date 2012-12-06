@@ -2,7 +2,7 @@
 
 #include "unit/player/Player.hpp"
 #include "unit/bullet/Bullet.hpp"
-#include "wall/Wall.hpp"
+#include "unit/wall/Wall.hpp"
 
 namespace junk {
 namespace client {

@@ -14,7 +14,7 @@
 #include "game_object/GameObject.hpp"
 #include "game_object/unit/player/Player.hpp"
 #include "game_object/unit/bullet/Bullet.hpp"
-#include "game_object/wall/Wall.hpp"
+#include "game_object/unit/wall/Wall.hpp"
 
 #include "CollisionHandler.hpp"
 

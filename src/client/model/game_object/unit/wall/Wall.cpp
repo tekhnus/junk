@@ -17,7 +17,8 @@ Wall::~Wall()
 
 void Wall::applyWallPatch(const WallPatch& wallPatch)
 {
-  applyGameObjectPatch(wallPatch.gameObjectPatch);
+  applyUnitPatch(wallPatch.unitPatch);
+  dbg.debug("Applying wall patch, ", wallPatch.corners.size(), " corners");
   corners.clear();
   for (const auto& corner : wallPatch.corners)
   {

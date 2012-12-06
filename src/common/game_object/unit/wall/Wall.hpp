@@ -1,11 +1,11 @@
 #pragma once
 
-#include "common/game_object/GameObject.hpp"
+#include "common/game_object/unit/Unit.hpp"
 
 namespace junk {
 namespace common {
 
-class Wall : public virtual GameObject
+class Wall : public virtual Unit
 {
 public:
   Wall();

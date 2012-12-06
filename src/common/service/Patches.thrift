@@ -33,7 +33,7 @@ struct BulletPatch {
 }
 
 struct WallPatch {
-  1: GameObjectPatch gameObjectPatch,
+  1: UnitPatch unitPatch,
   2: list<Vector2f> corners
 }
 

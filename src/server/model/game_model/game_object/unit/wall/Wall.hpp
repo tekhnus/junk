@@ -1,7 +1,7 @@
 #pragma once
 
-#include "server/model/game_model/game_object/GameObject.hpp"
-#include "common/game_object/wall/Wall.hpp"
+#include "server/model/game_model/game_object/unit/Unit.hpp"
+#include "common/game_object/unit/wall/Wall.hpp"
 
 #include <Box2D/Box2D.h>
 
@@ -9,7 +9,7 @@ namespace junk {
 namespace server {
 namespace model {
 
-class Wall : public virtual GameObject, public virtual junk::common::Wall
+class Wall : public virtual Unit, public virtual junk::common::Wall
 {
   MODEL_GAME_OBJECT_DEF(Wall)
 
@@ -26,6 +26,10 @@ public:
   virtual void init();
   virtual int getType();
   void setCorners(const std::vector<b2Vec2>& corners);
+
+  b2Body* body;
+private:
+  std::vector<b2Vec2> corns;
 
 }; // Wall
 

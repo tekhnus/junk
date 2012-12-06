@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 
 import json
-from random import randint
+from math import *
+from random import randint, random
 
-wall_count = 10
-approx_size = 30
-coord_range = 300
+wall_count = 20
+approx_size = 5
+coord_range = 40
 
 def gen():
   data = {}
@@ -15,9 +16,11 @@ def gen():
     center_x = randint(-coord_range, coord_range)
     center_y = randint(-coord_range, coord_range)
     corners = []
+    alpha = random()
     for corner_index in range(3):
-      x = randint(center_x - approx_size, center_x + approx_size)
-      y = randint(center_y - approx_size, center_y + approx_size)
+      angle = alpha + corner_index * 2 * pi / 3
+      x = center_x + size * cos(angle)
+      y = center_y + size * sin(angle)
       corner = {"x": x, "y": y}
       corners.append(corner)
     data["walls"].append(corners)

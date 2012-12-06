@@ -1,14 +1,14 @@
 #pragma once
 
-#include "common/game_object/wall/Wall.hpp"
-#include "client/model/game_object/wall/Wall.hpp"
-#include "client/view/game_object/GameObject.hpp"
+#include "common/game_object/unit/wall/Wall.hpp"
+#include "client/model/game_object/unit/wall/Wall.hpp"
+#include "client/view/game_object/unit/Unit.hpp"
 
 namespace junk {
 namespace client {
 namespace view {
 
-class Wall : public virtual GameObject, public virtual junk::common::Wall
+class Wall : public virtual Unit, public virtual junk::common::Wall
 {
   VIEW_GAME_OBJECT_DEF(Wall)
 

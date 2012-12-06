@@ -41,16 +41,6 @@ ServerGameModel::ServerGameModel()
     }
   }
 
-  /*b2BodyDef groundBodyDef;
-  groundBodyDef.position.Set(0.0f, -10.0f);
-  b2Body* groundBody = world->CreateBody(&groundBodyDef);
-
-  b2PolygonShape groundBox;
-
-  groundBox.SetAsBox(1000, 1000);
-
-  groundBody->CreateFixture(&groundBox, 0.0f);*/
-
   logger << "ServerGameModel created";
   firstFreeId = 0;
 }
@@ -64,10 +54,9 @@ ServerGameModel::~ServerGameModel()
 void ServerGameModel::start()
 {
   isRunning = true;
+  loadMap("map.json");
   gameLoopTimer.restart();
   gameLoopThread = std::thread(std::ref(*this));
-
-  loadMap("map.json");
 
   logger << "Game model started";
 }
@@ -263,6 +252,7 @@ void ServerGameModel::loadMap(std::string filename) {
       corners.push_back(b2Vec2(x, y));
     }
     Wall* wall = new Wall();
+    wall->model = this;
     wall->setCorners(corners);
     addGameObject(wall);
   }
