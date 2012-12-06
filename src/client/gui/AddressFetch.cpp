@@ -10,8 +10,12 @@ AddressFetch::AddressFetch(sfg::Desktop& desktop) :  window(sfg::Window::Create(
                                 m_desktop(desktop)
 {
   window->Add(box);
+  window->SetTitle("Enter server address");
   box->Pack(field);
   box->Pack(ok);
+
+  window->SetRequisition(sf::Vector2f(300.0f, 70.0f));  
+  window->SetPosition(sf::Vector2f(200.0f, 200.0f));
 
   try {
     config.load("client_config.json");
