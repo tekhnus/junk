@@ -3,9 +3,12 @@
 #include "SFML/System.hpp"
 #include <common/logger/Logger.hpp>
 #include <gen-cpp/ClientService.h>
-#include <map>
+
+#include <unordered_map>
 #include <thread>
 #include <mutex>
+#include <chrono>
+#include <queue>
 #include <Box2D/Box2D.h>
 
 #include "game_object/GameObject.hpp"
@@ -31,6 +34,7 @@ public:
 
   int32_t addPlayer(Player* player);
 
+  void processGameObjectAddQueue();
   int32_t addGameObject(GameObject* gameObject);
 
   void removeObsoleteGameObjects();
@@ -43,12 +47,11 @@ public:
 
   void operator()();
 
-private:
-  std::map<int32_t, std::unique_ptr<GameObject > > gameObjects;
+  b2World* world;
 
-  void move(Player* player, const MoveAction& moveAction);
-  void rotate(Player* player, const RotateAction& rotateAction);
-  void fire(Player* player, const FireAction& fireAction);
+private:
+  std::unordered_map<int32_t, std::unique_ptr<GameObject > > gameObjects;
+  std::queue<GameObject*> gameObjectAddQueue;
 
   int32_t firstFreeId;
   bool isRunning;
@@ -56,11 +59,13 @@ private:
 
   std::thread gameLoopThread;
   std::mutex gameChangesMutex;
+  std::mutex gameObjectAddMutex;
 
   Logger logger;
-  b2World* world;
 
   std::unique_ptr<CollisionHandler> handler;
+
+  std::chrono::high_resolution_clock::time_point currentTime;
 };
 
 }}} // namespace junk::server::model

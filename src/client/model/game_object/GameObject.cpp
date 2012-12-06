@@ -17,8 +17,8 @@ GameObject::~GameObject()
 
 void GameObject::applyGameObjectPatch(const GameObjectPatch &gameObjectPatch)
 {
-  destroyInfo.isDestroyed = gameObjectPatch.destroyInfo.isDestroyed;
-  if (gameObjectPatch.destroyInfo.isDestroyed)
+  destroyInfo.isDestructing = gameObjectPatch.destroyInfo.isDestructing;
+  if (gameObjectPatch.destroyInfo.isDestructing)
   {
     dbg << "Object destroyed " + std::to_string(id);
 

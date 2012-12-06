@@ -7,7 +7,9 @@ namespace model {
 int TYPE_PLAYER = 1;
 int TYPE_BULLET = 2;
 
-GameObject::GameObject() : lifetime(0)
+MODEL_GAME_OBJECT_IMPL(GameObject, gameObject, GAME_OBJECT)
+
+GameObject::GameObject() : lifetime(0), isRemoved(0)
 {
 }
 
@@ -15,22 +17,13 @@ GameObject::~GameObject()
 {
 }
 
-Patch GameObject::getPatch()
-{
-  Patch patch;
-  patch.id = id;
-  patch.gameObjectType = GameObjectType::GAME_OBJECT;
-  patch.gameObjectPatch = getGameObjectPatch();
-  return patch;
-}
-
 GameObjectPatch GameObject::getGameObjectPatch()
 {
   GameObjectPatch gameObjectPatch;
 
   gameObjectPatch.id = id;
-  gameObjectPatch.destroyInfo.isDestroyed = destroyInfo.isDestroyed;
-  if (destroyInfo.isDestroyed)
+  gameObjectPatch.destroyInfo.isDestructing = destroyInfo.isDestructing;
+  if (destroyInfo.isDestructing)
   {
     gameObjectPatch.destroyInfo.destroyCountdown = destroyInfo.destroyCountdown;
   }
@@ -41,6 +34,10 @@ GameObjectPatch GameObject::getGameObjectPatch()
 void GameObject::process()
 {
     ++lifetime;
+    if (destroyInfo.isDestructing)
+    {
+      destroyInfo.destroyCountdown = std::max(0, destroyInfo.destroyCountdown - 1);
+    }
 }
 
 }}} // namespace junk::server::model

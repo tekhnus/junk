@@ -7,7 +7,7 @@ include "Shared.thrift"
 typedef Shared.Vector2f Vector2f
 
 struct DestroyInfo {
-  1: bool isDestroyed,
+  1: bool isDestructing,
   2: i32 destroyCountdown;
 }
 
@@ -42,6 +42,7 @@ enum GameObjectType {
 struct Patch {
   1: i32 id,
   2: GameObjectType gameObjectType,
+  3: bool isCleanedUp,
 
   // Possible patches
   10: optional GameObjectPatch gameObjectPatch,

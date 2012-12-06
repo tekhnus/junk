@@ -11,19 +11,20 @@ namespace model {
 
 class Unit : public virtual GameObject, public virtual junk::common::Unit
 {
+  MODEL_GAME_OBJECT_DEF(Unit)
+
 public:
-    Unit();
-    virtual ~Unit();
+  Unit();
+  virtual ~Unit();
 
-    virtual Patch getPatch();
-    UnitPatch getUnitPatch();
+  UnitPatch getUnitPatch();
 
-    virtual void destroy();
-    virtual void startDestruction();
+  virtual void destroy();
+  virtual void startDestruction();
 
-    virtual void onBulletHit();
+  virtual void onBulletHit();
 
-    b2Body* body;
+  b2Body* body;
 
 }; // Unit
 

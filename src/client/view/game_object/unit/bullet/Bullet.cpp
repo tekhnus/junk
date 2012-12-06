@@ -21,9 +21,9 @@ void Bullet::updateBullet(const model::Bullet& bullet)
 {
   body.setPosition(20.0f * bullet.position);
 
-  if (bullet.destroyInfo.isDestroyed)
+  if (bullet.destroyInfo.isDestructing)
   {
-    destroyInfo.isDestroyed = true;
+    destroyInfo.isDestructing = true;
     destroyInfo.destroyCountdown = bullet.destroyInfo.destroyCountdown;
   }
 }

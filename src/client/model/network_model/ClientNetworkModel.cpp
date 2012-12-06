@@ -11,7 +11,7 @@ ClientNetworkModel::ClientNetworkModel() : logger("CLIENT_NETWORK_MODEL", "clien
 
 int32_t ClientNetworkModel::connectToServer(const std::string& serverIp, int port)
 {
-  logger << "Connecting to server";
+  logger.debug("Connecting to server");
 
   socket = boost::shared_ptr<TSocket > (new TSocket(serverIp, port));
   transport = boost::shared_ptr<TTransport > (new TFramedTransport(socket));
@@ -23,8 +23,7 @@ int32_t ClientNetworkModel::connectToServer(const std::string& serverIp, int por
   ConnectInfo connectInfo;
   clientServiceClient->connect(sessionInfo, connectInfo);
 
-  std::string message = "Connected to server, id = " + std::to_string(sessionInfo.id);
-  logger << message;
+  logger.debug("Connected to server, id = ", sessionInfo.id);
 
   alive = true;
   
@@ -38,28 +37,29 @@ ClientNetworkModel::~ClientNetworkModel()
 
 GameChanges ClientNetworkModel::getGameChanges()
 {
+  std::lock_guard<std::mutex> lock(socketMutex);
+
   if (!alive)
   {
     return GameChanges();
   }
-  socketMutex.lock();
+
   logger << "Getting changes";
 
   GameChanges gameChanges;
   clientServiceClient->getChanges(gameChanges, sessionInfo);
-
-  socketMutex.unlock();
 
   return gameChanges;
 }
 
 void ClientNetworkModel::makeAction(const Action& action)
 {
+  std::lock_guard<std::mutex> lock(socketMutex);
+
   if (!alive)
   {
     return;
   }
-  socketMutex.lock();
 
   logger << "ClientNetworkModel::makeAction(), id = " + std::to_string(sessionInfo.id);
   logger << action.moveAction.direction.x;
@@ -70,8 +70,6 @@ void ClientNetworkModel::makeAction(const Action& action)
   {
 
   }
-
-  socketMutex.unlock();
 }
 
 void ClientNetworkModel::shutdown()

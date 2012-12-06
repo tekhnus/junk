@@ -26,28 +26,28 @@ void ServerModel::expiredSessionsCleaner()
 {
   while (serverIsRunning)
   {
-    clientInfoMutex.lock();
-
-    logger << "Cleaning expired sessions";
-
-    sf::Time currentTime = clock.getElapsedTime();
-
-    std::vector<int32_t> eraseCandidates;
-    for (const auto& it : clientInfo)
     {
-      if (currentTime - it.second.lastUpdateTime > sessionExpirationTime)
+      std::lock_guard<std::mutex> lock(clientInfoMutex);
+
+      logger << "Cleaning expired sessions";
+
+      sf::Time currentTime = clock.getElapsedTime();
+
+      std::vector<int32_t> eraseCandidates;
+      for (const auto& it : clientInfo)
       {
-        eraseCandidates.push_back(it.first);
+        if (currentTime - it.second.lastUpdateTime > sessionExpirationTime)
+        {
+          eraseCandidates.push_back(it.first);
+        }
+      }
+      for (auto id : eraseCandidates)
+      {
+        logger << std::string("Cleaning ") + std::to_string(id);
+        gameModel.removePlayer(id);
+        clientInfo.erase(id);
       }
     }
-    for (auto id : eraseCandidates)
-    {
-      logger << std::string("Cleaning ") + std::to_string(id);
-      gameModel.removePlayer(id);
-      clientInfo.erase(id);
-    }
-
-    clientInfoMutex.unlock();
 
     std::this_thread::sleep_for(std::chrono::seconds(5));
   }
@@ -67,7 +67,7 @@ void ServerModel::start()
 
 SessionInfo ServerModel::addClient(int32_t id)
 {
-  clientInfoMutex.lock();
+  std::lock_guard<std::mutex> lock(clientInfoMutex);
 
   ClientInfo client(id);
   client.uuid = generator();
@@ -77,8 +77,6 @@ SessionInfo ServerModel::addClient(int32_t id)
   SessionInfo sessionInfo;
   sessionInfo.id = client.id;
   sessionInfo.uuid = boost::uuids::to_string(client.uuid);
-
-  clientInfoMutex.unlock();
 
   return sessionInfo;
 }
@@ -90,7 +88,7 @@ void ServerModel::updateLastUpdateTime(int32_t id)
 
 ServerModel::CheckStatus ServerModel::checkClientSessionInfo(const SessionInfo& sessionInfo)
 {
-  clientInfoMutex.lock();
+  std::lock_guard<std::mutex> lock(clientInfoMutex);
 
   ServerModel::CheckStatus checkStatus;
 
@@ -108,14 +106,15 @@ ServerModel::CheckStatus ServerModel::checkClientSessionInfo(const SessionInfo& 
     checkStatus = ServerModel::CheckStatus::CORRECT_UUID;
   }
 
-  clientInfoMutex.unlock();
-
   return checkStatus;
 }
 
 SessionInfo ServerModel::connectHandler(const ConnectInfo& connectInfo)
 {
   int playerID = gameModel.addPlayer(new Player());
+
+  logger.debug("Player connected, id = ", playerID);
+
   return addClient(playerID);
 }
 
