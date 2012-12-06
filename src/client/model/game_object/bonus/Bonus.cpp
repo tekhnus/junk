@@ -20,6 +20,7 @@ void Bonus::applyBonusPatch(const BonusPatch& bonusPatch)
   applyGameObjectPatch(bonusPatch.gameObjectPatch);
 
   position = common::to_SFML_Vector2f(bonusPatch.position);
+  bonusType = bonusPatch.bonusType;
 
   dbg << "Applying BonusPatch";
   dbg.debug(position.x, " ", position.y);

@@ -1,4 +1,5 @@
 #include "Bonus.hpp"
+#include "common/logger/Logger.hpp"
 
 namespace junk {
 namespace client {
@@ -10,7 +11,7 @@ Bonus::Bonus()
 {
     body.setRadius(5);
     body.setFillColor(sf::Color::Red);
-    body.setOutlineColor(sf::Color::Red);
+    body.setOutlineThickness(0.0);
     body.setOrigin(sf::Vector2f(body.getRadius(), body.getRadius()));
 }
 
@@ -22,18 +23,28 @@ void Bonus::updateBonus(const model::Bonus& bonus)
 {
     position = bonus.position;
     body.setPosition(position);
+    bonusType = bonus.bonusType;
 
+    /*switch (bonusType)
+    {
+    case 0: // Health
+        body.setFillColor(sf::Color::Red);
+        break;
+    case 1: // Speed
+        body.setFillColor(sf::Color::Blue);
+        break;
+    }
+*/
     if (bonus.destroyInfo.isDestructing)
     {
       destroyInfo.isDestructing = true;
-
       destroyInfo.destroyCountdown = bonus.destroyInfo.destroyCountdown;
     }
 }
 
 void Bonus::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(body, states);
+    //target.draw(body, states);
 }
 
 }}} // namespace junk::client::view

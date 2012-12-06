@@ -24,7 +24,8 @@ struct UnitPatch {
 
 struct BonusPatch {
   1: GameObjectPatch gameObjectPatch,
-  2: Vector2f position
+  2: Vector2f position,
+  3: i32 bonusType
 }
 
 struct PlayerPatch {

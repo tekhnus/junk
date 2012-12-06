@@ -12,6 +12,7 @@ public:
   virtual ~Bonus();
 
   sf::Vector2f position;
+  int32_t bonusType;
 }; // Bonus
 
 }} // namespace junk::common
