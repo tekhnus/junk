@@ -26,6 +26,7 @@ void Bonus::updateBonus(const model::Bonus& bonus)
     if (bonus.destroyInfo.isDestructing)
     {
       destroyInfo.isDestructing = true;
+
       destroyInfo.destroyCountdown = bonus.destroyInfo.destroyCountdown;
     }
 }

@@ -39,11 +39,17 @@ public:
 
   virtual void init() = 0;
 
+<<<<<<< HEAD
   virtual void process();
   virtual void destroy() = 0;
   virtual void startDestruction() = 0;
-  virtual Patch getPatch(){};
   GameObjectPatch getGameObjectPatch();
+=======
+    virtual void init() = 0;
+
+    virtual Patch getPatch();
+    GameObjectPatch getGameObjectPatch();
+>>>>>>> 09815e4ccaedf082bac7e0e44eee5769e2581753
 
   virtual int getType() = 0;
 

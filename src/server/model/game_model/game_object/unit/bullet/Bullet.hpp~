@@ -13,6 +13,7 @@ class Bullet : public virtual Unit, public virtual junk::common::Bullet
   MODEL_GAME_OBJECT_DEF(Bullet)
 
 public:
+<<<<<<< HEAD
   Bullet(Player* creator);
   virtual ~Bullet();
 
@@ -24,6 +25,20 @@ public:
   virtual void startDestruction();
 
   virtual int getType();
+=======
+    Bullet(Player* creator);
+    virtual ~Bullet();
+
+    virtual void init();
+
+    virtual Patch getPatch();
+    BulletPatch getBulletPatch();
+
+    virtual void process();
+    virtual void startDestruction();
+
+    virtual int getType();
+>>>>>>> 09815e4ccaedf082bac7e0e44eee5769e2581753
 
 }; // Bullet
 

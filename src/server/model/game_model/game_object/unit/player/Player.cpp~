@@ -128,7 +128,7 @@ void Player::move(const MoveAction& moveAction)
   force.Set(moveDirection.x, moveDirection.y);
 }
 
->>>>>>> Removed functionality from SGM
+>>>>>>> 09815e4ccaedf082bac7e0e44eee5769e2581753
 void Player::fire(const FireAction& fireAction)
 {
   fireOn = fireAction.on;

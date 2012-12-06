@@ -32,6 +32,7 @@ public:
   double angularImpulse;
   double torque;
   bool fireOn;
+
 private:
   virtual void processFire();
 

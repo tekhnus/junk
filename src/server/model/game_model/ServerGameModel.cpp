@@ -215,7 +215,6 @@ void ServerGameModel::operator()()
 
       currentTime = std::chrono::high_resolution_clock::now();
 
-
       /*
       if (rand() % 10 == 0)
       {
