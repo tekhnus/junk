@@ -14,17 +14,17 @@ MODEL_GAME_OBJECT_IMPL(Bonus, bonus, BONUS)
 
 Bonus::Bonus(b2World *world)
 {
+    srand(43);
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
 
     bodyDef.position.Set(rand() % 36, rand() % 36);
-    bodyDef.bullet = false;
 
     body = world->CreateBody(&bodyDef);
     body->SetUserData((Unit*)this);
 
     b2CircleShape circleShape;
-    circleShape.m_radius = 1.0f / 4.0f;
+    circleShape.m_radius = 0.5f;
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &circleShape;
@@ -33,6 +33,7 @@ Bonus::Bonus(b2World *world)
 
     body->CreateFixture(&fixtureDef);
     body->SetLinearDamping(0.1);
+    body->ApplyLinearImpulse(b2Vec2(10, 10), body->GetWorldCenter());
 
     bonusType = 0;
 }
@@ -47,6 +48,7 @@ void Bonus::process()
     b2Vec2 pos = body->GetWorldCenter();
     position.x = pos.x;
     position.y = pos.y;
+    dbg .debug("Processing bonus ", pos.x, " ", pos.y);
 }
 
 BonusPatch Bonus::getBonusPatch()
