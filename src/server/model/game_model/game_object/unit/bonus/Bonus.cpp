@@ -1,6 +1,8 @@
 #include "Bonus.hpp"
 #include "common/utils/Convert.hpp"
 
+#include "server/model/game_model/ServerGameModel.hpp"
+
 #include <iostream>
 #include <cmath>
 
@@ -10,15 +12,14 @@ namespace model {
 
 Bonus::Bonus(b2World *world)
 {
-    /*
-     *b2BodyDef bodyDef;
+    b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
 
     bodyDef.position.Set(rand() % 36, rand() % 36);
     bodyDef.bullet = false;
 
-    //body = world->CreateBody(&bodyDef);
-    //body->SetUserData((GameObject*)this);
+    body = world->CreateBody(&bodyDef);
+    body->SetUserData((Unit*)this);
 
     b2CircleShape circleShape;
     circleShape.m_radius = 1.0f / 4.0f;
@@ -28,9 +29,10 @@ Bonus::Bonus(b2World *world)
     fixtureDef.density = 2.0f;
     fixtureDef.restitution = 0.7f;
 
-    //body->CreateFixture(&fixtureDef);
-    //body->SetLinearDamping(0.1);
-    */
+    body->CreateFixture(&fixtureDef);
+    body->SetLinearDamping(0.1);
+
+    bonusType = 0;
 }
 
 Bonus::~Bonus()
@@ -47,8 +49,8 @@ void Bonus::process()
 
 BonusPatch Bonus::getBonusPatch()
 {
-    BulletPatch bulletPatch;
-    bulletPatch.unitPatch = getUnitPatch();
+    BonusPatch bonusPatch;
+    bonusPatch.unitPatch = getUnitPatch();
 
     /*
       Set fields here

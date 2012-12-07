@@ -4,6 +4,8 @@
 #include "common/game_object/unit/bonus/Bonus.hpp"
 #include "server/model/game_model/game_object/unit/player/Player.hpp"
 
+#include <Box2D/Box2D.h>
+
 namespace junk {
 namespace server {
 namespace model {

@@ -4,7 +4,7 @@
 
 #include "unit/player/Player.hpp"
 #include "unit/bullet/Bullet.hpp"
-#include "bonus/Bonus.hpp"
+#include "unit/bonus/Bonus.hpp"
 
 namespace junk {
 namespace client {

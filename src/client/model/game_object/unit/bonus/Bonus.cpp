@@ -17,9 +17,8 @@ Bonus::~Bonus()
 
 void Bonus::applyBonusPatch(const BonusPatch& bonusPatch)
 {
-  applyGameObjectPatch(bonusPatch.gameObjectPatch);
+  applyUnitPatch(bonusPatch.unitPatch);
 
-  position = common::to_SFML_Vector2f(bonusPatch.position);
   bonusType = bonusPatch.bonusType;
 
   dbg << "Applying BonusPatch";
