@@ -65,11 +65,12 @@ private:
 
   int32_t clientId;
   void processInput();
-  Logger logger;
+  mutable Logger logger;
   std::thread inputThread;
   bool prevUp, prevDown, prevLeft, prevRight, prevClicked;
   sf::Vector2i prevPos;
   bool alive;
+  model::ClientModel* model;
 
 protected:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;

@@ -39,6 +39,8 @@ public:
 
   bool alive;
 
+  std::unordered_map< int32_t, std::unique_ptr<GameObject> > gameObjects;
+
 private:
   struct ClientInfo
   {
@@ -47,7 +49,6 @@ private:
   };
 
   GameObjectFactory gameObjectFactory;
-  std::unordered_map< int32_t, std::unique_ptr<GameObject> > gameObjects;
 
   ClientNetworkModel networkModel;
 

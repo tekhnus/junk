@@ -55,6 +55,8 @@ void ClientView::setModel(model::ClientModel* clientModel)
   clientModel->gotClientIdSignal.connect(boost::bind(&ClientView::setClientId, this, _1));
   clientModel->gameObjectAddedSignal.connect(boost::bind(&ClientView::addGameObject, this, _1, _2));
   clientModel->shutdownSignal.connect(boost::bind(&ClientView::shutdown, this));
+
+  model = clientModel;
 }
 
 void ClientView::update()
@@ -150,10 +152,20 @@ void ClientView::setClientId(int32_t clientID)
   this->clientId = clientID;
 }
 
+#include <cassert>
 void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+  logger << "Drawing. getting shift";
+  sf::Vector2f shift;
+  if (model->gameObjects.find(clientId) != model->gameObjects.end()) {
+    model::Player* player = dynamic_cast<model::Player*>(model->gameObjects[clientId].get());
+    shift = sf::Vector2f(player->position);
+  }
+  states.transform.translate(shift * -20.0f);
+  states.transform.translate(360, 360);
   for (auto& gameObject : gameObjects)
   {
+    logger.debug(shift.x, " ", shift.y);
     target.draw(*gameObject.second, states);
   }
 }
@@ -203,6 +215,7 @@ void ClientView::processInput()
 
     sf::Vector2i posI = sf::Mouse::getPosition(*window);
     sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
+    pos -= sf::Vector2f(360, 360);
     rotate(pos);
 
     logger << "Processed mouse";

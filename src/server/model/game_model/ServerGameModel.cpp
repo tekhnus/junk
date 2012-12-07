@@ -21,25 +21,25 @@ ServerGameModel::ServerGameModel()
   world->SetAllowSleeping(true);
   world->SetContactListener(handler.get());
 
-  double size = 720.0f / 20;
-  for(int i = -1; i <= 1; ++i) {
-    for (int j = -1; j <=1; ++j) {
-      if (i*i+j*j!=1)
-        continue;
-      b2BodyDef bodyDef;
-      bodyDef.position.Set(i * (size + 0.5f) + 0.5f, j * (size + 0.5f) + 0.5f);
+  // double size = 720.0f / 20;
+  // for(int i = -1; i <= 1; ++i) {
+  //   for (int j = -1; j <=1; ++j) {
+  //     if (i*i+j*j!=1)
+  //       continue;
+  //     b2BodyDef bodyDef;
+  //     bodyDef.position.Set(i * (size + 0.5f) + 0.5f, j * (size + 0.5f) + 0.5f);
 
-      b2Body* body = world->CreateBody(&bodyDef);
-      b2PolygonShape polyShape;
-      polyShape.SetAsBox(size/2, size/2, b2Vec2(size/2, size/2), 0);
+  //     b2Body* body = world->CreateBody(&bodyDef);
+  //     b2PolygonShape polyShape;
+  //     polyShape.SetAsBox(size/2, size/2, b2Vec2(size/2, size/2), 0);
 
-      b2FixtureDef fixtureDef;
-      fixtureDef.shape = &polyShape;
-      fixtureDef.restitution = 0.5f;
+  //     b2FixtureDef fixtureDef;
+  //     fixtureDef.shape = &polyShape;
+  //     fixtureDef.restitution = 0.5f;
 
-      body->CreateFixture(&fixtureDef);
-    }
-  }
+  //     body->CreateFixture(&fixtureDef);
+  //   }
+  // }
 
   logger << "ServerGameModel created";
   firstFreeId = 0;
