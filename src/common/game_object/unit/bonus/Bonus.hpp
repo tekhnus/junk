@@ -1,17 +1,16 @@
 #pragma once
 
-#include "common/game_object/GameObject.hpp"
+#include "common/game_object/unit/Unit.hpp"
 
 namespace junk {
 namespace common {
 
-class Bonus : public virtual GameObject
+class Bonus : public virtual Unit
 {
 public:
   Bonus();
   virtual ~Bonus();
 
-  sf::Vector2f position;
   int32_t bonusType;
 }; // Bonus
 

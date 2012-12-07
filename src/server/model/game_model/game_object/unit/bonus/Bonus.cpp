@@ -10,7 +10,8 @@ namespace model {
 
 Bonus::Bonus(b2World *world)
 {
-    b2BodyDef bodyDef;
+    /*
+     *b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
 
     bodyDef.position.Set(rand() % 36, rand() % 36);
@@ -29,6 +30,7 @@ Bonus::Bonus(b2World *world)
 
     //body->CreateFixture(&fixtureDef);
     //body->SetLinearDamping(0.1);
+    */
 }
 
 Bonus::~Bonus()
@@ -37,30 +39,34 @@ Bonus::~Bonus()
 
 void Bonus::process()
 {
-  //b2Vec2 pos = body->GetWorldCenter();
-  //position.x = pos.x;
-  //position.y = pos.y;
+    GameObject::process();
+    b2Vec2 pos = body->GetWorldCenter();
+    position.x = pos.x;
+    position.y = pos.y;
 }
 
 BonusPatch Bonus::getBonusPatch()
 {
-  BonusPatch bonusPatch;
-  bonusPatch.gameObjectPatch = getGameObjectPatch();
+    BulletPatch bulletPatch;
+    bulletPatch.unitPatch = getUnitPatch();
 
-  bonusPatch.position = common::to_thrift_Vector2f(position);
-  bonusPatch.bonusType = bonusType;
+    /*
+      Set fields here
+    */
 
-  return bonusPatch;
-}
+    bonusPatch.bonusType = bonusType;
 
-void Bonus::destroy()
-{
+    return bonusPatch;
 }
 
 void Bonus::startDestruction()
 {
-  destroyInfo.isDestructing = true;
-  destroyInfo.destroyCountdown = 5;
+    if (!destroyInfo.isDestructing)
+    {
+      destroyInfo.isDestructing = true;
+      destroyInfo.destroyCountdown = 2;
+      cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
+    }
 }
 
 int Bonus::getType()
