@@ -22,6 +22,11 @@ struct UnitPatch {
   3: Vector2f direction
 }
 
+struct BonusPatch {
+  1: UnitPatch unitPatch,
+  2: i32 bonusType
+}
+
 struct PlayerPatch {
   1: UnitPatch unitPatch
   2: i32 health
@@ -42,7 +47,8 @@ enum GameObjectType {
   UNIT = 2,
   PLAYER = 3,
   BULLET = 4,
-  WALL = 5
+  WALL = 5,
+  BONUS = 6
 }
 
 struct Patch {
@@ -56,4 +62,5 @@ struct Patch {
   12: optional PlayerPatch playerPatch,
   13: optional BulletPatch bulletPatch,
   14: optional WallPatch wallPatch
+  15: optional BonusPatch bonusPatch
 }

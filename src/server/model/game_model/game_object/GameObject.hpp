@@ -26,6 +26,7 @@ namespace model {
 extern int TYPE_PLAYER;
 extern int TYPE_BULLET;
 extern int TYPE_WALL;
+extern int TYPE_BONUS;
 
 class ServerGameModel;
 
@@ -39,11 +40,10 @@ public:
 
   virtual void init() = 0;
 
-  GameObjectPatch getGameObjectPatch();
-
   virtual void process();
   virtual void destroy() = 0;
   virtual void startDestruction();
+  GameObjectPatch getGameObjectPatch();
 
   virtual int getType() = 0;
 

@@ -23,7 +23,6 @@ UnitPatch Unit::getUnitPatch()
   unitPatch.gameObjectPatch = getGameObjectPatch();
 
   unitPatch.position = common::to_thrift_Vector2f(position);
-  unitPatch.direction = common::to_thrift_Vector2f(direction);
 
   return unitPatch;
 }

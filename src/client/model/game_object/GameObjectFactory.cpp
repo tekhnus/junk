@@ -5,6 +5,7 @@
 #include "unit/player/Player.hpp"
 #include "unit/bullet/Bullet.hpp"
 #include "unit/wall/Wall.hpp"
+#include "unit/bonus/Bonus.hpp"
 
 namespace junk {
 namespace client {
@@ -20,6 +21,7 @@ Logger GameObjectFactory::logger("CLIENT_GAME_OBJECT_FACTORY", "client_model.log
 MODEL_GAME_OBJECT_REG(Player, player, PLAYER)
 MODEL_GAME_OBJECT_REG(Bullet, bullet, BULLET)
 MODEL_GAME_OBJECT_REG(Wall, wall, WALL)
+MODEL_GAME_OBJECT_REG(Bonus, bonus, BONUS)
 
 GameObjectFactory::GameObjectFactory()
 {

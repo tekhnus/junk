@@ -204,13 +204,22 @@ GameChanges ServerGameModel::getChanges(int32_t id)
 
 void ServerGameModel::operator()()
 {
+    {
+        std::lock_guard<std::mutex> guard(gameChangesMutex);
+//        if (rand() % 10 == 0)
+        {
+            Bonus *bonus = new Bonus(world);
+            addGameObject(bonus);
+        }
+
+    }
+
   while (true)
   {
     {
       std::lock_guard<std::mutex> guard(gameChangesMutex);
 
       currentTime = std::chrono::high_resolution_clock::now();
-
 
       if (!isRunning)
       {
