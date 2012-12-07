@@ -138,7 +138,7 @@ void Player::onBulletHit()
 
 void Player::onBonusEat()
 {
-  setHealth(std::min(getMaxHealth(), getHealth() + 30));
+  setHealth(std::abs(min(getMaxHealth(), getHealth() + 30));
 }
 
 }}} // namespace junk::server::model

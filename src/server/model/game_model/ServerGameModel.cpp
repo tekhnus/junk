@@ -208,18 +208,24 @@ GameChanges ServerGameModel::getChanges(int32_t id)
 
 void ServerGameModel::operator()()
 {
-    {
-        std::lock_guard<std::mutex> guard(gameChangesMutex);
-//        if (rand() % 10 == 0)
-        {
-            Bonus *bonus = new Bonus(world);
-            addGameObject(bonus);
-        }
-
-    }
-
+  int bonusCreationTimer = 0;
   while (true)
   {
+      {
+          std::lock_guard<std::mutex> guard(gameChangesMutex);
+          if (bonusCreationTimer == 200)
+          {
+              Bonus *bonus = new Bonus(world, sf::Vector2f(rand() % 36, rand() % 36));
+              addGameObject(bonus);
+              bonusCreationTimer = 0;
+          }
+          else
+          {
+              bonusCreationTimer++;
+          }
+
+      }
+
     {
       std::lock_guard<std::mutex> guard(gameChangesMutex);
 

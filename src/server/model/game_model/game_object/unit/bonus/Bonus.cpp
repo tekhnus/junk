@@ -12,13 +12,13 @@ namespace model {
 
 MODEL_GAME_OBJECT_IMPL(Bonus, bonus, BONUS)
 
-Bonus::Bonus(b2World *world)
+Bonus::Bonus(b2World *world, sf::Vector2f bornPosition)
 {
     srand(43);
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
 
-    bodyDef.position.Set(rand() % 36, rand() % 36);
+    bodyDef.position.Set(bornPosition.x, bornPosition.y);
 
     body = world->CreateBody(&bodyDef);
     body->SetUserData((Unit*)this);

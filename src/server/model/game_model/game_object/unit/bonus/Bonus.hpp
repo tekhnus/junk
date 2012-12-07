@@ -15,7 +15,7 @@ class Bonus : public virtual Unit, public virtual junk::common::Bonus
     MODEL_GAME_OBJECT_DEF(Bonus)
 
 public:
-    Bonus(b2World *world);
+    Bonus(b2World *world, sf::Vector2f bornPosition);
     virtual ~Bonus();
 
     virtual void init();

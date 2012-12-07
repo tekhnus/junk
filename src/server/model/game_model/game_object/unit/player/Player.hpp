@@ -21,6 +21,7 @@ public:
   virtual void process();
   virtual int getType();
   virtual void onBulletHit();
+  virtual void onBonusEat();
 
   virtual void init();
 
