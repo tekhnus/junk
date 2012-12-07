@@ -32,7 +32,7 @@ void CollisionHandler::BeginContact(b2Contact* contact)
           std::swap(uPlayer, uBonus);
       }
 
-      uPlayer->onBonusEat();
+      uPlayer->onBonusEat(dynamic_cast<Bonus*>(uBonus)->bonusType);
       uBonus->startDestruction();
   }
 

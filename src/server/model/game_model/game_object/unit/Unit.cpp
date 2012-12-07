@@ -50,7 +50,7 @@ void Unit::startDestruction()
 void Unit::onBulletHit()
 {}
 
-void Unit::onBonusEat()
+void Unit::onBonusEat(int bonusType)
 {}
 
 }}} // namespace junk::server::model

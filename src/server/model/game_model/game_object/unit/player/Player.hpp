@@ -21,7 +21,7 @@ public:
   virtual void process();
   virtual int getType();
   virtual void onBulletHit();
-  virtual void onBonusEat();
+  virtual void onBonusEat(int bonusType);
 
   virtual void init();
 
@@ -30,6 +30,7 @@ public:
   virtual void fire(const FireAction& fireAction);
 
   b2Vec2 force;
+  double forceFactor;
   double angularImpulse;
   double torque;
   bool fireOn;
