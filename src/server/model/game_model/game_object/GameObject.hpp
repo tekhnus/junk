@@ -49,6 +49,7 @@ public:
   ServerGameModel* model;
   int lifetime;
   std::chrono::high_resolution_clock::time_point cleanupTime;
+  std::chrono::high_resolution_clock::time_point destroyTime;
 
   bool isRemoved;
 
