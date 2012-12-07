@@ -6,6 +6,7 @@ namespace model {
 
 int TYPE_PLAYER = 1;
 int TYPE_BULLET = 2;
+int TYPE_WALL = 3;
 
 MODEL_GAME_OBJECT_IMPL(GameObject, gameObject, GAME_OBJECT)
 
@@ -38,6 +39,16 @@ void GameObject::process()
     {
       destroyInfo.destroyCountdown = (destroyTime - std::chrono::high_resolution_clock::now()).count();
     }
+}
+
+void GameObject::startDestruction()
+{
+  if (!destroyInfo.isDestructing)
+  {
+    destroyInfo.isDestructing = true;
+    destroyInfo.destroyCountdown = 2;
+    cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
+  }
 }
 
 }}} // namespace junk::server::model

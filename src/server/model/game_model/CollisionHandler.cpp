@@ -28,6 +28,14 @@ void CollisionHandler::BeginContact(b2Contact* contact)
   {
     aUnit->onBulletHit();
   }
+  if (aUnit->getType() == TYPE_PLAYER && bUnit->getType() == TYPE_BULLET)
+  {
+    bUnit->startDestruction();
+  }
+  if (bUnit->getType() == TYPE_PLAYER && aUnit->getType() == TYPE_BULLET)
+  {
+    aUnit->startDestruction();
+  }
 }
 
 }}} // namespace junk::server::model

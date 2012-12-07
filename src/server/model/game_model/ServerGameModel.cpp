@@ -3,6 +3,11 @@
 #include <functional>
 #include <math.h>
 
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
+using boost::property_tree::ptree;
+
 namespace junk {
 namespace server {
 namespace model {
@@ -36,16 +41,6 @@ ServerGameModel::ServerGameModel()
     }
   }
 
-  /*b2BodyDef groundBodyDef;
-  groundBodyDef.position.Set(0.0f, -10.0f);
-  b2Body* groundBody = world->CreateBody(&groundBodyDef);
-
-  b2PolygonShape groundBox;
-
-  groundBox.SetAsBox(1000, 1000);
-
-  groundBody->CreateFixture(&groundBox, 0.0f);*/
-
   logger << "ServerGameModel created";
   firstFreeId = 0;
 }
@@ -59,6 +54,7 @@ ServerGameModel::~ServerGameModel()
 void ServerGameModel::start()
 {
   isRunning = true;
+  loadMap("map.json");
   gameLoopTimer.restart();
   gameLoopThread = std::thread(std::ref(*this));
 
@@ -240,6 +236,26 @@ void ServerGameModel::operator()()
   }
 
   return;
+}
+
+void ServerGameModel::loadMap(std::string filename) {
+  logger.warn("loading map...");
+  ptree tree;
+  read_json(filename, tree);
+  for (const auto& entry : tree.get_child("walls")) {
+    logger.debug("adding a wall...");
+    std::vector<b2Vec2> corners;
+    for (const auto& point : entry.second) {
+      float x = point.second.get<float>("x");
+      float y = point.second.get<float>("y");
+      logger.debug("point: (", x, "; ", y, ")");
+      corners.push_back(b2Vec2(x, y));
+    }
+    Wall* wall = new Wall();
+    wall->model = this;
+    wall->setCorners(corners);
+    addGameObject(wall);
+  }
 }
 
 }}} // namespace junk::server::model

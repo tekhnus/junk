@@ -32,11 +32,17 @@ struct BulletPatch {
   1: UnitPatch unitPatch
 }
 
+struct WallPatch {
+  1: UnitPatch unitPatch,
+  2: list<Vector2f> corners
+}
+
 enum GameObjectType {
   GAME_OBJECT = 1,
   UNIT = 2,
   PLAYER = 3,
-  BULLET = 4
+  BULLET = 4,
+  WALL = 5
 }
 
 struct Patch {
@@ -48,5 +54,6 @@ struct Patch {
   10: optional GameObjectPatch gameObjectPatch,
   11: optional UnitPatch unitPatch,
   12: optional PlayerPatch playerPatch,
-  13: optional BulletPatch bulletPatch
+  13: optional BulletPatch bulletPatch,
+  14: optional WallPatch wallPatch
 }
