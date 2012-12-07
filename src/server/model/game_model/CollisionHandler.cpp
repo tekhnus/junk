@@ -20,6 +20,22 @@ void CollisionHandler::BeginContact(b2Contact* contact)
   }
   Unit* aUnit = (Unit*)aRaw;
   Unit* bUnit = (Unit*)bRaw;
+
+  if (
+          (aUnit->getType() == TYPE_PLAYER && bUnit->getType() == TYPE_BONUS) ||
+          (aUnit->getType() == TYPE_BONUS && bUnit->getType() == TYPE_PLAYER)
+         )
+  {
+      Unit *uPlayer = aUnit, *uBonus = bUnit;
+      if (aUnit->getType() == TYPE_BONUS && bUnit->getType() == TYPE_PLAYER)
+      {
+          std::swap(uPlayer, uBonus);
+      }
+
+      uPlayer->onBonusEat(dynamic_cast<Bonus*>(uBonus)->bonusType);
+      uBonus->startDestruction();
+  }
+
   if (aUnit->getType() == TYPE_BULLET)
   {
     bUnit->onBulletHit();

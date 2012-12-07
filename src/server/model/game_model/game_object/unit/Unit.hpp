@@ -23,6 +23,7 @@ public:
   virtual void startDestruction();
 
   virtual void onBulletHit();
+  virtual void onBonusEat(int bonusType);
 
   b2Body* body;
 

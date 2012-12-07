@@ -15,6 +15,7 @@ Player::Player() : fireOn(false)
 {
     setMaxHealth(100);
     setHealth(getMaxHealth() - 20);
+    forceFactor = 1.0;
 }
 
 Player::~Player()
@@ -112,6 +113,7 @@ void Player::move(const MoveAction& moveAction)
   moveDirection = 100.0f * moveDirection;
 
   force.Set(moveDirection.x, moveDirection.y);
+  force *= forceFactor;
 }
 
 void Player::fire(const FireAction& fireAction)
@@ -134,6 +136,19 @@ void Player::onBulletHit()
     setHealth(0);
     startDestruction();
   }
+}
+
+void Player::onBonusEat(int bonusType)
+{
+    switch (bonusType)
+    {
+    case 0:
+        setHealth(std::min(getMaxHealth(), getHealth() + 30));
+        break;
+    case 1:
+        forceFactor *= 1.1;
+        break;
+    }
 }
 
 }}} // namespace junk::server::model

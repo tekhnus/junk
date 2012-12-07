@@ -12,13 +12,12 @@ namespace model {
 
 MODEL_GAME_OBJECT_IMPL(Bonus, bonus, BONUS)
 
-Bonus::Bonus(b2World *world)
+Bonus::Bonus(b2World *world, sf::Vector2f bornPosition, int newBonusType)
 {
-    srand(43);
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
 
-    bodyDef.position.Set(rand() % 36, rand() % 36);
+    bodyDef.position.Set(bornPosition.x, bornPosition.y);
 
     body = world->CreateBody(&bodyDef);
     body->SetUserData((Unit*)this);
@@ -33,9 +32,9 @@ Bonus::Bonus(b2World *world)
 
     body->CreateFixture(&fixtureDef);
     body->SetLinearDamping(0.1);
-    body->ApplyLinearImpulse(b2Vec2(10, 10), body->GetWorldCenter());
+    // body->ApplyLinearImpulse(b2Vec2(10, 10), body->GetWorldCenter());
 
-    bonusType = 0;
+    this->bonusType = newBonusType;
 }
 
 Bonus::~Bonus()
