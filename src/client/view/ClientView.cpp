@@ -215,6 +215,7 @@ void ClientView::processInput()
 
     sf::Vector2i posI = sf::Mouse::getPosition(*window);
     sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
+    pos -= sf::Vector2f(360, 360);
     rotate(pos);
 
     logger << "Processed mouse";

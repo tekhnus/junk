@@ -90,7 +90,7 @@ void Player::rotate(const RotateAction& rotateAction)
 
   sf::Vector2f rotDirection = common::to_SFML_Vector2f(rotateAction.direction);
   rotDirection /= 20.0f;
-  rotDirection -= position;
+  //rotDirection -= position;
 
   double DEGTORAD = M_PI / 180;
   double desiredAngle = atan2(rotDirection.y, rotDirection.x);
