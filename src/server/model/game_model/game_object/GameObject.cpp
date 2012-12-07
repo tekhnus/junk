@@ -36,7 +36,7 @@ void GameObject::process()
     ++lifetime;
     if (destroyInfo.isDestructing)
     {
-      destroyInfo.destroyCountdown = std::max(0, destroyInfo.destroyCountdown - 1);
+      destroyInfo.destroyCountdown = (destroyTime - std::chrono::high_resolution_clock::now()).count();
     }
 }
 
