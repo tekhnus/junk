@@ -10,6 +10,8 @@ namespace junk {
 namespace server {
 namespace model {
 
+MODEL_GAME_OBJECT_IMPL(Bonus, bonus, BONUS)
+
 Bonus::Bonus(b2World *world)
 {
     b2BodyDef bodyDef;

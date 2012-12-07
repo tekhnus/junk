@@ -25,7 +25,7 @@ void Bonus::updateBonus(const model::Bonus& bonus)
     body.setPosition(position);
     bonusType = bonus.bonusType;
 
-    /*switch (bonusType)
+    switch (bonusType)
     {
     case 0: // Health
         body.setFillColor(sf::Color::Red);
@@ -34,7 +34,7 @@ void Bonus::updateBonus(const model::Bonus& bonus)
         body.setFillColor(sf::Color::Blue);
         break;
     }
-*/
+
     if (bonus.destroyInfo.isDestructing)
     {
       destroyInfo.isDestructing = true;
@@ -44,7 +44,7 @@ void Bonus::updateBonus(const model::Bonus& bonus)
 
 void Bonus::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    //target.draw(body, states);
+    target.draw(body, states);
 }
 
 }}} // namespace junk::client::view
