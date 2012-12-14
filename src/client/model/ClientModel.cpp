@@ -37,13 +37,7 @@ int32_t ClientModel::connectToServer(const std::string& serverIp, int port)
   clientInfo.id = networkModel.connectToServer(serverIp, port);
   gotClientIdSignal(clientInfo.id);
   alive = true;
-  ClientConfig config;
-  config.load("client_config.json");
-  Action rename;
-  rename.actionType = ActionType::CHANGE_SETTINGS;
-  rename.changeSettingsAction.name = config.name;
-  rename.__set_changeSettingsAction(rename.changeSettingsAction);
-  makeAction(rename);
+
   return clientInfo.id;
 }
 
@@ -110,6 +104,18 @@ void ClientModel::addGameObject(const Patch& patch)
   gameObjects[patch.id]->id = patch.id;
 
   gameObjectAddedSignal(patch.gameObjectType, gameObjects[patch.id].get());
+
+  if (patch.id == clientInfo.id)
+  {
+    ClientConfig config;
+    config.load("client_config.json");
+    Action rename;
+    rename.playerId = clientInfo.id;
+    rename.actionType = ActionType::CHANGE_SETTINGS;
+    rename.changeSettingsAction.name = config.name;
+    rename.__set_changeSettingsAction(rename.changeSettingsAction);
+    makeAction(rename);
+  }
 }
 
 void ClientModel::removeGameObject(int32_t id)

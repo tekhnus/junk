@@ -136,6 +136,7 @@ void Player::fire(const FireAction& fireAction)
 
 void Player::changeSettings(const ChangeSettingsAction& changeSettingsAction)
 {
+  dbg.debug( "Player change setting. Name: ", changeSettingsAction.name);
   setName(changeSettingsAction.name);
 }
 

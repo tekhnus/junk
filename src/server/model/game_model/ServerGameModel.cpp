@@ -173,7 +173,6 @@ void ServerGameModel::makeAction(const Action& action)
     return;
   }
   Player* player = dynamic_cast<Player*> (gameObjects[action.playerId].get());
-
   switch (action.actionType)
   {
     case ActionType::MOVE:
@@ -188,6 +187,7 @@ void ServerGameModel::makeAction(const Action& action)
       player->fire(action.fireAction);
       break;
     case ActionType::CHANGE_SETTINGS:
+      dbg.debug("Got change settings. Id = ", action.playerId, " pointer: ", player);
       player->changeSettings(action.changeSettingsAction);
       break;
   }
