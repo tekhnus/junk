@@ -58,6 +58,7 @@ public:
   boost::signals2::signal<void (const Action& action)> makeActionSignal;
   mutable std::mutex safe;
   sf::RenderWindow* window;
+  static sf::Font font;
 private:
 
   GameObjectFactory gameObjectFactory;
@@ -71,7 +72,6 @@ private:
   sf::Vector2i prevPos;
   bool alive;
   model::ClientModel* model;
-  sf::Font font;
 
 protected:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;

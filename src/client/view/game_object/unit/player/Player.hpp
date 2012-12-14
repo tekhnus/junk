@@ -3,6 +3,7 @@
 #include "client/view/game_object/unit/Unit.hpp"
 #include "client/model/game_object/unit/player/Player.hpp"
 #include "common/game_object/unit/player/Player.hpp"
+#include "client/view/ClientView.hpp"
 
 namespace junk {
 namespace client {
@@ -23,6 +24,7 @@ private:
   sf::CircleShape body, inner;
   sf::RectangleShape gun;
   sf::RectangleShape healthBar, healthBarBackground;
+  sf::Text nickname;
 
 }; // Player
 

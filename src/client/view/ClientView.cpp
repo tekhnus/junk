@@ -8,6 +8,8 @@ namespace junk {
 namespace client {
 namespace view {
 
+sf::Font ClientView::font;
+
 sf::Vector2f getDiff(bool up, bool down, bool left, bool right)
 {
   float time = 1;
