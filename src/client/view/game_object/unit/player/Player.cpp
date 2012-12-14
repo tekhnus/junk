@@ -53,7 +53,7 @@ void Player::updatePlayer(const model::Player& player)
   healthBarBackground.setPosition(body.getPosition());
   healthBar.setPosition(body.getPosition());
   sf::Vector2f direction = player.direction;
-  nickname = sf::Text(getName(), ClientView::font, 20);
+  nickname = sf::Text(player.getName(), ClientView::font, 20);
   nickname.setOrigin(sf::Vector2f(nickname.getLocalBounds().width / 2.0, 30 + body.getRadius()));
   nickname.setPosition(body.getPosition());
 

@@ -168,7 +168,7 @@ void ServerGameModel::makeAction(const Action& action)
       player->fire(action.fireAction);
       break;
     case ActionType::CHANGE_SETTINGS:
-      dbg.debug("Got change settings. Id = ", action.playerId, " pointer: ", player);
+//      dbg.debug("Got change settings. Id = ", action.playerId, " pointer: ", player, " nick ", changeSettingsAction.names);
       player->changeSettings(action.changeSettingsAction);
       break;
   }
