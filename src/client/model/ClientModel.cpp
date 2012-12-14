@@ -1,6 +1,7 @@
 #include "ClientModel.hpp"
 #include "game_object/unit/Unit.hpp"
 #include "game_object/unit/player/Player.hpp"
+#include "client/config/ClientConfig.hpp"
 
 namespace junk {
 namespace client {
@@ -36,6 +37,13 @@ int32_t ClientModel::connectToServer(const std::string& serverIp, int port)
   clientInfo.id = networkModel.connectToServer(serverIp, port);
   gotClientIdSignal(clientInfo.id);
   alive = true;
+  ClientConfig config;
+  config.load("client_config.json");
+  Action rename;
+  rename.actionType = ActionType::CHANGE_SETTINGS;
+  rename.changeSettingsAction.name = config.name;
+  rename.__set_changeSettingsAction(rename.changeSettingsAction);
+  makeAction(rename);
   return clientInfo.id;
 }
 

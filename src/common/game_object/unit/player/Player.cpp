@@ -23,6 +23,11 @@ int32_t Player::getMaxHealth() const
     return maxHealth;
 }
 
+const std::string& Player::getName() const
+{
+    return name;
+}
+
 void Player::setHealth(int32_t health)
 {
     this->health = health;
@@ -31,6 +36,11 @@ void Player::setHealth(int32_t health)
 void Player::setMaxHealth(int32_t maxHealth)
 {
     this->maxHealth = maxHealth;
+}
+
+void Player::setName(const std::string& name)
+{
+    this->name = name;
 }
 
 }} // namespace junk::common

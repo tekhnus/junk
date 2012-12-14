@@ -28,6 +28,7 @@ public:
   virtual void rotate(const RotateAction& rotateAction);
   virtual void move(const MoveAction& moveAction);
   virtual void fire(const FireAction& fireAction);
+  virtual void changeSettings(const ChangeSettingsAction& changeSettingsAction);
 
   b2Vec2 force;
   double forceFactor;

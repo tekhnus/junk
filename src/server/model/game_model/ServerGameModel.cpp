@@ -187,6 +187,9 @@ void ServerGameModel::makeAction(const Action& action)
     case ActionType::FIRE:
       player->fire(action.fireAction);
       break;
+    case ActionType::CHANGE_SETTINGS:
+      player->changeSettings(action.changeSettingsAction);
+      break;
   }
 }
 

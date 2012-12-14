@@ -13,11 +13,14 @@ public:
 
   int32_t getHealth() const;
   int32_t getMaxHealth() const;
+  const std::string& getName() const;
   void setHealth(int32_t health);
   void setMaxHealth(int32_t maxHealth);
+  void setName(const std::string& name);
 
 private:
   int32_t health, maxHealth;
+  std::string name;
 };
 
 }} // namespace junk::common

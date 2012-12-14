@@ -20,6 +20,7 @@ void Player::applyPlayerPatch(const PlayerPatch& playerPatch)
   applyUnitPatch(playerPatch.unitPatch);
   setHealth(playerPatch.health);
   setMaxHealth(playerPatch.maxHealth);
+  setName(playerPatch.name);
 
   dbg.debug("Player.position: ", position.x, " ", position.y);
 }

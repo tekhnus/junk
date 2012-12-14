@@ -28,6 +28,7 @@ PlayerPatch Player::getPlayerPatch()
   playerPatch.unitPatch = getUnitPatch();
   playerPatch.health = getHealth();
   playerPatch.maxHealth = getMaxHealth();
+  playerPatch.name = getName();
 
   return playerPatch;
 }
@@ -121,6 +122,10 @@ void Player::fire(const FireAction& fireAction)
   fireOn = fireAction.on;
 }
 
+void Player::changeSettings(const ChangeSettingsAction& changeSettingsAction)
+{
+  setName(changeSettingsAction.name);
+}
 
 int Player::getType()
 {

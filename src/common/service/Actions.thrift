@@ -18,10 +18,15 @@ struct FireAction {
   1: bool on
 }
 
+struct ChangeSettingsAction {
+  1: string name
+}
+
 enum ActionType {
   MOVE = 1,
   ROTATE = 2,
-  FIRE = 3
+  FIRE = 3,
+  CHANGE_SETTINGS = 4
 }
 
 struct Action {
@@ -31,5 +36,6 @@ struct Action {
   // Possible Actions
   10: optional MoveAction moveAction,
   11: optional RotateAction rotateAction,
-  12: optional FireAction fireAction
+  12: optional FireAction fireAction,
+  13: optional ChangeSettingsAction changeSettingsAction
 }

@@ -13,7 +13,7 @@ namespace junk
     for (const auto& entry : tree.get_child("recent")) {
       recent.push_back(entry.second.data());
     }
-    name = tree.get<std::string>("name");
+    name = tree.get("name", "player");
   } 
 
   void ClientConfig::save(std::string filename) {
