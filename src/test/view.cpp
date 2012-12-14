@@ -17,13 +17,18 @@ sfg::SFGUI sfgui;
 sfg::Desktop desktop;
 sf::ContextSettings settings(0, 0, 2);
 sf::RenderWindow window(sf::VideoMode(720, 720), "Title", sf::Style::Default, settings);
-junk::SimpleMenu mainMenu(desktop);
+junk::SimpleMenu mainMenu(desktop, "Main menu");
+junk::SimpleMenu deadMenu(desktop, "You are dead");
+junk::SimpleMenu pauseMenu(desktop, "Game menu");
 junk::AddressFetch fetcher(desktop);
 junk::HUD hud;
+bool showPause = true;
 
 void init()
 {
+  deadMenu.getWindow()->Show(false);
   mainMenu.getWindow()->Show(true);
+  fetcher.getWindow()->Show(false);
 }
 
 void play()
@@ -54,6 +59,21 @@ void drawWorld()
   // window.update();
 }
 
+void changePause()
+{
+  showPause = !showPause;
+  pauseMenu.getWindow()->Show(showPause);
+}
+
+void dead()
+{
+  deadMenu.getWindow()->Show(true);
+  if (showPause) {
+    changePause();
+  }
+}
+
+
 int main(int argc, char** argv)
 {
   if(!desktop.LoadThemeFromFile("Theme.theme"))
@@ -64,12 +84,16 @@ int main(int argc, char** argv)
   hud.addState("connect", play);
   hud.addState("game", connect);
   hud.addState("exit", quit);
-  model.shutdownSignal.connect(boost::bind(init));
+  hud.addState("dead", dead);
+
+  model.shutdownSignal.connect(boost::bind(dead));
   mainMenu.addItem("Play", hud.getEvent("connect"));
   mainMenu.addItem("Exit", hud.getEvent("exit"));
   fetcher.onOK(hud.getEvent("game"));
-  fetcher.getWindow()->Show(false);
+  deadMenu.addItem("Return to main menu", hud.getEvent("init"));
   view.window = &window;
+
+  pauseMenu.addItem("Continue playing", changePause);
 
   junk::dbg.debug("antialiasing: ", window.getSettings().antialiasingLevel);
 
@@ -77,6 +101,9 @@ int main(int argc, char** argv)
 
   view.setModel(&model);
   window.setFramerateLimit(60);
+
+  init();
+  changePause();
 
   sf::Clock clock;
   for (int counter = 0; window.isOpen(); ++counter)
@@ -89,9 +116,18 @@ int main(int argc, char** argv)
       //desktop.HandleEvent(event);
       mainMenu.getWindow()->HandleEvent(event);
       fetcher.getWindow()->HandleEvent(event);
+      deadMenu.getWindow()->HandleEvent(event);
+      pauseMenu.getWindow()->HandleEvent(event);
+
       if(event.type == sf::Event::Closed)
       {
         window.close();
+      }
+      else if (event.type == sf::Event::KeyPressed)
+      {
+        if (event.key.code == sf::Keyboard::Escape && model.alive) {
+          changePause();
+        }
       }
     }
 
@@ -106,6 +142,8 @@ int main(int argc, char** argv)
 
     fetcher.getWindow()->Update(t);
     mainMenu.getWindow()->Update(t);
+    deadMenu.getWindow()->Update(t);
+    pauseMenu.getWindow()->Update(t);
     sfgui.Display(window);
 
     window.display();

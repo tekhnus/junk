@@ -3,13 +3,13 @@
 namespace junk
 {
 
-SimpleMenu::SimpleMenu(sfg::Desktop& desktop) :  window(sfg::Window::Create()),
+SimpleMenu::SimpleMenu(sfg::Desktop& desktop, std::string title) :  window(sfg::Window::Create()),
                             box(sfg::Box::Create(sfg::Box::VERTICAL)),
                             m_desktop(desktop)
 {
 
   window->Add(box);
-  window->SetTitle("Main menu");
+  window->SetTitle(title);
   window->SetRequisition(sf::Vector2f(200.0f, 200.0f));  
   window->SetPosition(sf::Vector2f(200.0f, 200.0f));
   m_desktop.Add(window);

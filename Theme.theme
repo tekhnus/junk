@@ -1,6 +1,6 @@
 Window {
   BackgroundColor: #0066ffff;
-  TitleBackgroundColor: #00ff66ff;
+  TitleBackgroundColor: #ff1133ff;
 }
 
 Button {
