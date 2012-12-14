@@ -39,7 +39,7 @@ ClientView::ClientView()
 : logger("CLIENT_VIEW", "client_view.log", true), clientId(-1)
 , inputThread(&ClientView::processInput, this), alive(false)
 {
-
+    font.loadFromFile("arial.ttf");
 }
 
 ClientView::~ClientView()
@@ -157,9 +157,16 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   logger << "Drawing. getting shift";
   sf::Vector2f shift;
+  sf::Text text;
+  bool drawText = false;
   if (model->gameObjects.find(clientId) != model->gameObjects.end()) {
     model::Player* player = dynamic_cast<model::Player*>(model->gameObjects[clientId].get());
     shift = sf::Vector2f(player->position);
+
+    text = sf::Text(std::to_string(player->position.x) + std::string(":") + std::to_string(player->position.y), font, 20);
+    text.setPosition(target.getSize().x - 200 /*text.getLocalBounds().width*/, 0.0f);
+    drawText = true;
+
   }
   states.transform.translate(shift * -20.0f);
   states.transform.translate(360, 360);
@@ -167,6 +174,11 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
   {
     logger.debug(shift.x, " ", shift.y);
     target.draw(*gameObject.second, states);
+  }
+
+  if (drawText)
+  {
+    target.draw(text);
   }
 }
 

@@ -42,7 +42,7 @@ void CollisionHandler::BeginContact(b2Contact* contact)
   }
   if (aUnit->getType() == TYPE_PLAYER && bUnit->getType() == TYPE_BULLET)
   {
-    aUnit->onBulletHit(dynamic_cast<Bullet*>(aUnit)->type);
+    aUnit->onBulletHit(dynamic_cast<Bullet*>(bUnit)->type);
   }
   if (aUnit->getType() == TYPE_PLAYER && bUnit->getType() == TYPE_BULLET)
   {
