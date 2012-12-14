@@ -47,7 +47,7 @@ void GameObject::startDestruction()
   if (!destroyInfo.isDestructing)
   {
     destroyInfo.isDestructing = true;
-    destroyInfo.destroyCountdown = 2;
+    destroyTime = std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(100);
     cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
   }
 }

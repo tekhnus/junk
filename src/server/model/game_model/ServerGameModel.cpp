@@ -209,9 +209,9 @@ void ServerGameModel::operator()()
   {
       {
           std::lock_guard<std::mutex> guard(gameChangesMutex);
-          if (bonusCreationTimer == 200)
+          if (bonusCreationTimer == 60)
           {
-              Bonus *bonus = new Bonus(world, sf::Vector2f(rand() % 36, rand() % 36), rand() % 2);
+              Bonus *bonus = new Bonus(world, sf::Vector2f(rand() % 36, rand() % 36), rand() % 3);
               addGameObject(bonus);
               bonusCreationTimer = 0;
           }

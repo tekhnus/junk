@@ -16,6 +16,7 @@ Player::Player() : fireOn(false)
     setMaxHealth(100);
     setHealth(getMaxHealth() - 20);
     forceFactor = 1.0;
+    bulletsType = 0;
 }
 
 Player::~Player()
@@ -47,6 +48,17 @@ void Player::process()
   direction.x = cos(angle);
   direction.y = sin(angle);
 
+  std::chrono::high_resolution_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
+  if (forceFactor > 1.0 && slowDownTime <= currentTime)
+  {
+    forceFactor = 1.0;
+  }
+
+  if (bulletsType > 0 && defaultBulletsTime <= currentTime)
+  {
+      bulletsType = 0;
+  }
+
   processFire();
 }
 
@@ -56,7 +68,7 @@ void Player::processFire()
     return;
   dbg << "Adding a bullet...";
 
-  Bullet* bullet = new Bullet(this);
+  Bullet* bullet = new Bullet(this, bulletsType);
   model->addGameObject(bullet);
   dbg << "Bullet added successfully";
 }
@@ -127,9 +139,9 @@ int Player::getType()
   return TYPE_PLAYER;
 }
 
-void Player::onBulletHit()
+void Player::onBulletHit(int type)
 {
-  setHealth(getHealth() - getMaxHealth() / 10);
+    setHealth(getHealth() - (getMaxHealth() * (1 + type)) / 10);
   if (getHealth() <= 0)
   {
     dbg.debug("Low health, killed");
@@ -146,7 +158,12 @@ void Player::onBonusEat(int bonusType)
         setHealth(std::min(getMaxHealth(), getHealth() + 30));
         break;
     case 1:
-        forceFactor *= 1.1;
+        forceFactor = 2.5;
+        slowDownTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(5);
+        break;
+    case 2:
+        bulletsType = 1;
+        defaultBulletsTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
         break;
     }
 }
