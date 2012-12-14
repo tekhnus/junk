@@ -71,6 +71,7 @@ private:
   sf::Vector2i prevPos;
   bool alive;
   model::ClientModel* model;
+  sf::Font font;
 
 protected:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;

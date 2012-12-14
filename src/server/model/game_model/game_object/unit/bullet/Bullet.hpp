@@ -13,7 +13,7 @@ class Bullet : public virtual Unit, public virtual junk::common::Bullet
   MODEL_GAME_OBJECT_DEF(Bullet)
 
 public:
-  Bullet(Player* creator);
+  Bullet(Player* creator, int type);
   virtual ~Bullet();
 
   virtual void init();

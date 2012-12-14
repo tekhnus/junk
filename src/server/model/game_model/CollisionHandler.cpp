@@ -36,13 +36,13 @@ void CollisionHandler::BeginContact(b2Contact* contact)
       uBonus->startDestruction();
   }
 
-  if (aUnit->getType() == TYPE_BULLET)
+  if (bUnit->getType() == TYPE_PLAYER && aUnit->getType() == TYPE_BULLET)
   {
-    bUnit->onBulletHit();
+    bUnit->onBulletHit(dynamic_cast<Bullet*>(aUnit)->type);
   }
-  if (bUnit->getType() == TYPE_BULLET)
+  if (aUnit->getType() == TYPE_PLAYER && bUnit->getType() == TYPE_BULLET)
   {
-    aUnit->onBulletHit();
+    aUnit->onBulletHit(dynamic_cast<Bullet*>(bUnit)->type);
   }
   if (aUnit->getType() == TYPE_PLAYER && bUnit->getType() == TYPE_BULLET)
   {

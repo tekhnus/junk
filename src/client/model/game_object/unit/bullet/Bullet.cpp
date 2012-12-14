@@ -19,6 +19,7 @@ void Bullet::applyBulletPatch(const BulletPatch& bulletPatch)
 {
   applyUnitPatch(bulletPatch.unitPatch);
 
+  type = bulletPatch.type;
   dbg.debug("Bullet.position: ", position.x, " ", position.y);
 }
 

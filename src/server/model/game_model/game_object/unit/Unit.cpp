@@ -48,7 +48,7 @@ void Unit::startDestruction()
   }
 }
 
-void Unit::onBulletHit()
+void Unit::onBulletHit(int type)
 {}
 
 void Unit::onBonusEat(int bonusType)
