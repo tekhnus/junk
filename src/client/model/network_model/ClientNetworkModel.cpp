@@ -15,7 +15,7 @@ int32_t ClientNetworkModel::connectToServer(const std::string& serverIp, int por
 
   socket = boost::shared_ptr<TSocket > (new TSocket(serverIp, port));
   transport = boost::shared_ptr<TTransport > (new TFramedTransport(socket));
-  protocol = boost::shared_ptr<TProtocol > (new TBinaryProtocol(transport));
+  protocol = boost::shared_ptr<TProtocol > (new TCompactProtocol(transport));
   clientServiceClient = boost::shared_ptr<ClientServiceClient > (new ClientServiceClient(protocol));
 
   transport->open();
@@ -62,10 +62,8 @@ void ClientNetworkModel::makeAction(const Action& action)
   }
 
   logger << "ClientNetworkModel::makeAction(), id = " + std::to_string(sessionInfo.id);
-  logger << action.moveAction.direction.x;
-  logger << action.moveAction.direction.y;
   try {
-  clientServiceClient->makeAction(sessionInfo, action);
+    clientServiceClient->makeAction(sessionInfo, action);
   } catch(apache::thrift::transport::TTransportException e)
   {
 

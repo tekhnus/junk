@@ -70,7 +70,7 @@ void Bullet::process() {
   b2Vec2 pos = body->GetWorldCenter();
   position.x = pos.x;
   position.y = pos.y;
-
+  setChanged();
 }
 
 void Bullet::startDestruction()
@@ -81,6 +81,7 @@ void Bullet::startDestruction()
     destroyTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(1);
     cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
   }
+  setChanged();
 }
 
 int Bullet::getType()

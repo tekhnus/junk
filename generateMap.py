@@ -4,9 +4,9 @@ import json
 from math import *
 from random import randint, random
 
-wall_count = 20
-approx_size = 5
-coord_range = 40
+wall_count = 50
+approx_size = 15
+coord_range = 200
 
 def gen():
   data = {}

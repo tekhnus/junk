@@ -57,6 +57,18 @@ private:
   std::unordered_map<int32_t, std::unique_ptr<GameObject > > gameObjects;
   std::queue<GameObject*> gameObjectAddQueue;
 
+  struct PlayerInfo
+  {
+    PlayerInfo()
+    {
+      lastUpdatedTime = std::chrono::high_resolution_clock::time_point();
+    }
+
+    std::chrono::high_resolution_clock::time_point lastUpdatedTime;
+  };
+
+  std::unordered_map<int32_t, PlayerInfo> playerInfo;
+
   int32_t firstFreeId;
   bool isRunning;
   sf::Clock gameLoopTimer;

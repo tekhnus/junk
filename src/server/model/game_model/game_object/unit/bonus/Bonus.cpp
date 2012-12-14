@@ -45,9 +45,12 @@ void Bonus::process()
 {
     GameObject::process();
     b2Vec2 pos = body->GetWorldCenter();
-    position.x = pos.x;
-    position.y = pos.y;
-    dbg .debug("Processing bonus ", pos.x, " ", pos.y);
+    if (position.x != pos.x || position.y != pos.y)
+    {
+      position.x = pos.x;
+      position.y = pos.y;
+      setChanged();
+    }
 }
 
 BonusPatch Bonus::getBonusPatch()
@@ -72,6 +75,7 @@ void Bonus::startDestruction()
       destroyTime = std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(10);
       cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
     }
+    setChanged();
 }
 
 int Bonus::getType()

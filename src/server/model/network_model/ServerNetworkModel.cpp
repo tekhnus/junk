@@ -7,7 +7,7 @@ ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODEL", "serve
 {
   handler = boost::shared_ptr<ClientServiceHandler > (new ClientServiceHandler());
   processor = boost::shared_ptr<TProcessor > (new ClientServiceProcessor(handler));
-  protocolFactory = boost::shared_ptr<TProtocolFactory > (new TBinaryProtocolFactory());
+  protocolFactory = boost::shared_ptr<TProtocolFactory > (new TCompactProtocolFactory());
 
   // using thread pool with maximum 15 threads to handle incoming requests
   threadManager = boost::shared_ptr<ThreadManager > (ThreadManager::newSimpleThreadManager(15));

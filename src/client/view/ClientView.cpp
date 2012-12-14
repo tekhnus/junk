@@ -172,7 +172,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
   states.transform.translate(360, 360);
   for (auto& gameObject : gameObjects)
   {
-    logger.debug(shift.x, " ", shift.y);
+    //logger.debug(shift.x, " ", shift.y);
     target.draw(*gameObject.second, states);
   }
 

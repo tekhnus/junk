@@ -40,6 +40,8 @@ public:
 
   virtual void init() = 0;
 
+  virtual void setChanged();
+
   virtual void process();
   virtual void destroy() = 0;
   virtual void startDestruction();
@@ -51,6 +53,7 @@ public:
   int lifetime;
   std::chrono::high_resolution_clock::time_point cleanupTime;
   std::chrono::high_resolution_clock::time_point destroyTime;
+  std::chrono::high_resolution_clock::time_point lastUpdateTime;
 
   bool isRemoved;
 

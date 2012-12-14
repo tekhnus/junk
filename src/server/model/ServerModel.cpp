@@ -12,7 +12,7 @@ ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
   networkModel.makeActionSignal.connect(boost::bind(&ServerModel::makeActionHandler, this, _1, _2));
 
   random.seed(42);
-  sessionExpirationTime = sf::seconds(0.1f);
+  sessionExpirationTime = sf::seconds(1.0f);
 
   logger << "ServerModel created";
 }

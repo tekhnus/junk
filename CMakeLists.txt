@@ -21,6 +21,10 @@ ELSE(APPLE)
   include_directories (/usr/lib/x86_64-linux-gnu/sigc++-2.0/include)
 ENDIF(APPLE)
 
+
+include_directories (/usr/local/include/thrift/)
+
 add_definitions (-DHAVE_NETINET_IN_H)
+add_definitions (-DHAVE_CONFIG_H)
 
 add_subdirectory (src build)

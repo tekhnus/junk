@@ -13,10 +13,16 @@ MODEL_GAME_OBJECT_IMPL(GameObject, gameObject, GAME_OBJECT)
 
 GameObject::GameObject() : lifetime(0), isRemoved(0)
 {
+  setChanged();
 }
 
 GameObject::~GameObject()
 {
+}
+
+void GameObject::setChanged()
+{
+  lastUpdateTime = std::chrono::high_resolution_clock::now();
 }
 
 GameObjectPatch GameObject::getGameObjectPatch()
@@ -39,6 +45,7 @@ void GameObject::process()
     if (destroyInfo.isDestructing)
     {
       destroyInfo.destroyCountdown = (destroyTime - std::chrono::high_resolution_clock::now()).count();
+      setChanged();
     }
 }
 
@@ -50,6 +57,7 @@ void GameObject::startDestruction()
     destroyTime = std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(100);
     cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
   }
+  setChanged();
 }
 
 }}} // namespace junk::server::model

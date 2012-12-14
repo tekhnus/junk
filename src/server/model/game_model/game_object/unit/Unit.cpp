@@ -45,6 +45,7 @@ void Unit::startDestruction()
     destroyInfo.isDestructing = true;
     destroyTime = std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(100);
     cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
+    setChanged();
   }
 }
 

@@ -47,7 +47,7 @@ void ClientModel::update()
 
   GameChanges gameChanges = networkModel.getGameChanges();
 
-  logger << std::to_string(gameChanges.patches.size()) + " patches";
+  logger.debug(std::to_string(gameChanges.patches.size()) + " patches");
 
   for (auto& patch : gameChanges.patches)
   {

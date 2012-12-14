@@ -16,30 +16,9 @@ ServerGameModel::ServerGameModel()
 : logger("SERVER_GAME_MODEL", "server_model.log", true), isRunning(false),
   handler(new CollisionHandler())
 {
-  //world = new b2World(aabb, b2Vec2(0, 0), true);
   world = new b2World(b2Vec2(0, 0));
   world->SetAllowSleeping(true);
   world->SetContactListener(handler.get());
-
-  // double size = 720.0f / 20;
-  // for(int i = -1; i <= 1; ++i) {
-  //   for (int j = -1; j <=1; ++j) {
-  //     if (i*i+j*j!=1)
-  //       continue;
-  //     b2BodyDef bodyDef;
-  //     bodyDef.position.Set(i * (size + 0.5f) + 0.5f, j * (size + 0.5f) + 0.5f);
-
-  //     b2Body* body = world->CreateBody(&bodyDef);
-  //     b2PolygonShape polyShape;
-  //     polyShape.SetAsBox(size/2, size/2, b2Vec2(size/2, size/2), 0);
-
-  //     b2FixtureDef fixtureDef;
-  //     fixtureDef.shape = &polyShape;
-  //     fixtureDef.restitution = 0.5f;
-
-  //     body->CreateFixture(&fixtureDef);
-  //   }
-  // }
 
   logger << "ServerGameModel created";
   firstFreeId = 0;
@@ -79,6 +58,7 @@ int32_t ServerGameModel::addPlayer(Player* player)
   logger << "Adding a player...";
 
   int playerId = addGameObject(player);
+  playerInfo.insert(std::make_pair(playerId, PlayerInfo()));
 
   return playerId;
 }
@@ -139,6 +119,7 @@ void ServerGameModel::removeObsoleteGameObjects()
 
     gameObjects[destroyCandidateId]->destroy();
     gameObjects.erase(destroyCandidateId);
+    playerInfo.erase(destroyCandidateId);
   }
 }
 
@@ -197,11 +178,19 @@ GameChanges ServerGameModel::getChanges(int32_t id)
 {
   std::lock_guard<std::mutex> guard(gameChangesMutex);
 
+  auto& lastUpdatedTime = playerInfo[id].lastUpdatedTime;
+
   GameChanges gameChanges;
   for (const auto& gameObject : gameObjects)
   {
-    gameChanges.patches.push_back(gameObject.second->getPatch());
+    int32_t gameObjectId = gameObject.first;
+    if (lastUpdatedTime < gameObject.second->lastUpdateTime)
+    {
+      gameChanges.patches.push_back(gameObject.second->getPatch());
+    }
   }
+  lastUpdatedTime = currentTime;
+
   return gameChanges;
 }
 

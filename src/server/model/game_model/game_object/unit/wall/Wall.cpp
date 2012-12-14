@@ -64,9 +64,11 @@ void Wall::setCorners(const std::vector<b2Vec2>& corners)
   body = model->world->CreateBody(&bodyDef);
 
   b2PolygonShape convexShape;
+  /*
   for (int i = 0; i < corners.size(); ++i) {
     dbg.debug(corners.data()[i].x, corners.data()[i].y);
   }
+  */
   convexShape.Set(corners.data(), corners.size());
 
   b2FixtureDef fixtureDef;

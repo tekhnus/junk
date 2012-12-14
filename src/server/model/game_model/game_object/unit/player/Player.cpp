@@ -40,7 +40,6 @@ void Player::process()
   b2Vec2 pos = body->GetWorldCenter();
   double angle = body->GetAngle();
   body->ApplyForceToCenter(force);
-  //body->ApplyAngularImpulse(angularImpulse);
   body->ApplyTorque(torque);
 
   position.x = pos.x;
@@ -60,6 +59,7 @@ void Player::process()
       bulletsType = 0;
   }
 
+  setChanged();
   processFire();
 }
 
@@ -172,6 +172,7 @@ void Player::onBonusEat(int bonusType)
         defaultBulletsTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
         break;
     }
+    setChanged();
 }
 
 }}} // namespace junk::server::model
