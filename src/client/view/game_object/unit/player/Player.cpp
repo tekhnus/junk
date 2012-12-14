@@ -53,6 +53,9 @@ void Player::updatePlayer(const model::Player& player)
   healthBarBackground.setPosition(body.getPosition());
   healthBar.setPosition(body.getPosition());
   sf::Vector2f direction = player.direction;
+  nickname = sf::Text(getName(), ClientView::font, 20);
+  nickname.setOrigin(sf::Vector2f(nickname.getLocalBounds().width / 2.0, 30 + body.getRadius()));
+  nickname.setPosition(body.getPosition());
 
   float healthScale = float(getHealth()) / float(getMaxHealth());
 
@@ -78,6 +81,7 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
   target.draw(gun, states);
   target.draw(healthBarBackground, states);
   target.draw(healthBar, states);
+  target.draw(nickname, states);
 }
 
 }}} // namespace junk::client::view
