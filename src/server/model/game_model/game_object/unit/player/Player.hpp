@@ -20,7 +20,7 @@ public:
   PlayerPatch getPlayerPatch();
   virtual void process();
   virtual int getType();
-  virtual void onBulletHit();
+  virtual void onBulletHit(int type);
   virtual void onBonusEat(int bonusType);
 
   virtual void init();
@@ -34,6 +34,10 @@ public:
   double angularImpulse;
   double torque;
   bool fireOn;
+  int bulletsType;
+
+  std::chrono::high_resolution_clock::time_point slowDownTime;
+  std::chrono::high_resolution_clock::time_point defaultBulletsTime;
 
 private:
   virtual void processFire();

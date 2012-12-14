@@ -35,6 +35,7 @@ struct PlayerPatch {
 
 struct BulletPatch {
   1: UnitPatch unitPatch
+  2: i32 type
 }
 
 struct WallPatch {

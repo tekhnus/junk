@@ -33,6 +33,8 @@ void Bonus::updateBonus(const model::Bonus& bonus)
     case 1: // Speed
         body.setFillColor(sf::Color::Blue);
         break;
+    case 2: //Super bullets
+        body.setFillColor(sf::Color::Green);
     }
 
     if (bonus.destroyInfo.isDestructing)

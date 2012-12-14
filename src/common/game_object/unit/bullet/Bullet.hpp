@@ -10,6 +10,8 @@ class Bullet : public virtual Unit
 public:
   Bullet();
   virtual ~Bullet();
+
+  int type;
 };
 
 }} // namespace junk::common

@@ -9,7 +9,7 @@ namespace model {
 
 MODEL_GAME_OBJECT_IMPL(Bullet, bullet, BULLET)
 
-Bullet::Bullet(Player* creator)
+Bullet::Bullet(Player* creator, int type)
 {
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
@@ -35,6 +35,8 @@ Bullet::Bullet(Player* creator)
   body->CreateFixture(&fixtureDef);
   body->SetLinearDamping(0.1);
 
+  this->type = type;
+
   double power = 100;
   body->ApplyLinearImpulse(b2Vec2(power * cos(angle), power*sin(angle)), body->GetWorldCenter());
 }
@@ -55,6 +57,7 @@ BulletPatch Bullet::getBulletPatch()
     Set fields here
   */
 
+  bulletPatch.type = type;
   return bulletPatch;
 }
 
