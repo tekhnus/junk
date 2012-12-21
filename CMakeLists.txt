@@ -39,6 +39,6 @@ install (FILES
     ${LIB_PREF}/libsfml-graphics.so ${LIB_PREF}/libsfml-window.so ${LIB_PREF}/libsfml-system.so
     ${LIB_PREF}/libsfml-graphics.so.2 ${LIB_PREF}/libsfml-window.so.2 ${LIB_PREF}/libsfml-system.so.2
     ${LIB_PREF}/libsfml-graphics.so.2.0 ${LIB_PREF}/libsfml-window.so.2.0 ${LIB_PREF}/libsfml-system.so.2.0
-    ${LIB_PREF}/libsfgui.so ${LIB_PREF}/libthrift-0.9.0-dev.so ${LIB_PREF}/libBox2D.so ${LIB_PREF}/libBox2D.so.2.1.0 DESTINATION local/lib)
+    ${LIB_PREF}/libsfgui.so ${LIB_PREF}/libthrift-0.9.0-dev.so ${LIB_PREF}/libBox2D.so ${LIB_PREF}/libBox2D.so.2.1.0 DESTINATION lib)
 
 include (CPack)
