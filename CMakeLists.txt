@@ -28,3 +28,10 @@ add_definitions (-DHAVE_NETINET_IN_H)
 add_definitions (-DHAVE_CONFIG_H)
 
 add_subdirectory (src build)
+
+set (CPACK)
+#set (CPACK_GENERATOR "DEB")
+set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Junk team")
+
+install (DIRECTORY lib DESTINATION .)
+include (CPack)

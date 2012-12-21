@@ -2,10 +2,12 @@ build
 bin
 Makefile
 CMakeFiles
-CMakeCache.txt
-cmake_install.cmake
+_CPack_Packages
+*.txt
+*.cmake
 *.log
 *.json
 *.swp
 junk.*
 Junk.*
+
