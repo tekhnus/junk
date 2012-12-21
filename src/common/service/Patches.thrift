@@ -32,11 +32,13 @@ struct PlayerPatch {
   2: i32 health
   3: i32 maxHealth
   4: string name
+  5: i32 score
 }
 
 struct BulletPatch {
   1: UnitPatch unitPatch
   2: i32 type
+  3: string owner
 }
 
 struct WallPatch {

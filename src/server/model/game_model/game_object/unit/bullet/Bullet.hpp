@@ -25,6 +25,12 @@ public:
 
   virtual int getType();
 
+  const std::string& getOwner() const;
+  void setOwner(const std::string& owner);
+
+ private:
+  std::string owner;
+
 }; // Bullet
 
 }}} // namespace junk::server::model

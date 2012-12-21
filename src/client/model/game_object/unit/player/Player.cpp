@@ -21,6 +21,7 @@ void Player::applyPlayerPatch(const PlayerPatch& playerPatch)
   setHealth(playerPatch.health);
   setMaxHealth(playerPatch.maxHealth);
   setName(playerPatch.name);
+  setScore(playerPatch.score);
 
   dbg.debug("Player.position: ", position.x, " ", position.y);
 }

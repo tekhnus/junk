@@ -49,7 +49,7 @@ void Unit::startDestruction()
   }
 }
 
-void Unit::onBulletHit(int type)
+void Unit::onBulletHit(int type, const std::string& owner)
 {}
 
 void Unit::onBonusEat(int bonusType)
