@@ -175,6 +175,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
     text.setPosition(target.getSize().x - 200 /*text.getLocalBounds().width*/, 0.0f);
     drawText = true;
   }
+
   states.transform.translate(shift * -20.0f);
   states.transform.translate(360, 360);
   for (auto& gameObject : gameObjects)
@@ -186,6 +187,34 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
   if (drawText)
   {
     target.draw(text);
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab))
+  {
+      int yCord = 0;
+      for (auto& object : gameObjects)
+      {
+          Player* player = dynamic_cast<Player*>(object.second.get());
+          if (player != nullptr)
+          {
+              dbg.debug("Printing player scores");
+              dbg.debug(std::string("Player name is \"") + player->getName() + std::string("\""));
+              sf::Text text(player->getName() + std::string("ololo"), font, 20);
+              text.setPosition(10, yCord);
+              yCord += 24;
+
+              target.draw(text);
+          }
+          else
+          {
+              /*
+            sf::Text text("ololololo", font, 20);
+              text.setPosition(10, 0);
+
+              target.draw(text);
+              */
+          }
+      }
   }
 }
 
