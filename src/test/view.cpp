@@ -76,7 +76,7 @@ void dead()
 
 int main(int argc, char** argv)
 {
-  if(!desktop.LoadThemeFromFile("Theme.theme"))
+  if(!desktop.LoadThemeFromFile("/usr/share/junk/Theme.theme"))
   {
     junk::dbg << "Theme was not loaded";
   }

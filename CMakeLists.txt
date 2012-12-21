@@ -30,8 +30,15 @@ add_definitions (-DHAVE_CONFIG_H)
 add_subdirectory (src build)
 
 set (CPACK)
-#set (CPACK_GENERATOR "DEB")
+set (CPACK_GENERATOR "DEB")
 set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Junk team")
 
-install (DIRECTORY lib DESTINATION .)
+set (LIB_PREF /usr/local/lib)
+install (FILES arial.ttf Theme.theme DESTINATION share/junk)
+install (FILES
+    ${LIB_PREF}/libsfml-graphics.so ${LIB_PREF}/libsfml-window.so ${LIB_PREF}/libsfml-system.so
+    ${LIB_PREF}/libsfml-graphics.so.2 ${LIB_PREF}/libsfml-window.so.2 ${LIB_PREF}/libsfml-system.so.2
+    ${LIB_PREF}/libsfml-graphics.so.2.0 ${LIB_PREF}/libsfml-window.so.2.0 ${LIB_PREF}/libsfml-system.so.2.0
+    ${LIB_PREF}/libsfgui.so ${LIB_PREF}/libthrift-0.9.0-dev.so ${LIB_PREF}/libBox2D.so ${LIB_PREF}/libBox2D.so.2.1.0 DESTINATION local/lib)
+
 include (CPack)
