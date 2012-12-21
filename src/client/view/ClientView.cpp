@@ -209,7 +209,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(text);
   }
 
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab))
+  //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab))
   {
       std::vector<std::pair<int, std::string> > scoreBoard;
       for (auto& object : gameObjects)
