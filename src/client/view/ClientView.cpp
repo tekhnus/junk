@@ -191,7 +191,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab))
   {
-      int yCord = 50;
+      std::vector<std::pair<int, std::string> > scoreBoard;
       for (auto& object : gameObjects)
       {
           Player* player = dynamic_cast<Player*>(object.second.get());
@@ -199,13 +199,22 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
           {
               dbg.debug("Printing player scores");
               dbg.debug(std::string("Player name is \"") + player->getName() + std::string("\""));
-              sf::Text text(player->getName() + std::string(" : ") + std::to_string(player->getScore()), font, 20);
-              text.setColor(sf::Color::Green);
-              text.setPosition(10, yCord);
-              yCord += 24;
 
-              target.draw(text);
+              scoreBoard.push_back(std::make_pair(player->getScore(), player->getName()));
           }
+      }
+
+      std::sort(scoreBoard.rbegin(), scoreBoard.rend());
+
+      int yCord = 50;
+      for (auto& score : scoreBoard)
+      {
+          sf::Text text(score.second + std::string(" : ") + std::to_string(score.first), font, 20);
+          text.setColor(sf::Color::Green);
+          text.setPosition(10, yCord);
+          yCord += 24;
+
+          target.draw(text);
       }
   }
 }
