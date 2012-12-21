@@ -49,6 +49,11 @@ void Unit::startDestruction()
   }
 }
 
+GameObjectType Unit::getType()
+{
+  return GameObjectType::UNIT;
+}
+
 void Unit::onBulletHit(int type)
 {}
 

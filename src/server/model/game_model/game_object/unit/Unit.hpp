@@ -22,6 +22,7 @@ public:
   virtual void destroy();
   virtual void startDestruction();
 
+  virtual GameObjectType getType();
   virtual void onBulletHit(int type);
   virtual void onBonusEat(int bonusType);
 

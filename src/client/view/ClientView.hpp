@@ -36,6 +36,11 @@ public:
 
   void update();
 
+  int setWindowHeigth(int heigth);
+  int setWindowWidth(int width);
+  int getWindowHeigth() const;
+  int getWindowWidth() const;
+
   void addGameObject(const GameObjectType::type &gameObjectType, model::GameObject* gameObject);
 
   void removeObsoleteGameObjects();
@@ -72,6 +77,13 @@ private:
   sf::Vector2i prevPos;
   bool alive;
   model::ClientModel* model;
+
+  struct WindowAttributes
+  {
+    int height, width;
+  };
+
+  WindowAttributes windowAttributes;
 
 protected:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;

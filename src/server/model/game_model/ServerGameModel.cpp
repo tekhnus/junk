@@ -178,14 +178,31 @@ GameChanges ServerGameModel::getChanges(int32_t id)
 {
   std::lock_guard<std::mutex> guard(gameChangesMutex);
 
+  GameChanges gameChanges;
+
+  if (gameObjects.find(id) == gameObjects.end())
+  {
+    return gameChanges;
+  }
+  Player* player = dynamic_cast<Player*> (gameObjects[id].get());
+
   auto& lastUpdatedTime = playerInfo[id].lastUpdatedTime;
 
-  GameChanges gameChanges;
   for (const auto& gameObject : gameObjects)
   {
     int32_t gameObjectId = gameObject.first;
+
+    // If needToShow(gameObject, player)
     if (lastUpdatedTime < gameObject.second->lastUpdateTime)
     {
+      if (player)
+      {
+        if (!player->canSee(gameObject.second.get()))
+        {
+          continue;
+        }
+      }
+
       gameChanges.patches.push_back(gameObject.second->getPatch());
     }
   }

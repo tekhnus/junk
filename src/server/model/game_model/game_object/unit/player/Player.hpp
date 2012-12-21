@@ -19,9 +19,11 @@ public:
 
   PlayerPatch getPlayerPatch();
   virtual void process();
-  virtual int getType();
+  virtual GameObjectType getType();
   virtual void onBulletHit(int type);
   virtual void onBonusEat(int bonusType);
+
+  bool canSee(GameObject* gameObject);
 
   virtual void init();
 

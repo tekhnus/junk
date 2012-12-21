@@ -140,9 +140,9 @@ void Player::changeSettings(const ChangeSettingsAction& changeSettingsAction)
   setName(changeSettingsAction.name);
 }
 
-int Player::getType()
+GameObjectType Player::getType()
 {
-  return TYPE_PLAYER;
+  return GameObjectType::PLAYER;
 }
 
 void Player::onBulletHit(int type)
@@ -158,21 +158,40 @@ void Player::onBulletHit(int type)
 
 void Player::onBonusEat(int bonusType)
 {
-    switch (bonusType)
+  switch (bonusType)
+  {
+  case 0:
+    setHealth(std::min(getMaxHealth(), getHealth() + 30));
+    break;
+  case 1:
+    forceFactor = 2.5;
+    slowDownTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(5);
+    break;
+  case 2:
+    bulletsType = 1;
+    defaultBulletsTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
+    break;
+  }
+  setChanged();
+}
+
+bool Player::canSee(GameObject *gameObject)
+{
+  if (gameObject->getType() == GameObjectType::UNIT)
+  {
+    Unit* unit = dynamic_cast<Unit*> (gameObject);
+
+    sf::Vector2f distanceVector = unit->position - position;
+
+    double distance = sqrt(distanceVector.x * distanceVector.x +
+                           distanceVector.y * distanceVector.y);
+
+    if (distance > 150)
     {
-    case 0:
-        setHealth(std::min(getMaxHealth(), getHealth() + 30));
-        break;
-    case 1:
-        forceFactor = 2.5;
-        slowDownTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(5);
-        break;
-    case 2:
-        bulletsType = 1;
-        defaultBulletsTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
-        break;
+      return false;
     }
-    setChanged();
+  }
+  return true;
 }
 
 }}} // namespace junk::server::model

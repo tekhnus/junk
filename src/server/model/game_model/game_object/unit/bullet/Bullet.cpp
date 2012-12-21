@@ -84,9 +84,9 @@ void Bullet::startDestruction()
   setChanged();
 }
 
-int Bullet::getType()
+GameObjectType Bullet::getType()
 {
-  return TYPE_BULLET;
+  return GameObjectType::BULLET;
 }
 
 }}} // namespace junk::server::model
