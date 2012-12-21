@@ -192,6 +192,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
     shift = sf::Vector2f(player->position);
 
     text = sf::Text(std::to_string(player->position.x) + std::string(":") + std::to_string(player->position.y), font, 20);
+    text.setColor(sf::Color::Magenta);
     text.setPosition(target.getSize().x - 200 /*text.getLocalBounds().width*/, 0.0f);
     drawText = true;
   }
@@ -230,7 +231,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
       for (auto& score : scoreBoard)
       {
           sf::Text text(score.second + std::string(" : ") + std::to_string(score.first), font, 20);
-          text.setColor(sf::Color::Green);
+          text.setColor(sf::Color::Magenta);
           text.setPosition(10, yCord);
           yCord += 24;
 
