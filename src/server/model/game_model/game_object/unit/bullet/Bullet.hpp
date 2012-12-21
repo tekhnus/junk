@@ -23,7 +23,13 @@ public:
   virtual void process();
   virtual void startDestruction();
 
-  virtual int getType();
+  virtual GameObjectType getType();
+
+  const std::string& getOwner() const;
+  void setOwner(const std::string& owner);
+
+ private:
+  std::string owner;
 
 }; // Bullet
 

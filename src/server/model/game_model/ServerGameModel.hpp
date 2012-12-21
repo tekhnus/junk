@@ -52,6 +52,7 @@ public:
   void loadMap(std::string filename);
 
   b2World* world;
+  std::map<std::string, int> scoreBoard;
 
 private:
   std::unordered_map<int32_t, std::unique_ptr<GameObject > > gameObjects;

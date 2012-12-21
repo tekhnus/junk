@@ -24,7 +24,7 @@ public:
   virtual void onBulletHit();
 
   virtual void init();
-  virtual int getType();
+  virtual GameObjectType getType();
   void setCorners(const std::vector<b2Vec2>& corners);
 
   b2Body* body;

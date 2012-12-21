@@ -42,12 +42,12 @@ sf::Vector2f getDiff(bool up, bool down, bool left, bool right)
   return sf::Vector2f(dx, dy);
 }
 
-//#KoCTblJIb
-
 ClientView::ClientView()
 : logger("CLIENT_VIEW", "client_view.log", true), clientId(-1)
 , inputThread(&ClientView::processInput, this), alive(false)
 {
+  setWindowHeigth(360);
+  setWindowWidth(360);
 }
 
 ClientView::~ClientView()
@@ -69,7 +69,27 @@ void ClientView::setModel(model::ClientModel* clientModel)
 
 void ClientView::update()
 {
-  removeObsoleteGameObjects();
+    removeObsoleteGameObjects();
+}
+
+int ClientView::setWindowHeigth(int heigth)
+{
+  windowAttributes.height = heigth;
+}
+
+int ClientView::setWindowWidth(int width)
+{
+  windowAttributes.width = width;
+}
+
+int ClientView::getWindowHeigth() const
+{
+  return windowAttributes.height;
+}
+
+int ClientView::getWindowWidth() const
+{
+  return windowAttributes.width;
 }
 
 void ClientView::addGameObject(const GameObjectType::type& gameObjectType, model::GameObject* gameObject)
@@ -172,11 +192,13 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
     shift = sf::Vector2f(player->position);
 
     text = sf::Text(std::to_string(player->position.x) + std::string(":") + std::to_string(player->position.y), font, 20);
+    text.setColor(sf::Color::Magenta);
     text.setPosition(target.getSize().x - 200 /*text.getLocalBounds().width*/, 0.0f);
     drawText = true;
   }
+
   states.transform.translate(shift * -20.0f);
-  states.transform.translate(360, 360);
+  states.transform.translate(getWindowHeigth(), getWindowWidth());
   for (auto& gameObject : gameObjects)
   {
     //logger.debug(shift.x, " ", shift.y);
@@ -186,6 +208,35 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
   if (drawText)
   {
     target.draw(text);
+  }
+
+  //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab))
+  {
+      std::vector<std::pair<int, std::string> > scoreBoard;
+      for (auto& object : gameObjects)
+      {
+          Player* player = dynamic_cast<Player*>(object.second.get());
+          if (player != nullptr)
+          {
+              dbg.debug("Printing player scores");
+              dbg.debug(std::string("Player name is \"") + player->getName() + std::string("\""));
+
+              scoreBoard.push_back(std::make_pair(player->getScore(), player->getName()));
+          }
+      }
+
+      std::sort(scoreBoard.rbegin(), scoreBoard.rend());
+
+      int yCord = 50;
+      for (auto& score : scoreBoard)
+      {
+          sf::Text text(score.second + std::string(" : ") + std::to_string(score.first), font, 20);
+          text.setColor(sf::Color::Magenta);
+          text.setPosition(10, yCord);
+          yCord += 24;
+
+          target.draw(text);
+      }
   }
 }
 
@@ -203,7 +254,7 @@ void ClientView::processInput()
     if (clientId == -1)
       continue;
 
-    logger << "Processing input";
+logger << "Processing input";
 
     safe.lock();
 
@@ -234,7 +285,7 @@ void ClientView::processInput()
 
     sf::Vector2i posI = sf::Mouse::getPosition(*window);
     sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
-    pos -= sf::Vector2f(360, 360);
+    pos -= sf::Vector2f(getWindowHeigth(), getWindowWidth());
     rotate(pos);
 
     logger << "Processed mouse";
@@ -256,7 +307,7 @@ void ClientView::shutdown()
 
 void ClientView::wake()
 {
-  alive = true;
+    alive = true;
 }
 
 }}} // namespace junk::client::view

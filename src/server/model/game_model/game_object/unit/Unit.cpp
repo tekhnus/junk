@@ -49,8 +49,14 @@ void Unit::startDestruction()
   }
 }
 
-void Unit::onBulletHit(int type)
-{}
+GameObjectType Unit::getType()
+{
+  return GameObjectType::UNIT;
+}
+
+void Unit::onBulletHit(int type, const std::string& owner)
+{
+}
 
 void Unit::onBonusEat(int bonusType)
 {}

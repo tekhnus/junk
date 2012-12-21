@@ -5,6 +5,8 @@
 #include <gen-cpp/ClientService.h>
 #include "common/utils/Convert.hpp"
 
+#include <Box2D/Box2D.h>
+
 namespace junk {
 namespace server {
 namespace model {
@@ -19,9 +21,11 @@ public:
 
   PlayerPatch getPlayerPatch();
   virtual void process();
-  virtual int getType();
-  virtual void onBulletHit(int type);
+  virtual GameObjectType getType();
+  virtual void onBulletHit(int type, const std::string& owner);
   virtual void onBonusEat(int bonusType);
+
+  bool canSee(GameObject* gameObject);
 
   virtual void init();
 

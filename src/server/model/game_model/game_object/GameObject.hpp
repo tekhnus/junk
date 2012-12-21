@@ -13,7 +13,7 @@ Patch _Name::getPatch() \
 { \
   Patch patch; \
   patch.id = id; \
-  patch.gameObjectType = GameObjectType::_NAME; \
+  patch.gameObjectType = junk::GameObjectType::_NAME; \
   patch.isCleanedUp = isRemoved; \
   patch.__set_ ##_name## Patch(get ##_Name## Patch()); \
   return patch; \
@@ -23,10 +23,15 @@ namespace junk {
 namespace server {
 namespace model {
 
-extern int TYPE_PLAYER;
-extern int TYPE_BULLET;
-extern int TYPE_WALL;
-extern int TYPE_BONUS;
+enum class GameObjectType
+{
+  GAME_OBJECT = 0,
+  UNIT = 1,
+  PLAYER = 2,
+  BULLET = 3,
+  WALL = 4,
+  BONUS = 5
+};
 
 class ServerGameModel;
 
@@ -47,7 +52,7 @@ public:
   virtual void startDestruction();
   GameObjectPatch getGameObjectPatch();
 
-  virtual int getType() = 0;
+  virtual GameObjectType getType() = 0;
 
   ServerGameModel* model;
   int lifetime;

@@ -22,12 +22,13 @@ void CollisionHandler::BeginContact(b2Contact* contact)
   Unit* bUnit = (Unit*)bRaw;
 
   if (
-          (aUnit->getType() == TYPE_PLAYER && bUnit->getType() == TYPE_BONUS) ||
-          (aUnit->getType() == TYPE_BONUS && bUnit->getType() == TYPE_PLAYER)
+          (aUnit->getType() == GameObjectType::PLAYER && bUnit->getType() == GameObjectType::BONUS) ||
+          (aUnit->getType() == GameObjectType::BONUS && bUnit->getType() == GameObjectType::PLAYER)
          )
   {
-      Unit *uPlayer = aUnit, *uBonus = bUnit;
-      if (aUnit->getType() == TYPE_BONUS && bUnit->getType() == TYPE_PLAYER)
+      Unit* uPlayer = aUnit;
+      Unit* uBonus = bUnit;
+      if (aUnit->getType() == GameObjectType::BONUS && bUnit->getType() == GameObjectType::PLAYER)
       {
           std::swap(uPlayer, uBonus);
       }
@@ -36,19 +37,19 @@ void CollisionHandler::BeginContact(b2Contact* contact)
       uBonus->startDestruction();
   }
 
-  if (bUnit->getType() == TYPE_PLAYER && aUnit->getType() == TYPE_BULLET)
+  if (bUnit->getType() == GameObjectType::PLAYER && aUnit->getType() == GameObjectType::BULLET)
   {
-    bUnit->onBulletHit(dynamic_cast<Bullet*>(aUnit)->type);
+    bUnit->onBulletHit(dynamic_cast<Bullet*>(aUnit)->type, dynamic_cast<Bullet*>(aUnit)->getOwner());
   }
-  if (aUnit->getType() == TYPE_PLAYER && bUnit->getType() == TYPE_BULLET)
+  if (aUnit->getType() == GameObjectType::PLAYER && bUnit->getType() == GameObjectType::BULLET)
   {
-    aUnit->onBulletHit(dynamic_cast<Bullet*>(bUnit)->type);
+    aUnit->onBulletHit(dynamic_cast<Bullet*>(bUnit)->type, dynamic_cast<Bullet*>(bUnit)->getOwner());
   }
-  if (aUnit->getType() == TYPE_PLAYER && bUnit->getType() == TYPE_BULLET)
+  if (aUnit->getType() == GameObjectType::PLAYER && bUnit->getType() == GameObjectType::BULLET)
   {
     bUnit->startDestruction();
   }
-  if (bUnit->getType() == TYPE_PLAYER && aUnit->getType() == TYPE_BULLET)
+  if (bUnit->getType() == GameObjectType::PLAYER && aUnit->getType() == GameObjectType::BULLET)
   {
     aUnit->startDestruction();
   }

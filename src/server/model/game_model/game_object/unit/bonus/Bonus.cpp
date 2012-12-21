@@ -78,9 +78,9 @@ void Bonus::startDestruction()
     setChanged();
 }
 
-int Bonus::getType()
+GameObjectType Bonus::getType()
 {
-    return TYPE_BONUS;
+    return GameObjectType::BONUS;
 }
 
 void Bonus::init()

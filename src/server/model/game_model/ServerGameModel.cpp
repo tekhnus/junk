@@ -60,6 +60,11 @@ int32_t ServerGameModel::addPlayer(Player* player)
   int playerId = addGameObject(player);
   playerInfo.insert(std::make_pair(playerId, PlayerInfo()));
 
+  if (scoreBoard.find(player->getName()) == scoreBoard.end())
+  {
+      scoreBoard[player->getName()] = 0;
+  }
+
   return playerId;
 }
 
@@ -178,14 +183,31 @@ GameChanges ServerGameModel::getChanges(int32_t id)
 {
   std::lock_guard<std::mutex> guard(gameChangesMutex);
 
+  GameChanges gameChanges;
+
+  if (gameObjects.find(id) == gameObjects.end())
+  {
+    return gameChanges;
+  }
+  Player* player = dynamic_cast<Player*> (gameObjects[id].get());
+
   auto& lastUpdatedTime = playerInfo[id].lastUpdatedTime;
 
-  GameChanges gameChanges;
   for (const auto& gameObject : gameObjects)
   {
     int32_t gameObjectId = gameObject.first;
+
+    // If needToShow(gameObject, player)
     if (lastUpdatedTime < gameObject.second->lastUpdateTime)
     {
+      if (player)
+      {
+        if (!player->canSee(gameObject.second.get()))
+        {
+          continue;
+        }
+      }
+
       gameChanges.patches.push_back(gameObject.second->getPatch());
     }
   }
@@ -203,7 +225,7 @@ void ServerGameModel::operator()()
           std::lock_guard<std::mutex> guard(gameChangesMutex);
           if (bonusCreationTimer == 60)
           {
-              Bonus *bonus = new Bonus(world, sf::Vector2f(rand() % 36, rand() % 36), rand() % 3);
+              Bonus *bonus = new Bonus(world, sf::Vector2f(rand() % 120 - 60, rand() % 120 - 60), rand() % 3);
               addGameObject(bonus);
               bonusCreationTimer = 0;
           }

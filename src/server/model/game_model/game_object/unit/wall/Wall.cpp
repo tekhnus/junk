@@ -50,9 +50,9 @@ void Wall::init()
 {
 }
 
-int Wall::getType()
+GameObjectType Wall::getType()
 {
-  return TYPE_WALL;
+  return GameObjectType::WALL;
 }
 
 void Wall::setCorners(const std::vector<b2Vec2>& corners)

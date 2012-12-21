@@ -39,6 +39,8 @@ Bullet::Bullet(Player* creator, int type)
 
   double power = 100;
   body->ApplyLinearImpulse(b2Vec2(power * cos(angle), power*sin(angle)), body->GetWorldCenter());
+
+  setOwner(creator->getName());
 }
 
 Bullet::~Bullet()
@@ -52,6 +54,7 @@ BulletPatch Bullet::getBulletPatch()
 {
   BulletPatch bulletPatch;
   bulletPatch.unitPatch = getUnitPatch();
+  bulletPatch.owner = getOwner();
 
   /*
     Set fields here
@@ -84,9 +87,19 @@ void Bullet::startDestruction()
   setChanged();
 }
 
-int Bullet::getType()
+GameObjectType Bullet::getType()
 {
-  return TYPE_BULLET;
+  return GameObjectType::BULLET;
+}
+
+const std::string& Bullet::getOwner() const
+{
+    return owner;
+}
+
+void Bullet::setOwner(const std::string& owner)
+{
+    this->owner = owner;
 }
 
 }}} // namespace junk::server::model

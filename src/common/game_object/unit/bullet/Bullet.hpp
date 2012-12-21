@@ -12,6 +12,7 @@ public:
   virtual ~Bullet();
 
   int type;
+
 };
 
 }} // namespace junk::common

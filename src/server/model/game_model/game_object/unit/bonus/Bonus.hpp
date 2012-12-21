@@ -25,7 +25,7 @@ public:
     virtual void process();
     virtual void startDestruction();
 
-    virtual int getType();
+    virtual GameObjectType getType();
 
 }; // Bonus
 
