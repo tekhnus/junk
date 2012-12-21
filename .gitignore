@@ -10,4 +10,4 @@ _CPack_Packages
 *.swp
 junk.*
 Junk.*
-
+*.deb
