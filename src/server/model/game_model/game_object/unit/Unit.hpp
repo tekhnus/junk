@@ -23,7 +23,7 @@ public:
   virtual void startDestruction();
 
   virtual GameObjectType getType();
-  virtual void onBulletHit(int type);
+  virtual void onBulletHit(int type, const std::string& owner);
   virtual void onBonusEat(int bonusType);
 
   b2Body* body;

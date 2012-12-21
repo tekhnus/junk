@@ -39,11 +39,11 @@ void CollisionHandler::BeginContact(b2Contact* contact)
 
   if (bUnit->getType() == GameObjectType::PLAYER && aUnit->getType() == GameObjectType::BULLET)
   {
-    bUnit->onBulletHit(dynamic_cast<Bullet*>(aUnit)->type);
+    bUnit->onBulletHit(dynamic_cast<Bullet*>(aUnit)->type, dynamic_cast<Bullet*>(aUnit)->getOwner());
   }
   if (aUnit->getType() == GameObjectType::PLAYER && bUnit->getType() == GameObjectType::BULLET)
   {
-    aUnit->onBulletHit(dynamic_cast<Bullet*>(bUnit)->type);
+    aUnit->onBulletHit(dynamic_cast<Bullet*>(bUnit)->type, dynamic_cast<Bullet*>(bUnit)->getOwner());
   }
   if (aUnit->getType() == GameObjectType::PLAYER && bUnit->getType() == GameObjectType::BULLET)
   {

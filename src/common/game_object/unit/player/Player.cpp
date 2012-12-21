@@ -28,6 +28,11 @@ const std::string& Player::getName() const
     return name;
 }
 
+int Player::getScore() const
+{
+    return score;
+}
+
 void Player::setHealth(int32_t health)
 {
     this->health = health;
@@ -41,6 +46,11 @@ void Player::setMaxHealth(int32_t maxHealth)
 void Player::setName(const std::string& name)
 {
     this->name = name;
+}
+
+void Player::setScore(int score)
+{
+    this->score = score;
 }
 
 }} // namespace junk::common

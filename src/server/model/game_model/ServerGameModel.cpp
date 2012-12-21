@@ -60,6 +60,11 @@ int32_t ServerGameModel::addPlayer(Player* player)
   int playerId = addGameObject(player);
   playerInfo.insert(std::make_pair(playerId, PlayerInfo()));
 
+  if (scoreBoard.find(player->getName()) == scoreBoard.end())
+  {
+      scoreBoard[player->getName()] = 0;
+  }
+
   return playerId;
 }
 

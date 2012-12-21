@@ -17,6 +17,7 @@ Player::Player() : fireOn(false)
     setHealth(getMaxHealth() - 20);
     forceFactor = 1.0;
     bulletsType = 0;
+    setScore(0);
 }
 
 Player::~Player()
@@ -30,6 +31,9 @@ PlayerPatch Player::getPlayerPatch()
   playerPatch.health = getHealth();
   playerPatch.maxHealth = getMaxHealth();
   playerPatch.name = getName();
+
+  setScore(model->scoreBoard[getName()]);
+  playerPatch.score = getScore();
 
   return playerPatch;
 }
@@ -145,11 +149,17 @@ GameObjectType Player::getType()
   return GameObjectType::PLAYER;
 }
 
-void Player::onBulletHit(int type)
+void Player::onBulletHit(int type, const std::string& owner)
 {
     setHealth(getHealth() - (getMaxHealth() * (1 + type)) / 10);
   if (getHealth() <= 0)
   {
+      model->scoreBoard[getName()]--;
+      if (getName() != owner)
+      {
+          model->ServerGameModel::scoreBoard[owner]++;
+      }
+
     dbg.debug("Low health, killed");
     setHealth(0);
     startDestruction();

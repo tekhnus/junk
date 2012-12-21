@@ -195,6 +195,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
     text.setPosition(target.getSize().x - 200 /*text.getLocalBounds().width*/, 0.0f);
     drawText = true;
   }
+
   states.transform.translate(shift * -20.0f);
   states.transform.translate(getWindowHeigth(), getWindowWidth());
   for (auto& gameObject : gameObjects)
@@ -206,6 +207,35 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
   if (drawText)
   {
     target.draw(text);
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab))
+  {
+      std::vector<std::pair<int, std::string> > scoreBoard;
+      for (auto& object : gameObjects)
+      {
+          Player* player = dynamic_cast<Player*>(object.second.get());
+          if (player != nullptr)
+          {
+              dbg.debug("Printing player scores");
+              dbg.debug(std::string("Player name is \"") + player->getName() + std::string("\""));
+
+              scoreBoard.push_back(std::make_pair(player->getScore(), player->getName()));
+          }
+      }
+
+      std::sort(scoreBoard.rbegin(), scoreBoard.rend());
+
+      int yCord = 50;
+      for (auto& score : scoreBoard)
+      {
+          sf::Text text(score.second + std::string(" : ") + std::to_string(score.first), font, 20);
+          text.setColor(sf::Color::Green);
+          text.setPosition(10, yCord);
+          yCord += 24;
+
+          target.draw(text);
+      }
   }
 }
 
