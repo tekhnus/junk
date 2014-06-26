@@ -3,6 +3,10 @@
 #include <SFGUI/SFGUI.hpp>
 #include <SFML/Graphics.hpp>
 
+namespace sfg {
+typedef std::function<void(void)> Delegate;
+}
+
 namespace junk
 {
 
@@ -15,7 +19,7 @@ public:
 private:
   sfg::Window::Ptr window;
   sfg::Box::Ptr box;
-  sfg::Desktop m_desktop;
+  sfg::Desktop &m_desktop;
 };
 
 }

@@ -37,7 +37,7 @@ void play()
   fetcher.getWindow()->Show(true);
 }
 
-void connect()
+void connectXXX()
 {
   model.reset();
   view.reset();
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
   }
   hud.addState("init", init);
   hud.addState("connect", play);
-  hud.addState("game", connect);
+  hud.addState("game", connectXXX);
   hud.addState("exit", quit);
   hud.addState("dead", dead);
 

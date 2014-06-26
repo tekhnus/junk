@@ -4,6 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include <client/config/ClientConfig.hpp>
 
+namespace sfg {
+typedef std::function<void(void)> Delegate;
+}
+
 namespace junk
 {
 

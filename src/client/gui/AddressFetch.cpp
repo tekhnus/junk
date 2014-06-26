@@ -4,7 +4,7 @@ namespace junk
 {
 
 AddressFetch::AddressFetch(sfg::Desktop& desktop) :  window(sfg::Window::Create()),
-                                box(sfg::Box::Create(sfg::Box::HORIZONTAL)),
+                                box(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
                                 field(sfg::Entry::Create("enter server address here")),
                                 ok(sfg::Button::Create("OK")),
                                 m_desktop(desktop)
@@ -26,7 +26,7 @@ AddressFetch::AddressFetch(sfg::Desktop& desktop) :  window(sfg::Window::Create(
     field->SetText(config.recent.back());
   }
 
-  ok->GetSignal(sfg::Widget::OnLeftClick).Connect(&AddressFetch::updateHistory, this);
+  ok->GetSignal(sfg::Widget::OnLeftClick).Connect(std::bind(&AddressFetch::updateHistory, this));
   field->SetRequisition(sf::Vector2f(300.f, 0.f));
 
   m_desktop.Add(window);

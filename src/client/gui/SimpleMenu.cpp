@@ -4,8 +4,8 @@ namespace junk
 {
 
 SimpleMenu::SimpleMenu(sfg::Desktop& desktop, std::string title) :  window(sfg::Window::Create()),
-                            box(sfg::Box::Create(sfg::Box::VERTICAL)),
-                            m_desktop(desktop)
+                            box(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
+			    m_desktop(desktop)
 {
 
   window->Add(box);
