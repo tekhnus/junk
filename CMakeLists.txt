@@ -13,6 +13,8 @@ include_directories (/usr/local/include/thrift/)
 add_definitions (-DHAVE_NETINET_IN_H)
 add_definitions (-DHAVE_CONFIG_H)
 
+link_directories (/opt/lib)
+
 add_subdirectory (src build)
 
 set (CPACK)

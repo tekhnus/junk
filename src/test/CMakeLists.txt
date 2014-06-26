@@ -15,6 +15,6 @@ add_executable (servertest server.cpp)
 target_link_libraries(servertest server servermodel servernetworkmodel servergamemodel servermodelbonus servermodelwall
                       servermodelplayer servermodelbullet servermodelunit servermodelgameobject commonbonus commonwall
                       commonbullet commonplayer commonunit commongameobject clientservicehandler logger utils
-                      sfml-graphics sfml-window sfml-system pthread thrift Box2D)
+                      sfml-graphics sfml-window sfml-system pthread event thriftnb thrift event Box2D)
 
 install (TARGETS junk DESTINATION bin)
