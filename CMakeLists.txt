@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.6)
 project (junk CXX)
 
 set (CMAKE_CXX_COMPILER g++-4.8)
-add_definitions (-std=c++11)
+add_definitions (-std=c++11 -g)
 
 include_directories (/usr/include/sigc++-2.0)
 include_directories (/usr/lib/x86_64-linux-gnu/sigc++-2.0/include)

@@ -10,19 +10,21 @@
 #include <mutex>
 #include <iostream>
 
+class App {
+
 junk::client::view::ClientView view;
 junk::client::model::ClientModel model;
 
 sfg::SFGUI sfgui;
 sfg::Desktop desktop;
-sf::ContextSettings settings(0, 0, 2);
-sf::RenderWindow window(sf::VideoMode(720, 720), "Title", sf::Style::Default, settings);
-junk::SimpleMenu mainMenu(desktop, "Main menu");
-junk::SimpleMenu deadMenu(desktop, "You are dead");
-junk::SimpleMenu pauseMenu(desktop, "Game menu");
-junk::AddressFetch fetcher(desktop);
+sf::ContextSettings settings;
+sf::RenderWindow window;
+junk::SimpleMenu mainMenu;
+junk::SimpleMenu deadMenu;
+junk::SimpleMenu pauseMenu;
+junk::AddressFetch fetcher;
 junk::HUD hud;
-bool showPause = true;
+bool showPause;
 
 void init()
 {
@@ -33,8 +35,10 @@ void init()
 
 void play()
 {
+  printf("%d\n", mainMenu.getWindow() == nullptr);
   mainMenu.getWindow()->Show(false);
   fetcher.getWindow()->Show(true);
+  printf("%d\n", mainMenu.getWindow() == nullptr);
 }
 
 void connectXXX()
@@ -72,28 +76,33 @@ void dead()
     changePause();
   }
 }
-
-
-int main(int argc, char** argv)
+public:
+App() : settings(0, 0, 2),
+        window(sf::VideoMode(720, 720), "Title", sf::Style::Default, settings),
+	mainMenu(desktop, "Main menu"),
+	deadMenu(desktop, "You are dead"),
+	pauseMenu(desktop, "Game menu"),
+	fetcher(desktop),
+	showPause(true)
 {
   if(!desktop.LoadThemeFromFile("/usr/share/junk/Theme.theme"))
   {
     junk::dbg << "Theme was not loaded";
   }
-  hud.addState("init", init);
-  hud.addState("connect", play);
-  hud.addState("game", connectXXX);
-  hud.addState("exit", quit);
-  hud.addState("dead", dead);
+  hud.addState("init", std::bind(&App::init, this));
+  hud.addState("connect", std::bind(&App::play, this));
+  hud.addState("game", std::bind(&App::connectXXX, this));
+  hud.addState("exit", std::bind(&App::quit, this));
+  hud.addState("dead", std::bind(&App::dead, this));
 
-  model.shutdownSignal.connect(boost::bind(dead));
+  model.shutdownSignal.connect(boost::bind(&App::dead, this));
   mainMenu.addItem("Play", hud.getEvent("connect"));
   mainMenu.addItem("Exit", hud.getEvent("exit"));
   fetcher.onOK(hud.getEvent("game"));
   deadMenu.addItem("Return to main menu", hud.getEvent("init"));
   view.window = &window;
 
-  pauseMenu.addItem("Continue playing", changePause);
+  pauseMenu.addItem("Continue playing", std::bind(&App::changePause, this));
 
   junk::dbg.debug("antialiasing: ", window.getSettings().antialiasingLevel);
 
@@ -102,22 +111,27 @@ int main(int argc, char** argv)
   view.setModel(&model);
   window.setFramerateLimit(60);
 
+  printf("Before init: %d\n", mainMenu.getWindow() == nullptr);
   init();
+  printf("After init, before changePause: %d\n", mainMenu.getWindow() == nullptr);
   changePause();
 
+  printf("After changePause: %d\n", mainMenu.getWindow() == nullptr);
   sf::Clock clock;
   for (int counter = 0; window.isOpen(); ++counter)
   {
+	
     view.safe.lock();
+  printf("Cycle interation %d: %d\n", counter, mainMenu.getWindow() == nullptr);
 
     sf::Event event;
     while(window.pollEvent(event))
     {
-      //desktop.HandleEvent(event);
-      mainMenu.getWindow()->HandleEvent(event);
-      fetcher.getWindow()->HandleEvent(event);
-      deadMenu.getWindow()->HandleEvent(event);
-      pauseMenu.getWindow()->HandleEvent(event);
+      desktop.HandleEvent(event);
+      //mainMenu.getWindow()->HandleEvent(event);
+      //fetcher.getWindow()->HandleEvent(event);
+      //deadMenu.getWindow()->HandleEvent(event);
+      //pauseMenu.getWindow()->HandleEvent(event);
 
       if(event.type == sf::Event::Closed)
       {
@@ -131,26 +145,41 @@ int main(int argc, char** argv)
       }
     }
 
+    printf("After events: %d\n", mainMenu.getWindow() == nullptr);
     double t = clock.restart().asSeconds();
 
+    desktop.Update(t);
     window.clear();
+
+
+  printf("After updating and clearing: %d\n", mainMenu.getWindow() == nullptr);
 
     if (model.alive)
     {
       drawWorld();
     }
 
-    fetcher.getWindow()->Update(t);
-    mainMenu.getWindow()->Update(t);
-    deadMenu.getWindow()->Update(t);
-    pauseMenu.getWindow()->Update(t);
+  printf("Before sfgui display: %d\n", mainMenu.getWindow() == nullptr);
+    //fetcher.getWindow()->Update(t);
+    //mainMenu.getWindow()->Update(t);
+    //deadMenu.getWindow()->Update(t);
+    //pauseMenu.getWindow()->Update(t);
     sfgui.Display(window);
 
+  printf("Before window display: %d\n", mainMenu.getWindow() == nullptr);
     window.display();
 
     view.safe.unlock();
     sf::sleep(sf::milliseconds(30));
   }
 
+}
+
+
+};
+
+int main(int argc, char** argv)
+{
+  App app;
   return 0;
 }
