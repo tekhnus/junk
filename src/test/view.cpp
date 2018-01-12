@@ -35,10 +35,10 @@ void init()
 
 void play()
 {
-  printf("%d\n", mainMenu.getWindow() == nullptr);
+  // printf("%d\n", mainMenu.getWindow() == nullptr);
   mainMenu.getWindow()->Show(false);
   fetcher.getWindow()->Show(true);
-  printf("%d\n", mainMenu.getWindow() == nullptr);
+  // printf("%d\n", mainMenu.getWindow() == nullptr);
 }
 
 void connectXXX()
@@ -111,18 +111,18 @@ App() : settings(0, 0, 2),
   view.setModel(&model);
   window.setFramerateLimit(60);
 
-  printf("Before init: %d\n", mainMenu.getWindow() == nullptr);
+  // printf("Before init: %d\n", mainMenu.getWindow() == nullptr);
   init();
-  printf("After init, before changePause: %d\n", mainMenu.getWindow() == nullptr);
+  // printf("After init, before changePause: %d\n", mainMenu.getWindow() == nullptr);
   changePause();
 
-  printf("After changePause: %d\n", mainMenu.getWindow() == nullptr);
+  // printf("After changePause: %d\n", mainMenu.getWindow() == nullptr);
   sf::Clock clock;
   for (int counter = 0; window.isOpen(); ++counter)
   {
 	
     view.safe.lock();
-  printf("Cycle interation %d: %d\n", counter, mainMenu.getWindow() == nullptr);
+  // printf("Cycle interation %d: %d\n", counter, mainMenu.getWindow() == nullptr);
 
     sf::Event event;
     while(window.pollEvent(event))
@@ -145,28 +145,28 @@ App() : settings(0, 0, 2),
       }
     }
 
-    printf("After events: %d\n", mainMenu.getWindow() == nullptr);
+    // printf("After events: %d\n", mainMenu.getWindow() == nullptr);
     double t = clock.restart().asSeconds();
 
     desktop.Update(t);
     window.clear();
 
 
-  printf("After updating and clearing: %d\n", mainMenu.getWindow() == nullptr);
+  // printf("After updating and clearing: %d\n", mainMenu.getWindow() == nullptr);
 
     if (model.alive)
     {
       drawWorld();
     }
 
-  printf("Before sfgui display: %d\n", mainMenu.getWindow() == nullptr);
+  // printf("Before sfgui display: %d\n", mainMenu.getWindow() == nullptr);
     //fetcher.getWindow()->Update(t);
     //mainMenu.getWindow()->Update(t);
     //deadMenu.getWindow()->Update(t);
     //pauseMenu.getWindow()->Update(t);
     sfgui.Display(window);
 
-  printf("Before window display: %d\n", mainMenu.getWindow() == nullptr);
+  // printf("Before window display: %d\n", mainMenu.getWindow() == nullptr);
     window.display();
 
     view.safe.unlock();
