@@ -1,6 +1,10 @@
 #pragma once
 
-#include <SFGUI/SFGUI.hpp>
+#include <SFGUI/Desktop.hpp>
+#include <SFGUI/Window.hpp>
+#include <SFGUI/Box.hpp>
+#include <SFGUI/Entry.hpp>
+#include <SFGUI/Button.hpp>
 #include <SFML/Graphics.hpp>
 #include <client/config/ClientConfig.hpp>
 

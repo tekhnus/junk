@@ -1,6 +1,8 @@
 #pragma once
 
-#include <SFGUI/SFGUI.hpp>
+#include <SFGUI/Window.hpp>
+#include <SFGUI/Box.hpp>
+#include <SFGUI/Desktop.hpp>
 #include <SFML/Graphics.hpp>
 
 namespace sfg {

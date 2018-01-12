@@ -1,4 +1,5 @@
 #include "SimpleMenu.hpp"
+#include <SFGUI/Button.hpp>
 
 namespace junk
 {
