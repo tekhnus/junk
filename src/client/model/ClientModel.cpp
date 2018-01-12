@@ -108,7 +108,7 @@ void ClientModel::addGameObject(const Patch& patch)
   if (patch.id == clientInfo.id)
   {
     ClientConfig config;
-    config.load("client_config.json");
+    config.load("/tmp/client_config.json");
     Action rename;
     rename.playerId = clientInfo.id;
     rename.actionType = ActionType::CHANGE_SETTINGS;

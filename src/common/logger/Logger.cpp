@@ -18,13 +18,13 @@ Logger::Logger(const std::string& title,
 : file(filename.c_str(), std::ios::app), title(title),
 color(nextColor()), verbose(verbose)
 {
-	settings.load("logger_config.json");
+	settings.load("/tmp/logger_config.json");
 }
 
 Logger::Logger(const std::string& title)
 : title(title), color(nextColor()), verbose(true)
 {
-	settings.load("logger_config.json");
+	settings.load("/tmp/logger_config.json");
 }
 
 Logger::~Logger()

@@ -18,7 +18,7 @@ AddressFetch::AddressFetch(sfg::Desktop& desktop) :  window(sfg::Window::Create(
   window->SetPosition(sf::Vector2f(200.0f, 200.0f));
 
   try {
-    config.load("client_config.json");
+    config.load("/tmp/client_config.json");
   }
   catch(std::exception ex) {}
 
@@ -50,7 +50,7 @@ sfg::Window::Ptr AddressFetch::getWindow()
 void AddressFetch::updateHistory()
 {
   config.recent.push_back(getAddress());
-  config.save("client_config.json");
+  config.save("/tmp/client_config.json");
 }
 
 }
