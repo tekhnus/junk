@@ -38,7 +38,7 @@ Bullet::Bullet(Player* creator, int type)
   this->type = type;
 
   double power = 100;
-  body->ApplyLinearImpulse(b2Vec2(power * cos(angle), power*sin(angle)), body->GetWorldCenter());
+  body->ApplyLinearImpulse(b2Vec2(power * cos(angle), power*sin(angle)), body->GetWorldCenter(), true);
 
   setOwner(creator->getName());
 }

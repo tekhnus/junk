@@ -43,8 +43,8 @@ void Player::process()
   GameObject::process();
   b2Vec2 pos = body->GetWorldCenter();
   double angle = body->GetAngle();
-  body->ApplyForceToCenter(force);
-  body->ApplyTorque(torque);
+  body->ApplyForceToCenter(force, true);
+  body->ApplyTorque(torque, true);
 
   position.x = pos.x;
   position.y = pos.y;
