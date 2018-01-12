@@ -8,7 +8,7 @@ add_definitions (-std=c++11 -g)
 include_directories (/usr/include/sigc++-2.0)
 include_directories (/usr/lib/x86_64-linux-gnu/sigc++-2.0/include)
 
-include_directories (/usr/local/include/thrift/)
+include_directories (/usr/include/thrift/)
 
 add_definitions (-DHAVE_NETINET_IN_H)
 add_definitions (-DHAVE_CONFIG_H)
