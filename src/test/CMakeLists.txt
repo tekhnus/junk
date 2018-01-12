@@ -17,4 +17,4 @@ target_link_libraries(servertest server servermodel servernetworkmodel servergam
                       commonbullet commonplayer commonunit commongameobject clientservicehandler logger utils
                       sfml-graphics sfml-window sfml-system pthread event thriftnb thrift event Box2D)
 
-install (TARGETS junk DESTINATION bin)
+install (TARGETS junk servertest DESTINATION bin)
