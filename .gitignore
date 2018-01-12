@@ -6,7 +6,6 @@ _CPack_Packages
 *.txt
 *.cmake
 *.log
-*.json
 *.swp
 junk.*
 Junk.*
