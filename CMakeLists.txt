@@ -17,10 +17,10 @@ link_directories (/opt/lib)
 
 add_subdirectory (src build)
 
+install (FILES arial.ttf Theme.theme map.json DESTINATION share/junk)
+
 set (CPACK)
 set (CPACK_GENERATOR "DEB")
 set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Junk Team")
-set (LIB_PREF /usr/local/lib)
-install (FILES arial.ttf Theme.theme DESTINATION share/junk)
-include (CPack)
 
+include (CPack)
