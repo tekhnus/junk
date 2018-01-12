@@ -1,19 +1,10 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.1)
 
 project (junk CXX)
-
-set (CMAKE_CXX_COMPILER g++-4.8)
-add_definitions (-std=c++11 -g)
-
-include_directories (/usr/include/sigc++-2.0)
-include_directories (/usr/lib/x86_64-linux-gnu/sigc++-2.0/include)
-
-include_directories (/usr/include/thrift/)
+set (CMAKE_CXX_STANDARD 11)
 
 add_definitions (-DHAVE_NETINET_IN_H)
 add_definitions (-DHAVE_CONFIG_H)
-
-link_directories (/opt/lib)
 
 add_subdirectory (src build)
 
