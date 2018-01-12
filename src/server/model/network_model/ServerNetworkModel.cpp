@@ -5,17 +5,17 @@ namespace junk
 
 ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODEL", "server_model.log", true)
 {
-  handler = boost::shared_ptr<ClientServiceHandler > (new ClientServiceHandler());
-  processor = boost::shared_ptr<TProcessor > (new ClientServiceProcessor(handler));
-  protocolFactory = boost::shared_ptr<TProtocolFactory > (new TCompactProtocolFactory());
-
+  handler = std::shared_ptr<ClientServiceHandler > (new ClientServiceHandler());
+  processor= std::shared_ptr<TProcessor > (new ClientServiceProcessor(handler));
+  protocolFactory = std::shared_ptr<TProtocolFactory > (new TCompactProtocolFactory());
+  transport = std::shared_ptr<TNonblockingServerTransport > (new TNonblockingServerSocket(7777));
   // using thread pool with maximum 15 threads to handle incoming requests
-  threadManager = boost::shared_ptr<ThreadManager > (ThreadManager::newSimpleThreadManager(15));
-  threadFactory = boost::shared_ptr<PosixThreadFactory > (new PosixThreadFactory());
+  threadManager = std::shared_ptr<ThreadManager > (ThreadManager::newSimpleThreadManager(15));
+  threadFactory = std::shared_ptr<PosixThreadFactory > (new PosixThreadFactory());
   threadManager->threadFactory(threadFactory);
   threadManager->start();
-  server = boost::shared_ptr<TNonblockingServer >
-    (new TNonblockingServer(processor, protocolFactory, 7777, threadManager));
+  server = std::shared_ptr<TNonblockingServer >
+    (new TNonblockingServer(processor, protocolFactory, transport, threadManager));
 
   serverThread = std::shared_ptr<std::thread >
     (new std::thread(&TNonblockingServer::serve, server.get()));

@@ -13,10 +13,10 @@ int32_t ClientNetworkModel::connectToServer(const std::string& serverIp, int por
 {
   logger.debug("Connecting to server");
 
-  socket = boost::shared_ptr<TSocket > (new TSocket(serverIp, port));
-  transport = boost::shared_ptr<TTransport > (new TFramedTransport(socket));
-  protocol = boost::shared_ptr<TProtocol > (new TCompactProtocol(transport));
-  clientServiceClient = boost::shared_ptr<ClientServiceClient > (new ClientServiceClient(protocol));
+  socket = std::shared_ptr<TSocket > (new TSocket(serverIp, port));
+  transport = std::shared_ptr<TTransport > (new TFramedTransport(socket));
+  protocol = std::shared_ptr<TProtocol > (new TCompactProtocol(transport));
+  clientServiceClient = std::shared_ptr<ClientServiceClient > (new ClientServiceClient(protocol));
 
   transport->open();
 

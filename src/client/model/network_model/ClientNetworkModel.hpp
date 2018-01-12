@@ -40,10 +40,10 @@ public:
 private:
   SessionInfo sessionInfo;
 
-  boost::shared_ptr<TSocket> socket;
-  boost::shared_ptr<TTransport> transport;
-  boost::shared_ptr<TProtocol> protocol;
-  boost::shared_ptr<ClientServiceClient> clientServiceClient;
+  std::shared_ptr<TSocket> socket;
+  std::shared_ptr<TTransport> transport;
+  std::shared_ptr<TProtocol> protocol;
+  std::shared_ptr<ClientServiceClient> clientServiceClient;
 
   std::mutex socketMutex;
 

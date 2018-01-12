@@ -11,6 +11,7 @@
 #include <thrift/server/TThreadPoolServer.h>
 #include <thrift/server/TThreadedServer.h>
 #include <thrift/server/TNonblockingServer.h>
+#include <thrift/transport/TNonblockingServerSocket.h>
 #include <thrift/transport/TSocket.h>
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TTransportUtils.h>
@@ -43,12 +44,13 @@ public:
 private:
 
   // Client
-  boost::shared_ptr<ClientServiceHandler> handler;
-  boost::shared_ptr<TProcessor> processor;
-  boost::shared_ptr<TProtocolFactory> protocolFactory;
-  boost::shared_ptr<ThreadManager> threadManager;
-  boost::shared_ptr<PosixThreadFactory> threadFactory;
-  boost::shared_ptr<TNonblockingServer> server;
+  std::shared_ptr<ClientServiceHandler> handler;
+  std::shared_ptr<TProcessor> processor;
+  std::shared_ptr<TProtocolFactory> protocolFactory;
+  std::shared_ptr<TNonblockingServerTransport > transport;
+  std::shared_ptr<ThreadManager> threadManager;
+  std::shared_ptr<PosixThreadFactory> threadFactory;
+  std::shared_ptr<TNonblockingServer> server;
 
   std::shared_ptr<std::thread> serverThread;
 
