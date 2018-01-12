@@ -4,14 +4,12 @@ namespace cpp junk
 
 include "Shared.thrift"
 
-typedef Shared.Vector2f Vector2f
-
 struct MoveAction {
-  1: Vector2f direction
+  1: Shared.Vector2f direction
 }
 
 struct RotateAction {
-  1: Vector2f direction
+  1: Shared.Vector2f direction
 }
 
 struct FireAction {

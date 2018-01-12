@@ -4,8 +4,6 @@ namespace cpp junk
 
 include "Shared.thrift"
 
-typedef Shared.Vector2f Vector2f
-
 struct DestroyInfo {
   1: bool isDestructing,
   2: i32 destroyCountdown;
@@ -18,8 +16,8 @@ struct GameObjectPatch {
 
 struct UnitPatch {
   1: GameObjectPatch gameObjectPatch,
-  2: Vector2f position,
-  3: Vector2f direction
+  2: Shared.Vector2f position,
+  3: Shared.Vector2f direction
 }
 
 struct BonusPatch {
@@ -43,7 +41,7 @@ struct BulletPatch {
 
 struct WallPatch {
   1: UnitPatch unitPatch,
-  2: list<Vector2f> corners
+  2: list<Shared.Vector2f> corners
 }
 
 enum GameObjectType {
