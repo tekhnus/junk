@@ -11,7 +11,7 @@ namespace view {
 sf::Font createFont()
 {
     sf::Font font;
-    font.loadFromFile("/usr/share/junk/arial.ttf");
+    font.loadFromFile("/usr/local/share/junk/arial.ttf");
     return font;
 }
 

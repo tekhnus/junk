@@ -11,7 +11,7 @@ ServerNetworkModel::ServerNetworkModel() : logger("SERVER_NETWORK_MODEL", "serve
   transport = std::shared_ptr<TNonblockingServerTransport > (new TNonblockingServerSocket(7777));
   // using thread pool with maximum 15 threads to handle incoming requests
   threadManager = std::shared_ptr<ThreadManager > (ThreadManager::newSimpleThreadManager(15));
-  threadFactory = std::shared_ptr<PosixThreadFactory > (new PosixThreadFactory());
+  threadFactory = std::shared_ptr<ThreadFactory > (new ThreadFactory());
   threadManager->threadFactory(threadFactory);
   threadManager->start();
   server = std::shared_ptr<TNonblockingServer >

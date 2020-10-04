@@ -85,7 +85,7 @@ App() : settings(0, 0, 2),
 	fetcher(desktop),
 	showPause(true)
 {
-  if(!desktop.LoadThemeFromFile("/usr/share/junk/Theme.theme"))
+  if(!desktop.LoadThemeFromFile("/usr/local/share/junk/Theme.theme"))
   {
     junk::dbg << "Theme was not loaded";
   }

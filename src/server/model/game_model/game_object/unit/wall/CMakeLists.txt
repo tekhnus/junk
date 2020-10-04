@@ -1,1 +1,0 @@
-add_library (servermodelwall Wall.cpp)

@@ -1,6 +1,0 @@
-add_library (clientviewunit Unit.cpp)
-
-add_subdirectory (player)
-add_subdirectory (bullet)
-add_subdirectory (wall)
-add_subdirectory (bonus)

@@ -33,7 +33,7 @@ ServerGameModel::~ServerGameModel()
 void ServerGameModel::start()
 {
   isRunning = true;
-  loadMap("/usr/share/junk/map.json");
+  loadMap("/usr/local/share/junk/map.json");
   gameLoopTimer.restart();
   gameLoopThread = std::thread(std::ref(*this));
 

@@ -5,7 +5,7 @@
 #include <common/service/client/ClientServiceHandler.hpp>
 
 #include <thrift/concurrency/ThreadManager.h>
-#include <thrift/concurrency/PosixThreadFactory.h>
+#include <thrift/concurrency/ThreadFactory.h>
 #include <thrift/protocol/TCompactProtocol.h>
 #include <thrift/server/TSimpleServer.h>
 #include <thrift/server/TThreadPoolServer.h>
@@ -49,7 +49,7 @@ private:
   std::shared_ptr<TProtocolFactory> protocolFactory;
   std::shared_ptr<TNonblockingServerTransport > transport;
   std::shared_ptr<ThreadManager> threadManager;
-  std::shared_ptr<PosixThreadFactory> threadFactory;
+  std::shared_ptr<ThreadFactory> threadFactory;
   std::shared_ptr<TNonblockingServer> server;
 
   std::shared_ptr<std::thread> serverThread;

@@ -1,4 +1,24 @@
-add_subdirectory (logger)
-add_subdirectory (service)
-add_subdirectory (game_object)
-add_subdirectory (utils)
+target_sources(server
+	PRIVATE
+		./logger/Logger.hpp
+		./logger/Settings.hpp
+		./logger/Logger.inl
+		./logger/Logger.cpp
+		./logger/Settings.cpp
+		./utils/Convert.cpp
+		./utils/Convert.hpp
+		./game_object/unit/bonus/Bonus.hpp
+		./game_object/unit/bonus/Bonus.cpp
+		./game_object/unit/wall/Wall.cpp
+		./game_object/unit/wall/Wall.hpp
+		./game_object/unit/Unit.hpp
+		./game_object/unit/bullet/Bullet.hpp
+		./game_object/unit/bullet/Bullet.cpp
+		./game_object/unit/Unit.cpp
+		./game_object/unit/player/Player.cpp
+		./game_object/unit/player/Player.hpp
+		./game_object/GameObject.cpp
+		./game_object/GameObject.hpp
+		./service/client/ClientServiceHandler.cpp
+		./service/client/ClientServiceHandler.hpp
+)

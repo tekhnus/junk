@@ -1,6 +1,10 @@
 #include <SFML/System.hpp>
 #include "ServerModel.hpp"
 
+using boost::placeholders::_1;
+using boost::placeholders::_2;
+
+
 namespace junk {
 namespace server {
 namespace model {

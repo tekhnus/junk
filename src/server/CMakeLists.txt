@@ -1,3 +1,25 @@
-add_subdirectory (model)
-
-add_library (server Server.cpp)
+target_sources(server
+	PRIVATE
+		./Server.hpp
+		./model/ServerModel.hpp
+		./model/game_model/CollisionHandler.cpp
+		./model/game_model/ServerGameModel.hpp
+		./model/game_model/game_object/unit/bonus/Bonus.hpp
+		./model/game_model/game_object/unit/bonus/Bonus.cpp
+		./model/game_model/game_object/unit/wall/Wall.cpp
+		./model/game_model/game_object/unit/wall/Wall.hpp
+		./model/game_model/game_object/unit/Unit.hpp
+		./model/game_model/game_object/unit/bullet/Bullet.hpp
+		./model/game_model/game_object/unit/bullet/Bullet.cpp
+		./model/game_model/game_object/unit/Unit.cpp
+		./model/game_model/game_object/unit/player/Player.cpp
+		./model/game_model/game_object/unit/player/Player.hpp
+		./model/game_model/game_object/GameObject.cpp
+		./model/game_model/game_object/GameObject.hpp
+		./model/game_model/CollisionHandler.hpp
+		./model/game_model/ServerGameModel.cpp
+		./model/network_model/ServerNetworkModel.hpp
+		./model/network_model/ServerNetworkModel.cpp
+		./model/ServerModel.cpp
+		./Server.cpp
+)
