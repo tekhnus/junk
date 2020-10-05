@@ -5,26 +5,28 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 find_package(Boost 1.74 REQUIRED)
 find_package(SFML 2.5.1 REQUIRED COMPONENTS system graphics)
-# FIXME Write a nice SFGUI config file instead of FindSFGUI.cmake
+# TODO Write a nice SFGUI config file instead of FindSFGUI.cmake
 find_package(SFGUI 0.4.0 EXACT REQUIRED)
 find_package(box2d 2.4.0 EXACT REQUIRED)
-# FIXME Write a nice Thrift CMake config file instead of FindThift.cmake
-find_package(Thrift 0.13 EXACT REQUIRED)
-# FIXME Get rid of explicit transitive dependency (libevent) configuration
-find_package(Libevent 2.1.12 EXACT REQUIRED)
+find_package(Thrift 0.13.0 EXACT REQUIRED)
+
+# TODO Report the bug in https://github.com/apache/thrift/blob/0.13.0/build/cmake/ThriftConfig.cmake.in to Thrift developers.
+include("${THRIFT_CMAKE_DIR}/thriftnbTargets.cmake")
+# TODO The emptiness of the THRIFT_COMPILER variable is also a bug.
+set(THRIFT_COMPILER "${THRIFT_BIN_DIR}/thrift")
 
 add_executable(server "")
 add_executable(client "")
 
+
 # FIXME Separate the commands
-# FIXME Do not hardcode Thrift compiler path
 add_custom_command(
 	OUTPUT gen/gen-cpp/ServiceDefinition_types.cpp gen/gen-cpp/ClientService.cpp gen/gen-cpp/Actions_types.cpp gen/gen-cpp/Patches_types.cpp gen/gen-cpp/Shared_types.cpp gen/gen-cpp/ClientService.h
 	COMMAND mkdir -p ${PROJECT_BINARY_DIR}/gen
-	COMMAND /Users/harius/env/junk/usr/bin/thrift --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/Shared.thrift
-	COMMAND /Users/harius/env/junk/usr/bin/thrift --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/Patches.thrift
-	COMMAND /Users/harius/env/junk/usr/bin/thrift --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/Actions.thrift
-	COMMAND /Users/harius/env/junk/usr/bin/thrift --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/ServiceDefinition.thrift
+    COMMAND "${THRIFT_COMPILER}" --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/Shared.thrift
+    COMMAND "${THRIFT_COMPILER}" --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/Patches.thrift
+    COMMAND "${THRIFT_COMPILER}" --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/Actions.thrift
+    COMMAND "${THRIFT_COMPILER}" --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/ServiceDefinition.thrift
 	COMMENT "Thrifting service" 
 )
 target_include_directories(server PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/gen)
@@ -54,13 +56,10 @@ target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_compile_features(server PRIVATE cxx_std_11)
 target_compile_features(client PRIVATE cxx_std_11)
 
-target_link_libraries(server sfml-system ${THRIFT_STATIC_LIB} box2d::box2d /Users/harius/env/junk/usr/lib/libthriftnb.a)
-target_link_libraries(client sfml-system sfml-graphics ${THRIFT_STATIC_LIB} box2d::box2d ${SFGUI_LIBRARY})
+target_link_libraries(server sfml-system thrift::thrift thriftnb::thriftnb box2d::box2d)
+target_link_libraries(client sfml-system sfml-graphics thrift::thrift thriftnb::thriftnb box2d::box2d ${SFGUI_LIBRARY})
 
-# FIXME The following include paths and dependencies should be propagated by target_link_libraries(...)
-target_include_directories(server PRIVATE ${THRIFT_INCLUDE_DIR})
-target_include_directories(client PRIVATE ${THRIFT_INCLUDE_DIR})
+# TODO After the removal of FindSFGUI.cmake, this explicit include dir configuration can be dropped.
 target_include_directories(client PRIVATE ${SFGUI_INCLUDE_DIR})
-target_link_libraries(server libevent::core)
 
 add_subdirectory(src)
