@@ -12,41 +12,57 @@ find_package(Thrift 0.13.0 EXACT REQUIRED)
 
 # TODO Report the bug in https://github.com/apache/thrift/blob/0.13.0/build/cmake/ThriftConfig.cmake.in to Thrift developers.
 include("${THRIFT_CMAKE_DIR}/thriftnbTargets.cmake")
-# TODO The emptiness of the THRIFT_COMPILER variable is also a bug.
+# TODO The emptiness of the THRIFT_COMPILER variable should also be reported as a bug.
 set(THRIFT_COMPILER "${THRIFT_BIN_DIR}/thrift")
 
 add_executable(server "")
 add_executable(client "")
 
+file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/gen)
 
-# FIXME Separate the commands
-add_custom_command(
-	OUTPUT gen/gen-cpp/ServiceDefinition_types.cpp gen/gen-cpp/ClientService.cpp gen/gen-cpp/Actions_types.cpp gen/gen-cpp/Patches_types.cpp gen/gen-cpp/Shared_types.cpp gen/gen-cpp/ClientService.h
-	COMMAND mkdir -p ${PROJECT_BINARY_DIR}/gen
-    COMMAND "${THRIFT_COMPILER}" --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/Shared.thrift
-    COMMAND "${THRIFT_COMPILER}" --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/Patches.thrift
-    COMMAND "${THRIFT_COMPILER}" --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/Actions.thrift
-    COMMAND "${THRIFT_COMPILER}" --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/src/common/service/ServiceDefinition.thrift
-	COMMENT "Thrifting service" 
+target_include_directories(server PRIVATE ${PROJECT_BINARY_DIR}/gen)
+target_include_directories(client PRIVATE ${PROJECT_BINARY_DIR}/gen)
+
+macro(add_thrift_rule)
+    cmake_parse_arguments(ADD_THRIFT "" SOURCE OUTPUT ${ARGN})
+    add_custom_command(
+        OUTPUT ${ADD_THRIFT_OUTPUT}
+        COMMAND "${THRIFT_COMPILER}" --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/${ADD_THRIFT_SOURCE}
+    )
+endmacro()
+
+add_thrift_rule(
+        OUTPUT gen/gen-cpp/Shared_types.cpp
+        SOURCE src/common/service/Shared.thrift
 )
-target_include_directories(server PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/gen)
-target_include_directories(client PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/gen)
+add_thrift_rule(
+        OUTPUT gen/gen-cpp/Patches_types.cpp
+        SOURCE src/common/service/Patches.thrift
+)
+add_thrift_rule(
+        OUTPUT gen/gen-cpp/Actions_types.cpp
+        SOURCE src/common/service/Actions.thrift
+)
+add_thrift_rule(
+        OUTPUT gen/gen-cpp/ServiceDefinition_types.cpp gen/gen-cpp/ClientService.cpp
+        SOURCE src/common/service/ServiceDefinition.thrift
+)
 
 target_sources(server
-	PRIVATE
-		${PROJECT_BINARY_DIR}/gen/gen-cpp/ServiceDefinition_types.cpp
-		${PROJECT_BINARY_DIR}/gen/gen-cpp/ClientService.cpp
-		${PROJECT_BINARY_DIR}/gen/gen-cpp/Actions_types.cpp
-		${PROJECT_BINARY_DIR}/gen/gen-cpp/Patches_types.cpp
-		${PROJECT_BINARY_DIR}/gen/gen-cpp/Shared_types.cpp
+    PRIVATE
+        ${PROJECT_BINARY_DIR}/gen/gen-cpp/ServiceDefinition_types.cpp
+        ${PROJECT_BINARY_DIR}/gen/gen-cpp/ClientService.cpp
+        ${PROJECT_BINARY_DIR}/gen/gen-cpp/Actions_types.cpp
+        ${PROJECT_BINARY_DIR}/gen/gen-cpp/Patches_types.cpp
+        ${PROJECT_BINARY_DIR}/gen/gen-cpp/Shared_types.cpp
 )
 target_sources(client
-	PRIVATE
-		${PROJECT_BINARY_DIR}/gen/gen-cpp/ServiceDefinition_types.cpp
-		${PROJECT_BINARY_DIR}/gen/gen-cpp/ClientService.cpp
-		${PROJECT_BINARY_DIR}/gen/gen-cpp/Actions_types.cpp
-		${PROJECT_BINARY_DIR}/gen/gen-cpp/Patches_types.cpp
-		${PROJECT_BINARY_DIR}/gen/gen-cpp/Shared_types.cpp
+    PRIVATE
+        ${PROJECT_BINARY_DIR}/gen/gen-cpp/ServiceDefinition_types.cpp
+        ${PROJECT_BINARY_DIR}/gen/gen-cpp/ClientService.cpp
+        ${PROJECT_BINARY_DIR}/gen/gen-cpp/Actions_types.cpp
+        ${PROJECT_BINARY_DIR}/gen/gen-cpp/Patches_types.cpp
+        ${PROJECT_BINARY_DIR}/gen/gen-cpp/Shared_types.cpp
 )
 
 target_include_directories(server PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
