@@ -121,7 +121,7 @@ App() : settings(0, 0, 2),
   for (int counter = 0; window.isOpen(); ++counter)
   {
 	
-    view.safe.lock();
+    view.processInput();
   // printf("Cycle interation %d: %d\n", counter, mainMenu.getWindow() == nullptr);
 
     sf::Event event;
@@ -169,7 +169,6 @@ App() : settings(0, 0, 2),
   // printf("Before window display: %d\n", mainMenu.getWindow() == nullptr);
     window.display();
 
-    view.safe.unlock();
     sf::sleep(sf::milliseconds(30));
   }
 

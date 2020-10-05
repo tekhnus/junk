@@ -64,15 +64,14 @@ public:
   mutable std::mutex safe;
   sf::RenderWindow* window;
   static sf::Font font;
+  void processInput();
 private:
 
   GameObjectFactory gameObjectFactory;
   std::unordered_map<int32_t, std::unique_ptr<GameObject> > gameObjects;
 
   int32_t clientId;
-  void processInput();
   mutable Logger logger;
-  std::thread inputThread;
   bool prevUp, prevDown, prevLeft, prevRight, prevClicked;
   sf::Vector2i prevPos;
   bool alive;

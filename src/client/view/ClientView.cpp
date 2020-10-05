@@ -47,7 +47,7 @@ sf::Vector2f getDiff(bool up, bool down, bool left, bool right)
 
 ClientView::ClientView()
 : logger("CLIENT_VIEW", "client_view.log", true), clientId(-1)
-, inputThread(&ClientView::processInput, this), alive(false)
+, alive(false)
 {
   setWindowHeigth(360);
   setWindowWidth(360);
@@ -56,7 +56,6 @@ ClientView::ClientView()
 ClientView::~ClientView()
 {
   alive = false;
-  inputThread.join();
 }
 
 void ClientView::setModel(model::ClientModel* clientModel)
@@ -250,16 +249,12 @@ void ClientView::reset()
 
 void ClientView::processInput()
 {
-  while(true){
-
-  while (alive)
-  {
-    if (clientId == -1)
-      continue;
+  if (!alive || clientId == -1) {
+      return;
+  }
 
 logger << "Processing input";
 
-    safe.lock();
 
     bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
     bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
@@ -293,14 +288,6 @@ logger << "Processing input";
 
     logger << "Processed mouse";
 
-    safe.unlock();
-
-    std::chrono::milliseconds tm(30);
-    std::this_thread::sleep_for(tm);
-  }
-  std::chrono::milliseconds tm(300);
-  std::this_thread::sleep_for(tm);
-  }
 }
 
 void ClientView::shutdown()
