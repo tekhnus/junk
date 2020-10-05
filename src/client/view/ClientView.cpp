@@ -4,6 +4,9 @@
 #include "game_object/unit/Unit.hpp"
 #include "game_object/unit/player/Player.hpp"
 
+using boost::placeholders::_1;
+using boost::placeholders::_2;
+
 namespace junk {
 namespace client {
 namespace view {

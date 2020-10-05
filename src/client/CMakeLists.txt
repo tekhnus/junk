@@ -1,0 +1,26 @@
+target_sources(client
+    PRIVATE
+        ./Client.cpp
+        ./config/ClientConfig.cpp
+        ./gui/AddressFetch.cpp
+        ./gui/SimpleMenu.cpp
+        ./gui/HUD.cpp
+        ./model/ClientModel.cpp
+        ./model/game_object/unit/bonus/Bonus.cpp
+        ./model/game_object/unit/wall/Wall.cpp
+        ./model/game_object/unit/bullet/Bullet.cpp
+        ./model/game_object/unit/Unit.cpp
+        ./model/game_object/unit/player/Player.cpp
+        ./model/game_object/GameObject.cpp
+        ./model/game_object/GameObjectFactory.cpp
+        ./model/network_model/ClientNetworkModel.cpp
+        ./view/ClientView.cpp
+        ./view/game_object/unit/bonus/Bonus.cpp
+        ./view/game_object/unit/wall/Wall.cpp
+        ./view/game_object/unit/bullet/Bullet.cpp
+        ./view/game_object/unit/Unit.cpp
+        ./view/game_object/unit/player/Player.cpp
+        ./view/game_object/GameObject.cpp
+        ./view/game_object/GameObjectFactory.cpp
+        ./view/Unit.cpp
+)

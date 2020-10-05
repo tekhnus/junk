@@ -1,5 +1,7 @@
 #include "GameObject.hpp"
 
+using boost::placeholders::_1;
+
 namespace junk {
 namespace client {
 namespace view {

@@ -7,7 +7,6 @@
 #include <boost/uuid/uuid.hpp>
 
 #include <thrift/concurrency/ThreadManager.h>
-#include <thrift/concurrency/PosixThreadFactory.h>
 #include <thrift/protocol/TCompactProtocol.h>
 #include <thrift/server/TSimpleServer.h>
 #include <thrift/server/TThreadPoolServer.h>
