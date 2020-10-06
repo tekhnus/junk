@@ -73,7 +73,9 @@ void ClientNetworkModel::makeAction(const Action& action)
 void ClientNetworkModel::shutdown()
 {
   alive = false;
-  transport->close();
+  if (transport != nullptr) {
+      transport->close();
+  }
   logger << "ClientNetworkModel shut down";
 }
 

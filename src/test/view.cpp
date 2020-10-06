@@ -95,7 +95,7 @@ App() : settings(0, 0, 2),
   hud.addState("exit", std::bind(&App::quit, this));
   hud.addState("dead", std::bind(&App::dead, this));
 
-  model.shutdownSignal.connect(boost::bind(&App::dead, this));
+  // model.shutdownSignal.connect(boost::bind(&App::dead, this));
   mainMenu.addItem("Play", hud.getEvent("connect"));
   mainMenu.addItem("Exit", hud.getEvent("exit"));
   fetcher.onOK(hud.getEvent("game"));
