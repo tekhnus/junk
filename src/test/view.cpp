@@ -78,7 +78,7 @@ void dead()
 }
 public:
 App() : settings(0, 0, 2),
-        window(sf::VideoMode(720, 720), "Title", sf::Style::Default, settings),
+        window(sf::VideoMode(view.getWindowWidth(), view.getWindowHeigth()), "Junk", sf::Style::Default, settings),
 	mainMenu(desktop, "Main menu"),
 	deadMenu(desktop, "You are dead"),
 	pauseMenu(desktop, "Game menu"),

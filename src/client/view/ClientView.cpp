@@ -49,8 +49,8 @@ ClientView::ClientView()
 : logger("CLIENT_VIEW", "client_view.log", true), clientId(-1)
 , alive(false)
 {
-  setWindowHeigth(360);
-  setWindowWidth(360);
+  setWindowHeigth(sf::VideoMode::getDesktopMode().height * 2 / 3);
+  setWindowWidth(sf::VideoMode::getDesktopMode().width * 2 / 3);
 }
 
 ClientView::~ClientView()
@@ -200,7 +200,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
   }
 
   states.transform.translate(shift * -20.0f);
-  states.transform.translate(getWindowHeigth(), getWindowWidth());
+  states.transform.translate(getWindowHeigth() / 2, getWindowWidth() / 2);
   for (auto& gameObject : gameObjects)
   {
     //logger.debug(shift.x, " ", shift.y);
