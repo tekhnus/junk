@@ -7,6 +7,7 @@ target_sources(server
 		./logger/Settings.cpp
 		./utils/Convert.cpp
 		./utils/Convert.hpp
+        ./utils/Resource.cpp
 		./game_object/unit/bonus/Bonus.hpp
 		./game_object/unit/bonus/Bonus.cpp
 		./game_object/unit/wall/Wall.cpp
@@ -31,6 +32,7 @@ target_sources(client
 		./logger/Settings.cpp
 		./utils/Convert.cpp
 		./utils/Convert.hpp
+        ./utils/Resource.cpp
 		./game_object/unit/bonus/Bonus.hpp
 		./game_object/unit/bonus/Bonus.cpp
 		./game_object/unit/wall/Wall.cpp

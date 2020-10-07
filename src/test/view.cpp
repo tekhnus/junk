@@ -5,6 +5,7 @@
 #include "client/gui/HUD.hpp"
 #include "client/gui/SimpleMenu.hpp"
 #include "common/logger/Logger.hpp"
+#include "common/utils/Resource.hpp"
 #include <SFML/Window.hpp>
 #include <SFGUI/SFGUI.hpp>
 #include <mutex>
@@ -85,7 +86,7 @@ App() : settings(0, 0, 2),
 	fetcher(desktop),
 	showPause(true)
 {
-  if(!desktop.LoadThemeFromFile("/usr/local/share/junk/Theme.theme"))
+  if(!desktop.LoadThemeFromFile(get_resource_path("Theme.theme")))
   {
     junk::dbg << "Theme was not loaded";
   }

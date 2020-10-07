@@ -1,5 +1,24 @@
 ### Build instructions
 
+```sh
+cd junk
+mkdir build
+cd build
+
+cmake ..
+# If needed, install the missing dependencies and/or fix other problems
+# and/or edit the properties in CMakeCache.txt and rerun this command.
+
+make
+
+# Those are conveniency wrappers around the binaries
+# which launch them with the correct environment.
+make run-server
+make run-client
+```
+
+#### Dependency building advices
+
 - **thrift** should be built by CMake using the following instruction: https://github.com/apache/thrift/blob/master/build/cmake/README.md
   Building by ./configure shouldn't be used, as it won't generate the lib/cmake files.
 - **libevent** (a dependency of **thfift**) also should be built using cmake
@@ -11,7 +30,9 @@
   Otherwise you will get a linking error at runtime.
   TODO: Report this as a bug to SFML developers.
 
-### Keyboard access issue
+### Known issues
+
+#### Keyboard access problem
 
 Currenly, keyboard state checking (via isKeyPressed(...)) is used.
 For it to work on Mac, keyboard access should be granted in Preferences.

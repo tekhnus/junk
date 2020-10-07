@@ -3,6 +3,7 @@
 #include "game_object/GameObject.hpp"
 #include "game_object/unit/Unit.hpp"
 #include "game_object/unit/player/Player.hpp"
+#include "common/utils/Resource.hpp"
 
 using boost::placeholders::_1;
 using boost::placeholders::_2;
@@ -14,7 +15,7 @@ namespace view {
 sf::Font createFont()
 {
     sf::Font font;
-    font.loadFromFile("/usr/local/share/junk/arial.ttf");
+    font.loadFromFile(get_resource_path("arial.ttf"));
     return font;
 }
 

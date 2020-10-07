@@ -79,3 +79,24 @@ target_link_libraries(client sfml-system sfml-graphics thrift::thrift thriftnb::
 target_include_directories(client PRIVATE ${SFGUI_INCLUDE_DIR})
 
 add_subdirectory(src)
+
+set_target_properties(server PROPERTIES
+    RESOURCE
+        resources/map.json
+)
+set_target_properties(client PROPERTIES
+    RESOURCE
+        "resources/arial.ttf;resources/Theme.theme"
+)
+install(TARGETS server client RESOURCE DESTINATION share/junk)
+
+add_custom_target(run-server
+    COMMAND JUNK_RESOURCE_DIR=${PROJECT_SOURCE_DIR}/resources ./server
+    DEPENDS server
+    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+)
+add_custom_target(run-client
+    COMMAND JUNK_RESOURCE_DIR=${PROJECT_SOURCE_DIR}/resources ./client
+    DEPENDS client
+    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+)

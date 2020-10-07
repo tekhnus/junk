@@ -1,5 +1,6 @@
 #include "ServerGameModel.hpp"
 #include "common/utils/Convert.hpp"
+#include "common/utils/Resource.hpp"
 #include <functional>
 #include <math.h>
 
@@ -33,7 +34,7 @@ ServerGameModel::~ServerGameModel()
 void ServerGameModel::start()
 {
   isRunning = true;
-  loadMap("/usr/local/share/junk/map.json");
+  loadMap(get_resource_path("map.json"));
   gameLoopTimer.restart();
   gameLoopThread = std::thread(std::ref(*this));
 
