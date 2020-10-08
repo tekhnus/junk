@@ -80,10 +80,10 @@ void dead()
 public:
 App() : settings(0, 0, 2),
         window(sf::VideoMode(view.getWindowWidth(), view.getWindowHeigth()), "Junk", sf::Style::Default, settings),
-	mainMenu(desktop, "Main menu"),
-	deadMenu(desktop, "You are dead"),
-	pauseMenu(desktop, "Game menu"),
-	fetcher(desktop),
+	mainMenu(desktop, "Main menu", window),
+	deadMenu(desktop, "You are dead", window),
+	pauseMenu(desktop, "Game menu", window),
+	fetcher(desktop, window),
 	showPause(true)
 {
   if(!desktop.LoadThemeFromFile(get_resource_path("Theme.theme")))

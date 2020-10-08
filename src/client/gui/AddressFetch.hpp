@@ -18,7 +18,7 @@ namespace junk
 class AddressFetch
 {
 public:
-  AddressFetch(sfg::Desktop& desktop);
+  AddressFetch(sfg::Desktop& desktop, sf::Window& topWindow);
   void onOK(sfg::Delegate slot);
   sf::String getAddress();
   sfg::Window::Ptr getWindow();

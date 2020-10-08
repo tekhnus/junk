@@ -3,7 +3,7 @@
 namespace junk
 {
 
-AddressFetch::AddressFetch(sfg::Desktop& desktop) :  window(sfg::Window::Create()),
+AddressFetch::AddressFetch(sfg::Desktop& desktop, sf::Window& topWindow) :  window(sfg::Window::Create()),
                                 box(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
                                 field(sfg::Entry::Create("enter server address here")),
                                 ok(sfg::Button::Create("OK")),
@@ -14,8 +14,9 @@ AddressFetch::AddressFetch(sfg::Desktop& desktop) :  window(sfg::Window::Create(
   box->Pack(field);
   box->Pack(ok);
 
-  window->SetRequisition(sf::Vector2f(300.0f, 70.0f));  
-  window->SetPosition(sf::Vector2f(200.0f, 200.0f));
+  sf::Vector2<unsigned int> desiredSize {topWindow.getSize().x / 2, 70};
+  window->SetRequisition(sf::Vector2<float>(desiredSize));  
+  window->SetPosition(sf::Vector2<float>((topWindow.getSize() - desiredSize) / 2u));
 
   try {
     config.load("/tmp/client_config.json");

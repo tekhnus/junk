@@ -1,10 +1,12 @@
 Window {
   BackgroundColor: #0066ffff;
   TitleBackgroundColor: #ff1133ff;
+  FontSize: 30;
 }
 
 Button {
   BackgroundColor: #0000ffff;
+  FontSize: 30;
 }
 
 Button:PRELIGHT {
@@ -13,4 +15,5 @@ Button:PRELIGHT {
 
 Entry {
   BackgroundColor: #334477ff;
+  FontSize: 30;
 }
