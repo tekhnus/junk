@@ -9,7 +9,7 @@ VIEW_GAME_OBJECT_IMPL(Bonus, bonus, BONUS)
 
 Bonus::Bonus()
 {
-    body.setRadius(10);
+    body.setRadius(0.5);
     body.setFillColor(sf::Color::Red);
     body.setOutlineThickness(0.0);
     body.setOrigin(sf::Vector2f(body.getRadius(), body.getRadius()));
@@ -22,7 +22,7 @@ Bonus::~Bonus()
 void Bonus::updateBonus(const model::Bonus& bonus)
 {
     position = bonus.position;
-    body.setPosition(position * 20.0f);
+    body.setPosition(position);
     bonusType = bonus.bonusType;
 
     switch (bonusType)

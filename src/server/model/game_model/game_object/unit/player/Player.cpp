@@ -107,7 +107,7 @@ void Player::rotate(const RotateAction& rotateAction)
   dbg.debug("Rotate invoked ", rotateAction.direction.x, " ", rotateAction.direction.y);
 
   sf::Vector2f rotDirection = common::to_SFML_Vector2f(rotateAction.direction);
-  rotDirection /= 20.0f;
+  // rotDirection /= 20.0f;
   //rotDirection -= position;
 
   double DEGTORAD = M_PI / 180;

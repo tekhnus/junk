@@ -192,7 +192,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
   bool drawText = false;
   if (model->gameObjects.find(clientId) != model->gameObjects.end()) {
     model::Player* player = dynamic_cast<model::Player*>(model->gameObjects[clientId].get());
-    shift = sf::Vector2f(player->position);
+    shift = -sf::Vector2f(player->position);
 
     text = sf::Text(std::to_string(player->position.x) + std::string(":") + std::to_string(player->position.y), font, 20);
     text.setColor(sf::Color::Magenta);
@@ -200,8 +200,10 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
     drawText = true;
   }
 
-  states.transform.translate(shift * -20.0f);
-  states.transform.translate(getWindowHeigth() / 2, getWindowWidth() / 2);
+  states.transform.translate(getWindowWidth() / 2, getWindowHeigth() / 2);
+  states.transform.scale(20.0f, 20.0f);
+  states.transform.translate(shift);
+
   for (auto& gameObject : gameObjects)
   {
     //logger.debug(shift.x, " ", shift.y);
@@ -284,7 +286,8 @@ logger << "Processing input";
 
     sf::Vector2i posI = sf::Mouse::getPosition(*window);
     sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
-    pos -= sf::Vector2f(getWindowHeigth(), getWindowWidth());
+    // We don't use getWindowWidth() here, because the window could be resized by the player.
+    pos -= sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2);
     rotate(pos);
 
     logger << "Processed mouse";

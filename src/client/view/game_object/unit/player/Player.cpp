@@ -7,7 +7,7 @@ namespace view {
 
 VIEW_GAME_OBJECT_IMPL(Player, player, PLAYER)
 
-Player::Player() : body(20), inner(12), gun(sf::Vector2f(25.0, 4.0))
+Player::Player() : body(1), inner(12 / 20.0), gun(sf::Vector2f(25.0 / 20.0, 4.0 / 20.0 ))
 {
     body.setOrigin(sf::Vector2f(body.getRadius(), body.getRadius()));
     inner.setOrigin(sf::Vector2f(inner.getRadius(), inner.getRadius()));
@@ -15,24 +15,24 @@ Player::Player() : body(20), inner(12), gun(sf::Vector2f(25.0, 4.0))
     body.setFillColor(sf::Color::Yellow);
     inner.setFillColor(sf::Color::Cyan);
 
-    body.setOutlineThickness(2.0);
+    body.setOutlineThickness(2.0 / 20.0);
     body.setOutlineColor(sf::Color::Green);
 
-    inner.setOutlineThickness(1);
+    inner.setOutlineThickness(1 / 20.0);
     inner.setOutlineColor(sf::Color::Black);
 
     gun.setFillColor(sf::Color::Red);
-    gun.setOrigin(sf::Vector2f(1.0, gun.getSize().y / 2.0));
+    gun.setOrigin(sf::Vector2f(1.0 / 20.0, gun.getSize().y / 2.0 / 20.0));
 
     healthBarBackground.setFillColor(sf::Color::Black);
     healthBarBackground.setOutlineColor(sf::Color::White);
-    healthBarBackground.setOutlineThickness(1.0);
+    healthBarBackground.setOutlineThickness(1.0 / 20.0);
 
     healthBar.setFillColor(sf::Color::White);
     healthBar.setOutlineColor(sf::Color::Transparent);
-    healthBar.setOutlineThickness(1.0);
+    healthBar.setOutlineThickness(1.0 / 20.0);
 
-    healthBarBackground.setOrigin(sf::Vector2f(body.getRadius(), 8 + body.getRadius()));
+    healthBarBackground.setOrigin(sf::Vector2f(body.getRadius(), 8 / 20.0 + body.getRadius()));
     healthBar.setOrigin(healthBarBackground.getOrigin());
 }
 
@@ -47,7 +47,7 @@ void Player::updatePlayer(const model::Player& player)
   dbg.debug(player.direction.x, " ", player.direction.y);
   dbg.debug("gun rotation: ", std::to_string(gun.getRotation()));
 
-  body.setPosition(20.0f * player.position);
+  body.setPosition(player.position);
   inner.setPosition(body.getPosition());
   gun.setPosition(body.getPosition());
   healthBarBackground.setPosition(body.getPosition());
@@ -58,14 +58,14 @@ void Player::updatePlayer(const model::Player& player)
   setScore(player.getScore());
 
   nickname = sf::Text(player.getName(), ClientView::font, 20);
-  nickname.setOrigin(sf::Vector2f(nickname.getLocalBounds().width / 2.0, 30 + body.getRadius()));
+  nickname.setOrigin(sf::Vector2f(nickname.getLocalBounds().width / 2.0, 30 / 20.0 + body.getRadius()));
   nickname.setPosition(body.getPosition());
   nickname.setColor(sf::Color::Magenta);
 
   float healthScale = float(getHealth()) / float(getMaxHealth());
 
-  healthBarBackground.setSize(sf::Vector2f(body.getRadius() * 2, 4.0f));
-  healthBar.setSize(sf::Vector2f(body.getRadius() * 2 * healthScale, 4.0f));
+  healthBarBackground.setSize(sf::Vector2f(body.getRadius() * 2, 4.0f / 20.0));
+  healthBar.setSize(sf::Vector2f(body.getRadius() * 2 * healthScale, 4.0f / 20.0));
 
   setHealth(player.getHealth());
   setMaxHealth(player.getMaxHealth());
