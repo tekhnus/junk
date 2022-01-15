@@ -7,13 +7,16 @@ find_package(Boost 1.74 REQUIRED)
 find_package(SFML 2.5.1 REQUIRED COMPONENTS system graphics)
 # TODO Write a nice SFGUI config file instead of FindSFGUI.cmake
 find_package(SFGUI 0.4.0 EXACT REQUIRED)
-find_package(box2d 2.4.0 EXACT REQUIRED)
-find_package(Thrift 0.13.0 EXACT REQUIRED)
+find_package(box2d 2.4.1 EXACT REQUIRED)
+find_package(Thrift 0.15.0 EXACT REQUIRED)
 
 # TODO Report the bug in https://github.com/apache/thrift/blob/0.13.0/build/cmake/ThriftConfig.cmake.in to Thrift developers.
 include("${THRIFT_CMAKE_DIR}/thriftnbTargets.cmake")
 # TODO The emptiness of the THRIFT_COMPILER variable should also be reported as a bug.
 set(THRIFT_COMPILER "${THRIFT_BIN_DIR}/thrift")
+
+# TODO Investigate why libevent headers are not properly included automatically.
+include_directories("${LIBEVENT_ROOT}/include")
 
 add_executable(server "")
 add_executable(client "")

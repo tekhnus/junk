@@ -118,7 +118,7 @@ endif()
 find_library(
 	SFGUI_LIBRARY_DYNAMIC_RELEASE
 	NAMES
-		sfgui
+		SFGUI
 	PATH_SUFFIXES
 		lib
 		lib64
