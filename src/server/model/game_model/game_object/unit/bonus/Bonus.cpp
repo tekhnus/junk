@@ -16,6 +16,7 @@ Bonus::Bonus(b2World *world, sf::Vector2f bornPosition, int newBonusType)
 {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
+    // bodyDef.fixedRotation = true;
 
     bodyDef.position.Set(bornPosition.x, bornPosition.y);
 
@@ -23,14 +24,19 @@ Bonus::Bonus(b2World *world, sf::Vector2f bornPosition, int newBonusType)
     body->SetUserData((Unit*)this);
 
     b2CircleShape circleShape;
+    // circleShape.m_p.Set(0.0f, 0.0f);
     circleShape.m_radius = 0.5f;
 
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &circleShape;
-    fixtureDef.density = 2.0f;
-    fixtureDef.restitution = 0.7f;
-
-    body->CreateFixture(&fixtureDef);
+    // b2FixtureDef fixtureDef;
+    // fixtureDef.shape = &circleShape;
+    // fixtureDef.density = 2.0f;
+    // fixtureDef.restitution = 0.7f;
+    // body->CreateFixture(&fixtureDef);
+    // This API fails in a very weird way.
+    // You may try to uncomment it, but prepare your GDB.
+    // Meanwhile, a workaround:
+    auto *fixture = body->CreateFixture(&circleShape, 2.0f);
+    fixture->SetRestitution(0.7f);
     body->SetLinearDamping(0.1);
     // body->ApplyLinearImpulse(b2Vec2(10, 10), body->GetWorldCenter());
 

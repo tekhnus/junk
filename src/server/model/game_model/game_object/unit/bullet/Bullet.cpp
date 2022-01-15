@@ -27,12 +27,8 @@ Bullet::Bullet(Player* creator, int type)
   b2CircleShape circleShape;
   circleShape.m_radius = 1.0f / 7;
 
-  b2FixtureDef fixtureDef;
-  fixtureDef.shape = &circleShape;
-  fixtureDef.density = 2.0f;
-  fixtureDef.restitution = 0.7f;
-
-  body->CreateFixture(&fixtureDef);
+  auto *fixture = body->CreateFixture(&circleShape, 2.0f);
+  fixture->SetRestitution(0.7f);
   body->SetLinearDamping(0.1);
 
   this->type = type;

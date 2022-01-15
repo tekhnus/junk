@@ -89,12 +89,8 @@ void Player::init()
   b2CircleShape circleShape;
   circleShape.m_radius = 1.0f;
 
-  b2FixtureDef fixtureDef;
-  fixtureDef.shape = &circleShape;
-  fixtureDef.density = 1.0f;
-  fixtureDef.restitution = 0.5f;
-
-  body->CreateFixture(&fixtureDef);
+  auto *fixture = body->CreateFixture(&circleShape, 1.0f);
+  fixture->SetRestitution(0.5f);
   body->SetLinearDamping(1.5);
   body->SetUserData((Unit*)this);
 
