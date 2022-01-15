@@ -3,6 +3,7 @@
 #include <SFGUI/SFGUI.hpp>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <functional>
 
 namespace sfg {
 typedef std::function<void(void)> Delegate;
