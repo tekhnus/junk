@@ -9,8 +9,6 @@ find_package(Thrift 0.15.0 EXACT REQUIRED)
 
 # TODO Report the bug in https://github.com/apache/thrift/blob/0.13.0/build/cmake/ThriftConfig.cmake.in to Thrift developers.
 include("${THRIFT_CMAKE_DIR}/thriftnbTargets.cmake")
-# TODO The emptiness of the THRIFT_COMPILER variable should also be reported as a bug.
-set(THRIFT_COMPILER "${THRIFT_BIN_DIR}/thrift")
 
 add_executable(server "")
 add_executable(client "")
