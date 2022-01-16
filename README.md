@@ -6,7 +6,8 @@ cd junk
 # My last build command. You mileage will vary.
 $ cmake -B build \
     -DBoost_ROOT=$HOME/local/stow/boost_1_78_0 \
-    -DSFGUI_ROOT=$HOME/local/stow/sfgui-0.4.0 \
+    -DSFGUI_ROOT=$HOME/local/stow/SFGUI \
+    -DSFML_ROOT=$HOME/local/stow/SFML-2.5.1 \
     -Dbox2d_ROOT=$HOME/local/stow/box2d-2.4.1 \
     -DThrift_ROOT=$HOME/local/stow/thrift-0.15.0 \
     -DLibevent_ROOT=$HOME/local/stow/libevent-2.1.12 \
@@ -26,7 +27,7 @@ $ cmake --build build --target run-client
 
 - Install **flex** and **bison** with your package manager
 - Download **Boost** 1.78.0, build (all libraries) and install
-- Install **SFML** with the system's package manager
+- Download **SFML** 2.5.1, build and install
 - *Clone* the latest **SFGUI**, build and install
 - Download **Box2d** 2.4.1, build and install
 - Download the latest **libevent**, build *with CMake* and install
@@ -44,6 +45,22 @@ $ cmake -B mybuild \
     -DBUILD_TESTING=OFF \
     -DCMAKE_INSTALL_PREFIX=$HOME/local/stow/thrift-0.15.0
 $ cmake --build mybuild
+```
+
+SFML build command:
+```
+$ cmake -B build \
+    -DCMAKE_INSTALL_PREFIX=$HOME/local/stow/SFML-2.5.1 \
+    -DSFML_PKGCONFIG_INSTALL_PREFIX=$HOME/local/stow/SFML-2.5.1/lib/pkgconfig
+```
+
+SFGUI build command:
+```
+$ cmake -B build \
+    -DSFML_ROOT=$HOME/local/stow/SFML-2.5.1 \
+    -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
+    -DCMAKE_FIND_PACKAGE_PREFER_CONFIG=TRUE \
+    -DCMAKE_INSTALL_PREFIX=$HOME/local/stow/SFGUI
 ```
 
 Note:
