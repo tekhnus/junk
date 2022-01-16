@@ -15,9 +15,6 @@ include("${THRIFT_CMAKE_DIR}/thriftnbTargets.cmake")
 # TODO The emptiness of the THRIFT_COMPILER variable should also be reported as a bug.
 set(THRIFT_COMPILER "${THRIFT_BIN_DIR}/thrift")
 
-# TODO Investigate why libevent headers are not properly included automatically.
-include_directories("${LIBEVENT_ROOT}/include")
-
 add_executable(server "")
 add_executable(client "")
 
