@@ -6,7 +6,7 @@ cd junk
 # My last build command. You mileage will vary.
 cmake -B build \
     -DBoost_INCLUDE_DIR=$HOME/local/stow/boost_1_78_0/include \
-    -DSFGUI_ROOT=$HOME/local/stow/sgui-0.4 \
+    -DSFGUI_ROOT=$HOME/local/stow/sfgui-0.4.0 \
     -Dbox2d_DIR=$HOME/local/stow/box2d-2.4.1/lib/cmake/box2d \
     -DThrift_DIR=$HOME/local/stow/thrift-0.15.0/lib/cmake/thrift \
     -DLibevent_DIR=$HOME/local/stow/libevent-2.1.12/lib/cmake/libevent
@@ -24,13 +24,12 @@ cmake --build build --target run-client
 #### Dependency building advice
 
 - Install **flex** and **bison** with your package manager
-- Download, build and install **Boost** 1.78.0
+- Download **Boost** 1.78.0, build and install
 - Install **SFML** with the system's package manager
-- Download, build and install **SFGUI** 0.4.0
-- Patch the error in the SFGUI/Config.hpp: change SFGUI_MINOR_VERSION to 4 and SFGUI_REVISION_VERSION to 0
-- Download, build and install **Box2d** 2.4.1
-- Download, build *with CMake* and install **libevent** (latest)
-- Download, build *with CMake* and install **thrift** 0.15.0
+- *Clone* the latest **SFGUI**, build and install
+- Download **Box2d** 2.4.1, build and install
+- Download the latest **libevent**, build *with CMake* and install
+- Download **thrift** 0.15.0, build *with CMake* and install
 
 Thrift building instruction: https://github.com/apache/thrift/blob/master/build/cmake/README.md
 Approximate command:
