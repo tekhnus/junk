@@ -1,11 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
 project(junk CXX)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
-
 find_package(Boost 1.74 REQUIRED)
 find_package(SFML 2.5.1 REQUIRED COMPONENTS system graphics)
-# TODO Write a nice SFGUI config file instead of FindSFGUI.cmake
 find_package(SFGUI 0.4.0 EXACT REQUIRED)
 find_package(box2d 2.4.1 EXACT REQUIRED)
 find_package(Thrift 0.15.0 EXACT REQUIRED)
@@ -73,10 +70,7 @@ target_compile_features(server PRIVATE cxx_std_11)
 target_compile_features(client PRIVATE cxx_std_11)
 
 target_link_libraries(server sfml-system thrift::thrift thriftnb::thriftnb box2d::box2d)
-target_link_libraries(client sfml-system sfml-graphics thrift::thrift thriftnb::thriftnb box2d::box2d ${SFGUI_LIBRARY})
-
-# TODO After the removal of FindSFGUI.cmake, this explicit include dir configuration can be dropped.
-target_include_directories(client PRIVATE ${SFGUI_INCLUDE_DIR})
+target_link_libraries(client sfml-system sfml-graphics thrift::thrift thriftnb::thriftnb box2d::box2d SFGUI::SFGUI)
 
 add_subdirectory(src)
 
