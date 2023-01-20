@@ -4,10 +4,13 @@
  (guix build-system cmake)
  (guix licenses)
  (gnu packages rpc)
+ (gnu packages linux)
  (gnu packages version-control)
+ (gnu packages gl)
  (gnu packages flex)
  (gnu packages bison)
  (gnu packages boost)
+ (gnu packages commencement)
  (gnu packages game-development)
  (gnu packages libevent))
 
@@ -40,11 +43,13 @@
             (file-name (git-file-name name version))
             (sha256
              (base32
-              "17pjvprmdrx4h6bb1hhc98w9qi6ki7yl57f090n9kbhswxqfs7s3"))))
+              "0x4c79hjgzm8hxkchi5zxlc1fi5jikxddmlzb6bpyym4rjrvhm6z"))))
    (build-system cmake-build-system)
+   (arguments
+    `(#:tests? #false))
    (outputs '("out" "debug"))
    (inputs
-    (list sfml))
+    (list sfml mesa glew))
    (synopsis "")
    (description "")
    (license zlib)
@@ -60,4 +65,8 @@
         git
         libevent
         apache-thrift-with-libevent
+        gcc-toolchain
+        mesa
+        glew
+        linux-libre-headers
         (list apache-thrift-with-libevent "lib")))

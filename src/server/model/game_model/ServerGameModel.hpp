@@ -9,7 +9,7 @@
 #include <mutex>
 #include <chrono>
 #include <queue>
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 
 #include "game_object/GameObject.hpp"
 #include "game_object/unit/player/Player.hpp"

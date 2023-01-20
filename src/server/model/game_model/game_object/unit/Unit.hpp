@@ -3,7 +3,7 @@
 #include "server/model/game_model/game_object/GameObject.hpp"
 #include "common/game_object/unit/Unit.hpp"
 
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 
 namespace junk {
 namespace server {

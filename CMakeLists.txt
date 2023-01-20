@@ -4,15 +4,17 @@ find_package(PkgConfig REQUIRED)
 
 find_package(Boost 1.77.0 EXACT REQUIRED NO_MODULE)
 find_package(SFML 2.5.1 EXACT REQUIRED COMPONENTS system graphics NO_MODULE)
-# find_package(SFGUI 0.4.0 EXACT REQUIRED NO_MODULE)
+find_package(SFGUI 0.4.0 EXACT REQUIRED NO_MODULE)
 find_package(box2d 2.4.1 EXACT REQUIRED NO_MODULE)
+
+pkg_check_modules(libevent REQUIRED IMPORTED_TARGET libevent)
+add_library(libevent::libevent ALIAS PkgConfig::libevent)
+
 pkg_check_modules(thrift REQUIRED IMPORTED_TARGET thrift)
 add_library(thrift::thrift ALIAS PkgConfig::thrift)
 pkg_check_modules(thriftnb REQUIRED IMPORTED_TARGET thrift-nb)
 add_library(thriftnb::thriftnb ALIAS PkgConfig::thriftnb)
-
-# TODO Report the bug in https://github.com/apache/thrift/blob/0.13.0/build/cmake/ThriftConfig.cmake.in to Thrift developers.
-# include("${THRIFT_CMAKE_DIR}/thriftnbTargets.cmake")
+find_program(THRIFT_COMPILER thrift REQUIRED)
 
 add_executable(server "")
 add_executable(client "")
@@ -26,6 +28,7 @@ macro(add_thrift_rule)
     cmake_parse_arguments(ADD_THRIFT "" SOURCE OUTPUT ${ARGN})
     add_custom_command(
         OUTPUT ${ADD_THRIFT_OUTPUT}
+        COMMAND echo  "${THRIFT_COMPILER}" --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/${ADD_THRIFT_SOURCE}
         COMMAND "${THRIFT_COMPILER}" --gen cpp -o ${PROJECT_BINARY_DIR}/gen ${CMAKE_CURRENT_SOURCE_DIR}/${ADD_THRIFT_SOURCE}
     )
 endmacro()
@@ -71,7 +74,7 @@ target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_compile_features(server PRIVATE cxx_std_11)
 target_compile_features(client PRIVATE cxx_std_11)
 
-target_link_libraries(server sfml-system thrift::thrift thriftnb::thriftnb box2d::box2d)
+target_link_libraries(server sfml-system thrift::thrift thriftnb::thriftnb box2d::box2d pthread rt libevent::libevent)
 target_link_libraries(client sfml-system sfml-graphics thrift::thrift thriftnb::thriftnb box2d::box2d SFGUI::SFGUI)
 
 add_subdirectory(src)
