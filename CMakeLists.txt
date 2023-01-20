@@ -1,14 +1,18 @@
 cmake_minimum_required(VERSION 3.13)
 project(junk CXX)
+find_package(PkgConfig REQUIRED)
 
-find_package(Boost 1.78.0 EXACT REQUIRED NO_MODULE)
+find_package(Boost 1.77.0 EXACT REQUIRED NO_MODULE)
 find_package(SFML 2.5.1 EXACT REQUIRED COMPONENTS system graphics NO_MODULE)
-find_package(SFGUI 0.4.0 EXACT REQUIRED NO_MODULE)
+# find_package(SFGUI 0.4.0 EXACT REQUIRED NO_MODULE)
 find_package(box2d 2.4.1 EXACT REQUIRED NO_MODULE)
-find_package(Thrift 0.15.0 EXACT REQUIRED NO_MODULE)
+pkg_check_modules(thrift REQUIRED IMPORTED_TARGET thrift)
+add_library(thrift::thrift ALIAS PkgConfig::thrift)
+pkg_check_modules(thriftnb REQUIRED IMPORTED_TARGET thrift-nb)
+add_library(thriftnb::thriftnb ALIAS PkgConfig::thriftnb)
 
 # TODO Report the bug in https://github.com/apache/thrift/blob/0.13.0/build/cmake/ThriftConfig.cmake.in to Thrift developers.
-include("${THRIFT_CMAKE_DIR}/thriftnbTargets.cmake")
+# include("${THRIFT_CMAKE_DIR}/thriftnbTargets.cmake")
 
 add_executable(server "")
 add_executable(client "")
