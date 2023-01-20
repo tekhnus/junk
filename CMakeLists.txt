@@ -75,7 +75,7 @@ target_compile_features(server PRIVATE cxx_std_11)
 target_compile_features(client PRIVATE cxx_std_11)
 
 target_link_libraries(server sfml-system thrift::thrift thriftnb::thriftnb box2d::box2d pthread rt libevent::libevent)
-target_link_libraries(client sfml-system sfml-graphics thrift::thrift thriftnb::thriftnb box2d::box2d SFGUI::SFGUI)
+target_link_libraries(client sfml-system sfml-graphics thrift::thrift thriftnb::thriftnb box2d::box2d SFGUI::SFGUI libevent::libevent)
 
 add_subdirectory(src)
 

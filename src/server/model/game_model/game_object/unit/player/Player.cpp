@@ -92,7 +92,7 @@ void Player::init()
   auto *fixture = body->CreateFixture(&circleShape, 1.0f);
   fixture->SetRestitution(0.5f);
   body->SetLinearDamping(1.5);
-  body->SetUserData((Unit*)this);
+  body->GetUserData().pointer = reinterpret_cast<uintptr_t>((Unit*)this);
 
   force.SetZero();
   torque = 0.0f;
