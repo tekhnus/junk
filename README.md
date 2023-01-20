@@ -1,4 +1,19 @@
 ### Build instructions
+```sh
+# Enter the guix shell:
+$ cd junk
+$ guix shell --manifest=manifest.scm
+
+# Build
+$ CMAKE_PREFIX_PATH=$GUIX_ENVIRONMENT cmake -B build
+$ cmake --build build
+
+# Run:
+cmake --build build --target run-server
+cmake --build build --target run-client
+```
+
+### Old Build instructions
 
 ```sh
 cd junk
