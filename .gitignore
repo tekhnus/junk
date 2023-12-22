@@ -1,4 +1,5 @@
 mybuild
+*.core.dmp
 build
 *.log
 *.swp

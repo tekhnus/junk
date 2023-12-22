@@ -88,7 +88,7 @@ set_target_properties(client PROPERTIES
     RESOURCE
         "resources/arial.ttf;resources/Theme.theme"
 )
-# install(TARGETS server client RESOURCE DESTINATION share/junk)
+install(TARGETS server client RESOURCE DESTINATION share/junk)
 
 add_custom_target(run-server
     COMMAND JUNK_RESOURCE_DIR=${PROJECT_SOURCE_DIR}/resources ./server
