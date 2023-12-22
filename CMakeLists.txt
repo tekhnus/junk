@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 project(junk CXX)
 find_package(PkgConfig REQUIRED)
+set(SFGUI_DIR "${CMAKE_SOURCE_DIR}/third_party/SFGUI/build")
 
-find_package(Boost 1.77.0 EXACT REQUIRED NO_MODULE)
+find_package(Boost 1.81.0 EXACT REQUIRED NO_MODULE)
 find_package(SFML 2.5.1 EXACT REQUIRED COMPONENTS system graphics NO_MODULE)
 find_package(SFGUI 0.4.0 EXACT REQUIRED NO_MODULE)
 find_package(box2d 2.4.1 EXACT REQUIRED NO_MODULE)
@@ -87,7 +88,7 @@ set_target_properties(client PROPERTIES
     RESOURCE
         "resources/arial.ttf;resources/Theme.theme"
 )
-install(TARGETS server client RESOURCE DESTINATION share/junk)
+# install(TARGETS server client RESOURCE DESTINATION share/junk)
 
 add_custom_target(run-server
     COMMAND JUNK_RESOURCE_DIR=${PROJECT_SOURCE_DIR}/resources ./server
