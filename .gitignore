@@ -1,5 +1,5 @@
+.cache
 result
-mybuild
 *.core.dmp
 build
 *.log

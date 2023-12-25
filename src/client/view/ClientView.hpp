@@ -26,6 +26,8 @@ namespace junk {
 namespace client {
 namespace view {
 
+void loadFont();
+
 class ClientView : public sf::Drawable
 {
 public:

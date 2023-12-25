@@ -8,6 +8,7 @@
 #include "common/utils/Resource.hpp"
 #include <SFML/Window.hpp>
 #include <SFGUI/SFGUI.hpp>
+#include <libgen.h>
 #include <mutex>
 #include <iostream>
 
@@ -180,6 +181,9 @@ App() : settings(0, 0, 2),
 
 int main(int argc, char** argv)
 {
+  resource_root = std::string(dirname(dirname(argv[0]))) + "/share/junk";
+  junk::client::view::loadFont();
+  std::cerr << "(1) Resource root is " << resource_root << std::endl;
   App app;
   return 0;
 }

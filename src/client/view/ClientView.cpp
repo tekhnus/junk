@@ -12,14 +12,12 @@ namespace junk {
 namespace client {
 namespace view {
 
-sf::Font createFont()
-{
-    sf::Font font;
-    font.loadFromFile(get_resource_path("arial.ttf"));
-    return font;
-}
+sf::Font ClientView::font;
 
-sf::Font ClientView::font(createFont());
+void loadFont()
+{
+    ClientView::font.loadFromFile(get_resource_path("arial.ttf"));
+}
 
 sf::Vector2f getDiff(bool up, bool down, bool left, bool right)
 {

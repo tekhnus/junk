@@ -18,7 +18,7 @@
         ];
       };
     in
-    {
+    rec {
       packages."x86_64-linux".default = pkgs.stdenv.mkDerivation {
         name = "junk";
         src = pkgs.lib.cleanSource ./.;
@@ -44,8 +44,9 @@
           "-DBOOST_ROOT=${pkgs.boost}"
         ];
       };
-      # devShell = pkgs.mkShell {
-      #   inputsFrom = [ packages.junk ];
-      # };
+      devShells."x86_64-linux".default = pkgs.mkShell {
+        nativeBuildInputs = [ pkgs.lldb ];
+        inputsFrom = [ packages."x86_64-linux".default ];
+      };
     };
 }
