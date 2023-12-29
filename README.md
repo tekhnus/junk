@@ -1,10 +1,11 @@
 ### Build instructions
 ```sh
-nix build
+nix develop
+./scripts/build
 
 # Run:
-./result/bin/server
-./result/bin/client
+./build/server
+./build/client
 ```
 
 Note:
@@ -15,6 +16,10 @@ Otherwise you will get a linking error at runtime.
 TODO: Report this as a bug to SFML developers.
 
 ### Known issues
+
+#### Build with optimizations crashes
+
+I suspect that infinite for-loop in main() might be the cause.
 
 #### Collisions stopped working
 

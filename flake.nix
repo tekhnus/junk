@@ -41,12 +41,12 @@
             pkgs.thrift
           ];
 
-          cmakeFlags = [
-            "-DBOOST_ROOT=${pkgs.boost}"
-          ];
+          cmakeBuildType = "Debug";
+          cmakeFlags = [ ];
+          dontStrip = true;
         };
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = [ pkgs.lldb ];
+          nativeBuildInputs = [ pkgs.cmake pkgs.pkg-config ];
           inputsFrom = [ packages.default ];
         };
       });
