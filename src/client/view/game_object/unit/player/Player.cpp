@@ -23,7 +23,7 @@ Player::Player() : body(1), inner(12 / 20.0), gun(sf::Vector2f(25.0 / 20.0, 4.0 
     inner.setOutlineColor(sf::Color::Black);
 
     gun.setFillColor(sf::Color::Red);
-    gun.setOrigin(sf::Vector2f(1.0 / 20.0, gun.getSize().y / 2.0 / 20.0));
+    gun.setOrigin(sf::Vector2f(1.0 / 20.0, gun.getSize().y / 2.0f / 20.0f));
 
     healthBarBackground.setFillColor(sf::Color::Black);
     healthBarBackground.setOutlineColor(sf::Color::White);
@@ -33,7 +33,7 @@ Player::Player() : body(1), inner(12 / 20.0), gun(sf::Vector2f(25.0 / 20.0, 4.0 
     healthBar.setOutlineColor(sf::Color::Transparent);
     healthBar.setOutlineThickness(1.0 / 20.0);
 
-    healthBarBackground.setOrigin(sf::Vector2f(body.getRadius(), 8 / 20.0 + body.getRadius()));
+    healthBarBackground.setOrigin(sf::Vector2f(body.getRadius(), 8 / 20.0f + body.getRadius()));
     healthBar.setOrigin(healthBarBackground.getOrigin());
 }
 
@@ -59,7 +59,7 @@ void Player::updatePlayer(const model::Player& player)
   setScore(player.getScore());
 
   nickname = sf::Text(player.getName(), ClientView::font, 20);
-  nickname.setOrigin(sf::Vector2f(nickname.getLocalBounds().width / 2.0, 30 / 20.0 + body.getRadius()));
+  nickname.setOrigin(sf::Vector2f(nickname.getLocalBounds().width / 2.0f, 30 / 20.0f + body.getRadius()));
   nickname.setPosition(body.getPosition());
   nickname.setFillColor(sf::Color::Magenta);
 

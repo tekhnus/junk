@@ -2,7 +2,6 @@
 
 #include <unordered_map>
 #include <thread>
-#include <chrono>
 #include <mutex>
 
 #include <SFML/System.hpp>

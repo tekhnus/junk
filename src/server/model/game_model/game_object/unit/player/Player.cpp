@@ -177,6 +177,9 @@ void Player::onBonusEat(int bonusType)
     bulletsType = 1;
     defaultBulletsTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
     break;
+  default:
+    std::cerr << "Fatal error: Unknown bonus type:" << bonusType << std::endl;
+    std::terminate();
   }
   setChanged();
 }

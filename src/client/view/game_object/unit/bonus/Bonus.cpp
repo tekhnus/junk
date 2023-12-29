@@ -1,4 +1,6 @@
 #include "Bonus.hpp"
+#include <exception>
+#include <iostream>
 
 namespace junk {
 namespace client {
@@ -34,6 +36,10 @@ void Bonus::updateBonus(const model::Bonus& bonus)
         break;
     case 2: //Super bullets
         body.setFillColor(sf::Color::Green);
+        break;
+    default:
+        std::cerr << "Fatal error: Unknown bonus type:" << bonusType << std::endl;
+        std::terminate();
     }
 
     if (bonus.destroyInfo.isDestructing)

@@ -39,8 +39,7 @@ void Logger::writeHead(std::ostream& stream, bool colored, bool dated)
   if (dated)
   {
     time_t logTime = std::time(nullptr);
-    std::string reprTime(std::asctime(std::localtime(&logTime)));
-    stream << reprTime;
+    stream << std::put_time(std::localtime(&logTime), "%H:%M:%S ");
   }
   if (colored)
   {

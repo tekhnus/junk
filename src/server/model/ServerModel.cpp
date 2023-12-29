@@ -1,8 +1,7 @@
 #include <SFML/System.hpp>
 #include "ServerModel.hpp"
 
-using boost::placeholders::_1;
-using boost::placeholders::_2;
+namespace ph = boost::placeholders;
 
 
 namespace junk {
@@ -11,9 +10,9 @@ namespace model {
 
 ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
 {
-  networkModel.connectSignal.connect(boost::bind(&ServerModel::connectHandler, this, _1));
-  networkModel.getChangesSignal.connect(boost::bind(&ServerModel::getChangesHandler, this, _1));
-  networkModel.makeActionSignal.connect(boost::bind(&ServerModel::makeActionHandler, this, _1, _2));
+  networkModel.connectSignal.connect(boost::bind(&ServerModel::connectHandler, this, ph::_1));
+  networkModel.getChangesSignal.connect(boost::bind(&ServerModel::getChangesHandler, this, ph::_1));
+  networkModel.makeActionSignal.connect(boost::bind(&ServerModel::makeActionHandler, this, ph::_1, ph::_2));
 
   random.seed(42);
   sessionExpirationTime = sf::seconds(1.0f);
