@@ -4,8 +4,7 @@
 #include "game_object/unit/player/Player.hpp"
 #include "common/utils/Resource.hpp"
 
-using boost::placeholders::_1;
-using boost::placeholders::_2;
+namespace ph = boost::placeholders;
 
 namespace junk {
 namespace client {
@@ -37,8 +36,8 @@ sf::Vector2f getDiff(bool up, bool down, bool left, bool right)
 
   if (fabs(dx) > 0.0 && fabs(dy) > 0.0)
   {
-    dx /= sqrt(2.0);
-    dy /= sqrt(2.0);
+    dx /= sqrtf(2.0);
+    dy /= sqrtf(2.0);
   }
   return sf::Vector2f(dx, dy);
 }
@@ -58,10 +57,10 @@ ClientView::~ClientView()
 
 void ClientView::setModel(model::ClientModel* clientModel)
 {
-  makeActionSignal.connect(boost::bind(&model::ClientModel::makeAction, clientModel, _1));
+  makeActionSignal.connect(boost::bind(&model::ClientModel::makeAction, clientModel, ph::_1));
 
-  clientModel->gotClientIdSignal.connect(boost::bind(&ClientView::setClientId, this, _1));
-  clientModel->gameObjectAddedSignal.connect(boost::bind(&ClientView::addGameObject, this, _1, _2));
+  clientModel->gotClientIdSignal.connect(boost::bind(&ClientView::setClientId, this, ph::_1));
+  clientModel->gameObjectAddedSignal.connect(boost::bind(&ClientView::addGameObject, this, ph::_1, ph::_2));
   clientModel->shutdownSignal.connect(boost::bind(&ClientView::shutdown, this));
 
   model = clientModel;
@@ -72,22 +71,22 @@ void ClientView::update()
     removeObsoleteGameObjects();
 }
 
-void ClientView::setWindowHeigth(int heigth)
+void ClientView::setWindowHeigth(unsigned heigth)
 {
   windowAttributes.height = heigth;
 }
 
-void ClientView::setWindowWidth(int width)
+void ClientView::setWindowWidth(unsigned width)
 {
   windowAttributes.width = width;
 }
 
-int ClientView::getWindowHeigth() const
+unsigned ClientView::getWindowHeigth() const
 {
   return windowAttributes.height;
 }
 
-int ClientView::getWindowWidth() const
+unsigned ClientView::getWindowWidth() const
 {
   return windowAttributes.width;
 }
@@ -192,11 +191,11 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
     text = sf::Text(std::to_string(player->position.x) + std::string(":") + std::to_string(player->position.y), font, 30);
     text.setFillColor(sf::Color::Magenta);
-    text.setPosition(target.getSize().x - 400 /*text.getLocalBounds().width*/, 0.0f);
+    text.setPosition(static_cast<float>(target.getSize().x) - 400.0f, 0.0f);
     drawText = true;
   }
 
-  states.transform.translate(getWindowWidth() / 2.0, getWindowHeigth() / 2.0);
+  states.transform.translate(sf::Vector2f(window->getSize()) * 0.5f);
   states.transform.scale(20.0f, 20.0f);
   states.transform.translate(shift);
 
@@ -228,7 +227,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
       std::sort(scoreBoard.rbegin(), scoreBoard.rend());
 
-      int yCord = 50;
+      float yCord = 50;
       for (auto& score : scoreBoard)
       {
           sf::Text text(score.second + std::string(" : ") + std::to_string(score.first), font, 30);
@@ -281,9 +280,9 @@ logger << "Processing input";
     }
 
     sf::Vector2i posI = sf::Mouse::getPosition(*window);
-    sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
+    sf::Vector2f pos = sf::Vector2f(posI);
     // We don't use getWindowWidth() here, because the window could be resized by the player.
-    pos -= sf::Vector2f(window->getSize().x / 2.0, window->getSize().y / 2.0);
+    pos -= sf::Vector2f(window->getSize()) * 0.5f;
     rotate(pos);
 
     logger << "Processed mouse";

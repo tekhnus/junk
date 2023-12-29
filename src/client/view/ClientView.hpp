@@ -28,7 +28,7 @@ void loadFont();
 
 struct WindowAttributes
 {
-  int height, width;
+  unsigned height, width;
 };
 
 class ClientView : public sf::Drawable
@@ -41,10 +41,10 @@ public:
 
   void update();
 
-  void setWindowHeigth(int heigth);
-  void setWindowWidth(int width);
-  int getWindowHeigth() const;
-  int getWindowWidth() const;
+  void setWindowHeigth(unsigned heigth);
+  void setWindowWidth(unsigned width);
+  unsigned getWindowHeigth() const;
+  unsigned getWindowWidth() const;
 
   void addGameObject(const GameObjectType::type &gameObjectType, model::GameObject* gameObject);
 
