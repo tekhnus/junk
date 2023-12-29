@@ -1,7 +1,6 @@
 #pragma once
 
 #include "common/game_object/GameObject.hpp"
-#include "common/utils/Convert.hpp"
 #include <gen-cpp/Patches_types.h>
 
 #include <boost/signals2.hpp>

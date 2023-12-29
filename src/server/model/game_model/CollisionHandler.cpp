@@ -1,4 +1,8 @@
 #include "CollisionHandler.hpp"
+#include "server/model/game_model/game_object/unit/Unit.hpp"
+#include "server/model/game_model/game_object/unit/bonus/Bonus.hpp"
+#include "server/model/game_model/game_object/unit/bullet/Bullet.hpp"
+#include <box2d/b2_contact.h>
 
 namespace junk {
 namespace server {

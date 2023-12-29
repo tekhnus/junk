@@ -2,7 +2,6 @@
 
 #include "server/model/game_model/game_object/unit/Unit.hpp"
 #include "common/game_object/unit/bonus/Bonus.hpp"
-#include "server/model/game_model/game_object/unit/player/Player.hpp"
 
 #include <box2d/box2d.h>
 

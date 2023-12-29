@@ -2,7 +2,6 @@ target_sources(server
 	PRIVATE
 		./logger/Logger.hpp
 		./logger/Settings.hpp
-		./logger/Logger.inl
 		./logger/Logger.cpp
 		./logger/Settings.cpp
 		./utils/Convert.cpp
@@ -27,7 +26,6 @@ target_sources(client
 	PRIVATE
 		./logger/Logger.hpp
 		./logger/Settings.hpp
-		./logger/Logger.inl
 		./logger/Logger.cpp
 		./logger/Settings.cpp
 		./utils/Convert.cpp

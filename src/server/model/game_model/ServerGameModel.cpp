@@ -1,5 +1,7 @@
 #include "ServerGameModel.hpp"
 #include "common/utils/Resource.hpp"
+#include "server/model/game_model/game_object/unit/bonus/Bonus.hpp"
+#include "server/model/game_model/game_object/unit/wall/Wall.hpp"
 #include <functional>
 
 #include <boost/property_tree/ptree.hpp>

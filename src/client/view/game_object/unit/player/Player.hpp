@@ -3,7 +3,6 @@
 #include "client/view/game_object/unit/Unit.hpp"
 #include "client/model/game_object/unit/player/Player.hpp"
 #include "common/game_object/unit/player/Player.hpp"
-#include "client/view/ClientView.hpp"
 
 namespace junk {
 namespace client {

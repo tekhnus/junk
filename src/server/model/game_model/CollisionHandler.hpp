@@ -1,8 +1,8 @@
 #pragma once
 
+#include <box2d/b2_world_callbacks.h>
 #include <common/logger/Logger.hpp>
 
-#include "ServerGameModel.hpp"
 
 namespace junk {
 namespace server {

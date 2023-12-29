@@ -2,6 +2,7 @@
 
 #include "common/logger/Logger.hpp"
 #include "../bullet/Bullet.hpp"
+#include "common/utils/Convert.hpp"
 #include "server/model/game_model/ServerGameModel.hpp"
 
 namespace junk {

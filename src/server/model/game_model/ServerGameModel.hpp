@@ -1,6 +1,5 @@
 #pragma once
 
-#include "SFML/System.hpp"
 #include <common/logger/Logger.hpp>
 #include <gen-cpp/ClientService.h>
 
@@ -13,9 +12,6 @@
 
 #include "game_object/GameObject.hpp"
 #include "game_object/unit/player/Player.hpp"
-#include "game_object/unit/bullet/Bullet.hpp"
-#include "game_object/unit/wall/Wall.hpp"
-#include "game_object/unit/bonus/Bonus.hpp"
 
 #include "CollisionHandler.hpp"
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Unit.hpp"
 #include "client/model/ClientModel.hpp"
 #include "game_object/GameObject.hpp"
 #include "game_object/GameObjectFactory.hpp"
@@ -12,7 +11,6 @@
 #include <common/logger/Logger.hpp>
 
 #include <unordered_map>
-#include <cassert>
 #include <memory>
 
 //for std::this_thread::sleep_for
@@ -20,7 +18,6 @@
 	#define _GLIBCXX_USE_NANOSLEEP
 #endif
 
-#include <thread>
 
 namespace junk {
 namespace client {

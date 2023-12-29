@@ -1,5 +1,6 @@
 #include "Wall.hpp"
 #include "common/logger/Logger.hpp"
+#include "common/utils/Convert.hpp"
 
 namespace junk {
 namespace client {

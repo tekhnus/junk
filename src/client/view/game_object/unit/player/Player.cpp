@@ -1,5 +1,6 @@
 #include "Player.hpp"
 #include "common/logger/Logger.hpp"
+#include "client/view/ClientView.hpp"
 
 namespace junk {
 namespace client {

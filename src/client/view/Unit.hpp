@@ -3,8 +3,6 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
-#include <cstdlib>
-#include <cmath>
 
 namespace junk
 {

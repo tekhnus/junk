@@ -2,7 +2,6 @@
 
 #include <SFGUI/SFGUI.hpp>
 #include <SFML/Graphics.hpp>
-#include <vector>
 #include <functional>
 
 namespace sfg {

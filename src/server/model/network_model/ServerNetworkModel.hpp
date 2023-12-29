@@ -16,7 +16,6 @@
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TTransportUtils.h>
 
-#include <unordered_map>
 #include <thread>
 
 using namespace apache::thrift;
