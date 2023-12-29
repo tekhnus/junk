@@ -26,6 +26,7 @@
           nativeBuildInputs = [
             pkgs.cmake
             pkgs.pkg-config
+            pkgs.ninja
           ];
 
           buildInputs = [
@@ -46,7 +47,11 @@
           dontStrip = true;
         };
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = [ pkgs.cmake pkgs.pkg-config ];
+          nativeBuildInputs = [
+            pkgs.cmake
+            pkgs.pkg-config
+            pkgs.ninja
+          ];
           inputsFrom = [ packages.default ];
         };
       });
