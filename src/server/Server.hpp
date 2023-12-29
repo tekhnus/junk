@@ -12,6 +12,8 @@ public:
 
   void run();
 
+  void join();
+
 private:
   model::ServerModel model;
 

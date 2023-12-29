@@ -13,4 +13,9 @@ void Server::run()
   model.start();
 }
 
+void Server::join()
+{
+  model.join();
+}
+
 }} // namespace junk::server

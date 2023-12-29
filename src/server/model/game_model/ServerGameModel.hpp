@@ -32,6 +32,7 @@ public:
   ~ServerGameModel();
 
   void start();
+  void join();
   void stop();
 
   int32_t addPlayer(Player* player);

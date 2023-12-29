@@ -40,13 +40,18 @@ void ServerGameModel::start()
   logger << "Game model started";
 }
 
+void ServerGameModel::join()
+{
+  gameLoopThread.join();
+}
+
 void ServerGameModel::stop()
 {
   gameChangesMutex.lock();
   isRunning = false;
   gameChangesMutex.unlock();
 
-  gameLoopThread.join();
+  join();
 
   logger << "Game model stopped";
 }

@@ -69,6 +69,13 @@ void ServerModel::start()
   clock.restart();
 }
 
+void ServerModel::join()
+{
+  gameModel.join();
+
+  expiredSessionsCleanerThread->join();
+}
+
 SessionInfo ServerModel::addClient(int32_t id)
 {
   std::lock_guard<std::mutex> lock(clientInfoMutex);

@@ -29,6 +29,7 @@ public:
   ~ServerModel();
 
   void start();
+  void join();
 
 private:
   GameChanges getChangesHandler(const SessionInfo &sessionInfo);

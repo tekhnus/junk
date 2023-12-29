@@ -25,12 +25,10 @@
           name = "junk";
           src = pkgs.lib.cleanSource ./.;
           nativeBuildInputs = [
-            pkgs.clang-tools_17
             pkgs.cmake
             pkgs.pkg-config
             pkgs.ninja
           ];
-
           buildInputs = [
             pkgs.boost
             pkgs.sfml
@@ -42,13 +40,10 @@
             pkgs.libevent
             pkgs.thrift
           ];
-
-          cmakeBuildType = "Debug";
-          cmakeFlags = [ ];
-          dontStrip = true;
         };
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = [
+            pkgs.clang-tools_17
             pkgs.cmake
             pkgs.pkg-config
             pkgs.ninja

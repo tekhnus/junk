@@ -12,10 +12,6 @@ nix develop
 
 ### Known issues
 
-#### Build with optimizations crashes
-
-I suspect that infinite for-loop in main() might be the cause.
-
 #### Keyboard access problem
 
 Currenly, keyboard state checking (via isKeyPressed(...)) is used.
