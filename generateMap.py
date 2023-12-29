@@ -4,9 +4,9 @@ import json
 from math import *
 from random import Random
 
-wall_count = 50
-approx_size = 15
 coord_range = 200
+wall_count = int(coord_range * coord_range / 150)
+approx_size = coord_range / 10
 
 def gen():
   rng = Random(42)

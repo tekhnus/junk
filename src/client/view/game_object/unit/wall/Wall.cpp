@@ -7,7 +7,7 @@ namespace view {
 VIEW_GAME_OBJECT_IMPL(Wall, wall, WALL)
 
 Wall::Wall() {
-  body.setFillColor(sf::Color::White);
+  body.setFillColor(sf::Color{180, 180, 180});
 }
 
 Wall::~Wall() {}

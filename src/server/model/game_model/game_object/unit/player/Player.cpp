@@ -84,7 +84,7 @@ void Player::init() {
 
   auto* fixture = body->CreateFixture(&circleShape, 1.0f);
   fixture->SetRestitution(0.5f);
-  body->SetLinearDamping(1.5);
+  body->SetLinearDamping(10);
   body->GetUserData().pointer = reinterpret_cast<uintptr_t>(static_cast<Unit*>(this));
 
   force.SetZero();
@@ -108,14 +108,14 @@ void Player::rotate(const RotateAction& rotateAction) {
   while (totalRotation < -180 * DEGTORAD) totalRotation += 360 * DEGTORAD;
   while (totalRotation > 180 * DEGTORAD) totalRotation -= 360 * DEGTORAD;
   float desiredAngularVelocity = totalRotation * 10;
-  torque = body->GetInertia() * desiredAngularVelocity / (1 / 10.0);
+  torque = body->GetInertia() * desiredAngularVelocity * 30.0;
 }
 
 void Player::move(const MoveAction& moveAction) {
   dbg << "Move invoked";
 
   sf::Vector2f moveDirection = common::to_SFML_Vector2f(moveAction.direction);
-  moveDirection = 300.0f * moveDirection;
+  moveDirection = 3000.0f * moveDirection;
 
   force.Set(moveDirection.x, moveDirection.y);
   force *= forceFactor;
