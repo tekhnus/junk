@@ -45,7 +45,7 @@ sf::Vector2f getDiff(bool up, bool down, bool left, bool right)
 }
 
 ClientView::ClientView()
-: logger("CLIENT_VIEW", "client_view.log", true), clientId(-1)
+: clientId(-1), logger("CLIENT_VIEW", "client_view.log", true)
 , alive(false)
 {
   setWindowHeigth(sf::VideoMode::getDesktopMode().height * 2 / 3);

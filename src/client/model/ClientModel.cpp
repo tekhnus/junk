@@ -7,8 +7,7 @@ namespace junk {
 namespace client {
 namespace model {
 
-ClientModel::ClientModel() : logger("CLIENT_MODEL", "client_model.log", true),
-  alive(false)
+ClientModel::ClientModel() : alive(false), logger("CLIENT_MODEL", "client_model.log", true)
 {
   logger << "ClientModel created";
 }

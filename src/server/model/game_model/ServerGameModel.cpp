@@ -13,8 +13,9 @@ namespace junk {
 namespace server {
 namespace model {
 
-ServerGameModel::ServerGameModel()
-: logger("SERVER_GAME_MODEL", "server_model.log", true), isRunning(false),
+ServerGameModel::ServerGameModel():
+isRunning(false),
+logger("SERVER_GAME_MODEL", "server_model.log", true),
   handler(new CollisionHandler())
 {
   world = new b2World(b2Vec2(0, 0));
@@ -196,7 +197,7 @@ GameChanges ServerGameModel::getChanges(int32_t id)
 
   for (const auto& gameObject : gameObjects)
   {
-    int32_t gameObjectId = gameObject.first;
+    // int32_t gameObjectId = gameObject.first;
 
     // If needToShow(gameObject, player)
     if (lastUpdatedTime < gameObject.second->lastUpdateTime)

@@ -120,11 +120,10 @@ App() : settings(0, 0, 2),
 
   // printf("After changePause: %d\n", mainMenu.getWindow() == nullptr);
   sf::Clock clock;
-  for (int counter = 0; window.isOpen(); ++counter)
+  for (; window.isOpen(); )
   {
 	
     view.processInput();
-  // printf("Cycle interation %d: %d\n", counter, mainMenu.getWindow() == nullptr);
 
     sf::Event event;
     while(window.pollEvent(event))

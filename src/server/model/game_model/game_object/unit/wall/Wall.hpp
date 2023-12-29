@@ -21,7 +21,7 @@ public:
 
   virtual void destroy();
 
-  virtual void onBulletHit();
+  virtual void onBulletHit(int type, const std::string& owner);
 
   virtual void init();
   virtual GameObjectType getType();
