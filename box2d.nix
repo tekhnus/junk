@@ -12,6 +12,7 @@ pkgs.stdenv.mkDerivation {
     pkgs.xorg.libXinerama
     pkgs.xorg.libXcursor
     pkgs.xorg.libXi
+  ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
     pkgs.darwin.apple_sdk.frameworks.Carbon
     pkgs.darwin.apple_sdk.frameworks.Cocoa
     pkgs.darwin.apple_sdk.frameworks.Kernel
@@ -22,4 +23,3 @@ pkgs.stdenv.mkDerivation {
     make
   '';
 }
-
