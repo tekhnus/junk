@@ -18,19 +18,20 @@
             })
           ];
         };
+        stdenv = pkgs.clangStdenv;
       in
       rec {
-        packages.default = pkgs.stdenv.mkDerivation {
+        packages.default = stdenv.mkDerivation {
           name = "junk";
           src = pkgs.lib.cleanSource ./.;
           nativeBuildInputs = [
+            pkgs.clang-tools
             pkgs.cmake
             pkgs.pkg-config
             pkgs.ninja
           ];
 
           buildInputs = [
-            pkgs.stdenv.cc
             pkgs.boost
             pkgs.sfml
             pkgs.mesa

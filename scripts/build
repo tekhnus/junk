@@ -2,7 +2,9 @@
 
 cmake -B build -S . \
   -GNinja \
-  -DCMAKE_BUILD_TYPE=Debug
+  -DCMAKE_BUILD_TYPE=Debug \
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
 
 VERBOSE=1 cmake --build build
 
