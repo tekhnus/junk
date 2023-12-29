@@ -1,7 +1,7 @@
 .cache
 result
 *.core.dmp
-build
+build/
 *.log
 *.swp
 junk.*

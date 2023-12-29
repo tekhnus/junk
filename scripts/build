@@ -1,0 +1,11 @@
+#!/bin/sh
+
+cmake -B build -S . \
+  -DCMAKE_BUILD_TYPE=Debug \
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+VERBOSE=1 cmake --build build
+
+rm -rf share
+mkdir -p share/junk
+cp -r resources/* share/junk

@@ -17,7 +17,11 @@ pkg_check_modules(thriftnb REQUIRED IMPORTED_TARGET thrift-nb)
 add_library(thriftnb::thriftnb ALIAS PkgConfig::thriftnb)
 find_program(THRIFT_COMPILER thrift REQUIRED)
 
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED on)
+set(CMAKE_CXX_EXTENSIONS off)
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
 
 add_executable(server "")
 add_executable(client "")
