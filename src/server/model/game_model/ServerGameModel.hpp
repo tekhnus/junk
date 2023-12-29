@@ -1,29 +1,27 @@
 #pragma once
 
-#include <common/logger/Logger.hpp>
+#include <box2d/box2d.h>
 #include <gen-cpp/ClientService.h>
 
-#include <unordered_map>
-#include <thread>
-#include <mutex>
 #include <chrono>
+#include <common/logger/Logger.hpp>
+#include <mutex>
 #include <queue>
-#include <box2d/box2d.h>
+#include <thread>
+#include <unordered_map>
 
+#include "CollisionHandler.hpp"
 #include "game_object/GameObject.hpp"
 #include "game_object/unit/player/Player.hpp"
 
-#include "CollisionHandler.hpp"
-
 namespace junk {
 namespace server {
-namespace model { 
+namespace model {
 
 class CollisionHandler;
 
-class ServerGameModel
-{
-public:
+class ServerGameModel {
+ public:
   ServerGameModel();
   ~ServerGameModel();
 
@@ -51,14 +49,12 @@ public:
   b2World* world;
   std::map<std::string, int> scoreBoard;
 
-private:
-  std::unordered_map<int32_t, std::unique_ptr<GameObject > > gameObjects;
+ private:
+  std::unordered_map<int32_t, std::unique_ptr<GameObject> > gameObjects;
   std::queue<GameObject*> gameObjectAddQueue;
 
-  struct PlayerInfo
-  {
-    PlayerInfo()
-    {
+  struct PlayerInfo {
+    PlayerInfo() {
       lastUpdatedTime = std::chrono::high_resolution_clock::time_point();
     }
 
@@ -82,4 +78,6 @@ private:
   std::chrono::high_resolution_clock::time_point currentTime;
 };
 
-}}} // namespace junk::server::model
+}  // namespace model
+}  // namespace server
+}  // namespace junk

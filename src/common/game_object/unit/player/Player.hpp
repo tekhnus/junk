@@ -5,9 +5,8 @@
 namespace junk {
 namespace common {
 
-class Player : public virtual Unit
-{
-public:
+class Player : public virtual Unit {
+ public:
   Player();
   virtual ~Player();
 
@@ -21,9 +20,10 @@ public:
   void setName(const std::string& name);
   void setScore(int score);
 
-private:
+ private:
   int32_t health, maxHealth, score;
   std::string name;
 };
 
-}} // namespace junk::common
+}  // namespace common
+}  // namespace junk

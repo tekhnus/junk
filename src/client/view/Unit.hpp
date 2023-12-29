@@ -1,23 +1,19 @@
 #pragma once
 
-#include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 
+namespace junk {
 
-namespace junk
-{
-
-class Unit : public sf::Drawable
-{
-public:
-  explicit Unit(const std::string& name = "", sf::Vector2f position = sf::Vector2f(0.0, 0.0),
+class Unit : public sf::Drawable {
+ public:
+  explicit Unit(const std::string& name = "",
+                sf::Vector2f position = sf::Vector2f(0.0, 0.0),
                 sf::Vector2f rotation = sf::Vector2f(1.0, 1.0));
 
-  virtual ~Unit()
-  {
-  }
+  virtual ~Unit() {}
 
-  void setName(const std::string &name);
+  void setName(const std::string& name);
   void setPosition(sf::Vector2f position);
   void setRotation(sf::Vector2f rotation);
 
@@ -27,28 +23,26 @@ public:
 
   virtual void update() = 0;
 
-private:
+ private:
   std::string name;
   sf::Vector2f position;
   sf::Vector2f rotation;
-
 };
 
-class PlayerUnit : public Unit
-{
-public:
-  explicit PlayerUnit(const std::string& name = "", sf::Vector2f position = sf::Vector2f(0.0, 0.0),
+class PlayerUnit : public Unit {
+ public:
+  explicit PlayerUnit(const std::string& name = "",
+                      sf::Vector2f position = sf::Vector2f(0.0, 0.0),
                       sf::Vector2f rotation = sf::Vector2f(1.0, 1.0));
   virtual ~PlayerUnit();
   void update();
 
-private:
+ private:
   sf::CircleShape player;
   sf::ConvexShape gun;
 
-protected:
+ protected:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
 };
 
-}
+}  // namespace junk

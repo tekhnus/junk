@@ -1,23 +1,20 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <boost/signals2.hpp>
+#include <common/logger/Logger.hpp>
+#include <memory>
+#include <unordered_map>
+
 #include "client/model/ClientModel.hpp"
 #include "game_object/GameObject.hpp"
 #include "game_object/GameObjectFactory.hpp"
 
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <boost/signals2.hpp>
-
-#include <common/logger/Logger.hpp>
-
-#include <unordered_map>
-#include <memory>
-
-//for std::this_thread::sleep_for
+// for std::this_thread::sleep_for
 #ifndef _GLIBCXX_USE_NANOSLEEP
-	#define _GLIBCXX_USE_NANOSLEEP
+#define _GLIBCXX_USE_NANOSLEEP
 #endif
-
 
 namespace junk {
 namespace client {
@@ -25,15 +22,12 @@ namespace view {
 
 void loadFont();
 
-
-struct WindowAttributes
-{
+struct WindowAttributes {
   unsigned height, width;
 };
 
-class ClientView : public sf::Drawable
-{
-public:
+class ClientView : public sf::Drawable {
+ public:
   ClientView();
   virtual ~ClientView();
 
@@ -46,7 +40,8 @@ public:
   unsigned getWindowHeigth() const;
   unsigned getWindowWidth() const;
 
-  void addGameObject(const GameObjectType::type &gameObjectType, model::GameObject* gameObject);
+  void addGameObject(const GameObjectType::type& gameObjectType,
+                     model::GameObject* gameObject);
 
   void removeObsoleteGameObjects();
   void removeGameObject(int32_t gameObjectId);
@@ -65,13 +60,13 @@ public:
 
   void reset();
 
-  boost::signals2::signal<void (const Action& action)> makeActionSignal;
+  boost::signals2::signal<void(const Action& action)> makeActionSignal;
   mutable std::mutex safe;
   sf::RenderWindow* window;
   static sf::Font font;
   void processInput();
-private:
 
+ private:
   GameObjectFactory gameObjectFactory;
   std::unordered_map<int32_t, std::unique_ptr<GameObject> > gameObjects;
 
@@ -84,8 +79,10 @@ private:
 
   WindowAttributes windowAttributes;
 
-protected:
+ protected:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
-}}} // namespace junk::client::view
+}  // namespace view
+}  // namespace client
+}  // namespace junk

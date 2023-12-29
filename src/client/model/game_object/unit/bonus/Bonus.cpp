@@ -1,4 +1,5 @@
 #include "Bonus.hpp"
+
 #include "common/logger/Logger.hpp"
 
 namespace junk {
@@ -7,16 +8,11 @@ namespace model {
 
 MODEL_GAME_OBJECT_IMPL(Bonus, bonus, BONUS)
 
-Bonus::Bonus()
-{
-}
+Bonus::Bonus() {}
 
-Bonus::~Bonus()
-{
-}
+Bonus::~Bonus() {}
 
-void Bonus::applyBonusPatch(const BonusPatch& bonusPatch)
-{
+void Bonus::applyBonusPatch(const BonusPatch& bonusPatch) {
   applyUnitPatch(bonusPatch.unitPatch);
 
   bonusType = bonusPatch.bonusType;
@@ -25,5 +21,6 @@ void Bonus::applyBonusPatch(const BonusPatch& bonusPatch)
   dbg.debug(position.x, " ", position.y);
 }
 
-}}} // namespace junk::client::model
-
+}  // namespace model
+}  // namespace client
+}  // namespace junk

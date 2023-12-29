@@ -6,14 +6,12 @@
 namespace junk {
 namespace common {
 
-class GameObject
-{
-public:
+class GameObject {
+ public:
   GameObject();
   virtual ~GameObject();
 
-  struct DestroyInfo
-  {
+  struct DestroyInfo {
     bool isDestructing;
     int32_t destroyCountdown;
   };
@@ -24,6 +22,7 @@ public:
 
   DestroyInfo destroyInfo;
 
-}; // GameObject
+};  // GameObject
 
-}} // namespace junk::common
+}  // namespace common
+}  // namespace junk

@@ -7,18 +7,19 @@ namespace junk {
 namespace client {
 namespace model {
 
-class Wall : public virtual Unit, public virtual junk::common::Wall
-{
+class Wall : public virtual Unit, public virtual junk::common::Wall {
   MODEL_GAME_OBJECT_DEF(Wall)
 
-public:
+ public:
   Wall();
   virtual ~Wall();
 
   void applyWallPatch(const WallPatch& wallPatch);
 
   std::vector<sf::Vector2f> corners;
-  
-}; // Wall
 
-}}} // namespace junk::client::model
+};  // Wall
+
+}  // namespace model
+}  // namespace client
+}  // namespace junk

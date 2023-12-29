@@ -1,8 +1,8 @@
 #include "ClientView.hpp"
 
+#include "common/utils/Resource.hpp"
 #include "game_object/GameObject.hpp"
 #include "game_object/unit/player/Player.hpp"
-#include "common/utils/Resource.hpp"
 
 namespace ph = boost::placeholders;
 
@@ -12,13 +12,11 @@ namespace view {
 
 sf::Font ClientView::font;
 
-void loadFont()
-{
-    ClientView::font.loadFromFile(get_resource_path("arial.ttf"));
+void loadFont() {
+  ClientView::font.loadFromFile(get_resource_path("arial.ttf"));
 }
 
-sf::Vector2f getDiff(bool up, bool down, bool left, bool right)
-{
+sf::Vector2f getDiff(bool up, bool down, bool left, bool right) {
   float time = 1;
   float dx = 0;
   float dy = 0;
@@ -34,8 +32,7 @@ sf::Vector2f getDiff(bool up, bool down, bool left, bool right)
   if (right)
     dx += time;
 
-  if (fabs(dx) > 0.0 && fabs(dy) > 0.0)
-  {
+  if (fabs(dx) > 0.0 && fabs(dy) > 0.0) {
     dx /= sqrtf(2.0);
     dy /= sqrtf(2.0);
   }
@@ -43,102 +40,94 @@ sf::Vector2f getDiff(bool up, bool down, bool left, bool right)
 }
 
 ClientView::ClientView()
-: clientId(-1), logger("CLIENT_VIEW", "client_view.log", true)
-, alive(false)
-{
+    : clientId(-1),
+      logger("CLIENT_VIEW", "client_view.log", true),
+      alive(false) {
   setWindowHeigth(sf::VideoMode::getDesktopMode().height * 2 / 3);
   setWindowWidth(sf::VideoMode::getDesktopMode().width * 2 / 3);
 }
 
-ClientView::~ClientView()
-{
+ClientView::~ClientView() {
   alive = false;
 }
 
-void ClientView::setModel(model::ClientModel* clientModel)
-{
-  makeActionSignal.connect(boost::bind(&model::ClientModel::makeAction, clientModel, ph::_1));
+void ClientView::setModel(model::ClientModel* clientModel) {
+  makeActionSignal.connect(
+      boost::bind(&model::ClientModel::makeAction, clientModel, ph::_1));
 
-  clientModel->gotClientIdSignal.connect(boost::bind(&ClientView::setClientId, this, ph::_1));
-  clientModel->gameObjectAddedSignal.connect(boost::bind(&ClientView::addGameObject, this, ph::_1, ph::_2));
+  clientModel->gotClientIdSignal.connect(
+      boost::bind(&ClientView::setClientId, this, ph::_1));
+  clientModel->gameObjectAddedSignal.connect(
+      boost::bind(&ClientView::addGameObject, this, ph::_1, ph::_2));
   clientModel->shutdownSignal.connect(boost::bind(&ClientView::shutdown, this));
 
   model = clientModel;
 }
 
-void ClientView::update()
-{
-    removeObsoleteGameObjects();
+void ClientView::update() {
+  removeObsoleteGameObjects();
 }
 
-void ClientView::setWindowHeigth(unsigned heigth)
-{
+void ClientView::setWindowHeigth(unsigned heigth) {
   windowAttributes.height = heigth;
 }
 
-void ClientView::setWindowWidth(unsigned width)
-{
+void ClientView::setWindowWidth(unsigned width) {
   windowAttributes.width = width;
 }
 
-unsigned ClientView::getWindowHeigth() const
-{
+unsigned ClientView::getWindowHeigth() const {
   return windowAttributes.height;
 }
 
-unsigned ClientView::getWindowWidth() const
-{
+unsigned ClientView::getWindowWidth() const {
   return windowAttributes.width;
 }
 
-void ClientView::addGameObject(const GameObjectType::type& gameObjectType, model::GameObject* gameObject)
-{
+void ClientView::addGameObject(const GameObjectType::type& gameObjectType,
+                               model::GameObject* gameObject) {
   logger << std::string("Adding object ") + std::to_string(gameObject->id);
 
-  gameObjects.insert(std::make_pair(gameObject->id,
-    std::unique_ptr<GameObject> (gameObjectFactory.create(gameObjectType))));
+  gameObjects.insert(std::make_pair(
+      gameObject->id,
+      std::unique_ptr<GameObject>(gameObjectFactory.create(gameObjectType))));
 
   gameObjects[gameObject->id]->setModelObject(gameObject);
 }
 
-void ClientView::removeObsoleteGameObjects()
-{
+void ClientView::removeObsoleteGameObjects() {
   logger << "removeObsoleteGameObjects()";
   std::vector<int32_t> destroyCandidates;
-  for (auto& gameObject : gameObjects)
-  {
-    if (gameObject.second->destroyInfo.isDestructing)
-    {
-      logger << "destroyCountdown " + std::to_string(gameObject.second->destroyInfo.destroyCountdown);
+  for (auto& gameObject : gameObjects) {
+    if (gameObject.second->destroyInfo.isDestructing) {
+      logger << "destroyCountdown " +
+                    std::to_string(
+                        gameObject.second->destroyInfo.destroyCountdown);
 
-      if (gameObject.second->destroyInfo.destroyCountdown == 0)
-      {
+      if (gameObject.second->destroyInfo.destroyCountdown == 0) {
         destroyCandidates.push_back(gameObject.first);
       }
     }
   }
-  for (size_t i = 0; i < destroyCandidates.size(); ++i)
-  {
+  for (size_t i = 0; i < destroyCandidates.size(); ++i) {
     logger << "removing " + std::to_string(destroyCandidates[i]);
     gameObjects.erase(destroyCandidates[i]);
   }
 }
 
-void ClientView::removeGameObject(int32_t gameObjectId)
-{
+void ClientView::removeGameObject(int32_t gameObjectId) {
   gameObjects.erase(gameObjectId);
 }
 
-void ClientView::makeAction(Action& action)
-{
+void ClientView::makeAction(Action& action) {
   logger << "makeAction invoked";
   action.playerId = clientId;
   makeActionSignal(action);
 }
 
-void ClientView::move(sf::Vector2f direction)
-{
-  logger << "move invoked " + std::to_string(direction.x) + " " + std::to_string(direction.y);
+void ClientView::move(sf::Vector2f direction) {
+  logger << "move invoked " + std::to_string(direction.x) + " " +
+                std::to_string(direction.y);
 
   Action action;
   action.actionType = ActionType::MOVE;
@@ -149,9 +138,9 @@ void ClientView::move(sf::Vector2f direction)
   makeAction(action);
 }
 
-void ClientView::rotate(sf::Vector2f direction)
-{
-  logger << "rotate invoked " + std::to_string(direction.x) + " " + std::to_string(direction.y);
+void ClientView::rotate(sf::Vector2f direction) {
+  logger << "rotate invoked " + std::to_string(direction.x) + " " +
+                std::to_string(direction.y);
 
   Action action;
   action.actionType = ActionType::ROTATE;
@@ -173,23 +162,24 @@ void ClientView::fire(bool on) {
   makeAction(action);
 }
 
-void ClientView::setClientId(int32_t clientID)
-{
+void ClientView::setClientId(int32_t clientID) {
   logger << std::string("Setting client id to ") + std::to_string(clientID);
   this->clientId = clientID;
 }
 
-void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
+void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   logger << "Drawing. getting shift";
   sf::Vector2f shift;
   sf::Text text;
   bool drawText = false;
   if (model->gameObjects.find(clientId) != model->gameObjects.end()) {
-    model::Player* player = dynamic_cast<model::Player*>(model->gameObjects[clientId].get());
+    model::Player* player =
+        dynamic_cast<model::Player*>(model->gameObjects[clientId].get());
     shift = -sf::Vector2f(player->position);
 
-    text = sf::Text(std::to_string(player->position.x) + std::string(":") + std::to_string(player->position.y), font, 30);
+    text = sf::Text(std::to_string(player->position.x) + std::string(":") +
+                        std::to_string(player->position.y),
+                    font, 30);
     text.setFillColor(sf::Color::Magenta);
     text.setPosition(static_cast<float>(target.getSize().x) - 400.0f, 0.0f);
     drawText = true;
@@ -199,104 +189,100 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
   states.transform.scale(20.0f, 20.0f);
   states.transform.translate(shift);
 
-  for (auto& gameObject : gameObjects)
-  {
-    //logger.debug(shift.x, " ", shift.y);
+  for (auto& gameObject : gameObjects) {
+    // logger.debug(shift.x, " ", shift.y);
     target.draw(*gameObject.second, states);
   }
 
-  if (drawText)
-  {
+  if (drawText) {
     target.draw(text);
   }
 
-  //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab))
+  // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab))
   {
-      std::vector<std::pair<int, std::string> > scoreBoard;
-      for (auto& object : gameObjects)
-      {
-          Player* player = dynamic_cast<Player*>(object.second.get());
-          if (player != nullptr)
-          {
-              dbg.debug("Printing player scores");
-              dbg.debug(std::string("Player name is \"") + player->getName() + std::string("\""));
+    std::vector<std::pair<int, std::string> > scoreBoard;
+    for (auto& object : gameObjects) {
+      Player* player = dynamic_cast<Player*>(object.second.get());
+      if (player != nullptr) {
+        dbg.debug("Printing player scores");
+        dbg.debug(std::string("Player name is \"") + player->getName() +
+                  std::string("\""));
 
-              scoreBoard.push_back(std::make_pair(player->getScore(), player->getName()));
-          }
+        scoreBoard.push_back(
+            std::make_pair(player->getScore(), player->getName()));
       }
+    }
 
-      std::sort(scoreBoard.rbegin(), scoreBoard.rend());
+    std::sort(scoreBoard.rbegin(), scoreBoard.rend());
 
-      float yCord = 50;
-      for (auto& score : scoreBoard)
-      {
-          sf::Text text(score.second + std::string(" : ") + std::to_string(score.first), font, 30);
-          text.setFillColor(sf::Color::Magenta);
-          text.setPosition(10, yCord);
-          yCord += 24;
+    float yCord = 50;
+    for (auto& score : scoreBoard) {
+      sf::Text text(
+          score.second + std::string(" : ") + std::to_string(score.first), font,
+          30);
+      text.setFillColor(sf::Color::Magenta);
+      text.setPosition(10, yCord);
+      yCord += 24;
 
-          target.draw(text);
-      }
+      target.draw(text);
+    }
   }
 }
 
-void ClientView::reset()
-{
+void ClientView::reset() {
   gameObjects.clear();
 }
 
-void ClientView::processInput()
-{
+void ClientView::processInput() {
   if (!alive || clientId == -1) {
-      return;
+    return;
   }
 
-logger << "Processing input";
+  logger << "Processing input";
 
+  bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
+  bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
+  bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+  bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
 
-    bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
-    bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
-    bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
-    bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+  logger << "Processed keyboard";
 
-    logger << "Processed keyboard";
+  sf::Vector2f diff = getDiff(up, down, left, right);
+  if (up != prevUp || down != prevDown || left != prevLeft ||
+      right != prevRight) {
+    move(diff);
+    prevUp = up;
+    prevDown = down;
+    prevLeft = left;
+    prevRight = right;
+  }
 
-    sf::Vector2f diff = getDiff(up, down, left, right);
-    if (up != prevUp || down != prevDown || left != prevLeft || right != prevRight)
-    {
-      move(diff);
-      prevUp = up;
-      prevDown = down;
-      prevLeft = left;
-      prevRight = right;
-    }
+  logger << "Processing mouse";
 
-    logger << "Processing mouse";
+  bool clicked = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+  if (clicked != prevClicked) {
+    fire(clicked);
+    prevClicked = clicked;
+  }
 
-    bool clicked = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
-    if (clicked != prevClicked) {
-      fire(clicked);
-      prevClicked = clicked;
-    }
+  sf::Vector2i posI = sf::Mouse::getPosition(*window);
+  sf::Vector2f pos = sf::Vector2f(posI);
+  // We don't use getWindowWidth() here, because the window could be resized by
+  // the player.
+  pos -= sf::Vector2f(window->getSize()) * 0.5f;
+  rotate(pos);
 
-    sf::Vector2i posI = sf::Mouse::getPosition(*window);
-    sf::Vector2f pos = sf::Vector2f(posI);
-    // We don't use getWindowWidth() here, because the window could be resized by the player.
-    pos -= sf::Vector2f(window->getSize()) * 0.5f;
-    rotate(pos);
-
-    logger << "Processed mouse";
-
+  logger << "Processed mouse";
 }
 
-void ClientView::shutdown()
-{
+void ClientView::shutdown() {
   alive = false;
 }
 
-void ClientView::wake()
-{
-    alive = true;
+void ClientView::wake() {
+  alive = true;
 }
 
-}}} // namespace junk::client::view
+}  // namespace view
+}  // namespace client
+}  // namespace junk

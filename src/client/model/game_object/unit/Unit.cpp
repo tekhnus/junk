@@ -1,4 +1,5 @@
 #include "Unit.hpp"
+
 #include "common/logger/Logger.hpp"
 #include "common/utils/Convert.hpp"
 
@@ -8,16 +9,11 @@ namespace model {
 
 MODEL_GAME_OBJECT_IMPL(Unit, unit, UNIT)
 
-Unit::Unit()
-{
-}
+Unit::Unit() {}
 
-Unit::~Unit()
-{
-}
+Unit::~Unit() {}
 
-void Unit::applyUnitPatch(const UnitPatch& unitPatch)
-{
+void Unit::applyUnitPatch(const UnitPatch& unitPatch) {
   applyGameObjectPatch(unitPatch.gameObjectPatch);
 
   position = common::to_SFML_Vector2f(unitPatch.position);
@@ -27,4 +23,6 @@ void Unit::applyUnitPatch(const UnitPatch& unitPatch)
   dbg.debug(position.x, " ", position.y);
 }
 
-}}} // namespace junk::client::model
+}  // namespace model
+}  // namespace client
+}  // namespace junk

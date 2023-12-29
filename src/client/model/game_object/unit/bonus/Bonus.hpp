@@ -7,16 +7,17 @@ namespace junk {
 namespace client {
 namespace model {
 
-class Bonus : public virtual Unit, public virtual junk::common::Bonus
-{
+class Bonus : public virtual Unit, public virtual junk::common::Bonus {
   MODEL_GAME_OBJECT_DEF(Bonus)
 
-public:
+ public:
   Bonus();
   virtual ~Bonus();
 
   void applyBonusPatch(const BonusPatch& bonusPatch);
 
-}; // Bonus
+};  // Bonus
 
-}}} // namespace junk::client::model
+}  // namespace model
+}  // namespace client
+}  // namespace junk

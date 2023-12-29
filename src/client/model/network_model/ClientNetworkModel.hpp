@@ -1,31 +1,28 @@
 #pragma once
 
-#include <SFML/System.hpp>
-#include <common/logger/Logger.hpp>
-#include <common/service/client/ClientServiceHandler.hpp>
-
-#include <boost/uuid/uuid.hpp>
-
 #include <thrift/concurrency/ThreadManager.h>
 #include <thrift/protocol/TCompactProtocol.h>
 #include <thrift/server/TSimpleServer.h>
 #include <thrift/server/TThreadPoolServer.h>
 #include <thrift/server/TThreadedServer.h>
-#include <thrift/transport/TSocket.h>
 #include <thrift/transport/TServerSocket.h>
+#include <thrift/transport/TSocket.h>
 #include <thrift/transport/TTransportUtils.h>
+
+#include <SFML/System.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <common/logger/Logger.hpp>
+#include <common/service/client/ClientServiceHandler.hpp>
 
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
 using namespace apache::thrift::transport;
 using namespace apache::thrift::server;
 
-namespace junk
-{
+namespace junk {
 
-class ClientNetworkModel
-{
-public:
+class ClientNetworkModel {
+ public:
   ClientNetworkModel();
   ~ClientNetworkModel();
 
@@ -36,7 +33,7 @@ public:
 
   void shutdown();
 
-private:
+ private:
   SessionInfo sessionInfo;
 
   std::shared_ptr<TSocket> socket;
@@ -50,6 +47,6 @@ private:
 
   bool alive;
 
-}; // ClientNetworkModel
+};  // ClientNetworkModel
 
-} // namespace junk
+}  // namespace junk

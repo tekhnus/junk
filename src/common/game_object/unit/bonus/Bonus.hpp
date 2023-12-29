@@ -5,13 +5,13 @@
 namespace junk {
 namespace common {
 
-class Bonus : public virtual Unit
-{
-public:
+class Bonus : public virtual Unit {
+ public:
   Bonus();
   virtual ~Bonus();
 
   int32_t bonusType;
-}; // Bonus
+};  // Bonus
 
-}} // namespace junk::common
+}  // namespace common
+}  // namespace junk

@@ -5,9 +5,8 @@
 namespace junk {
 namespace common {
 
-class Unit : public virtual GameObject
-{
-public:
+class Unit : public virtual GameObject {
+ public:
   Unit();
   virtual ~Unit();
 
@@ -15,4 +14,5 @@ public:
   sf::Vector2f direction;
 };
 
-}} // namespace junk::common
+}  // namespace common
+}  // namespace junk

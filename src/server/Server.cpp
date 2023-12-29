@@ -1,21 +1,17 @@
 #include "Server.hpp"
 
-
 namespace junk {
 namespace server {
 
-Server::Server()
-{
-}
+Server::Server() {}
 
-void Server::run()
-{
+void Server::run() {
   model.start();
 }
 
-void Server::join()
-{
+void Server::join() {
   model.join();
 }
 
-}} // namespace junk::server
+}  // namespace server
+}  // namespace junk

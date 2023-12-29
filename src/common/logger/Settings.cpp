@@ -1,10 +1,9 @@
 #include "Settings.hpp"
 
-#include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 
-namespace junk
-{
+namespace junk {
 
 int LEVEL_NONE = 1;
 int LEVEL_WARN = 2;
@@ -14,17 +13,14 @@ using boost::property_tree::ptree;
 
 void Settings::load(std::string filename) {
   ptree tree;
-  try
-  {
+  try {
     read_json(filename, tree);
     level = tree.get<int>("level");
-  }
-  catch (std::exception ex)
-  {
+  } catch (std::exception ex) {
     level = LEVEL_DEBUG;
     save(filename);
   }
-} 
+}
 
 void Settings::save(std::string filename) {
   ptree tree;
@@ -32,4 +28,4 @@ void Settings::save(std::string filename) {
   write_json(filename, tree);
 }
 
-} // junk
+}  // namespace junk

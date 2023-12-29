@@ -5,13 +5,13 @@
 namespace junk {
 namespace common {
 
-class Wall : public virtual Unit
-{
-public:
+class Wall : public virtual Unit {
+ public:
   Wall();
   virtual ~Wall();
-private:
-  
+
+ private:
 };
 
-}} // namespace junk::common
+}  // namespace common
+}  // namespace junk

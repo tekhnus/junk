@@ -2,36 +2,31 @@
 
 #include <common/logger/Logger.hpp>
 
-namespace junk
-{
+namespace junk {
 
-ClientServiceHandler::ClientServiceHandler()
-{
-}
+ClientServiceHandler::ClientServiceHandler() {}
 
-ClientServiceHandler::~ClientServiceHandler()
-{
-}
+ClientServiceHandler::~ClientServiceHandler() {}
 
-void ClientServiceHandler::connect(SessionInfo &sessionInfo, const ConnectInfo &connectInfo)
-{
+void ClientServiceHandler::connect(SessionInfo& sessionInfo,
+                                   const ConnectInfo& connectInfo) {
   std::lock_guard<std::mutex> lock(serviceMutex);
 
   sessionInfo = connectSignal(connectInfo);
 }
 
-void ClientServiceHandler::makeAction(const SessionInfo &sessionInfo, const Action& action)
-{
+void ClientServiceHandler::makeAction(const SessionInfo& sessionInfo,
+                                      const Action& action) {
   std::lock_guard<std::mutex> lock(serviceMutex);
 
   makeActionSignal(sessionInfo, action);
 }
 
-void ClientServiceHandler::getChanges(GameChanges& gameChanges, const SessionInfo& sessionInfo)
-{
+void ClientServiceHandler::getChanges(GameChanges& gameChanges,
+                                      const SessionInfo& sessionInfo) {
   std::lock_guard<std::mutex> lock(serviceMutex);
 
   gameChanges = getChangesSignal(sessionInfo);
 }
 
-} // namespace junk
+}  // namespace junk

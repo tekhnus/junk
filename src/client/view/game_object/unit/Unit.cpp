@@ -6,16 +6,12 @@ namespace view {
 
 VIEW_GAME_OBJECT_IMPL(Unit, unit, UNIT)
 
-Unit::Unit()
-{
-}
+Unit::Unit() {}
 
-Unit::~Unit()
-{
-}
+Unit::~Unit() {}
 
-void Unit::updateUnit(const model::Unit& )
-{
-}
+void Unit::updateUnit(const model::Unit&) {}
 
-}}} // namespace junk::client::view
+}  // namespace view
+}  // namespace client
+}  // namespace junk

@@ -3,12 +3,9 @@
 namespace junk {
 namespace common {
 
-Wall::Wall()
-{
-}
+Wall::Wall() {}
 
-Wall::~Wall()
-{
-}
+Wall::~Wall() {}
 
-}} // namespace junk::common
+}  // namespace common
+}  // namespace junk

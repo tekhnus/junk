@@ -3,19 +3,16 @@
 namespace junk {
 namespace common {
 
-GameObject::GameObject()
-{
+GameObject::GameObject() {
   destroyInfo.isDestructing = false;
   destroyInfo.destroyCountdown = 0;
 }
 
-GameObject::~GameObject()
-{
-}
+GameObject::~GameObject() {}
 
-bool GameObject::isDestroyed() const
-{
+bool GameObject::isDestroyed() const {
   return destroyInfo.isDestructing && (destroyInfo.destroyCountdown == 0);
 }
 
-}} // namespace junk::common
+}  // namespace common
+}  // namespace junk

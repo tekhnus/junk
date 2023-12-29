@@ -1,43 +1,39 @@
 #pragma once
 
-#include <unordered_map>
-#include <thread>
-#include <mutex>
-
 #include <SFML/System.hpp>
-#include <common/logger/Logger.hpp>
-
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <boost/uuid/uuid_generators.hpp>
 #include <boost/random/mersenne_twister.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#include <common/logger/Logger.hpp>
+#include <mutex>
+#include <thread>
+#include <unordered_map>
 
-#include "network_model/ServerNetworkModel.hpp"
 #include "game_model/ServerGameModel.hpp"
+#include "network_model/ServerNetworkModel.hpp"
 
 namespace junk {
 namespace server {
 namespace model {
 
-//class CollisionHandler;
+// class CollisionHandler;
 
-class ServerModel
-{
-public:
+class ServerModel {
+ public:
   ServerModel();
   ~ServerModel();
 
   void start();
   void join();
 
-private:
-  GameChanges getChangesHandler(const SessionInfo &sessionInfo);
+ private:
+  GameChanges getChangesHandler(const SessionInfo& sessionInfo);
   SessionInfo connectHandler(const ConnectInfo& connectInfo);
-  void makeActionHandler(const SessionInfo &sessionInfo, const Action& action);
+  void makeActionHandler(const SessionInfo& sessionInfo, const Action& action);
 
-  struct ClientInfo
-  {
-    ClientInfo(int32_t id = -1): id(id) {}
+  struct ClientInfo {
+    ClientInfo(int32_t id = -1) : id(id) {}
 
     int32_t id;
     boost::uuids::uuid uuid;
@@ -50,12 +46,7 @@ private:
   SessionInfo addClient(int32_t id);
   void updateLastUpdateTime(int32_t id);
 
-  enum class CheckStatus
-  {
-    CLIENT_NOT_FOUND,
-    WROND_UUID,
-    CORRECT_UUID
-  };
+  enum class CheckStatus { CLIENT_NOT_FOUND, WROND_UUID, CORRECT_UUID };
 
   CheckStatus checkClientSessionInfo(const SessionInfo& sessionInfo);
 
@@ -77,6 +68,8 @@ private:
 
   Logger logger;
 
-}; // ServerModel
+};  // ServerModel
 
-}}} // namespace junk::server::model
+}  // namespace model
+}  // namespace server
+}  // namespace junk

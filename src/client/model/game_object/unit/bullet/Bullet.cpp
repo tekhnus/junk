@@ -1,4 +1,5 @@
 #include "Bullet.hpp"
+
 #include "common/logger/Logger.hpp"
 
 namespace junk {
@@ -7,20 +8,17 @@ namespace model {
 
 MODEL_GAME_OBJECT_IMPL(Bullet, bullet, BULLET)
 
-Bullet::Bullet()
-{
-}
+Bullet::Bullet() {}
 
-Bullet::~Bullet()
-{
-}
+Bullet::~Bullet() {}
 
-void Bullet::applyBulletPatch(const BulletPatch& bulletPatch)
-{
+void Bullet::applyBulletPatch(const BulletPatch& bulletPatch) {
   applyUnitPatch(bulletPatch.unitPatch);
 
   type = bulletPatch.type;
   dbg.debug("Bullet.position: ", position.x, " ", position.y);
 }
 
-}}} // namespace junk::client::model
+}  // namespace model
+}  // namespace client
+}  // namespace junk

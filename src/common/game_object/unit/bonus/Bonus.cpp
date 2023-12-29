@@ -3,12 +3,9 @@
 namespace junk {
 namespace common {
 
-Bonus::Bonus()
-{
-}
+Bonus::Bonus() {}
 
-Bonus::~Bonus()
-{
-}
+Bonus::~Bonus() {}
 
-}} // namespace junk::common
+}  // namespace common
+}  // namespace junk

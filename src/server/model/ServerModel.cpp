@@ -1,18 +1,20 @@
-#include <SFML/System.hpp>
 #include "ServerModel.hpp"
 
-namespace ph = boost::placeholders;
+#include <SFML/System.hpp>
 
+namespace ph = boost::placeholders;
 
 namespace junk {
 namespace server {
 namespace model {
 
-ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
-{
-  networkModel.connectSignal.connect(boost::bind(&ServerModel::connectHandler, this, ph::_1));
-  networkModel.getChangesSignal.connect(boost::bind(&ServerModel::getChangesHandler, this, ph::_1));
-  networkModel.makeActionSignal.connect(boost::bind(&ServerModel::makeActionHandler, this, ph::_1, ph::_2));
+ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true) {
+  networkModel.connectSignal.connect(
+      boost::bind(&ServerModel::connectHandler, this, ph::_1));
+  networkModel.getChangesSignal.connect(
+      boost::bind(&ServerModel::getChangesHandler, this, ph::_1));
+  networkModel.makeActionSignal.connect(
+      boost::bind(&ServerModel::makeActionHandler, this, ph::_1, ph::_2));
 
   random.seed(42);
   sessionExpirationTime = sf::seconds(1.0f);
@@ -20,15 +22,12 @@ ServerModel::ServerModel() : logger("SERVER_MODEL", "server_model.log", true)
   logger << "ServerModel created";
 }
 
-ServerModel::~ServerModel()
-{
+ServerModel::~ServerModel() {
   logger << "ServerModel destroyed";
 }
 
-void ServerModel::expiredSessionsCleaner()
-{
-  while (serverIsRunning)
-  {
+void ServerModel::expiredSessionsCleaner() {
+  while (serverIsRunning) {
     {
       std::lock_guard<std::mutex> lock(clientInfoMutex);
 
@@ -37,15 +36,12 @@ void ServerModel::expiredSessionsCleaner()
       sf::Time currentTime = clock.getElapsedTime();
 
       std::vector<int32_t> eraseCandidates;
-      for (const auto& it : clientInfo)
-      {
-        if (currentTime - it.second.lastUpdateTime > sessionExpirationTime)
-        {
+      for (const auto& it : clientInfo) {
+        if (currentTime - it.second.lastUpdateTime > sessionExpirationTime) {
           eraseCandidates.push_back(it.first);
         }
       }
-      for (auto id : eraseCandidates)
-      {
+      for (auto id : eraseCandidates) {
         logger << std::string("Cleaning ") + std::to_string(id);
         gameModel.removePlayer(id);
         clientInfo.erase(id);
@@ -56,27 +52,24 @@ void ServerModel::expiredSessionsCleaner()
   }
 }
 
-void ServerModel::start()
-{
+void ServerModel::start() {
   serverIsRunning = true;
 
   gameModel.start();
 
-  expiredSessionsCleanerThread = std::shared_ptr<std::thread>
-      (new std::thread(&ServerModel::expiredSessionsCleaner, this));
+  expiredSessionsCleanerThread = std::shared_ptr<std::thread>(
+      new std::thread(&ServerModel::expiredSessionsCleaner, this));
 
   clock.restart();
 }
 
-void ServerModel::join()
-{
+void ServerModel::join() {
   gameModel.join();
 
   expiredSessionsCleanerThread->join();
 }
 
-SessionInfo ServerModel::addClient(int32_t id)
-{
+SessionInfo ServerModel::addClient(int32_t id) {
   std::lock_guard<std::mutex> lock(clientInfoMutex);
 
   ClientInfo client(id);
@@ -91,34 +84,29 @@ SessionInfo ServerModel::addClient(int32_t id)
   return sessionInfo;
 }
 
-void ServerModel::updateLastUpdateTime(int32_t id)
-{
+void ServerModel::updateLastUpdateTime(int32_t id) {
   clientInfo[id].lastUpdateTime = clock.getElapsedTime();
 }
 
-ServerModel::CheckStatus ServerModel::checkClientSessionInfo(const SessionInfo& sessionInfo)
-{
+ServerModel::CheckStatus ServerModel::checkClientSessionInfo(
+    const SessionInfo& sessionInfo) {
   std::lock_guard<std::mutex> lock(clientInfoMutex);
 
   ServerModel::CheckStatus checkStatus;
 
-  if (clientInfo.find(sessionInfo.id) == clientInfo.end())
-  {
+  if (clientInfo.find(sessionInfo.id) == clientInfo.end()) {
     checkStatus = ServerModel::CheckStatus::CLIENT_NOT_FOUND;
-  }
-  else if (boost::uuids::to_string(clientInfo[sessionInfo.id].uuid) != sessionInfo.uuid)
-  {
+  } else if (boost::uuids::to_string(clientInfo[sessionInfo.id].uuid) !=
+             sessionInfo.uuid) {
     checkStatus = ServerModel::CheckStatus::WROND_UUID;
-  } else
-  {
+  } else {
     checkStatus = ServerModel::CheckStatus::CORRECT_UUID;
   }
 
   return checkStatus;
 }
 
-SessionInfo ServerModel::connectHandler(const ConnectInfo& )
-{
+SessionInfo ServerModel::connectHandler(const ConnectInfo&) {
   int playerID = gameModel.addPlayer(new Player());
 
   logger.debug("Player connected, id = ", playerID);
@@ -126,12 +114,11 @@ SessionInfo ServerModel::connectHandler(const ConnectInfo& )
   return addClient(playerID);
 }
 
-GameChanges ServerModel::getChangesHandler(const SessionInfo& sessionInfo)
-{
+GameChanges ServerModel::getChangesHandler(const SessionInfo& sessionInfo) {
   logger << "getChanges invoked";
 
-  if (checkClientSessionInfo(sessionInfo) != ServerModel::CheckStatus::CORRECT_UUID)
-  {
+  if (checkClientSessionInfo(sessionInfo) !=
+      ServerModel::CheckStatus::CORRECT_UUID) {
     throw BadLogin();
   }
 
@@ -140,12 +127,12 @@ GameChanges ServerModel::getChangesHandler(const SessionInfo& sessionInfo)
   return gameModel.getChanges(sessionInfo.id);
 }
 
-void ServerModel::makeActionHandler(const SessionInfo& sessionInfo, const Action& action)
-{
+void ServerModel::makeActionHandler(const SessionInfo& sessionInfo,
+                                    const Action& action) {
   logger << "makeAction invoked, id = " + std::to_string(sessionInfo.id);
 
-  if (checkClientSessionInfo(sessionInfo) != ServerModel::CheckStatus::CORRECT_UUID)
-  {
+  if (checkClientSessionInfo(sessionInfo) !=
+      ServerModel::CheckStatus::CORRECT_UUID) {
     throw BadLogin();
   }
 
@@ -156,4 +143,6 @@ void ServerModel::makeActionHandler(const SessionInfo& sessionInfo, const Action
   gameModel.makeAction(action);
 }
 
-}}} // namespace junk::server::model
+}  // namespace model
+}  // namespace server
+}  // namespace junk

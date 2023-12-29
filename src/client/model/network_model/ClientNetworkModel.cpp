@@ -1,22 +1,21 @@
 #include "ClientNetworkModel.hpp"
 
-namespace junk
-{
+namespace junk {
 
-ClientNetworkModel::ClientNetworkModel() : logger("CLIENT_NETWORK_MODEL", "client_model.log", true),
-  alive(true)
-{
+ClientNetworkModel::ClientNetworkModel()
+    : logger("CLIENT_NETWORK_MODEL", "client_model.log", true), alive(true) {
   logger << "ClientNetworkModel created";
 }
 
-int32_t ClientNetworkModel::connectToServer(const std::string& serverIp, int port)
-{
+int32_t ClientNetworkModel::connectToServer(const std::string& serverIp,
+                                            int port) {
   logger.debug("Connecting to server");
 
-  socket = std::shared_ptr<TSocket > (new TSocket(serverIp, port));
-  transport = std::shared_ptr<TTransport > (new TFramedTransport(socket));
-  protocol = std::shared_ptr<TProtocol > (new TCompactProtocol(transport));
-  clientServiceClient = std::shared_ptr<ClientServiceClient > (new ClientServiceClient(protocol));
+  socket = std::shared_ptr<TSocket>(new TSocket(serverIp, port));
+  transport = std::shared_ptr<TTransport>(new TFramedTransport(socket));
+  protocol = std::shared_ptr<TProtocol>(new TCompactProtocol(transport));
+  clientServiceClient =
+      std::shared_ptr<ClientServiceClient>(new ClientServiceClient(protocol));
 
   transport->open();
 
@@ -26,21 +25,18 @@ int32_t ClientNetworkModel::connectToServer(const std::string& serverIp, int por
   logger.debug("Connected to server, id = ", sessionInfo.id);
 
   alive = true;
-  
+
   return sessionInfo.id;
 }
 
-ClientNetworkModel::~ClientNetworkModel()
-{
+ClientNetworkModel::~ClientNetworkModel() {
   shutdown();
 }
 
-GameChanges ClientNetworkModel::getGameChanges()
-{
+GameChanges ClientNetworkModel::getGameChanges() {
   std::lock_guard<std::mutex> lock(socketMutex);
 
-  if (!alive)
-  {
+  if (!alive) {
     return GameChanges();
   }
 
@@ -52,31 +48,27 @@ GameChanges ClientNetworkModel::getGameChanges()
   return gameChanges;
 }
 
-void ClientNetworkModel::makeAction(const Action& action)
-{
+void ClientNetworkModel::makeAction(const Action& action) {
   std::lock_guard<std::mutex> lock(socketMutex);
 
-  if (!alive)
-  {
+  if (!alive) {
     return;
   }
 
-  logger << "ClientNetworkModel::makeAction(), id = " + std::to_string(sessionInfo.id);
+  logger << "ClientNetworkModel::makeAction(), id = " +
+                std::to_string(sessionInfo.id);
   try {
     clientServiceClient->makeAction(sessionInfo, action);
-  } catch(apache::thrift::transport::TTransportException e)
-  {
-
+  } catch (apache::thrift::transport::TTransportException e) {
   }
 }
 
-void ClientNetworkModel::shutdown()
-{
+void ClientNetworkModel::shutdown() {
   alive = false;
   if (transport != nullptr) {
-      transport->close();
+    transport->close();
   }
   logger << "ClientNetworkModel shut down";
 }
 
-} // namespace junk
+}  // namespace junk

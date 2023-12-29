@@ -1,18 +1,17 @@
 #pragma once
 
-#include "client/view/game_object/unit/Unit.hpp"
 #include "client/model/game_object/unit/bonus/Bonus.hpp"
+#include "client/view/game_object/unit/Unit.hpp"
 #include "common/game_object/unit/bonus/Bonus.hpp"
 
 namespace junk {
 namespace client {
 namespace view {
 
-class Bonus : public virtual Unit, public virtual junk::common::Bonus
-{
+class Bonus : public virtual Unit, public virtual junk::common::Bonus {
   VIEW_GAME_OBJECT_DEF(Bonus)
 
-public:
+ public:
   Bonus();
   virtual ~Bonus();
 
@@ -22,6 +21,8 @@ public:
 
   sf::CircleShape body;
 
-}; // Bonus
+};  // Bonus
 
-}}} // namespace junk::client::view
+}  // namespace view
+}  // namespace client
+}  // namespace junk

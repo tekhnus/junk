@@ -2,19 +2,17 @@
 
 #include <string>
 
-namespace junk
-{
+namespace junk {
 
 extern int LEVEL_NONE;
 extern int LEVEL_WARN;
 extern int LEVEL_DEBUG;
 
-struct Settings
-{
+struct Settings {
   int level;
 
   void load(std::string file);
   void save(std::string file);
 };
 
-}
+}  // namespace junk

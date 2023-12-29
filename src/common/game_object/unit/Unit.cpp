@@ -3,12 +3,9 @@
 namespace junk {
 namespace common {
 
-Unit::Unit()
-{
-}
+Unit::Unit() {}
 
-Unit::~Unit()
-{
-}
+Unit::~Unit() {}
 
-}} // namespace junk::common
+}  // namespace common
+}  // namespace junk

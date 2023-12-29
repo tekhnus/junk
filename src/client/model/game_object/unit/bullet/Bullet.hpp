@@ -7,16 +7,17 @@ namespace junk {
 namespace client {
 namespace model {
 
-class Bullet : public virtual Unit, public virtual junk::common::Bullet
-{
+class Bullet : public virtual Unit, public virtual junk::common::Bullet {
   MODEL_GAME_OBJECT_DEF(Bullet)
 
-public:
+ public:
   Bullet();
   virtual ~Bullet();
 
   void applyBulletPatch(const BulletPatch& bulletPatch);
 
-}; // Bullet
+};  // Bullet
 
-}}} // namespace junk::client::model
+}  // namespace model
+}  // namespace client
+}  // namespace junk

@@ -1,31 +1,31 @@
 #pragma once
 
-#include "common/game_object/GameObject.hpp"
-#include "client/model/game_object/GameObject.hpp"
 #include <gen-cpp/Patches_types.h>
-#include <SFML/Graphics.hpp>
 
+#include <SFML/Graphics.hpp>
 #include <boost/signals2.hpp>
 
-#define VIEW_GAME_OBJECT_DEF( _name ) \
-public: \
-virtual void update(const model::GameObject& gameObject);
+#include "client/model/game_object/GameObject.hpp"
+#include "common/game_object/GameObject.hpp"
 
-#define VIEW_GAME_OBJECT_IMPL( _Name, _name, _NAME ) \
-void _Name::update(const model::GameObject& gameObject) \
-{ \
-  update ## _Name (dynamic_cast<const model::_Name&> (gameObject)); \
-} \
+#define VIEW_GAME_OBJECT_DEF(_name) \
+ public:                            \
+  virtual void update(const model::GameObject& gameObject);
+
+#define VIEW_GAME_OBJECT_IMPL(_Name, _name, _NAME)                \
+  void _Name::update(const model::GameObject& gameObject) {       \
+    update##_Name(dynamic_cast<const model::_Name&>(gameObject)); \
+  }
 
 namespace junk {
 namespace client {
 namespace view {
 
-class GameObject : public virtual common::GameObject, public virtual sf::Drawable
-{
+class GameObject : public virtual common::GameObject,
+                   public virtual sf::Drawable {
   VIEW_GAME_OBJECT_DEF(GameObject)
 
-public:
+ public:
   GameObject();
   virtual ~GameObject();
 
@@ -33,6 +33,8 @@ public:
 
   void updateGameObject(const model::GameObject& gameObject);
 
-}; // GameObject
+};  // GameObject
 
-}}} // namespace junk::client::view
+}  // namespace view
+}  // namespace client
+}  // namespace junk

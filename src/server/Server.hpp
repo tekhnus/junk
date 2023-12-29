@@ -5,18 +5,18 @@
 namespace junk {
 namespace server {
 
-class Server
-{
-public:
+class Server {
+ public:
   Server();
 
   void run();
 
   void join();
 
-private:
+ private:
   model::ServerModel model;
 
-}; // Server
+};  // Server
 
-}} // namespace junk::server
+}  // namespace server
+}  // namespace junk

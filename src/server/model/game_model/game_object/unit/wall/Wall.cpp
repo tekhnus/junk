@@ -1,6 +1,6 @@
 #include "Wall.hpp"
-#include "server/model/game_model/ServerGameModel.hpp"
 
+#include "server/model/game_model/ServerGameModel.hpp"
 
 namespace junk {
 namespace server {
@@ -8,21 +8,15 @@ namespace model {
 
 MODEL_GAME_OBJECT_IMPL(Wall, wall, WALL)
 
-Wall::Wall()
-{
-}
+Wall::Wall() {}
 
-Wall::~Wall()
-{
-}
+Wall::~Wall() {}
 
-WallPatch Wall::getWallPatch()
-{
+WallPatch Wall::getWallPatch() {
   WallPatch wallPatch;
   wallPatch.unitPatch = getUnitPatch();
   // dbg.debug("COrners size:", corns->size());
-  for (const b2Vec2& corner : corns)
-  {
+  for (const b2Vec2& corner : corns) {
     Vector2f vec;
     vec.x = corner.x;
     vec.y = corner.y;
@@ -31,29 +25,21 @@ WallPatch Wall::getWallPatch()
   return wallPatch;
 }
 
-void Wall::destroy()
-{
-  if (!isRemoved)
-  {
-    
+void Wall::destroy() {
+  if (!isRemoved) {
     isRemoved = true;
   }
 }
 
-void Wall::onBulletHit(int , const std::string& )
-{}
+void Wall::onBulletHit(int, const std::string&) {}
 
-void Wall::init()
-{
-}
+void Wall::init() {}
 
-GameObjectType Wall::getType()
-{
+GameObjectType Wall::getType() {
   return GameObjectType::WALL;
 }
 
-void Wall::setCorners(const std::vector<b2Vec2>& corners)
-{
+void Wall::setCorners(const std::vector<b2Vec2>& corners) {
   b2BodyDef bodyDef;
   bodyDef.type = b2_staticBody;
   // bodyDef.position.Set(3.0f, 3.0f);
@@ -77,5 +63,6 @@ void Wall::setCorners(const std::vector<b2Vec2>& corners)
   corns = corners;
 }
 
-
-}}} // namespace junk::server::model
+}  // namespace model
+}  // namespace server
+}  // namespace junk

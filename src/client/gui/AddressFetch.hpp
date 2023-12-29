@@ -1,10 +1,10 @@
 #pragma once
 
-#include <SFGUI/Desktop.hpp>
-#include <SFGUI/Window.hpp>
 #include <SFGUI/Box.hpp>
-#include <SFGUI/Entry.hpp>
 #include <SFGUI/Button.hpp>
+#include <SFGUI/Desktop.hpp>
+#include <SFGUI/Entry.hpp>
+#include <SFGUI/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <client/config/ClientConfig.hpp>
 
@@ -12,17 +12,16 @@ namespace sfg {
 typedef std::function<void(void)> Delegate;
 }
 
-namespace junk
-{
+namespace junk {
 
-class AddressFetch
-{
-public:
+class AddressFetch {
+ public:
   AddressFetch(sfg::Desktop& desktop, sf::Window& topWindow);
   void onOK(sfg::Delegate slot);
   sf::String getAddress();
   sfg::Window::Ptr getWindow();
-private:
+
+ private:
   void updateHistory();
   sfg::Window::Ptr window;
   sfg::Box::Ptr box;
@@ -32,4 +31,4 @@ private:
   sfg::Desktop& m_desktop;
 };
 
-}
+}  // namespace junk

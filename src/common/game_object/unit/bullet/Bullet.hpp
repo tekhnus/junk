@@ -5,14 +5,13 @@
 namespace junk {
 namespace common {
 
-class Bullet : public virtual Unit
-{
-public:
+class Bullet : public virtual Unit {
+ public:
   Bullet();
   virtual ~Bullet();
 
   int type;
-
 };
 
-}} // namespace junk::common
+}  // namespace common
+}  // namespace junk

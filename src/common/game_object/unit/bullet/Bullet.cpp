@@ -3,12 +3,9 @@
 namespace junk {
 namespace common {
 
-Bullet::Bullet()
-{
-}
+Bullet::Bullet() {}
 
-Bullet::~Bullet()
-{
-}
+Bullet::~Bullet() {}
 
-}} // namespace junk::common
+}  // namespace common
+}  // namespace junk

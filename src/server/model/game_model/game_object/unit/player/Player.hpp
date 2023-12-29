@@ -1,20 +1,19 @@
 #pragma once
 
-#include "server/model/game_model/game_object/unit/Unit.hpp"
-#include "common/game_object/unit/player/Player.hpp"
+#include <box2d/box2d.h>
 #include <gen-cpp/ClientService.h>
 
-#include <box2d/box2d.h>
+#include "common/game_object/unit/player/Player.hpp"
+#include "server/model/game_model/game_object/unit/Unit.hpp"
 
 namespace junk {
 namespace server {
 namespace model {
 
-class Player : public virtual Unit, public virtual junk::common::Player
-{
+class Player : public virtual Unit, public virtual junk::common::Player {
   MODEL_GAME_OBJECT_DEF(Player)
 
-public:
+ public:
   Player();
   virtual ~Player();
 
@@ -43,9 +42,11 @@ public:
   std::chrono::high_resolution_clock::time_point slowDownTime;
   std::chrono::high_resolution_clock::time_point defaultBulletsTime;
 
-private:
+ private:
   virtual void processFire();
 
-}; // Player
+};  // Player
 
-}}} // namespace junk::server::model
+}  // namespace model
+}  // namespace server
+}  // namespace junk

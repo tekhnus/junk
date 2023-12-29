@@ -8,15 +8,14 @@ namespace model {
 
 MODEL_GAME_OBJECT_IMPL(Bullet, bullet, BULLET)
 
-Bullet::Bullet(Player* creator, int type)
-{
+Bullet::Bullet(Player* creator, int type) {
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
 
   double angle = creator->body->GetAngle();
   double rad = 1.5;
   bodyDef.position.Set(creator->position.x + rad * cos(angle),
-    creator->position.y + rad * sin(angle));
+                       creator->position.y + rad * sin(angle));
 
   bodyDef.bullet = true;
 
@@ -26,27 +25,24 @@ Bullet::Bullet(Player* creator, int type)
   b2CircleShape circleShape;
   circleShape.m_radius = 1.0f / 7;
 
-  auto *fixture = body->CreateFixture(&circleShape, 2.0f);
+  auto* fixture = body->CreateFixture(&circleShape, 2.0f);
   fixture->SetRestitution(0.7f);
   body->SetLinearDamping(0.1);
 
   this->type = type;
 
   double power = 100;
-  body->ApplyLinearImpulse(b2Vec2(power * cos(angle), power*sin(angle)), body->GetWorldCenter(), true);
+  body->ApplyLinearImpulse(b2Vec2(power * cos(angle), power * sin(angle)),
+                           body->GetWorldCenter(), true);
 
   setOwner(creator->getName());
 }
 
-Bullet::~Bullet()
-{
-}
+Bullet::~Bullet() {}
 
-void Bullet::init()
-{}
+void Bullet::init() {}
 
-BulletPatch Bullet::getBulletPatch()
-{
+BulletPatch Bullet::getBulletPatch() {
   BulletPatch bulletPatch;
   bulletPatch.unitPatch = getUnitPatch();
   bulletPatch.owner = getOwner();
@@ -60,7 +56,6 @@ BulletPatch Bullet::getBulletPatch()
 }
 
 void Bullet::process() {
-
   GameObject::process();
   if (lifetime == 50) {
     startDestruction();
@@ -71,30 +66,29 @@ void Bullet::process() {
   setChanged();
 }
 
-void Bullet::startDestruction()
-{
-  if (!destroyInfo.isDestructing)
-  {
+void Bullet::startDestruction() {
+  if (!destroyInfo.isDestructing) {
     destroyInfo.isDestructing = true;
-    destroyTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(1);
-    cleanupTime = std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
+    destroyTime =
+        std::chrono::high_resolution_clock::now() + std::chrono::seconds(1);
+    cleanupTime =
+        std::chrono::high_resolution_clock::now() + std::chrono::seconds(10);
   }
   setChanged();
 }
 
-GameObjectType Bullet::getType()
-{
+GameObjectType Bullet::getType() {
   return GameObjectType::BULLET;
 }
 
-const std::string& Bullet::getOwner() const
-{
-    return owner;
+const std::string& Bullet::getOwner() const {
+  return owner;
 }
 
-void Bullet::setOwner(const std::string& owner)
-{
-    this->owner = owner;
+void Bullet::setOwner(const std::string& owner) {
+  this->owner = owner;
 }
 
-}}} // namespace junk::server::model
+}  // namespace model
+}  // namespace server
+}  // namespace junk

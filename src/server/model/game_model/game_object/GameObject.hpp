@@ -1,30 +1,29 @@
 #pragma once
 
+#include <chrono>
+
 #include "common/game_object/GameObject.hpp"
 #include "gen-cpp/Patches_types.h"
 
-#include <chrono>
+#define MODEL_GAME_OBJECT_DEF(_name) \
+ public:                             \
+  virtual Patch getPatch();
 
-#define MODEL_GAME_OBJECT_DEF( _name ) \
-public: virtual Patch getPatch();
-
-#define MODEL_GAME_OBJECT_IMPL( _Name, _name, _NAME) \
-Patch _Name::getPatch() \
-{ \
-  Patch patch; \
-  patch.id = id; \
-  patch.gameObjectType = junk::GameObjectType::_NAME; \
-  patch.isCleanedUp = isRemoved; \
-  patch.__set_ ##_name## Patch(get ##_Name## Patch()); \
-  return patch; \
-}
+#define MODEL_GAME_OBJECT_IMPL(_Name, _name, _NAME)     \
+  Patch _Name::getPatch() {                             \
+    Patch patch;                                        \
+    patch.id = id;                                      \
+    patch.gameObjectType = junk::GameObjectType::_NAME; \
+    patch.isCleanedUp = isRemoved;                      \
+    patch.__set_##_name##Patch(get##_Name##Patch());    \
+    return patch;                                       \
+  }
 
 namespace junk {
 namespace server {
 namespace model {
 
-enum class GameObjectType
-{
+enum class GameObjectType {
   GAME_OBJECT = 0,
   UNIT = 1,
   PLAYER = 2,
@@ -35,11 +34,10 @@ enum class GameObjectType
 
 class ServerGameModel;
 
-class GameObject : public virtual junk::common::GameObject
-{
+class GameObject : public virtual junk::common::GameObject {
   MODEL_GAME_OBJECT_DEF(GameObject)
 
-public:
+ public:
   GameObject();
   virtual ~GameObject();
 
@@ -62,6 +60,8 @@ public:
 
   bool isRemoved;
 
-}; // GameObject
+};  // GameObject
 
-}}} // namespace junk::client::model
+}  // namespace model
+}  // namespace server
+}  // namespace junk

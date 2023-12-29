@@ -1,27 +1,25 @@
 #include "ClientModel.hpp"
+
 #include "client/config/ClientConfig.hpp"
 
 namespace junk {
 namespace client {
 namespace model {
 
-ClientModel::ClientModel() : alive(false), logger("CLIENT_MODEL", "client_model.log", true)
-{
+ClientModel::ClientModel()
+    : alive(false), logger("CLIENT_MODEL", "client_model.log", true) {
   logger << "ClientModel created";
 }
 
-ClientModel::~ClientModel()
-{
+ClientModel::~ClientModel() {
   shutdown();
 }
 
-void ClientModel::reset()
-{
+void ClientModel::reset() {
   gameObjects.clear();
 }
 
-void ClientModel::shutdown()
-{
+void ClientModel::shutdown() {
   logger << "ClientModel shut down";
   alive = false;
   networkModel.shutdown();
@@ -29,8 +27,7 @@ void ClientModel::shutdown()
   // gameObjects.clear();
 }
 
-int32_t ClientModel::connectToServer(const std::string& serverIp, int port)
-{
+int32_t ClientModel::connectToServer(const std::string& serverIp, int port) {
   clientInfo.id = networkModel.connectToServer(serverIp, port);
   gotClientIdSignal(clientInfo.id);
   alive = true;
@@ -38,21 +35,17 @@ int32_t ClientModel::connectToServer(const std::string& serverIp, int port)
   return clientInfo.id;
 }
 
-void ClientModel::update()
-{
+void ClientModel::update() {
   logger << "update";
 
   GameChanges gameChanges = networkModel.getGameChanges();
 
   logger.debug(std::to_string(gameChanges.patches.size()) + " patches");
 
-  for (auto& patch : gameChanges.patches)
-  {
+  for (auto& patch : gameChanges.patches) {
     logger << "patch received " + std::to_string(patch.id);
-    if ((gameObjects.find(patch.id) == gameObjects.end()))
-    {
-      if (patch.isCleanedUp)
-      {
+    if ((gameObjects.find(patch.id) == gameObjects.end())) {
+      if (patch.isCleanedUp) {
         continue;
       }
       addGameObject(patch);
@@ -63,27 +56,23 @@ void ClientModel::update()
   removeObsoleteGameObjects();
 }
 
-void ClientModel::removeObsoleteGameObjects()
-{
+void ClientModel::removeObsoleteGameObjects() {
   std::vector<int32_t> destroyCandidates;
-  for (auto& gameObject : gameObjects)
-  {
-    if (gameObject.second->destroyInfo.isDestructing)
-    {
-      logger << "destroyCountdown " + std::to_string(gameObject.second->destroyInfo.destroyCountdown);
+  for (auto& gameObject : gameObjects) {
+    if (gameObject.second->destroyInfo.isDestructing) {
+      logger << "destroyCountdown " +
+                    std::to_string(
+                        gameObject.second->destroyInfo.destroyCountdown);
 
-      if (gameObject.second->destroyInfo.destroyCountdown == 0)
-      {
+      if (gameObject.second->destroyInfo.destroyCountdown == 0) {
         destroyCandidates.push_back(gameObject.second->id);
       }
     }
   }
 
-  for (size_t i = 0; i < destroyCandidates.size(); ++i)
-  {
+  for (size_t i = 0; i < destroyCandidates.size(); ++i) {
     logger << "removing " + std::to_string(destroyCandidates[i]);
-    if (gameObjects[destroyCandidates[i]]->id == clientInfo.id)
-    {
+    if (gameObjects[destroyCandidates[i]]->id == clientInfo.id) {
       logger << "You are killed";
       shutdown();
     }
@@ -91,19 +80,18 @@ void ClientModel::removeObsoleteGameObjects()
   }
 }
 
-void ClientModel::addGameObject(const Patch& patch)
-{
+void ClientModel::addGameObject(const Patch& patch) {
   logger << "Adding new GameObject " + std::to_string(patch.id);
 
-  gameObjects.insert(std::make_pair(patch.id,
-    std::unique_ptr<GameObject> (gameObjectFactory.create(patch.gameObjectType))));
+  gameObjects.insert(std::make_pair(
+      patch.id, std::unique_ptr<GameObject>(
+                    gameObjectFactory.create(patch.gameObjectType))));
 
   gameObjects[patch.id]->id = patch.id;
 
   gameObjectAddedSignal(patch.gameObjectType, gameObjects[patch.id].get());
 
-  if (patch.id == clientInfo.id)
-  {
+  if (patch.id == clientInfo.id) {
     ClientConfig config;
     config.load("/tmp/client_config.json");
     Action rename;
@@ -115,23 +103,21 @@ void ClientModel::addGameObject(const Patch& patch)
   }
 }
 
-void ClientModel::removeGameObject(int32_t id)
-{
-  if (gameObjects.find(id) == gameObjects.end())
-  {
-    logger << std::string("There is no such game object, id = ") + std::to_string(id);
-  }
-  else
-  {
+void ClientModel::removeGameObject(int32_t id) {
+  if (gameObjects.find(id) == gameObjects.end()) {
+    logger << std::string("There is no such game object, id = ") +
+                  std::to_string(id);
+  } else {
     gameObjects.erase(id);
     logger << "Game object removed, id = " + std::to_string(id);
   }
 }
 
-void ClientModel::makeAction(const Action& action)
-{
+void ClientModel::makeAction(const Action& action) {
   logger << "makeAction invoked";
   networkModel.makeAction(action);
 }
 
-}}} // namespace junk::client::model
+}  // namespace model
+}  // namespace client
+}  // namespace junk
