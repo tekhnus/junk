@@ -184,6 +184,6 @@ int main(int argc, char** argv)
   resource_root = std::string(dirname(dirname(argv[0]))) + "/share/junk";
   junk::client::view::loadFont();
   std::cerr << "(1) Resource root is " << resource_root << std::endl;
-  App app;
+  App app{};
   return 0;
 }

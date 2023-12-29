@@ -28,6 +28,12 @@ namespace view {
 
 void loadFont();
 
+
+struct WindowAttributes
+{
+  int height, width;
+};
+
 class ClientView : public sf::Drawable
 {
 public:
@@ -38,8 +44,8 @@ public:
 
   void update();
 
-  int setWindowHeigth(int heigth);
-  int setWindowWidth(int width);
+  void setWindowHeigth(int heigth);
+  void setWindowWidth(int width);
   int getWindowHeigth() const;
   int getWindowWidth() const;
 
@@ -78,11 +84,6 @@ private:
   sf::Vector2i prevPos;
   bool alive;
   model::ClientModel* model;
-
-  struct WindowAttributes
-  {
-    int height, width;
-  };
 
   WindowAttributes windowAttributes;
 

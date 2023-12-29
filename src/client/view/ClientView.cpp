@@ -73,12 +73,12 @@ void ClientView::update()
     removeObsoleteGameObjects();
 }
 
-int ClientView::setWindowHeigth(int heigth)
+void ClientView::setWindowHeigth(int heigth)
 {
   windowAttributes.height = heigth;
 }
 
-int ClientView::setWindowWidth(int width)
+void ClientView::setWindowWidth(int width)
 {
   windowAttributes.width = width;
 }
