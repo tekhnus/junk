@@ -25,7 +25,7 @@
           name = "junk";
           src = pkgs.lib.cleanSource ./.;
           nativeBuildInputs = [
-            pkgs.clang-tools
+            pkgs.clang-tools_17
             pkgs.cmake
             pkgs.pkg-config
             pkgs.ninja
