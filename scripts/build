@@ -3,7 +3,8 @@
 cmake -B build -S . \
   -GNinja \
   -DCMAKE_BUILD_TYPE=Debug \
-  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+  -DCMAKE_CXX_FLAGS=-fdiagnostics-color=always
 
 
 VERBOSE=1 cmake --build build
