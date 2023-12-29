@@ -4,5 +4,5 @@ target_sources(server
 )
 target_sources(client
 	PRIVATE
-		./view.cpp
+		./client.cpp
 )
