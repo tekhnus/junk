@@ -115,7 +115,7 @@ void Player::move(const MoveAction& moveAction) {
   dbg << "Move invoked";
 
   sf::Vector2f moveDirection = common::to_SFML_Vector2f(moveAction.direction);
-  moveDirection = 100.0f * moveDirection;
+  moveDirection = 300.0f * moveDirection;
 
   force.Set(moveDirection.x, moveDirection.y);
   force *= forceFactor;

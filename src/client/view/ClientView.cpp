@@ -190,7 +190,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   }
 
   states.transform.translate(sf::Vector2f(window->getSize()) * 0.5f);
-  states.transform.scale(20.0f, 20.0f);
+  states.transform.scale(40.0f, 40.0f);
   states.transform.translate(shift);
 
   for (auto& gameObject : gameObjects) {
@@ -244,10 +244,14 @@ void ClientView::processInput() {
 
   logger << "Processing input";
 
-  bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
-  bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
-  bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
-  bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+  bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::W);
+  bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
+              sf::Keyboard::isKeyPressed(sf::Keyboard::S);
+  bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
+              sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+  bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
+               sf::Keyboard::isKeyPressed(sf::Keyboard::D);
 
   logger << "Processed keyboard";
 
