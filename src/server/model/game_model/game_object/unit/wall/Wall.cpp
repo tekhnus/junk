@@ -1,9 +1,6 @@
 #include "Wall.hpp"
-#include "common/utils/Convert.hpp"
 #include "server/model/game_model/ServerGameModel.hpp"
 
-#include <iostream>
-#include <cassert>
 
 namespace junk {
 namespace server {

@@ -1,6 +1,5 @@
 #include "Player.hpp"
 
-#include <iostream>
 #include "common/logger/Logger.hpp"
 #include "../bullet/Bullet.hpp"
 #include "server/model/game_model/ServerGameModel.hpp"

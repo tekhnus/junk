@@ -1,10 +1,6 @@
 #include "Bonus.hpp"
-#include "common/utils/Convert.hpp"
 
-#include "server/model/game_model/ServerGameModel.hpp"
 
-#include <iostream>
-#include <cmath>
 
 namespace junk {
 namespace server {

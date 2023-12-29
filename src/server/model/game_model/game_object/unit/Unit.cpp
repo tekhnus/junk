@@ -1,7 +1,6 @@
 #include "Unit.hpp"
 #include "common/utils/Convert.hpp"
 
-#include <iostream>
 
 namespace junk {
 namespace server {

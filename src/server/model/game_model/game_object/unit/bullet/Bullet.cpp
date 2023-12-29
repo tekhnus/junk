@@ -1,6 +1,5 @@
 #include "Bullet.hpp"
 
-#include <iostream>
 #include "server/model/game_model/ServerGameModel.hpp"
 
 namespace junk {

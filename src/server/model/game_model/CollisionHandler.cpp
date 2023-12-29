@@ -1,6 +1,4 @@
 #include "CollisionHandler.hpp"
-#include "common/logger/Logger.hpp"
-#include <typeinfo>
 
 namespace junk {
 namespace server {

@@ -100,12 +100,10 @@ ServerModel::CheckStatus ServerModel::checkClientSessionInfo(const SessionInfo& 
   {
     checkStatus = ServerModel::CheckStatus::CLIENT_NOT_FOUND;
   }
-  else
-  if (boost::uuids::to_string(clientInfo[sessionInfo.id].uuid) != sessionInfo.uuid)
+  else if (boost::uuids::to_string(clientInfo[sessionInfo.id].uuid) != sessionInfo.uuid)
   {
     checkStatus = ServerModel::CheckStatus::WROND_UUID;
-  }
-  else
+  } else
   {
     checkStatus = ServerModel::CheckStatus::CORRECT_UUID;
   }

@@ -1,6 +1,4 @@
 #include "ClientModel.hpp"
-#include "game_object/unit/Unit.hpp"
-#include "game_object/unit/player/Player.hpp"
 #include "client/config/ClientConfig.hpp"
 
 namespace junk {

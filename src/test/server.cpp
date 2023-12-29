@@ -2,7 +2,6 @@
 #include "common/utils/Resource.hpp"
 #include "libgen.h"
 
-#include <iostream>
 
 int main(int , char **argv)
 {

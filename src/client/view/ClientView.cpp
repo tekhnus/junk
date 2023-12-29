@@ -1,7 +1,6 @@
 #include "ClientView.hpp"
 
 #include "game_object/GameObject.hpp"
-#include "game_object/unit/Unit.hpp"
 #include "game_object/unit/player/Player.hpp"
 #include "common/utils/Resource.hpp"
 
@@ -181,7 +180,6 @@ void ClientView::setClientId(int32_t clientID)
   this->clientId = clientID;
 }
 
-#include <cassert>
 void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   logger << "Drawing. getting shift";
@@ -198,7 +196,7 @@ void ClientView::draw(sf::RenderTarget& target, sf::RenderStates states) const
     drawText = true;
   }
 
-  states.transform.translate(getWindowWidth() / 2, getWindowHeigth() / 2);
+  states.transform.translate(getWindowWidth() / 2.0, getWindowHeigth() / 2.0);
   states.transform.scale(20.0f, 20.0f);
   states.transform.translate(shift);
 
@@ -285,7 +283,7 @@ logger << "Processing input";
     sf::Vector2i posI = sf::Mouse::getPosition(*window);
     sf::Vector2f pos = sf::Vector2f(posI.x, posI.y);
     // We don't use getWindowWidth() here, because the window could be resized by the player.
-    pos -= sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2);
+    pos -= sf::Vector2f(window->getSize().x / 2.0, window->getSize().y / 2.0);
     rotate(pos);
 
     logger << "Processed mouse";

@@ -1,6 +1,5 @@
 #include "Server.hpp"
 
-#include <iostream>
 
 namespace junk {
 namespace server {

@@ -1,5 +1,4 @@
 #include "Logger.hpp"
-#include <mutex>
 
 namespace junk
 {

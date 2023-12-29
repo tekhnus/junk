@@ -1,6 +1,5 @@
 #include "GameObjectFactory.hpp"
 
-#include <iostream>
 
 #include "unit/player/Player.hpp"
 #include "unit/bullet/Bullet.hpp"

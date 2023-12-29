@@ -1,5 +1,4 @@
 #include "Bonus.hpp"
-#include "common/logger/Logger.hpp"
 
 namespace junk {
 namespace client {

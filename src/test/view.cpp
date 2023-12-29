@@ -1,6 +1,5 @@
 #include "client/view/ClientView.hpp"
 #include "client/model/ClientModel.hpp"
-#include "client/config/ClientConfig.hpp"
 #include "client/gui/AddressFetch.hpp"
 #include "client/gui/HUD.hpp"
 #include "client/gui/SimpleMenu.hpp"
@@ -9,7 +8,6 @@
 #include <SFML/Window.hpp>
 #include <SFGUI/SFGUI.hpp>
 #include <libgen.h>
-#include <mutex>
 #include <iostream>
 
 class App {

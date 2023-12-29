@@ -1,5 +1,4 @@
 #include "Bullet.hpp"
-#include "common/logger/Logger.hpp"
 
 namespace junk {
 namespace client {

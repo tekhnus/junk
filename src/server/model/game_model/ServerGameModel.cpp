@@ -1,8 +1,6 @@
 #include "ServerGameModel.hpp"
-#include "common/utils/Convert.hpp"
 #include "common/utils/Resource.hpp"
 #include <functional>
-#include <math.h>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
