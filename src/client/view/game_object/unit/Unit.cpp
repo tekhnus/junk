@@ -14,7 +14,7 @@ Unit::~Unit()
 {
 }
 
-void Unit::updateUnit(const model::Unit& unit)
+void Unit::updateUnit(const model::Unit& )
 {
 }
 

@@ -18,7 +18,7 @@ Wall::~Wall()
 void Wall::updateWall(const model::Wall& wall)
 {
   body.setPointCount(wall.corners.size());
-  for (int i = 0; i < wall.corners.size(); ++i) {
+  for (size_t i = 0; i < wall.corners.size(); ++i) {
     body.setPoint(i, wall.corners[i]);
   }
 }

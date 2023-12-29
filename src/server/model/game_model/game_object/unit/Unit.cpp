@@ -54,11 +54,11 @@ GameObjectType Unit::getType()
   return GameObjectType::UNIT;
 }
 
-void Unit::onBulletHit(int type, const std::string& owner)
+void Unit::onBulletHit(int , const std::string& )
 {
 }
 
-void Unit::onBonusEat(int bonusType)
+void Unit::onBonusEat(int )
 {}
 
 }}} // namespace junk::server::model

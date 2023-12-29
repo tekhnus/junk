@@ -119,7 +119,7 @@ void ClientView::removeObsoleteGameObjects()
       }
     }
   }
-  for (int i = 0; i < destroyCandidates.size(); ++i)
+  for (size_t i = 0; i < destroyCandidates.size(); ++i)
   {
     logger << "removing " + std::to_string(destroyCandidates[i]);
     gameObjects.erase(destroyCandidates[i]);

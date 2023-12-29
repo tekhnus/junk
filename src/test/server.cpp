@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-int main(int argc, char **argv)
+int main(int , char **argv)
 {
   resource_root = std::string(dirname(dirname(argv[0]))) + "/share/junk";
   junk::server::Server server;

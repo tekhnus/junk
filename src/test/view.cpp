@@ -178,7 +178,7 @@ App() : settings(0, 0, 2),
 
 };
 
-int main(int argc, char** argv)
+int main(int , char** argv)
 {
   resource_root = std::string(dirname(dirname(argv[0]))) + "/share/junk";
   junk::client::view::loadFont();

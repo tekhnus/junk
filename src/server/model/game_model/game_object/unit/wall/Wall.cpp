@@ -43,7 +43,7 @@ void Wall::destroy()
   }
 }
 
-void Wall::onBulletHit(int type, const std::string& owner)
+void Wall::onBulletHit(int , const std::string& )
 {}
 
 void Wall::init()

@@ -53,7 +53,7 @@ void Logger::writeHead(std::ostream& stream, bool colored, bool dated)
   }
 }
 
-void Logger::_log(int level)
+void Logger::_log(int )
 {}
 
 }

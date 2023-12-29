@@ -113,7 +113,7 @@ ServerModel::CheckStatus ServerModel::checkClientSessionInfo(const SessionInfo& 
   return checkStatus;
 }
 
-SessionInfo ServerModel::connectHandler(const ConnectInfo& connectInfo)
+SessionInfo ServerModel::connectHandler(const ConnectInfo& )
 {
   int playerID = gameModel.addPlayer(new Player());
 
