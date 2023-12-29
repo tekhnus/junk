@@ -20,17 +20,21 @@ sf::Vector2f getDiff(bool up, bool down, bool left, bool right) {
   float time = 1;
   float dx = 0;
   float dy = 0;
-  if (up)
+  if (up) {
     dy += -time;
+  }
 
-  if (down)
+  if (down) {
     dy += time;
+  }
 
-  if (left)
+  if (left) {
     dx += -time;
+  }
 
-  if (right)
+  if (right) {
     dx += time;
+  }
 
   if (fabs(dx) > 0.0 && fabs(dy) > 0.0) {
     dx /= sqrtf(2.0);

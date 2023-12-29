@@ -132,8 +132,9 @@ void ServerGameModel::removeGameObject(int32_t id) {
 
 void ServerGameModel::removePlayer(int32_t playerId) {
   logger.debug("starting destruction of player, id = ", playerId);
-  if (gameObjects.find(playerId) != gameObjects.end())
+  if (gameObjects.find(playerId) != gameObjects.end()) {
     gameObjects[playerId]->startDestruction();
+  }
 }
 
 void ServerGameModel::makeAction(const Action& action) {

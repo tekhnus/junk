@@ -17,12 +17,6 @@
 #include <common/service/client/ClientServiceHandler.hpp>
 #include <thread>
 
-using namespace apache::thrift;
-using namespace apache::thrift::protocol;
-using namespace apache::thrift::transport;
-using namespace apache::thrift::server;
-using namespace apache::thrift::concurrency;
-
 namespace junk {
 
 class ServerNetworkModel {
@@ -44,12 +38,13 @@ class ServerNetworkModel {
  private:
   // Client
   std::shared_ptr<ClientServiceHandler> handler;
-  std::shared_ptr<TProcessor> processor;
-  std::shared_ptr<TProtocolFactory> protocolFactory;
-  std::shared_ptr<TNonblockingServerTransport> transport;
-  std::shared_ptr<ThreadManager> threadManager;
-  std::shared_ptr<ThreadFactory> threadFactory;
-  std::shared_ptr<TNonblockingServer> server;
+  std::shared_ptr<apache::thrift::TProcessor> processor;
+  std::shared_ptr<apache::thrift::protocol::TProtocolFactory> protocolFactory;
+  std::shared_ptr<apache::thrift::transport::TNonblockingServerTransport>
+      transport;
+  std::shared_ptr<apache::thrift::server::ThreadManager> threadManager;
+  std::shared_ptr<apache::thrift::server::ThreadFactory> threadFactory;
+  std::shared_ptr<apache::thrift::server::TNonblockingServer> server;
 
   std::shared_ptr<std::thread> serverThread;
 

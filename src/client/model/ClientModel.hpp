@@ -43,7 +43,7 @@ class ClientModel {
 
  private:
   struct ClientInfo {
-    ClientInfo(int32_t id = -1) : id(id) {}
+    explicit ClientInfo(int32_t id = -1) : id(id) {}
     int32_t id;
   };
 

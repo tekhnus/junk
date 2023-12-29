@@ -20,7 +20,7 @@ Bullet::Bullet(Player* creator, int type) {
   bodyDef.bullet = true;
 
   body = creator->model->world->CreateBody(&bodyDef);
-  body->GetUserData().pointer = reinterpret_cast<uintptr_t>((Unit*)this);
+  body->GetUserData().pointer = reinterpret_cast<uintptr_t>(static_cast<Unit*>(this));
 
   b2CircleShape circleShape;
   circleShape.m_radius = 1.0f / 7;

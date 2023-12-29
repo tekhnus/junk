@@ -63,7 +63,8 @@ void Player::updatePlayer(const model::Player& player) {
   nickname.setPosition(body.getPosition());
   nickname.setFillColor(sf::Color::Magenta);
 
-  float healthScale = float(getHealth()) / float(getMaxHealth());
+  float healthScale =
+      static_cast<float>(getHealth()) / static_cast<float>(getMaxHealth());
 
   healthBarBackground.setSize(sf::Vector2f(body.getRadius() * 2, 4.0f / 20.0));
   healthBar.setSize(

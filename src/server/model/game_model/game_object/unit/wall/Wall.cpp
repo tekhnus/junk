@@ -58,7 +58,7 @@ void Wall::setCorners(const std::vector<b2Vec2>& corners) {
   fixtureDef.shape = &convexShape;
 
   body->CreateFixture(&fixtureDef);
-  body->GetUserData().pointer = reinterpret_cast<uintptr_t>((Unit*)this);
+  body->GetUserData().pointer = reinterpret_cast<uintptr_t>(static_cast<Unit*>(this));
 
   corns = corners;
 }

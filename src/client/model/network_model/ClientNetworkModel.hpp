@@ -14,11 +14,6 @@
 #include <common/logger/Logger.hpp>
 #include <common/service/client/ClientServiceHandler.hpp>
 
-using namespace apache::thrift;
-using namespace apache::thrift::protocol;
-using namespace apache::thrift::transport;
-using namespace apache::thrift::server;
-
 namespace junk {
 
 class ClientNetworkModel {
@@ -36,9 +31,9 @@ class ClientNetworkModel {
  private:
   SessionInfo sessionInfo;
 
-  std::shared_ptr<TSocket> socket;
-  std::shared_ptr<TTransport> transport;
-  std::shared_ptr<TProtocol> protocol;
+  std::shared_ptr<apache::thrift::transport::TSocket> socket;
+  std::shared_ptr<apache::thrift::protocol::TTransport> transport;
+  std::shared_ptr<apache::thrift::protocol::TProtocol> protocol;
   std::shared_ptr<ClientServiceClient> clientServiceClient;
 
   std::mutex socketMutex;

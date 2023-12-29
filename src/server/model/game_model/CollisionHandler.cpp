@@ -20,8 +20,8 @@ void CollisionHandler::BeginContact(b2Contact* contact) {
   if (aRaw == 0 || bRaw == 0) {
     return;
   }
-  Unit* aUnit = (Unit*)aRaw;
-  Unit* bUnit = (Unit*)bRaw;
+  Unit* aUnit = reinterpret_cast<Unit*>(aRaw);
+  Unit* bUnit = reinterpret_cast<Unit*>(bRaw);
 
   if ((aUnit->getType() == GameObjectType::PLAYER &&
        bUnit->getType() == GameObjectType::BONUS) ||

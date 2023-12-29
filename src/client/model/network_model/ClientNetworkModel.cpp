@@ -1,6 +1,14 @@
 #include "ClientNetworkModel.hpp"
+#include <thrift/protocol/TProtocol.h>
+#include <thrift/transport/TBufferTransports.h>
 
 namespace junk {
+
+using apache::thrift::transport::TFramedTransport;
+using apache::thrift::protocol::TProtocol;
+using apache::thrift::protocol::TCompactProtocol;
+using apache::thrift::transport::TSocket;
+using apache::thrift::transport::TTransport;
 
 ClientNetworkModel::ClientNetworkModel()
     : logger("CLIENT_NETWORK_MODEL", "client_model.log", true), alive(true) {
