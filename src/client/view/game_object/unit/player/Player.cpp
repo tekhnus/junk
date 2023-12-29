@@ -60,7 +60,7 @@ void Player::updatePlayer(const model::Player& player)
   nickname = sf::Text(player.getName(), ClientView::font, 20);
   nickname.setOrigin(sf::Vector2f(nickname.getLocalBounds().width / 2.0, 30 / 20.0 + body.getRadius()));
   nickname.setPosition(body.getPosition());
-  nickname.setColor(sf::Color::Magenta);
+  nickname.setFillColor(sf::Color::Magenta);
 
   float healthScale = float(getHealth()) / float(getMaxHealth());
 

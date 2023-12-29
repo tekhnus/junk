@@ -14,7 +14,7 @@ void CollisionHandler::BeginContact(b2Contact* contact)
   b2Body* b = bF->GetBody();
   uintptr_t aRaw = a->GetUserData().pointer;
   uintptr_t bRaw = b->GetUserData().pointer;
-  if (aRaw == NULL || bRaw == NULL)
+  if (aRaw == 0 || bRaw == 0)
   {
     return;
   }
