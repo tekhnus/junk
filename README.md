@@ -1,5 +1,7 @@
-### Build instructions
+### Instructions
+
 ```sh
+# Build:
 nix develop
 ./scripts/build
 
@@ -8,22 +10,11 @@ nix develop
 ./build/client
 ```
 
-Note:
-If you decide to use a custom `CMAKE_INSTALL_PREFIX` for **SFML** on Mac, you also probably want
-to alter `SFML_DEPENDENCIES_INSTALL_PREFIX` (unless you want to install the dependent frameworks globally).
-Unfortunately, is such case you are forced to set `SFML_DEPENDENCIES_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}/Frameworks`.
-Otherwise you will get a linking error at runtime.
-TODO: Report this as a bug to SFML developers.
-
 ### Known issues
 
 #### Build with optimizations crashes
 
 I suspect that infinite for-loop in main() might be the cause.
-
-#### Collisions stopped working
-
-Currently, nothing collides with anything. ¯\_(ツ)_/¯
 
 #### Keyboard access problem
 
