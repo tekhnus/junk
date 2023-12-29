@@ -2,21 +2,22 @@
 
 import json
 from math import *
-from random import randint, random
+from random import Random
 
 wall_count = 50
 approx_size = 15
 coord_range = 200
 
 def gen():
+  rng = Random(42)
   data = {}
   data["walls"] = []
   for wall_index in range(wall_count):
-    size = randint(1, approx_size)
-    center_x = randint(-coord_range, coord_range)
-    center_y = randint(-coord_range, coord_range)
+    size = rng.randint(1, approx_size)
+    center_x = rng.randint(-coord_range, coord_range)
+    center_y = rng.randint(-coord_range, coord_range)
     corners = []
-    alpha = random()
+    alpha = rng.random()
     for corner_index in range(3):
       angle = alpha + corner_index * 2 * pi / 3
       x = center_x + size * cos(angle)
@@ -28,5 +29,5 @@ def gen():
 
 if __name__ == '__main__':
   data = gen()
-  with open('map.json', 'w') as fp:
+  with open('resources/map.json', 'w') as fp:
     json.dump(data, fp)
