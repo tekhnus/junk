@@ -41,7 +41,7 @@
             pkgs.thrift
           ];
         };
-        devShells.default = pkgs.mkShell {
+        devShells.default = pkgs.mkShell.override { inherit stdenv; } {
           nativeBuildInputs = [
             pkgs.clang-tools_17
             pkgs.cmake
