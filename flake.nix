@@ -48,6 +48,7 @@
             pkgs.pkg-config
             pkgs.ninja
           ];
+          hardeningDisable = [ "fortify" ];
           inputsFrom = [ packages.default ];
         };
       });
