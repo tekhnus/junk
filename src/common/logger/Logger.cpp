@@ -1,5 +1,7 @@
 #include "Logger.hpp"
 
+#include <iomanip>
+
 namespace junk {
 
 Logger dbg("debug", "debug.log");

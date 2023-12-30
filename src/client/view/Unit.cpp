@@ -1,5 +1,7 @@
 #include "Unit.hpp"
 
+#include <cmath>
+
 namespace junk {
 
 Unit::Unit(const std::string& name, sf::Vector2f position,
@@ -52,7 +54,7 @@ void PlayerUnit::update() {
   float length =
       getRotation().x * getRotation().x + getRotation().y * getRotation().y;
 
-  length = sqrt(length);
+  length = std::sqrt(length);
 
   sf::Vector2f v = (player.getRadius() / length) * getRotation();
   sf::Vector2f n(-v.y, v.x);
