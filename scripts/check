@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+parallel chronic clang-tidy -p build/ --use-color -- "$@"

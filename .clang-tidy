@@ -1,6 +1,6 @@
 ---
 Checks:          '-*,bugprone*,-bugprone-empty-catch,-bugprone-easily-swappable-parameters,-bugprone-narrowing-conversions,google-*'
-WarningsAsErrors: ''
+WarningsAsErrors: '*'
 HeaderFileExtensions:
   - ''
   - h

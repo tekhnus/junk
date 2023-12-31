@@ -44,6 +44,8 @@
         devShells.default = pkgs.mkShell.override { inherit stdenv; } {
           nativeBuildInputs = [
             pkgs.clang-tools_17
+            pkgs.fd
+            pkgs.moreutils
             pkgs.cmake
             pkgs.pkg-config
             pkgs.ninja
