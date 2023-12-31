@@ -28,12 +28,12 @@ AddressFetch::AddressFetch(sfg::Desktop& desktop, sf::Window& topWindow)
   if (!config.recent.empty()) {
     field->SetText(config.recent.back());
   } else {
-    field->SetText("<server address>");
+    field->SetText("127.0.0.1");
   }
   if (!config.name.empty()) {
     namefield->SetText(config.name);
   } else {
-    namefield->SetText("<your nickname>");
+    namefield->SetText("nickname");
   }
 
   ok->GetSignal(sfg::Widget::OnLeftClick)
