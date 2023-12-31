@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <boost/signals2.hpp>
 #include <common/logger/Logger.hpp>
 #include <memory>
@@ -59,7 +60,7 @@ class ClientView : public sf::Drawable {
   mutable std::mutex safe;
   sf::RenderWindow* window;
   static sf::Font font;
-  void processInput();
+  void processInput(const std::vector<sf::Event>& keyEvents);
 
  private:
   GameObjectFactory gameObjectFactory;
@@ -67,7 +68,9 @@ class ClientView : public sf::Drawable {
 
   int32_t clientId;
   mutable Logger logger;
-  bool prevUp, prevDown, prevLeft, prevRight, prevClicked;
+  std::map<sf::Keyboard::Key, bool> keyState;
+  bool prevUp = false, prevDown = false, prevLeft = false, prevRight = false,
+       prevClicked;
   sf::Vector2i prevPos;
   bool alive;
   model::ClientModel* model;

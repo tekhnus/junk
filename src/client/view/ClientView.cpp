@@ -1,5 +1,7 @@
 #include "ClientView.hpp"
 
+#include <SFML/Window/Keyboard.hpp>
+
 #include "common/utils/Resource.hpp"
 #include "game_object/GameObject.hpp"
 #include "game_object/unit/player/Player.hpp"
@@ -237,32 +239,53 @@ void ClientView::reset() {
   gameObjects.clear();
 }
 
-void ClientView::processInput() {
+void ClientView::processInput(const std::vector<sf::Event>& key_events) {
   if (!alive || clientId == -1) {
     return;
   }
 
   logger << "Processing input";
 
-  bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::W);
-  bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
-              sf::Keyboard::isKeyPressed(sf::Keyboard::S);
-  bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-              sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-  bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
-               sf::Keyboard::isKeyPressed(sf::Keyboard::D);
-
   logger << "Processed keyboard";
 
-  sf::Vector2f diff = getDiff(up, down, left, right);
-  if (up != prevUp || down != prevDown || left != prevLeft ||
-      right != prevRight) {
+  bool changed = false;
+  for (const auto& event : key_events) {
+    bool isPressed;
+    if (event.type == sf::Event::KeyPressed) {
+      isPressed = true;
+    } else if (event.type == sf::Event::KeyReleased) {
+      isPressed = false;
+    } else {
+      continue;
+    }
+    switch (event.key.code) {
+      case sf::Keyboard::Up:
+      case sf::Keyboard::W:
+        prevUp = isPressed;
+        changed = true;
+        break;
+      case sf::Keyboard::Down:
+      case sf::Keyboard::S:
+        prevDown = isPressed;
+        changed = true;
+        break;
+      case sf::Keyboard::Left:
+      case sf::Keyboard::A:
+        prevLeft = isPressed;
+        changed = true;
+        break;
+      case sf::Keyboard::Right:
+      case sf::Keyboard::D:
+        prevRight = isPressed;
+        changed = true;
+        break;
+      default:
+        break;
+    }
+  }
+  if (changed) {
+    sf::Vector2f diff = getDiff(prevUp, prevDown, prevLeft, prevRight);
     move(diff);
-    prevUp = up;
-    prevDown = down;
-    prevLeft = left;
-    prevRight = right;
   }
 
   logger << "Processing mouse";

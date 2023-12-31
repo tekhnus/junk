@@ -114,9 +114,8 @@ class App {
 
     // printf("After changePause: %d\n", mainMenu.getWindow() == nullptr);
     sf::Clock clock;
+    std::vector<sf::Event> keyEvents{};
     for (; window.isOpen();) {
-      view.processInput();
-
       sf::Event event;
       while (window.pollEvent(event)) {
         desktop.HandleEvent(event);
@@ -128,11 +127,15 @@ class App {
         if (event.type == sf::Event::Closed) {
           window.close();
         } else if (event.type == sf::Event::KeyPressed) {
+          keyEvents.push_back(event);
           if (event.key.code == sf::Keyboard::Escape && model.alive) {
             changePause();
           }
+        } else if (event.type == sf::Event::KeyReleased) {
+          keyEvents.push_back(event);
         }
       }
+      view.processInput(keyEvents);
 
       // printf("After events: %d\n", mainMenu.getWindow() == nullptr);
       double t = clock.restart().asSeconds();
