@@ -43,7 +43,7 @@ class GameObject : public virtual junk::common::GameObject {
 
   virtual void init() = 0;
 
-  virtual void setChanged();
+  void setChanged();
 
   virtual void process();
   virtual void destroy() = 0;

@@ -3,6 +3,7 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <functional>
+#include <random>
 
 #include "common/utils/Resource.hpp"
 #include "server/model/game_model/game_object/unit/bonus/Bonus.hpp"
@@ -13,6 +14,14 @@ using boost::property_tree::ptree;
 namespace junk {
 namespace server {
 namespace model {
+
+int random_int() {
+    static std::random_device rd;
+    static std::mt19937 gen{rd()};
+    static std::uniform_int_distribution<> distrib{};
+
+    return distrib(gen);
+}
 
 ServerGameModel::ServerGameModel()
     : isRunning(false),
@@ -205,8 +214,8 @@ void ServerGameModel::operator()() {
       std::lock_guard<std::mutex> guard(gameChangesMutex);
       if (bonusCreationTimer == 60) {
         Bonus* bonus =
-            new Bonus(world, sf::Vector2f(rand() % 120 - 60, rand() % 120 - 60),
-                      rand() % 3);
+            new Bonus(world, sf::Vector2f(random_int() % 120 - 60, random_int() % 120 - 60),
+                      random_int() % 3);
         addGameObject(bonus);
         bonusCreationTimer = 0;
       } else {

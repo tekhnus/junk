@@ -1,5 +1,5 @@
 ---
-Checks:          '-*,bugprone*,-bugprone-empty-catch,-bugprone-easily-swappable-parameters,-bugprone-narrowing-conversions,google-*'
+Checks:          '-*,bugprone*,-bugprone-empty-catch,-bugprone-easily-swappable-parameters,-bugprone-narrowing-conversions,google-*,clang-analyzer-*,-clang-analyzer-cplusplus.NewDelete'
 WarningsAsErrors: '*'
 HeaderFileExtensions:
   - ''
