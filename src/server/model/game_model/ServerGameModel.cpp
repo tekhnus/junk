@@ -236,6 +236,7 @@ void ServerGameModel::operator()() {
     }
 
     std::chrono::milliseconds tm(20);
+    // TODO(): bad idea, we don't know the timer precision.
     std::this_thread::sleep_for(tm);
   }
 

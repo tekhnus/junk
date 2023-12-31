@@ -11,11 +11,6 @@
 #include "game_object/GameObject.hpp"
 #include "game_object/GameObjectFactory.hpp"
 
-// for std::this_thread::sleep_for
-#ifndef _GLIBCXX_USE_NANOSLEEP
-#define _GLIBCXX_USE_NANOSLEEP
-#endif
-
 namespace junk {
 namespace client {
 namespace view {
