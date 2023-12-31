@@ -1,5 +1,6 @@
 #include "ClientView.hpp"
 
+#include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 #include "common/utils/Resource.hpp"
@@ -249,6 +250,7 @@ void ClientView::processInput(const std::vector<sf::Event>& key_events) {
   logger << "Processed keyboard";
 
   bool changed = false;
+  bool mouseChanged = false;
   for (const auto& event : key_events) {
     switch (event.type) {
       case sf::Event::KeyPressed:
@@ -277,6 +279,17 @@ void ClientView::processInput(const std::vector<sf::Event>& key_events) {
         }
         break;
       }
+      case sf::Event::MouseButtonPressed:
+      case sf::Event::MouseButtonReleased:
+      case sf::Event::MouseMoved: {
+        mouseChanged = true;
+        if (event.type == sf::Event::MouseButtonPressed) {
+          prevClicked = true;
+        } else if (event.type == sf::Event::MouseButtonReleased) {
+          prevClicked = false;
+        }
+        break;
+      }
       default: {
         break;
       }
@@ -289,10 +302,10 @@ void ClientView::processInput(const std::vector<sf::Event>& key_events) {
 
   logger << "Processing mouse";
 
-  bool clicked = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
-  if (clicked != prevClicked) {
-    fire(clicked);
-    prevClicked = clicked;
+  // TODO(): seems that short mouse clicks don't produce a shot because
+  // prevClicked is set and immediately unset.
+  if (mouseChanged) {
+    fire(prevClicked);
   }
 
   sf::Vector2i posI = sf::Mouse::getPosition(*window);

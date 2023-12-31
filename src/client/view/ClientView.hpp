@@ -70,7 +70,7 @@ class ClientView : public sf::Drawable {
   mutable Logger logger;
   std::map<sf::Keyboard::Key, bool> keyState;
   bool prevUp = false, prevDown = false, prevLeft = false, prevRight = false,
-       prevClicked;
+       prevClicked = false;
   sf::Vector2i prevPos;
   bool alive;
   model::ClientModel* model;

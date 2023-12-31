@@ -131,7 +131,10 @@ class App {
           if (event.key.code == sf::Keyboard::Escape && model.alive) {
             changePause();
           }
-        } else if (event.type == sf::Event::KeyReleased) {
+        } else if (event.type == sf::Event::KeyReleased ||
+                   event.type == sf::Event::MouseButtonReleased ||
+                   event.type == sf::Event::MouseButtonPressed ||
+                   event.type == sf::Event::MouseMoved) {
           keyEvents.push_back(event);
         }
       }
