@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+chronic clang-tidy -p build/ --use-color "$@" | ifne lckdo .output-lock cat

@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-parallel chronic clang-tidy -p build/ --use-color -- "$@"
+parallel ./scripts/check-one -- $(./scripts/list-files)

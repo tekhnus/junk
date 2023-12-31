@@ -8,3 +8,4 @@ junk.*
 Junk.*
 *.deb
 share
+.output-lock
