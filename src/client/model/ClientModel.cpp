@@ -23,7 +23,11 @@ void ClientModel::shutdown() {
   logger << "ClientModel shut down";
   alive = false;
   networkModel.shutdown();
-  shutdownSignal();
+  try {
+    shutdownSignal();
+  } catch (...) {
+    logger << "Caught an exception while signaling shutdown";
+  }
   // gameObjects.clear();
 }
 

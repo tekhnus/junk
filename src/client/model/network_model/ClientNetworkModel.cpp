@@ -74,7 +74,12 @@ void ClientNetworkModel::makeAction(const Action& action) {
 void ClientNetworkModel::shutdown() {
   alive = false;
   if (transport != nullptr) {
-    transport->close();
+    try {
+      transport->close();
+    }
+    catch (...){
+      logger << "Exception caught while closing transport";
+    }
   }
   logger << "ClientNetworkModel shut down";
 }

@@ -28,7 +28,11 @@ Logger::Logger(const std::string& title)
 
 Logger::~Logger() {
   if (file.is_open()) {
-    file.close();
+    try {
+      file.close();
+    } catch (...) {
+      std::cerr << "Error while closing log output" << std::endl;
+    }
   }
 }
 
