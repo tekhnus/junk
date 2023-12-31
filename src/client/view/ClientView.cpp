@@ -250,37 +250,36 @@ void ClientView::processInput(const std::vector<sf::Event>& key_events) {
 
   bool changed = false;
   for (const auto& event : key_events) {
-    bool isPressed;
-    if (event.type == sf::Event::KeyPressed) {
-      isPressed = true;
-    } else if (event.type == sf::Event::KeyReleased) {
-      isPressed = false;
-    } else {
-      continue;
-    }
-    switch (event.key.code) {
-      case sf::Keyboard::Up:
-      case sf::Keyboard::W:
-        prevUp = isPressed;
+    switch (event.type) {
+      case sf::Event::KeyPressed:
+      case sf::Event::KeyReleased: {
         changed = true;
+        bool isPressed = event.type == sf::Event::KeyPressed;
+        switch (event.key.code) {
+          case sf::Keyboard::Up:
+          case sf::Keyboard::W:
+            prevUp = isPressed;
+            break;
+          case sf::Keyboard::Down:
+          case sf::Keyboard::S:
+            prevDown = isPressed;
+            break;
+          case sf::Keyboard::Left:
+          case sf::Keyboard::A:
+            prevLeft = isPressed;
+            break;
+          case sf::Keyboard::Right:
+          case sf::Keyboard::D:
+            prevRight = isPressed;
+            break;
+          default:
+            break;
+        }
         break;
-      case sf::Keyboard::Down:
-      case sf::Keyboard::S:
-        prevDown = isPressed;
-        changed = true;
+      }
+      default: {
         break;
-      case sf::Keyboard::Left:
-      case sf::Keyboard::A:
-        prevLeft = isPressed;
-        changed = true;
-        break;
-      case sf::Keyboard::Right:
-      case sf::Keyboard::D:
-        prevRight = isPressed;
-        changed = true;
-        break;
-      default:
-        break;
+      }
     }
   }
   if (changed) {
