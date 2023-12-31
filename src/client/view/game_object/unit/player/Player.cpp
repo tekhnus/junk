@@ -59,7 +59,7 @@ void Player::updatePlayer(const model::Player& player) {
 
   nickname = sf::Text(player.getName(), ClientView::font, 20);
   nickname.setOrigin(sf::Vector2f(nickname.getLocalBounds().width / 2.0f,
-                                  30 / 20.0f + body.getRadius()));
+                                  100 + body.getRadius()));
   nickname.setPosition(body.getPosition());
   nickname.setFillColor(sf::Color::Magenta);
 
@@ -87,7 +87,10 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   target.draw(gun, states);
   target.draw(healthBarBackground, states);
   target.draw(healthBar, states);
-  target.draw(nickname, states);
+  auto newNickname = nickname;
+  auto newPosition = states.transform.transformPoint(nickname.getPosition());
+  newNickname.setPosition(newPosition);
+  target.draw(newNickname);
 }
 
 }  // namespace view

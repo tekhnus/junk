@@ -22,10 +22,11 @@ class AddressFetch {
   sfg::Window::Ptr getWindow();
 
  private:
-  void updateHistory();
+  void onOk();
   sfg::Window::Ptr window;
   sfg::Box::Ptr box;
   sfg::Entry::Ptr field;
+  sfg::Entry::Ptr namefield;
   sfg::Button::Ptr ok;
   junk::ClientConfig config;
   sfg::Desktop& m_desktop;
