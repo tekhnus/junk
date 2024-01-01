@@ -61,7 +61,7 @@ if( SFGUI_INCLUDE_FONT )
 endif()
 
 target_link_libraries( ${TARGET} PUBLIC sfml-graphics sfml-window sfml-system )
-target_link_libraries( ${TARGET} PRIVATE ${OPENGL_egl_LIBRARY} )
+target_link_libraries( ${TARGET} PRIVATE ${OPENGL_gl_LIBRARY} ${OPENGL_egl_LIBRARY} )
 
 # Tell the compiler to export when necessary.
 set_target_properties( ${TARGET} PROPERTIES DEFINE_SYMBOL SFGUI_EXPORTS )
