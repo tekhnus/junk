@@ -61,7 +61,7 @@ if( SFGUI_INCLUDE_FONT )
 endif()
 
 target_link_libraries( ${TARGET} PUBLIC sfml-graphics sfml-window sfml-system )
-target_link_libraries( ${TARGET} PRIVATE ${OPENGL_gl_LIBRARY} )
+target_link_libraries( ${TARGET} PRIVATE ${OPENGL_egl_LIBRARY} )
 
 # Tell the compiler to export when necessary.
 set_target_properties( ${TARGET} PROPERTIES DEFINE_SYMBOL SFGUI_EXPORTS )
@@ -118,8 +118,6 @@ elseif( APPLE )
 	set( SHARE_PATH "${CMAKE_INSTALL_PREFIX}/share/SFGUI" )
 	set( LIB_PATH "lib" )
 elseif( "${CMAKE_SYSTEM_NAME}" MATCHES "Linux" )
-	find_package( X11 REQUIRED )
-	target_link_libraries( ${TARGET} PRIVATE ${X11_LIBRARIES} )
 	set( SHARE_PATH "${CMAKE_INSTALL_PREFIX}/share/SFGUI" )
 	
 	if( LIB_SUFFIX )

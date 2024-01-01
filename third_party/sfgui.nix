@@ -20,7 +20,6 @@ pkgs.stdenv.mkDerivation {
     pkgs.stdenv.isLinux
     [
       pkgs.libGL
-      pkgs.xorg.libX11
     ];
 
   cmakeFlags = [
