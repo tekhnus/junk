@@ -46,6 +46,7 @@
             pkgs.clang-tools_17
             pkgs.fd
             pkgs.moreutils
+            pkgs.python3
             pkgs.cmake
             pkgs.pkg-config
             pkgs.ninja
