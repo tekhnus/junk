@@ -118,6 +118,8 @@ elseif( APPLE )
 	set( SHARE_PATH "${CMAKE_INSTALL_PREFIX}/share/SFGUI" )
 	set( LIB_PATH "lib" )
 elseif( "${CMAKE_SYSTEM_NAME}" MATCHES "Linux" )
+	find_package( X11 REQUIRED )
+	target_link_libraries( ${TARGET} PRIVATE ${X11_LIBRARIES} )
 	set( SHARE_PATH "${CMAKE_INSTALL_PREFIX}/share/SFGUI" )
 	
 	if( LIB_SUFFIX )
