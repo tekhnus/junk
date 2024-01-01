@@ -13,8 +13,8 @@
           inherit system;
           overlays = [
             (self: super: {
-              sfgui = import ./sfgui.nix { inherit pkgs; };
-              box2d = import ./box2d.nix { inherit pkgs; };
+              sfgui = import ./third_party/sfgui.nix { inherit pkgs; };
+              box2d = import ./third_party/box2d.nix { inherit pkgs; };
             })
           ];
         };

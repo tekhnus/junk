@@ -3,7 +3,7 @@
 
 pkgs.stdenv.mkDerivation {
   name = "box2d";
-  src = ./third_party/box2d;
+  src = ./box2d;
 
   nativeBuildInputs = [ pkgs.cmake pkgs.pkg-config ];
   buildInputs = [
