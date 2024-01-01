@@ -15,6 +15,11 @@ pkgs.stdenv.mkDerivation {
       # link OpenGL itself.
       pkgs.darwin.apple_sdk.frameworks.OpenGL
     ];
+
+  cmakeFlags = [
+    "-DSFGUI_BUILD_EXAMPLES=OFF"
+  ];
+
   buildPhase = ''
     cmake .
     make
