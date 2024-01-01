@@ -5,7 +5,6 @@
 
 include( CMakeFindDependencyMacro )
 find_dependency( SFML 2.5 COMPONENTS graphics window system)
-find_dependency( OpenGL )
 
 if( "${CMAKE_SYSTEM_NAME}" MATCHES "Linux" )
 	find_dependency( X11 )

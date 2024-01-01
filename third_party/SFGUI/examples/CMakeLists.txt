@@ -2,7 +2,7 @@ cmake_minimum_required( VERSION 3.2 )
 
 function( build_example SAMPLE_NAME SOURCES )
 	add_executable( ${SAMPLE_NAME} ${SOURCES} )
-	target_link_libraries( ${SAMPLE_NAME} PRIVATE SFGUI::SFGUI)
+	target_link_libraries( ${SAMPLE_NAME} PRIVATE SFGUI::SFGUI ${OPENGL_gl_LIBRARY})
 
 	install(
 		TARGETS ${SAMPLE_NAME}
