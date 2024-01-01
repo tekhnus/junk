@@ -37,7 +37,6 @@
             pkgs.libGLU
             pkgs.xorg.libX11
             pkgs.box2d
-            pkgs.libevent
             pkgs.thrift
           ];
         };

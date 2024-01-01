@@ -8,9 +8,6 @@ find_package(SFML 2.5.1 EXACT REQUIRED COMPONENTS system graphics NO_MODULE)
 find_package(SFGUI 0.4.0 EXACT REQUIRED NO_MODULE)
 find_package(box2d 2.4.1 EXACT REQUIRED NO_MODULE)
 
-pkg_check_modules(libevent REQUIRED IMPORTED_TARGET libevent)
-add_library(libevent::libevent ALIAS PkgConfig::libevent)
-
 find_package(thrift REQUIRED NO_MODULE)
 # TODO: this should have been done in thrift cmake config, report it to them.
 include("${THRIFT_CMAKE_DIR}/thriftnbTargets.cmake")
@@ -79,8 +76,8 @@ target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_compile_features(server PRIVATE cxx_std_11)
 target_compile_features(client PRIVATE cxx_std_11)
 
-target_link_libraries(server sfml-system thrift::thrift thriftnb::thriftnb box2d::box2d pthread libevent::libevent)
-target_link_libraries(client sfml-system sfml-graphics thrift::thrift box2d::box2d SFGUI::SFGUI libevent::libevent)
+target_link_libraries(server sfml-system thrift::thrift thriftnb::thriftnb box2d::box2d pthread)
+target_link_libraries(client sfml-system sfml-graphics thrift::thrift box2d::box2d SFGUI::SFGUI)
 
 add_subdirectory(src)
 
