@@ -1,12 +1,13 @@
 #include "ClientNetworkModel.hpp"
+
 #include <thrift/protocol/TProtocol.h>
 #include <thrift/transport/TBufferTransports.h>
 
 namespace junk {
 
-using apache::thrift::transport::TFramedTransport;
-using apache::thrift::protocol::TProtocol;
 using apache::thrift::protocol::TCompactProtocol;
+using apache::thrift::protocol::TProtocol;
+using apache::thrift::transport::TFramedTransport;
 using apache::thrift::transport::TSocket;
 using apache::thrift::transport::TTransport;
 
@@ -76,8 +77,7 @@ void ClientNetworkModel::shutdown() {
   if (transport != nullptr) {
     try {
       transport->close();
-    }
-    catch (...){
+    } catch (...) {
       logger << "Exception caught while closing transport";
     }
   }

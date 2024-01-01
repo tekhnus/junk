@@ -64,7 +64,7 @@ void Player::process() {
 void Player::processFire() {
   if (!fireOn || lifetime % 7 != 0) {
     return;
-}
+  }
   dbg << "Adding a bullet...";
 
   Bullet* bullet = new Bullet(this, bulletsType);
@@ -85,7 +85,8 @@ void Player::init() {
   auto* fixture = body->CreateFixture(&circleShape, 1.0f);
   fixture->SetRestitution(0.5f);
   body->SetLinearDamping(10);
-  body->GetUserData().pointer = reinterpret_cast<uintptr_t>(static_cast<Unit*>(this));
+  body->GetUserData().pointer =
+      reinterpret_cast<uintptr_t>(static_cast<Unit*>(this));
 
   force.SetZero();
   torque = 0.0f;

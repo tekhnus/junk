@@ -14,7 +14,8 @@ Bonus::Bonus(b2World *world, sf::Vector2f bornPosition, int newBonusType) {
   bodyDef.position.Set(bornPosition.x, bornPosition.y);
 
   body = world->CreateBody(&bodyDef);
-  body->GetUserData().pointer = reinterpret_cast<uintptr_t>(static_cast<Unit*>(this));
+  body->GetUserData().pointer =
+      reinterpret_cast<uintptr_t>(static_cast<Unit *>(this));
 
   b2CircleShape circleShape;
   // circleShape.m_p.Set(0.0f, 0.0f);

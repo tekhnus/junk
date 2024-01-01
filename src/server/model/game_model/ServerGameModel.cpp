@@ -16,11 +16,11 @@ namespace server {
 namespace model {
 
 int random_int() {
-    static std::random_device rd;
-    static std::mt19937 gen{rd()};
-    static std::uniform_int_distribution<> distrib{};
+  static std::random_device rd;
+  static std::mt19937 gen{rd()};
+  static std::uniform_int_distribution<> distrib{};
 
-    return distrib(gen);
+  return distrib(gen);
 }
 
 ServerGameModel::ServerGameModel()
@@ -213,9 +213,10 @@ void ServerGameModel::operator()() {
     {
       std::lock_guard<std::mutex> guard(gameChangesMutex);
       if (bonusCreationTimer == 60) {
-        Bonus* bonus =
-            new Bonus(world, sf::Vector2f(random_int() % 120 - 60, random_int() % 120 - 60),
-                      random_int() % 3);
+        Bonus* bonus = new Bonus(
+            world,
+            sf::Vector2f(random_int() % 120 - 60, random_int() % 120 - 60),
+            random_int() % 3);
         addGameObject(bonus);
         bonusCreationTimer = 0;
       } else {

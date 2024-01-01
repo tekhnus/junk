@@ -8,14 +8,15 @@ namespace junk {
 ServerNetworkModel::ServerNetworkModel()
     : logger("SERVER_NETWORK_MODEL", "server_model.log", true) {
   handler = std::shared_ptr<ClientServiceHandler>(new ClientServiceHandler());
-  processor = std::shared_ptr<se::TProcessor>(new ClientServiceProcessor(handler));
-  protocolFactory =
-      std::shared_ptr<se::TProtocolFactory>(new th::protocol::TCompactProtocolFactory());
+  processor =
+      std::shared_ptr<se::TProcessor>(new ClientServiceProcessor(handler));
+  protocolFactory = std::shared_ptr<se::TProtocolFactory>(
+      new th::protocol::TCompactProtocolFactory());
   transport = std::shared_ptr<se::TNonblockingServerTransport>(
       new th::transport::TNonblockingServerSocket(7777));
   // using thread pool with maximum 15 threads to handle incoming requests
-  threadManager =
-      std::shared_ptr<se::ThreadManager>(se::ThreadManager::newSimpleThreadManager(15));
+  threadManager = std::shared_ptr<se::ThreadManager>(
+      se::ThreadManager::newSimpleThreadManager(15));
   threadFactory = std::shared_ptr<se::ThreadFactory>(new se::ThreadFactory());
   threadManager->threadFactory(threadFactory);
   threadManager->start();

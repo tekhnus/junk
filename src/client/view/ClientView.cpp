@@ -319,8 +319,8 @@ void ClientView::processInput(const std::vector<sf::Event>& key_events) {
   if (mouseMoved) {
     sf::Vector2i posI{mx, my};
     sf::Vector2f pos = sf::Vector2f(posI);
-    // We don't use getWindowWidth() here, because the window could be resized by
-    // the player.
+    // We don't use getWindowWidth() here, because the window could be resized
+    // by the player.
     pos -= sf::Vector2f(window->getSize()) * 0.5f;
     rotate(pos);
   }
