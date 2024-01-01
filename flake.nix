@@ -34,11 +34,6 @@
             pkgs.sfgui
             pkgs.box2d
             pkgs.thrift
-            # The following packages are transitive dependencies.
-            # TODO: investigate why do we need to list them here.
-            pkgs.mesa
-            pkgs.libGLU
-            pkgs.xorg.libX11
           ];
         };
         devShells.default = pkgs.mkShell.override { inherit stdenv; } {
