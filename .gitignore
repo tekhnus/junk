@@ -7,5 +7,5 @@ build/
 junk.*
 Junk.*
 *.deb
-share
+dev
 .output-lock

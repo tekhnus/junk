@@ -8,8 +8,8 @@ nix develop
 ./scripts/build
 
 # Run:
-./build/server
-./build/client
+./dev/bin/server
+./dev/bin/client
 ```
 
 **Production build:**

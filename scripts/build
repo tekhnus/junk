@@ -3,12 +3,9 @@
 cmake -B build -S . \
   -GNinja \
   -DCMAKE_BUILD_TYPE=Debug \
+  -DCMAKE_INSTALL_PREFIX=./dev \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
   -DCMAKE_CXX_FLAGS=-fdiagnostics-color=always
 
 
-VERBOSE=1 cmake --build build
-
-rm -rf share
-mkdir -p share/junk
-cp -r resources/* share/junk
+VERBOSE=1 cmake --build build --target install
