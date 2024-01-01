@@ -251,6 +251,9 @@ void ClientView::processInput(const std::vector<sf::Event>& key_events) {
 
   bool changed = false;
   bool mouseChanged = false;
+  bool mouseMoved = false;
+  int mx = 0;
+  int my = 0;
   for (const auto& event : key_events) {
     switch (event.type) {
       case sf::Event::KeyPressed:
@@ -282,11 +285,16 @@ void ClientView::processInput(const std::vector<sf::Event>& key_events) {
       case sf::Event::MouseButtonPressed:
       case sf::Event::MouseButtonReleased:
       case sf::Event::MouseMoved: {
-        mouseChanged = true;
         if (event.type == sf::Event::MouseButtonPressed) {
+          mouseChanged = true;
           prevClicked = true;
         } else if (event.type == sf::Event::MouseButtonReleased) {
+          mouseChanged = true;
           prevClicked = false;
+        } else if (event.type == sf::Event::MouseMoved) {
+          mouseMoved = true;
+          mx = event.mouseMove.x;
+          my = event.mouseMove.y;
         }
         break;
       }
@@ -308,12 +316,14 @@ void ClientView::processInput(const std::vector<sf::Event>& key_events) {
     fire(prevClicked);
   }
 
-  sf::Vector2i posI = sf::Mouse::getPosition(*window);
-  sf::Vector2f pos = sf::Vector2f(posI);
-  // We don't use getWindowWidth() here, because the window could be resized by
-  // the player.
-  pos -= sf::Vector2f(window->getSize()) * 0.5f;
-  rotate(pos);
+  if (mouseMoved) {
+    sf::Vector2i posI{mx, my};
+    sf::Vector2f pos = sf::Vector2f(posI);
+    // We don't use getWindowWidth() here, because the window could be resized by
+    // the player.
+    pos -= sf::Vector2f(window->getSize()) * 0.5f;
+    rotate(pos);
+  }
 
   logger << "Processed mouse";
 }
