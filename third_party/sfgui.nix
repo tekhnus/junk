@@ -5,7 +5,7 @@ pkgs.stdenv.mkDerivation {
   name = "SFGUI";
   src = ./SFGUI;
 
-  nativeBuildInputs = [ pkgs.cmake pkgs.pkg-config ];
+  nativeBuildInputs = [ pkgs.cmake ];
   buildInputs = [
     pkgs.sfml
   ] ++ pkgs.lib.optionals

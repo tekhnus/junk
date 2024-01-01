@@ -5,8 +5,7 @@ pkgs.stdenv.mkDerivation {
   name = "box2d";
   src = ./box2d;
 
-  nativeBuildInputs = [ pkgs.cmake pkgs.pkg-config ];
-  buildInputs = [ ];
+  nativeBuildInputs = [ pkgs.cmake ];
 
   cmakeFlags = [
     "-DBOX2D_INSTALL=ON"
