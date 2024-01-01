@@ -44,9 +44,9 @@ static PROC WinGetProcAddress(const char *name)
 
 /* Linux, FreeBSD, other */
 #ifndef IntGetProcAddress
-	#include <GL/glx.h>
+	#include <EGL/egl.h>
 
-	#define IntGetProcAddress(name) (*glXGetProcAddressARB)((const GLubyte*)name)
+	#define IntGetProcAddress(name) (*eglGetProcAddress)(name)
 #endif
 
 int sfgogl_ext_SGIS_texture_edge_clamp = sfgogl_LOAD_FAILED;
