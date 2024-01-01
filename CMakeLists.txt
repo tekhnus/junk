@@ -5,7 +5,7 @@ find_package(Boost 1.81.0 EXACT REQUIRED NO_MODULE)
 find_package(SFML 2.5.1 EXACT REQUIRED COMPONENTS system graphics NO_MODULE)
 find_package(SFGUI 0.4.0 EXACT REQUIRED NO_MODULE)
 find_package(box2d 2.4.1 EXACT REQUIRED NO_MODULE)
-find_package(thrift REQUIRED NO_MODULE)
+find_package(Thrift REQUIRED NO_MODULE)
 # TODO: this should have been done in thrift cmake config, report it to them.
 include("${THRIFT_CMAKE_DIR}/thriftnbTargets.cmake")
 
