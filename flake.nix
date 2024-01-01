@@ -42,16 +42,14 @@
           ];
         };
         devShells.default = pkgs.mkShell.override { inherit stdenv; } {
-          nativeBuildInputs = [
-            pkgs.cmake
-            pkgs.ninja
+          inputsFrom = [ packages.default ];
+          packages = [
             pkgs.python3
             pkgs.clang-tools_17
             pkgs.moreutils
             pkgs.fd
           ];
           hardeningDisable = [ "fortify" ];
-          inputsFrom = [ packages.default ];
         };
       });
 }
