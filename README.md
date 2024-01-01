@@ -1,5 +1,7 @@
 ### Instructions
 
+**Development build:**
+
 ```sh
 # Build:
 nix develop
@@ -8,4 +10,15 @@ nix develop
 # Run:
 ./build/server
 ./build/client
+```
+
+**Production build:**
+
+```sh
+# Build:
+nix build
+
+# Run:
+./result/bin/server
+./result/bin/client
 ```
